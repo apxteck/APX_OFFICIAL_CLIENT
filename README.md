@@ -1,153 +1,139 @@
-# APX Official Frontend Portal 🚀
+# APX Official Frontend
 
-Welcome to the **APX Official Frontend** project. This is a modern, high-performance web portal built with **Next.js 16 (App Router)**, **React 19**, **TypeScript**, and styled using **Tailwind CSS v4**.
+Welcome to the official frontend application for the **APX Platform**. This project is a modern, performance-oriented client-side application built on top of **Next.js** and **React 19**, designed to interface with the [APX Official Backend](APX/BACKEND/README.md).
 
-It is the user interface layer of the APX ecosystem, communicating with the [APX Official Backend](APX/BACKEND/README.md) to provide role-based dashboard experiences, content delivery, payment processing, service request pipelines, and CRM capabilities.
-
----
-
-## 🔑 Key Features & Role-Based Views
-
-The portal is architected around three core user roles:
-
-1. **Admin (`(admin)`)**:
-   - Full user, role, and permission management.
-   - Module access controls and pricing slot setup.
-   - Dynamic service fields configuration and request assignment.
-   - Invoicing, payment verification, and audit pipelines.
-   - Lead assignment and conversion metrics.
-   - CRM operations, enquiries management, FAQ editing, and banner configurations.
-
-2. **Employee (`(employee)`)**:
-   - Task management boards (viewing assigned items, updating progress).
-   - Leads tracking and follow-up logging.
-   - Handling assigned customer service requests.
-   - Expense reimbursement submissions and tracker.
-
-3. **Customer (`(customer)`)**:
-   - Custom service requests with interactive dynamic forms.
-   - File uploads (identity verification, receipts, project requirements).
-   - Invoices view, payment link access, and payment proof submission.
-   - Real-time task and order progress updates.
+It implements a comprehensive client-side architecture supporting multi-role portal layouts (Admin, Employee, and Customer), secure session handling, dynamically rendered forms, and state-of-the-art developer tools like the new React Compiler.
 
 ---
 
-## 📂 Project Directory Structure
+## 🚀 Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (v16.2.6 - App Router)
+- **Library**: [React](https://react.dev/) (v19.2.4)
+- **Compiler**: React Compiler (built-in, configured in [next.config.ts](file:///d:/Custom/MCA/Project/APX/frontend/next.config.ts))
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (using new CSS-first syntax)
+- **Language**: [TypeScript](https://www.typescriptlang.org/) (configured in [tsconfig.json](file:///d:/Custom/MCA/Project/APX/frontend/tsconfig.json))
+- **Path Aliases**: `@/*` points to `./src/*`
+
+---
+
+## 📂 Project Architecture
+
+The application is structured logically with modular components, separation of concerns, and role-based route separation:
 
 ```
 frontend/
 ├── src/
 │   └── app/
-│       ├── (roles)/              # Role-specific layouts and dashboard views
-│       │   ├── (admin)/          # Admin-specific routes and layouts
-│       │   ├── (customer)/       # Customer-specific routes and layouts
-│       │   └── (employee)/       # Employee-specific routes and layouts
-│       ├── components/           # Reusable UI components (Buttons, Modals, Forms, etc.)
-│       ├── hooks/                # Custom React Hooks (e.g., auth checks, layout helpers)
-│       │   └── useAuth.ts        # Custom authorization and session hook
-│       ├── lib/
-│       │   └── api/              # Centralized API service layer
-│       │       └── auth.api.ts   # Authentication-related API endpoints
-│       ├── types/                # TypeScript models, typings, and validation schemas
-│       │   └── auth.types.ts     # Auth types and models
-│       ├── globals.css           # Tailwind CSS imports & global design tokens
-│       ├── layout.tsx            # Main root layout configuration
-│       └── page.tsx              # Public home page / landing page
-├── AGENTS.md                     # Agent development rules and specifications
-├── CLAUDE.md                     # Claude development guidelines (mirrors AGENTS.md)
-├── package.json                  # Dependencies and execution scripts
+│       ├── (roles)/              # Role-specific dashboard layouts and views
+│       │   ├── (admin)/          # Admin-only dashboard & administration management
+│       │   ├── (customer)/       # Customer/Client-only features (requests, payments)
+│       │   └── (employee)/       # Employee/Staff features (tasks, blogs, reimbursements)
+│       ├── components/           # Reusable UI component library (atomic design pattern)
+│       ├── hooks/                # Custom React hooks (e.g. useAuth.ts)
+│       ├── lib/                  # Shared library functions and modules
+│       │   └── api/              # Centralized API service layer (e.g. auth.api.ts)
+│       ├── types/                # TypeScript interface declarations (e.g. auth.types.ts)
+│       ├── globals.css           # Tailwind v4 directives and CSS theme variables
+│       ├── layout.tsx            # Global HTML root layout
+│       └── page.tsx              # Public home page
+├── AGENTS.md                     # LLM/AI Agent developer coding guidelines
+├── CLAUDE.md                     # IDE/CLI instructions and developer constraints
+├── package.json                  # Dependencies, scripts, and build metadata
 └── tsconfig.json                 # TypeScript compiler configuration
 ```
 
----
+### Key Files Reference
 
-## 🛠️ Tech Stack & Dependencies
-
-- **Framework**: [Next.js](https://nextjs.org/) (v16.2.6) - App Router and React Server Components (RSC)
-- **Library**: [React](https://react.dev/) (v19.2.4)
-- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict typing enforced)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (v4.x) with PostCSS
-- **Tooling**: [ESLint](https://eslint.org/) (v9.x)
-
----
-
-## 📐 Core Architecture & Styling Guidelines
-
-Developers working on this project must adhere to the rules specified in [AGENTS.md](file:///d:/Custom/MCA/Project/APX/frontend/AGENTS.md):
-
-*   **Modular Architecture**: Keep components small, reusable, and single-responsibility.
-*   **Design System & Theme Consistency**:
-    - Use design tokens and Tailwind theme variables. Do not hardcode arbitrary color palettes.
-    - Build responsive layouts supporting mobile, tablet, and desktop viewports.
-*   **API Management**:
-    - All requests must be handled via the centralized API layer under [src/app/lib/api](file:///d:/Custom/MCA/Project/APX/frontend/src/app/lib/api).
-    - Do not perform fetch calls directly inside visual UI components.
-*   **State Management**:
-    - Use React local state for component-level UI status.
-    - Integrate Redux Toolkit (or RTK Query) only for shared, complex backend-synchronized states.
-*   **Forms & Validation**:
-    - Build forms using **React Hook Form** paired with **Zod** schema validations.
-    - Do not close forms automatically if an API action fails; keep inputted user data intact.
-    - Disable submit buttons to prevent double-submits when requests are pending.
-*   **User Feedback & Notifications**:
-    - Every asynchronous action should display appropriate loader states.
-    - Display toast notifications for successes, client validation issues, and server errors.
-*   **SEO & SSR**:
-    - Use Server Components and SSR by default for public pages.
-    - Every public page must contain dynamic, well-defined SEO metadata (Title, Description, OG/Twitter tags).
+- **Styling entry point**: [globals.css](file:///d:/Custom/MCA/Project/APX/frontend/src/app/globals.css)
+- **Application configuration**: [next.config.ts](file:///d:/Custom/MCA/Project/APX/frontend/next.config.ts)
+- **Global Types**: [auth.types.ts](file:///d:/Custom/MCA/Project/APX/frontend/src/app/types/auth.types.ts)
+- **Authentication Hook**: [useAuth.ts](file:///d:/Custom/MCA/Project/APX/frontend/src/app/hooks/useAuth.ts)
+- **Authentication Service API**: [auth.api.ts](file:///d:/Custom/MCA/Project/APX/frontend/src/app/lib/api/auth.api.ts)
+- **Homepage**: [page.tsx](file:///d:/Custom/MCA/Project/APX/frontend/src/app/page.tsx)
+- **Root Layout**: [layout.tsx](file:///d:/Custom/MCA/Project/APX/frontend/src/app/layout.tsx)
 
 ---
 
-## 🚀 Getting Started
+## 🛡️ Functional Domains
 
-### 📋 Prerequisites
+The frontend is designed to support client interfaces for all features defined in the backend [schema.prisma](file:///d:/Custom/MCA/Project/APX/BACKEND/prisma/schema.prisma):
 
-- **Node.js**: `v20.x` or higher recommended.
-- **npm** or **yarn** / **pnpm**.
-- Running [APX Backend Service](file:///d:/Custom/MCA/Project/APX/BACKEND/README.md).
+1. **User Role Management**: Dashboards and interfaces adapted dynamically based on roles: `SUPER_ADMIN`, `CUSTOMER`, or `EMPLOYEE` (with subroles like `EDITOR` and `ADS_MANAGER`).
+2. **Service Request System**: A dynamic form-generation interface driven by database-defined fields for specific agency services. Customers can create/track requests, and employees/admins can assign and update progress.
+3. **Payments & Invoicing**: Interface for billing tracking, custom invoice creation, invoice emails, payment link generation, and client payment proof upload.
+4. **CRM & Lead Tracking**: Customer Relationship Management interface to tracking inquiries, new leads, lead prioritization, and follow-up activities.
+5. **Task & Reminder System**: Board or list view of tasks assigned by managers to employees, with completion tracking, priority levels, and file attachments.
+6. **Expense Reimbursement**: Staff claim submissions interface with image/file upload for receipts, including review flow for managers.
+7. **Content Management System (CMS)**: Interface to publish blog posts, organize categories, and manage reader comments/likes.
+8. **Banner & Ads Manager**: Dashboards for configuring homepage banners and setting up advertisement placements.
 
-### ⚙️ Installation
+---
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
+## 🛠️ Development & Coding Guidelines
 
-2. Install dependencies:
+To keep the codebase maintainable, secure, and clean, developers and AI agents must adhere to the rules outlined in [AGENTS.md](file:///d:/Custom/MCA/Project/APX/frontend/AGENTS.md):
+
+### 1. Separation of Concerns
+*   **UI Components**: Responsible solely for rendering visual markup. Keep them small, reusable, and single-purpose in the [components/](file:///d:/Custom/MCA/Project/APX/frontend/src/app/components) directory.
+*   **Business Logic**: Extracted to custom React hooks in the `hooks/` directory.
+*   **API Layer**: Centralized under [lib/api/](file:///d:/Custom/MCA/Project/APX/frontend/src/app/lib/api). Direct API fetch or Axios calls within component render cycles are forbidden.
+
+### 2. State & Data Fetching
+*   Keep local component states minimal.
+*   Utilize Redux Toolkit or RTK Query for shared cross-component global states and server state synchronization where appropriate.
+*   API actions must provide user feedback (e.g. toast notifications, loader skeletons).
+*   Disable duplicate form submissions (loading state disabling buttons) during request flight.
+
+### 3. Forms & Validation
+*   Build forms using `react-hook-form` paired with `zod` for type-safe validation schema definitions.
+*   Forms must not auto-close when an API request fails; retain input values and display inline/toast errors.
+
+### 4. SEO & Performance
+*   Utilize Server-Side Rendering (SSR) or Server Components by default unless client interactivity is mandatory (`"use client"`).
+*   All public-facing pages must generate optimized SEO metadata (titles, descriptions, keywords, Open Graph, and Twitter card tags).
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+- **Node.js**: `v20.x` or later recommended
+- **PackageManager**: `npm`
+
+### Installation
+
+1. Install project packages:
    ```bash
    npm install
    ```
 
-### 💻 Running the Application
+2. Configure Environment Variables:
+   Create a `.env.local` file in the root folder containing the required backend API addresses:
+   ```env
+   NEXT_PUBLIC_API_URL=http://localhost:5000/api
+   ```
 
-*   **Development Mode** (with hot-reloading):
+### Running the Application
+
+*   **Development Mode** (with live reloading and fast refresh):
     ```bash
     npm run dev
     ```
-    Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+    Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-*   **Production Build**:
+*   **Build Production Bundle**:
     ```bash
     npm run build
     ```
 
-*   **Start Production Server** (after building):
+*   **Run Production Build**:
     ```bash
     npm run start
     ```
 
-*   **Lint Check**:
+*   **Linter checks**:
     ```bash
     npm run lint
     ```
-
----
-
-## ⚙️ Environment Configuration
-
-Create a `.env.local` file in the `frontend` root to manage connections and variables (do not commit secrets to Git):
-
-```env
-# URL for the APX backend API
-NEXT_PUBLIC_API_URL=http://localhost:8090/api/v1
-```
