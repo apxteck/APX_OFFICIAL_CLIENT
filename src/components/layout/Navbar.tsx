@@ -8,27 +8,27 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { LogIn, Menu, X } from "lucide-react";
 
 export function Navbar() {
-  const { scrollY } = useScroll();
-  const backgroundY = useTransform(scrollY, [0, 50], ["rgba(0,0,0,0)", "var(--glass)"]);
-  const backdropBlur = useTransform(scrollY, [0, 50], ["blur(0px)", "blur(16px)"]);
-  const borderWidth = useTransform(scrollY, [0, 50], ["rgba(255,255,255,0)", "var(--glass-border)"]);
-  const paddingY = useTransform(scrollY, [0, 50], ["1.5rem", "0.75rem"]);
-
+  const [isScrolled, setIsScrolled] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
 
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <motion.header
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4"
-      style={{ paddingTop: paddingY }}
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-300 ${
+        isScrolled ? "pt-3" : "pt-6"
+      }`}
     >
-      <motion.div
-        style={{
-          backgroundColor: backgroundY,
-          backdropFilter: backdropBlur,
-          WebkitBackdropFilter: backdropBlur,
-          borderColor: borderWidth,
-        }}
-        className="w-full max-w-5xl rounded-full border border-transparent transition-all duration-300 shadow-2xl"
+      <div
+        className={`w-full max-w-5xl rounded-full border transition-all duration-300 shadow-2xl ${
+          isScrolled ? "glass-panel" : "bg-transparent border-transparent"
+        }`}
       >
         <div className="px-6 h-16 flex items-center justify-between">
           {/* Logo */}
@@ -84,7 +84,7 @@ export function Navbar() {
             </Link>
           </motion.div>
         )}
-      </motion.div>
-    </motion.header>
+      </div>
+    </header>
   );
 }
