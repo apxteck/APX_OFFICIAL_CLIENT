@@ -1,83 +1,173 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { Quote, Star } from "lucide-react";
-
-const testimonials = [
-  {
-    name: "Sarah Jenkins",
-    role: "CEO at TechFlow",
-    content: "APXTeck completely transformed our digital presence. The new platform is not only beautiful but extremely fast. Their attention to detail is unmatched.",
-    rating: 5,
-  },
-  {
-    name: "Michael Chen",
-    role: "Founder, DataSync",
-    content: "Working with them was a breeze. They understood our complex requirements and delivered a solution that exceeded our expectations in every way.",
-    rating: 5,
-  },
-  {
-    name: "Emma Watson",
-    role: "Marketing Director",
-    content: "The ROI we've seen since launching the new SEO strategy and redesigned website is phenomenal. Highly recommend the APX team!",
-    rating: 5,
-  },
-];
+import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { api, Testimonial } from "@/lib/api";
 
 export function TestimonialsSection() {
-  return (
-    <section id="testimonials" className="py-32 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-accent/5 rounded-full blur-[100px] pointer-events-none -z-10" />
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
+  useEffect(() => {
+    async function loadTestimonials() {
+      try {
+        const data = await api.fetchTestimonials();
+        const published = data.filter((t) => t.isPublished);
+        setTestimonials(published);
+      } catch (err) {
+        console.error("Failed to load testimonials", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadTestimonials();
+  }, []);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+  };
+
+  const resetTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      handleNext();
+    }, 6000);
+  };
+
+  useEffect(() => {
+    if (testimonials.length > 1) {
+      resetTimer();
+    }
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [testimonials, currentIndex, resetTimer]);
+
+  if (isLoading || testimonials.length === 0) {
+    return null;
+  }
+
+  const current = testimonials[currentIndex];
+
+  return (
+    <section id="testimonials" className="py-32 relative overflow-hidden bg-background">
+      {/* Background glow overlay */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
+
+      <div className="max-w-4xl mx-auto px-6">
+        
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/25 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-4"
+          >
+            Testimonials
+          </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold tracking-tight mb-6"
+            className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
           >
-            Client Success
+            What Our Clients Say
           </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-foreground/70 max-w-2xl mx-auto text-lg"
-          >
-            Don&apos;t just take our word for it. Hear from the amazing companies we&apos;ve partnered with.
-          </motion.p>
+          <p className="text-foreground/60">
+            Real feedback from growing Indian SMBs and companies we have partnered with.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+        {/* Carousel Slider */}
+        <div className="relative">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.15, duration: 0.5 }}
+              key={current.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
             >
-              <GlassCard className="h-full relative">
-                <Quote className="absolute top-6 right-6 w-10 h-10 text-accent/20" />
-                <div className="flex gap-1 mb-6">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-500 text-yellow-500" />
-                  ))}
+              <GlassCard className="relative p-8 md:p-12 border border-glass-border shadow-xl min-h-[300px] flex flex-col justify-between">
+                <Quote className="absolute top-6 right-6 w-14 h-14 text-accent/10 pointer-events-none" />
+                
+                <div>
+                  {/* Rating Stars */}
+                  <div className="flex gap-1.5 mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-5 h-5 ${
+                          i < current.rating
+                            ? "fill-amber-500 text-amber-500"
+                            : "text-foreground/20"
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Feedback Text */}
+                  <p className="text-lg md:text-xl text-foreground/80 leading-relaxed font-medium italic mb-8">
+                    &quot;{current.feedback}&quot;
+                  </p>
                 </div>
-                <p className="text-foreground/80 text-lg leading-relaxed mb-8 italic">
-                  &quot;{testimonial.content}&quot;
-                </p>
-                <div className="mt-auto">
-                  <h4 className="font-semibold text-lg">{testimonial.name}</h4>
-                  <p className="text-foreground/60 text-sm">{testimonial.role}</p>
+
+                {/* Client Profile details */}
+                <div className="flex items-center gap-4 pt-6 border-t border-glass-border">
+                  {current.clientPhotoUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={current.clientPhotoUrl}
+                      alt={current.clientName}
+                      className="w-12 h-12 rounded-full object-cover border border-accent/30"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-accent">
+                      {current.clientName[0]}
+                    </div>
+                  )}
+                  <div>
+                    <h4 className="font-extrabold text-foreground tracking-tight text-base">
+                      {current.clientName}
+                    </h4>
+                    <p className="text-xs text-foreground/50">
+                      {current.clientBusiness} {current.projectType ? `(${current.projectType})` : ""}
+                    </p>
+                  </div>
                 </div>
               </GlassCard>
             </motion.div>
-          ))}
+          </AnimatePresence>
+
+          {/* Navigation Controls */}
+          {testimonials.length > 1 && (
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={handlePrev}
+                className="w-10 h-10 rounded-full glass-panel border border-glass-border flex items-center justify-center hover:bg-foreground/5 active:scale-95 transition-all text-foreground"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={handleNext}
+                className="w-10 h-10 rounded-full glass-panel border border-glass-border flex items-center justify-center hover:bg-foreground/5 active:scale-95 transition-all text-foreground"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          )}
         </div>
+
       </div>
     </section>
   );

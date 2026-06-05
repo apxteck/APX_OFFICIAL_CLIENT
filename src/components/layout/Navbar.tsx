@@ -39,11 +39,11 @@ export function Navbar() {
             <span className="text-xl font-bold tracking-tight hidden sm:block">APXTeck</span>
           </Link>
 
-          {/* Desktop Links */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+            <Link href="/about" className="hover:text-accent transition-colors">About</Link>
             <Link href="/services" className="hover:text-accent transition-colors">Services</Link>
             <Link href="/portfolio" className="hover:text-accent transition-colors">Portfolio</Link>
-            <Link href="/explore" className="hover:text-accent transition-colors">Explore & News</Link>
+            <Link href="/explore-news" className="hover:text-accent transition-colors">Explore & News</Link>
             <Link href="/contact" className="hover:text-accent transition-colors">Contact</Link>
           </nav>
 
@@ -75,9 +75,10 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             className="md:hidden absolute top-full left-0 right-0 mt-4 p-4 glass-panel rounded-3xl flex flex-col gap-4 shadow-xl"
           >
+            <Link href="/about" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">About</Link>
             <Link href="/services" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">Services</Link>
             <Link href="/portfolio" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">Portfolio</Link>
-            <Link href="/explore" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">Explore & News</Link>
+            <Link href="/explore-news" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">Explore & News</Link>
             <Link href="/contact" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">Contact</Link>
             <Link href="/login" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl bg-accent text-white font-medium flex items-center justify-center gap-2">
               <LogIn className="w-4 h-4" /> Login
