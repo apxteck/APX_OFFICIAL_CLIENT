@@ -1,24 +1,19 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { KeyRound, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
-import { api } from "@/lib/axios";
-import Link from "next/link";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import z from 'zod';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { KeyRound, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { api } from '@/lib/axios';
+import Link from 'next/link';
 
 const forgotPasswordSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .min(1, "Email is required")
-    .email("Invalid email format"),
+  email: z.string().trim().toLowerCase().min(1, 'Email is required').email('Invalid email format'),
 });
 
 type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>;
@@ -26,8 +21,8 @@ type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>;
 export default function ForgotPasswordPage() {
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -41,24 +36,24 @@ export default function ForgotPasswordPage() {
   } = useForm<ForgotPasswordValues>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
   const onSubmit = async (values: ForgotPasswordValues) => {
-    setErrorMsg("");
-    setSuccessMsg("");
+    setErrorMsg('');
+    setSuccessMsg('');
     setIsLoading(true);
 
     try {
       const result = await api.forgotPassword(values.email);
       if (result.success) {
-        setSuccessMsg(result.message || "A password reset link has been sent to your email.");
+        setSuccessMsg(result.message || 'A password reset link has been sent to your email.');
       } else {
-        setErrorMsg("Failed to process request");
+        setErrorMsg('Failed to process request');
       }
     } catch (err: unknown) {
-      setErrorMsg((err as Error).message || "Something went wrong. Try again.");
+      setErrorMsg((err as Error).message || 'Something went wrong. Try again.');
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +71,7 @@ export default function ForgotPasswordPage() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="w-full max-w-md"
         >
           <GlassCard className="p-8 sm:p-10 shadow-2xl border-accent/20">
@@ -100,7 +95,9 @@ export default function ForgotPasswordPage() {
                   <CheckCircle2 className="w-9 h-9" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold tracking-tight text-emerald-500">Reset Link Sent</h3>
+                  <h3 className="text-xl font-bold tracking-tight text-emerald-500">
+                    Reset Link Sent
+                  </h3>
                   <p className="text-foreground/70 text-sm leading-relaxed max-w-sm mx-auto">
                     {successMsg}
                   </p>
@@ -124,10 +121,12 @@ export default function ForgotPasswordPage() {
                 )}
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">Email Address</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                    Email Address
+                  </label>
                   <input
                     type="email"
-                    {...register("email")}
+                    {...register('email')}
                     className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm font-medium"
                     placeholder="you@company.com"
                   />
@@ -141,12 +140,14 @@ export default function ForgotPasswordPage() {
                   disabled={isLoading}
                   className="group w-full h-12 mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
                 >
-                  {isLoading ? "Sending link..." : "Send Reset Link"}
-                  {!isLoading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+                  {isLoading ? 'Sending link...' : 'Send Reset Link'}
+                  {!isLoading && (
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  )}
                 </button>
 
                 <p className="text-center text-xs text-foreground/60 mt-6 font-medium">
-                  Remember your password?{" "}
+                  Remember your password?{' '}
                   <Link href="/login" className="text-accent hover:underline font-bold">
                     Sign In
                   </Link>

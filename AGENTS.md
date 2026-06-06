@@ -1,19 +1,20 @@
 <!-- BEGIN:nextjs-agent-rules -->
+
 # Frontend Development Rules
 
 ## Architecture & Code Quality
 
 1. All code must be modular, reusable, and maintainable.
 2. Follow separation of concerns:
+   - UI Components
+   - Business Logic
+   - API Layer
+   - State Management
+   - Validation Layer
 
-   * UI Components
-   * Business Logic
-   * API Layer
-   * State Management
-   * Validation Layer
 3. Avoid duplicate code. Create reusable components, hooks, utilities, and services whenever possible.
 4. Keep components small and focused on a single responsibility.
-5. Use TypeScript strict typing. Avoid using `any` unless absolutely necessary.
+5. Use TypeScript strict typing. Avoid using `any` unless absolutely necessary. All types and interface should be defined in the `frontend/src/app/types/` directory using domain-specific type files (e.g., `user.types.ts`, `blog.types.ts`).
 
 ---
 
@@ -30,7 +31,7 @@
 
 ## API Management
 
-1. All API requests must be managed from a centralized API layer.
+1. All API requests must be managed from a centralized API layer. Create domain-specific API files (e.g., `auth.api.ts`) inside the `frontend/src/app/services/api/` directory to handle all requests with proper error handling(try catch).
 2. Do not call APIs directly inside UI components.
 3. Create dedicated service files or use Redux Toolkit Query when appropriate.
 4. API endpoints, request configuration, interceptors, and error handling must be maintained in a single centralized location.
@@ -63,9 +64,9 @@
 2. Display validation errors clearly next to the relevant fields.
 3. Forms must not automatically close when an API request fails.
 4. Forms should remain open until:
+   - The user manually closes them, or
+   - The operation completes successfully.
 
-   * The user manually closes them, or
-   * The operation completes successfully.
 5. Preserve user-entered data when validation or API errors occur.
 6. Disable duplicate form submissions while a request is in progress.
 
@@ -76,12 +77,12 @@
 1. All public-facing pages must be SEO-friendly and using SSR.
 2. Use Server-Side Rendering (SSR) or Server Components wherever appropriate.
 3. Generate proper metadata for every public page:
+   - title
+   - description
+   - keywords
+   - Open Graph tags
+   - Twitter tags
 
-   * title
-   * description
-   * keywords
-   * Open Graph tags
-   * Twitter tags
 4. Use semantic HTML structure.
 5. Ensure pages are crawlable by search engines.
 6. Optimize Core Web Vitals and page performance.

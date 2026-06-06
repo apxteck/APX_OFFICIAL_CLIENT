@@ -1,34 +1,44 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Code2, Search, Smartphone, Rocket, Shield, Globe, ArrowRight, Clock, Tag } from "lucide-react";
-import Link from "next/link";
-import { Service } from "@/app/types/service.types";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import {
+  Code2,
+  Search,
+  Smartphone,
+  Rocket,
+  Shield,
+  Globe,
+  ArrowRight,
+  Clock,
+  Tag,
+} from 'lucide-react';
+import Link from 'next/link';
+import { Service } from '@/app/types/service.types';
 
 interface ServicesListingSectionProps {
   initialServices: Service[];
 }
 
-const categories = ["All", "Development", "Design", "Marketing"];
+const categories = ['All', 'Development', 'Design', 'Marketing'];
 
 const getServiceCategory = (slug: string) => {
-  if (slug.includes("development") || slug.includes("cloud")) return "Development";
-  if (slug.includes("design") || slug.includes("ui")) return "Design";
-  if (slug.includes("seo") || slug.includes("marketing")) return "Marketing";
-  return "All";
+  if (slug.includes('development') || slug.includes('cloud')) return 'Development';
+  if (slug.includes('design') || slug.includes('ui')) return 'Design';
+  if (slug.includes('seo') || slug.includes('marketing')) return 'Marketing';
+  return 'All';
 };
 
 const getServiceIcon = (slug: string) => {
   switch (slug) {
-    case "web-development":
+    case 'web-development':
       return Code2;
-    case "seo-optimization":
+    case 'seo-optimization':
       return Search;
-    case "ui-ux-design":
+    case 'ui-ux-design':
       return Smartphone;
-    case "digital-marketing":
+    case 'digital-marketing':
       return Rocket;
     default:
       return Globe;
@@ -37,30 +47,29 @@ const getServiceIcon = (slug: string) => {
 
 const getServiceGlow = (slug: string) => {
   switch (slug) {
-    case "web-development":
-      return "#0ea5e9";
-    case "seo-optimization":
-      return "#8b5cf6";
-    case "ui-ux-design":
-      return "#ec4899";
-    case "digital-marketing":
-      return "#f59e0b";
+    case 'web-development':
+      return '#0ea5e9';
+    case 'seo-optimization':
+      return '#8b5cf6';
+    case 'ui-ux-design':
+      return '#ec4899';
+    case 'digital-marketing':
+      return '#f59e0b';
     default:
-      return "#10b981";
+      return '#10b981';
   }
 };
 
 export function ServicesListingSection({ initialServices }: ServicesListingSectionProps) {
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState('All');
 
   const filteredServices = initialServices.filter((service) => {
-    if (activeTab === "All") return true;
+    if (activeTab === 'All') return true;
     return getServiceCategory(service.slug) === activeTab;
   });
 
   return (
     <section className="py-12 max-w-7xl mx-auto px-6">
-      
       {/* Category Tabs Filter */}
       <div className="flex justify-center flex-wrap gap-3 mb-16">
         {categories.map((cat) => (
@@ -69,8 +78,8 @@ export function ServicesListingSection({ initialServices }: ServicesListingSecti
             onClick={() => setActiveTab(cat)}
             className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 border ${
               activeTab === cat
-                ? "bg-accent border-accent text-white shadow-lg shadow-accent/20 scale-105"
-                : "glass-panel border-glass-border text-foreground/75 hover:bg-white/10 hover:text-foreground"
+                ? 'bg-accent border-accent text-white shadow-lg shadow-accent/20 scale-105'
+                : 'glass-panel border-glass-border text-foreground/75 hover:bg-white/10 hover:text-foreground'
             }`}
           >
             {cat}
@@ -121,7 +130,9 @@ export function ServicesListingSection({ initialServices }: ServicesListingSecti
 
                     {/* Meta info */}
                     <div className="space-y-3">
-                      <h3 className="text-2xl font-bold tracking-tight text-foreground">{service.name}</h3>
+                      <h3 className="text-2xl font-bold tracking-tight text-foreground">
+                        {service.name}
+                      </h3>
                       <p className="text-foreground/70 text-sm leading-relaxed min-h-[64px]">
                         {service.description}
                       </p>
@@ -131,7 +142,9 @@ export function ServicesListingSection({ initialServices }: ServicesListingSecti
                     <div className="pt-4 border-t border-glass-border grid grid-cols-2 gap-4 text-xs text-foreground/60">
                       {service.timeline && (
                         <div>
-                          <p className="text-[10px] uppercase font-bold text-foreground/40 tracking-wider">Timeline</p>
+                          <p className="text-[10px] uppercase font-bold text-foreground/40 tracking-wider">
+                            Timeline
+                          </p>
                           <div className="flex items-center gap-1.5 mt-1 font-semibold text-foreground/80">
                             <Clock className="w-3.5 h-3.5 text-accent" />
                             <span>{service.timeline}</span>
@@ -140,7 +153,9 @@ export function ServicesListingSection({ initialServices }: ServicesListingSecti
                       )}
                       {service.price && (
                         <div>
-                          <p className="text-[10px] uppercase font-bold text-foreground/40 tracking-wider">Investment</p>
+                          <p className="text-[10px] uppercase font-bold text-foreground/40 tracking-wider">
+                            Investment
+                          </p>
                           <div className="flex items-center gap-1.5 mt-1 font-semibold text-emerald-500">
                             <Tag className="w-3.5 h-3.5" />
                             <span>{service.price}</span>
@@ -166,7 +181,6 @@ export function ServicesListingSection({ initialServices }: ServicesListingSecti
           })}
         </AnimatePresence>
       </div>
-
     </section>
   );
 }

@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { ExternalLink, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { api } from "@/lib/axios";
-import { Portfolio } from "@/app/types/portfolio.types";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { ExternalLink, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { api } from '@/lib/axios';
+import { Portfolio } from '@/app/types/portfolio.types';
 
 export function PortfolioSection() {
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
@@ -23,7 +23,7 @@ export function PortfolioSection() {
           .slice(0, 3);
         setPortfolios(items);
       } catch (err) {
-        console.error("Failed to load portfolio items", err);
+        console.error('Failed to load portfolio items', err);
       } finally {
         setIsLoading(false);
       }
@@ -62,7 +62,8 @@ export function PortfolioSection() {
               transition={{ delay: 0.1 }}
               className="text-foreground/75 max-w-xl text-lg leading-relaxed"
             >
-              Discover how we help Indian SMBs and global clients deploy robust code systems and visual identity portals.
+              Discover how we help Indian SMBs and global clients deploy robust code systems and
+              visual identity portals.
             </motion.p>
           </div>
           <motion.div
@@ -101,7 +102,10 @@ export function PortfolioSection() {
                   <div className="relative w-full h-56 rounded-2xl overflow-hidden mb-5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={item.coverImageUrl || "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3"}
+                      src={
+                        item.coverImageUrl ||
+                        'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3'
+                      }
                       alt={item.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
                     />
@@ -130,9 +134,11 @@ export function PortfolioSection() {
                         </p>
                       )}
                     </div>
-                    
+
                     <div className="flex items-center justify-between pt-4 border-t border-glass-border text-xs text-foreground/50 mt-auto">
-                      <span>Client: <strong className="text-foreground/80">{item.clientName}</strong></span>
+                      <span>
+                        Client: <strong className="text-foreground/80">{item.clientName}</strong>
+                      </span>
                       {item.liveUrl && (
                         <a
                           href={item.liveUrl}

@@ -1,7 +1,19 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
-import { authApi } from '@/app/services/api/auth.api';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useCallback,
+} from 'react';
+import {
+  login as apiLogin,
+  logout as apiLogout,
+  refreshToken as apiRefreshToken,
+  getCurrentUser as apiGetCurrentUser,
+} from '@/app/services/api/auth.api';
 
 interface User {
   id: number;
@@ -28,7 +40,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchCurrentUser = useCallback(async () => {
     try {
-      const response = await authApi.getCurrentUser();
+      const response = await apiGetCurrentUser();
       const userData = response.data?.user || response.data;
       setUser(userData);
     } catch (error) {
@@ -43,7 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [fetchCurrentUser]);
 
   const login = async (credentials: any) => {
-    const response = await authApi.login(credentials);
+    const response = await apiLogin(credentials);
     const userData = response.data?.user;
     if (userData) {
       setUser(userData);
@@ -52,14 +64,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     try {
-      await authApi.logout();
+      await apiLogout();
     } finally {
       setUser(null);
     }
   };
 
   const refresh = async () => {
-    await authApi.refreshToken();
+    await apiRefreshToken();
     await fetchCurrentUser();
   };
 

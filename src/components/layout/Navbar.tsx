@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { LogIn, Menu, X } from "lucide-react";
+import * as React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { LogIn, Menu, X } from 'lucide-react';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -15,36 +15,51 @@ export function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-300 ${
-        isScrolled ? "pt-3" : "pt-6"
+        isScrolled ? 'pt-3' : 'pt-6'
       }`}
     >
       <div
         className={`w-full max-w-5xl rounded-full border transition-all duration-300 shadow-2xl ${
-          isScrolled ? "glass-panel" : "bg-transparent border-transparent"
+          isScrolled ? 'glass-panel' : 'bg-transparent border-transparent'
         }`}
       >
         <div className="px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">
             <div className="relative w-10 h-10 flex items-center justify-center transition-transform group-hover:scale-105">
-              <Image src="/APXTeck.png" alt="APXTeck Logo" fill className="object-contain drop-shadow-[0_0_15px_rgba(14,165,233,0.3)]" />
+              <Image
+                src="/APXTeck.png"
+                alt="APXTeck Logo"
+                fill
+                className="object-contain drop-shadow-[0_0_15px_rgba(14,165,233,0.3)]"
+              />
             </div>
             <span className="text-xl font-bold tracking-tight hidden sm:block">APXTeck</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <Link href="/about" className="hover:text-accent transition-colors">About</Link>
-            <Link href="/services" className="hover:text-accent transition-colors">Services</Link>
-            <Link href="/portfolio" className="hover:text-accent transition-colors">Portfolio</Link>
-            <Link href="/explore-news" className="hover:text-accent transition-colors">Explore & News</Link>
-            <Link href="/contact" className="hover:text-accent transition-colors">Contact</Link>
+            <Link href="/about" className="hover:text-accent transition-colors">
+              About
+            </Link>
+            <Link href="/services" className="hover:text-accent transition-colors">
+              Services
+            </Link>
+            <Link href="/portfolio" className="hover:text-accent transition-colors">
+              Portfolio
+            </Link>
+            <Link href="/explore-news" className="hover:text-accent transition-colors">
+              Explore & News
+            </Link>
+            <Link href="/contact" className="hover:text-accent transition-colors">
+              Contact
+            </Link>
           </nav>
 
           {/* Actions */}
@@ -75,12 +90,46 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             className="md:hidden absolute top-full left-0 right-0 mt-4 p-4 glass-panel rounded-3xl flex flex-col gap-4 shadow-xl"
           >
-            <Link href="/about" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">About</Link>
-            <Link href="/services" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">Services</Link>
-            <Link href="/portfolio" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">Portfolio</Link>
-            <Link href="/explore-news" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">Explore & News</Link>
-            <Link href="/contact" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl hover:bg-white/10 font-medium">Contact</Link>
-            <Link href="/login" onClick={() => setIsOpen(false)} className="p-3 text-center rounded-xl bg-accent text-white font-medium flex items-center justify-center gap-2">
+            <Link
+              href="/about"
+              onClick={() => setIsOpen(false)}
+              className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
+            >
+              About
+            </Link>
+            <Link
+              href="/services"
+              onClick={() => setIsOpen(false)}
+              className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
+            >
+              Services
+            </Link>
+            <Link
+              href="/portfolio"
+              onClick={() => setIsOpen(false)}
+              className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
+            >
+              Portfolio
+            </Link>
+            <Link
+              href="/explore-news"
+              onClick={() => setIsOpen(false)}
+              className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
+            >
+              Explore & News
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setIsOpen(false)}
+              className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
+            >
+              Contact
+            </Link>
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="p-3 text-center rounded-xl bg-accent text-white font-medium flex items-center justify-center gap-2"
+            >
               <LogIn className="w-4 h-4" /> Login
             </Link>
           </motion.div>

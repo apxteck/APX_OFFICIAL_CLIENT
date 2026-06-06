@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { getAccessToken, setAccessToken, clearAccessToken } from './token-manager';
 
-const baseURL = process.env.NEXT_PUBLIC_NODEJS_API_URL || "http://localhost:8090/api/v1";
+const baseURL = process.env.NEXT_PUBLIC_NODEJS_API_URL || 'http://localhost:8090/api/v1';
 
 const apiClient = axios.create({
   baseURL,
@@ -68,26 +68,26 @@ apiClient.interceptors.response.use(
       try {
         // Attempt to refresh
         const { data } = await axios.post(`${baseURL}/auth/refresh`, {}, { withCredentials: true });
-        
+
         const newAccessToken = data?.data?.accessToken;
         if (newAccessToken) {
           setAccessToken(newAccessToken);
         }
-        
+
         processQueue(null, newAccessToken);
-        
+
         // Retry the original request
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return apiClient(originalRequest);
       } catch (err) {
         processQueue(err, null);
         clearAccessToken();
-        
+
         // Optional: you can force a reload or redirect
         if (typeof window !== 'undefined') {
           // window.location.href = '/login'; // Handle via AuthProvider instead
         }
-        
+
         return Promise.reject(err);
       } finally {
         isRefreshing = false;
@@ -99,5 +99,3 @@ apiClient.interceptors.response.use(
 );
 
 export default apiClient;
-
-

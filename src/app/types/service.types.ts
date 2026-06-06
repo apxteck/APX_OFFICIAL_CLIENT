@@ -3,7 +3,7 @@ export interface ServiceField {
   serviceId: number;
   fieldLabel: string;
   fieldKey: string;
-  fieldType: "TEXT" | "TEXTAREA" | "DROPDOWN" | "FILE" | "NUMBER" | "DATE" | "EMAIL" | "PHONE";
+  fieldType: 'TEXT' | 'TEXTAREA' | 'DROPDOWN' | 'FILE' | 'NUMBER' | 'DATE' | 'EMAIL' | 'PHONE';
   isRequired: boolean;
   placeholder: string | null;
   options: unknown; // Parsed options array or string

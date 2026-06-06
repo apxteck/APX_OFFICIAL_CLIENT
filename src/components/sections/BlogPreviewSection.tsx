@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { ArrowRight, Clock, Calendar } from "lucide-react";
-import Link from "next/link";
-import { api } from "@/lib/axios";
-import { BlogPost } from "@/app/types/blog.types";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { ArrowRight, Clock, Calendar } from 'lucide-react';
+import Link from 'next/link';
+import { api } from '@/lib/axios';
+import { BlogPost } from '@/app/types/blog.types';
 
 export function BlogPreviewSection() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -17,12 +17,10 @@ export function BlogPreviewSection() {
       try {
         const data = await api.fetchBlogs();
         // Filter published posts and slice to 3
-        const latest = data
-          .filter((p) => p.status === "PUBLISHED")
-          .slice(0, 3);
+        const latest = data.filter((p) => p.status === 'PUBLISHED').slice(0, 3);
         setPosts(latest);
       } catch (err) {
-        console.error("Failed to load blog posts", err);
+        console.error('Failed to load blog posts', err);
       } finally {
         setIsLoading(false);
       }
@@ -31,13 +29,13 @@ export function BlogPreviewSection() {
   }, []);
 
   const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return "Recent";
+    if (!dateStr) return 'Recent';
     try {
       const d = new Date(dateStr);
-      return d.toLocaleDateString("en-IN", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
+      return d.toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
       });
     } catch {
       return dateStr;
@@ -47,7 +45,6 @@ export function BlogPreviewSection() {
   return (
     <section className="py-32 relative bg-background">
       <div className="max-w-7xl mx-auto px-6">
-        
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <motion.div
@@ -73,10 +70,11 @@ export function BlogPreviewSection() {
               transition={{ delay: 0.1 }}
               className="text-foreground/75 max-w-xl text-lg leading-relaxed"
             >
-              Stay ahead of the curve with our latest articles on technology, design guidelines, and search engine trends.
+              Stay ahead of the curve with our latest articles on technology, design guidelines, and
+              search engine trends.
             </motion.p>
           </div>
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -110,12 +108,14 @@ export function BlogPreviewSection() {
               >
                 <Link href={`/explore-news/${post.slug}`} className="block group h-full">
                   <GlassCard className="!p-0 overflow-hidden h-full flex flex-col hover:border-white/20 hover:shadow-2xl transition-all duration-300">
-                    
                     {/* Cover Image */}
                     <div className="relative h-52 w-full overflow-hidden">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={post.coverImageUrl || "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixlib=rb-4.0.3"}
+                        src={
+                          post.coverImageUrl ||
+                          'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixlib=rb-4.0.3'
+                        }
                         alt={post.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
                       />
@@ -146,12 +146,10 @@ export function BlogPreviewSection() {
                           {formatDate(post.publishedAt)}
                         </span>
                         <span className="flex items-center gap-1.5 font-medium">
-                          <Clock className="w-3.5 h-3.5 text-accent" />
-                          5 min read
+                          <Clock className="w-3.5 h-3.5 text-accent" />5 min read
                         </span>
                       </div>
                     </div>
-
                   </GlassCard>
                 </Link>
               </motion.div>

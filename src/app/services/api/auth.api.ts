@@ -1,36 +1,46 @@
-import apiClient  from '@/lib/api/axios';
+import apiClient from '@/lib/api/axios';
 import { setAccessToken, clearAccessToken } from '@/lib/api/token-manager';
 
-export const authApi = {
-  login: async (credentials: any) => {
+export const login = async (credentials: any) => {
+  try {
     const response = await apiClient.post('/auth/login', credentials);
     const { accessToken } = response.data?.data || {};
     if (accessToken) {
       setAccessToken(accessToken);
     }
     return response.data;
-  },
-  
-  logout: async () => {
-    try {
-      const response = await apiClient.post('/auth/logout');
-      return response.data;
-    } finally {
-      clearAccessToken();
-    }
-  },
+  } catch (error) {
+    throw error;
+  }
+};
 
-  refreshToken: async () => {
+export const logout = async () => {
+  try {
+    const response = await apiClient.post('/auth/logout');
+    return response.data;
+  } finally {
+    clearAccessToken();
+  }
+};
+
+export const refreshToken = async () => {
+  try {
     const response = await apiClient.post('/auth/refresh');
     const { accessToken } = response.data?.data || {};
     if (accessToken) {
       setAccessToken(accessToken);
     }
     return response.data;
-  },
+  } catch (error) {
+    throw error;
+  }
+};
 
-  getCurrentUser: async () => {
+export const getCurrentUser = async () => {
+  try {
     const response = await apiClient.get('/auth/me');
     return response.data;
+  } catch (error) {
+    throw error;
   }
 };

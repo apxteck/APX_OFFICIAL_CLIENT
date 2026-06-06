@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
-import { api } from "@/lib/axios";
-import { Testimonial } from "@/app/types/testimonial.types";
+import { useEffect, useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { Quote, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { api } from '@/lib/axios';
+import { Testimonial } from '@/app/types/testimonial.types';
 
 export function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -20,7 +20,7 @@ export function TestimonialsSection() {
         const published = data.filter((t) => t.isPublished);
         setTestimonials(published);
       } catch (err) {
-        console.error("Failed to load testimonials", err);
+        console.error('Failed to load testimonials', err);
       } finally {
         setIsLoading(false);
       }
@@ -64,7 +64,6 @@ export function TestimonialsSection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
 
       <div className="max-w-4xl mx-auto px-6">
-        
         <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -99,7 +98,7 @@ export function TestimonialsSection() {
             >
               <GlassCard className="relative p-8 md:p-12 border border-glass-border shadow-xl min-h-[300px] flex flex-col justify-between">
                 <Quote className="absolute top-6 right-6 w-14 h-14 text-accent/10 pointer-events-none" />
-                
+
                 <div>
                   {/* Rating Stars */}
                   <div className="flex gap-1.5 mb-6">
@@ -108,8 +107,8 @@ export function TestimonialsSection() {
                         key={i}
                         className={`w-5 h-5 ${
                           i < current.rating
-                            ? "fill-amber-500 text-amber-500"
-                            : "text-foreground/20"
+                            ? 'fill-amber-500 text-amber-500'
+                            : 'text-foreground/20'
                         }`}
                       />
                     ))}
@@ -140,7 +139,8 @@ export function TestimonialsSection() {
                       {current.clientName}
                     </h4>
                     <p className="text-xs text-foreground/50">
-                      {current.clientBusiness} {current.projectType ? `(${current.projectType})` : ""}
+                      {current.clientBusiness}{' '}
+                      {current.projectType ? `(${current.projectType})` : ''}
                     </p>
                   </div>
                 </div>
@@ -168,7 +168,6 @@ export function TestimonialsSection() {
             </div>
           )}
         </div>
-
       </div>
     </section>
   );

@@ -75,23 +75,27 @@ The frontend is designed to support client interfaces for all features defined i
 To keep the codebase maintainable, secure, and clean, developers and AI agents must adhere to the rules outlined in [AGENTS.md](file:///d:/Custom/MCA/Project/APX/frontend/AGENTS.md):
 
 ### 1. Separation of Concerns
-*   **UI Components**: Responsible solely for rendering visual markup. Keep them small, reusable, and single-purpose in the [components/](file:///d:/Custom/MCA/Project/APX/frontend/src/app/components) directory.
-*   **Business Logic**: Extracted to custom React hooks in the `hooks/` directory.
-*   **API Layer**: Centralized under [lib/api/](file:///d:/Custom/MCA/Project/APX/frontend/src/app/lib/api). Direct API fetch or Axios calls within component render cycles are forbidden.
+
+- **UI Components**: Responsible solely for rendering visual markup. Keep them small, reusable, and single-purpose in the [components/](file:///d:/Custom/MCA/Project/APX/frontend/src/app/components) directory.
+- **Business Logic**: Extracted to custom React hooks in the `hooks/` directory.
+- **API Layer**: Centralized under [lib/api/](file:///d:/Custom/MCA/Project/APX/frontend/src/app/lib/api). Direct API fetch or Axios calls within component render cycles are forbidden.
 
 ### 2. State & Data Fetching
-*   Keep local component states minimal.
-*   Utilize Redux Toolkit or RTK Query for shared cross-component global states and server state synchronization where appropriate.
-*   API actions must provide user feedback (e.g. toast notifications, loader skeletons).
-*   Disable duplicate form submissions (loading state disabling buttons) during request flight.
+
+- Keep local component states minimal.
+- Utilize Redux Toolkit or RTK Query for shared cross-component global states and server state synchronization where appropriate.
+- API actions must provide user feedback (e.g. toast notifications, loader skeletons).
+- Disable duplicate form submissions (loading state disabling buttons) during request flight.
 
 ### 3. Forms & Validation
-*   Build forms using `react-hook-form` paired with `zod` for type-safe validation schema definitions.
-*   Forms must not auto-close when an API request fails; retain input values and display inline/toast errors.
+
+- Build forms using `react-hook-form` paired with `zod` for type-safe validation schema definitions.
+- Forms must not auto-close when an API request fails; retain input values and display inline/toast errors.
 
 ### 4. SEO & Performance
-*   Utilize Server-Side Rendering (SSR) or Server Components by default unless client interactivity is mandatory (`"use client"`).
-*   All public-facing pages must generate optimized SEO metadata (titles, descriptions, keywords, Open Graph, and Twitter card tags).
+
+- Utilize Server-Side Rendering (SSR) or Server Components by default unless client interactivity is mandatory (`"use client"`).
+- All public-facing pages must generate optimized SEO metadata (titles, descriptions, keywords, Open Graph, and Twitter card tags).
 
 ---
 
@@ -105,6 +109,7 @@ To keep the codebase maintainable, secure, and clean, developers and AI agents m
 ### Installation
 
 1. Install project packages:
+
    ```bash
    npm install
    ```
@@ -117,23 +122,27 @@ To keep the codebase maintainable, secure, and clean, developers and AI agents m
 
 ### Running the Application
 
-*   **Development Mode** (with live reloading and fast refresh):
-    ```bash
-    npm run dev
-    ```
-    Open [http://localhost:3000](http://localhost:3000) to view the application.
+- **Development Mode** (with live reloading and fast refresh):
 
-*   **Build Production Bundle**:
-    ```bash
-    npm run build
-    ```
+  ```bash
+  npm run dev
+  ```
 
-*   **Run Production Build**:
-    ```bash
-    npm run start
-    ```
+  Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-*   **Linter checks**:
-    ```bash
-    npm run lint
-    ```
+- **Build Production Bundle**:
+
+  ```bash
+  npm run build
+  ```
+
+- **Run Production Build**:
+
+  ```bash
+  npm run start
+  ```
+
+- **Linter checks**:
+  ```bash
+  npm run lint
+  ```

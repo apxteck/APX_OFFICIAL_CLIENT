@@ -47,7 +47,7 @@ export const api = new Proxy(apiClient, {
       if (prop === 'fetchStats') return {} as unknown as StatsOverview;
       return [];
     };
-  }
+  },
 }) as MockApi;
 
 export default apiClient;

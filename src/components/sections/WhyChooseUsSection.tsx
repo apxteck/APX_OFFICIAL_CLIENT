@@ -1,33 +1,37 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Cpu, Zap, HeartHandshake, ShieldCheck } from "lucide-react";
+import { motion } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { Cpu, Zap, HeartHandshake, ShieldCheck } from 'lucide-react';
 
 const features = [
   {
-    title: "Premium Glassmorphic Design",
-    description: "Premium-grade glassy layouts with harmonic gradients, blur shadows, and interactive micro-animations that wow visitors.",
+    title: 'Premium Glassmorphic Design',
+    description:
+      'Premium-grade glassy layouts with harmonic gradients, blur shadows, and interactive micro-animations that wow visitors.',
     icon: Cpu,
-    color: "#0ea5e9", // Cyan
+    color: '#0ea5e9', // Cyan
   },
   {
-    title: "Next.js ISR Performance",
-    description: "Built using Next.js Incremental Static Regeneration (ISR) with a 60-second refresh for sub-second load times and flawless SEO.",
+    title: 'Next.js ISR Performance',
+    description:
+      'Built using Next.js Incremental Static Regeneration (ISR) with a 60-second refresh for sub-second load times and flawless SEO.',
     icon: Zap,
-    color: "#38bdf8", // Light Cyan
+    color: '#38bdf8', // Light Cyan
   },
   {
-    title: "Tailored for Indian SMBs",
-    description: "High-end corporate software scaled down and custom priced to fit the exact operational budgets of Indian small-medium businesses.",
+    title: 'Tailored for Indian SMBs',
+    description:
+      'High-end corporate software scaled down and custom priced to fit the exact operational budgets of Indian small-medium businesses.',
     icon: HeartHandshake,
-    color: "#a855f7", // Purple
+    color: '#a855f7', // Purple
   },
   {
-    title: "Modular Clean Architecture",
-    description: "A secure, decoupled TypeScript design system matching global coding frameworks, ensuring your codebase is ready to scale.",
+    title: 'Modular Clean Architecture',
+    description:
+      'A secure, decoupled TypeScript design system matching global coding frameworks, ensuring your codebase is ready to scale.',
     icon: ShieldCheck,
-    color: "#ec4899", // Pink
+    color: '#ec4899', // Pink
   },
 ];
 
@@ -40,7 +44,6 @@ export function WhyChooseUsSection() {
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-12 gap-16 items-center">
-          
           {/* Text panel */}
           <div className="lg:col-span-5 flex flex-col items-start gap-6">
             <motion.div
@@ -69,7 +72,8 @@ export function WhyChooseUsSection() {
               transition={{ delay: 0.1 }}
               className="text-foreground/75 text-lg leading-relaxed"
             >
-              At APXTeck, we reject boring design. We combine advanced performance with futuristic aesthetics, crafting interfaces that are as fast as they are stunning.
+              At APXTeck, we reject boring design. We combine advanced performance with futuristic
+              aesthetics, crafting interfaces that are as fast as they are stunning.
             </motion.p>
           </div>
 
@@ -95,21 +99,20 @@ export function WhyChooseUsSection() {
                         backgroundColor: `${feat.color}14`,
                         borderColor: `${feat.color}3a`,
                         color: feat.color,
-                        boxShadow: `0 6px 16px -4px ${feat.color}26, 0 0 12px 1px ${feat.color}1a`
+                        boxShadow: `0 6px 16px -4px ${feat.color}26, 0 0 12px 1px ${feat.color}1a`,
                       }}
                     >
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-lg font-bold tracking-tight text-foreground">{feat.title}</h3>
-                    <p className="text-foreground/70 text-sm leading-relaxed">
-                      {feat.description}
-                    </p>
+                    <h3 className="text-lg font-bold tracking-tight text-foreground">
+                      {feat.title}
+                    </h3>
+                    <p className="text-foreground/70 text-sm leading-relaxed">{feat.description}</p>
                   </GlassCard>
                 </motion.div>
               );
             })}
           </div>
-
         </div>
       </div>
     </section>

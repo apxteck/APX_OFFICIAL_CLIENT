@@ -1,40 +1,42 @@
-"use client";
+'use client';
 
-import { useEffect, useState, Suspense } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Lock, ArrowRight, AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
-import { api } from "@/lib/axios";
+import { useEffect, useState, Suspense } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import z from 'zod';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { Lock, ArrowRight, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { api } from '@/lib/axios';
 
-const resetPasswordSchema = z.object({
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Password must contain at least 1 uppercase letter")
-    .regex(/\d/, "Password must contain at least 1 number")
-    .regex(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least 1 special character"),
-  confirmPassword: z.string().min(1, "Confirm password is required"),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .regex(/[A-Z]/, 'Password must contain at least 1 uppercase letter')
+      .regex(/\d/, 'Password must contain at least 1 number')
+      .regex(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least 1 special character'),
+    confirmPassword: z.string().min(1, 'Confirm password is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
 
 function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get("token") || "";
+  const token = searchParams.get('token') || '';
 
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -48,18 +50,18 @@ function ResetPasswordContent() {
   } = useForm<ResetPasswordValues>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      password: "",
-      confirmPassword: "",
+      password: '',
+      confirmPassword: '',
     },
   });
 
   const onSubmit = async (values: ResetPasswordValues) => {
     if (!token) {
-      setErrorMsg("Reset token is missing from URL.");
+      setErrorMsg('Reset token is missing from URL.');
       return;
     }
 
-    setErrorMsg("");
+    setErrorMsg('');
     setIsLoading(true);
 
     try {
@@ -70,12 +72,12 @@ function ResetPasswordContent() {
 
       if (result.success) {
         // Redirect to login page with query message parameter
-        router.push("/login?message=Password changed successfully. Please log in.");
+        router.push('/login?message=Password changed successfully. Please log in.');
       } else {
-        setErrorMsg("Failed to reset password. The link may have expired.");
+        setErrorMsg('Failed to reset password. The link may have expired.');
       }
     } catch (err: unknown) {
-      setErrorMsg((err as Error).message || "Failed to reset password. Try requesting a new link.");
+      setErrorMsg((err as Error).message || 'Failed to reset password. Try requesting a new link.');
     } finally {
       setIsLoading(false);
     }
@@ -93,7 +95,7 @@ function ResetPasswordContent() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="w-full max-w-md"
         >
           <GlassCard className="p-8 sm:p-10 shadow-2xl border-accent/20">
@@ -128,31 +130,39 @@ function ResetPasswordContent() {
 
               {/* Password */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">New Password *</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                  New Password *
+                </label>
                 <input
                   type="password"
                   disabled={!token}
-                  {...register("password")}
+                  {...register('password')}
                   className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm font-medium disabled:opacity-50"
                   placeholder="••••••••"
                 />
                 {errors.password && (
-                  <p className="text-xs text-rose-500 font-medium pl-1">{errors.password.message}</p>
+                  <p className="text-xs text-rose-500 font-medium pl-1">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
               {/* Confirm Password */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">Confirm New Password *</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                  Confirm New Password *
+                </label>
                 <input
                   type="password"
                   disabled={!token}
-                  {...register("confirmPassword")}
+                  {...register('confirmPassword')}
                   className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm font-medium disabled:opacity-50"
                   placeholder="••••••••"
                 />
                 {errors.confirmPassword && (
-                  <p className="text-xs text-rose-500 font-medium pl-1">{errors.confirmPassword.message}</p>
+                  <p className="text-xs text-rose-500 font-medium pl-1">
+                    {errors.confirmPassword.message}
+                  </p>
                 )}
               </div>
 
@@ -161,8 +171,10 @@ function ResetPasswordContent() {
                 disabled={isLoading || !token}
                 className="group w-full h-12 mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
               >
-                {isLoading ? "Saving password..." : "Reset Password"}
-                {!isLoading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+                {isLoading ? 'Saving password...' : 'Reset Password'}
+                {!isLoading && (
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                )}
               </button>
             </form>
           </GlassCard>

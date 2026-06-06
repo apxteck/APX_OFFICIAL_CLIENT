@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { ExternalLink, Calendar, Layers, ShieldCheck, X, ZoomIn } from "lucide-react";
-import { Portfolio } from "@/app/types/portfolio.types";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { ExternalLink, Calendar, Layers, ShieldCheck, X, ZoomIn } from 'lucide-react';
+import { Portfolio } from '@/app/types/portfolio.types';
 
 interface PortfolioDetailClientProps {
   project: Portfolio;
@@ -14,12 +14,12 @@ export function PortfolioDetailClient({ project }: PortfolioDetailClientProps) {
   const [activeImage, setActiveImage] = useState<string | null>(null);
 
   const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return "Ongoing";
+    if (!dateStr) return 'Ongoing';
     try {
       const d = new Date(dateStr);
-      return d.toLocaleDateString("en-IN", {
-        month: "long",
-        year: "numeric",
+      return d.toLocaleDateString('en-IN', {
+        month: 'long',
+        year: 'numeric',
       });
     } catch {
       return dateStr;
@@ -28,11 +28,10 @@ export function PortfolioDetailClient({ project }: PortfolioDetailClientProps) {
 
   return (
     <section className="max-w-5xl mx-auto px-6 space-y-12">
-      
       {/* Header Info Banner */}
       <GlassCard className="relative overflow-hidden p-8 border border-glass-border">
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 pointer-events-none" />
-        
+
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10">
           <div className="space-y-3">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/15 border border-accent/25 text-accent text-[10px] font-bold uppercase tracking-wider">
@@ -47,7 +46,9 @@ export function PortfolioDetailClient({ project }: PortfolioDetailClientProps) {
           <div className="flex flex-wrap gap-4 text-xs text-foreground/50 shrink-0">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-accent" />
-              <span>Completed: <strong>{formatDate(project.completedAt)}</strong></span>
+              <span>
+                Completed: <strong>{formatDate(project.completedAt)}</strong>
+              </span>
             </div>
             {project.liveUrl && (
               <a
@@ -77,10 +78,8 @@ export function PortfolioDetailClient({ project }: PortfolioDetailClientProps) {
 
       {/* Core Case Study Columns (Problem, Solution, Results) */}
       <div className="grid md:grid-cols-12 gap-8 items-start">
-        
         {/* Left Side: Challenge & Implementation */}
         <div className="md:col-span-8 space-y-8">
-          
           {project.problem && (
             <GlassCard className="p-8 border border-glass-border space-y-4">
               <h3 className="text-2xl font-extrabold tracking-tight text-foreground flex items-center gap-2">
@@ -104,7 +103,6 @@ export function PortfolioDetailClient({ project }: PortfolioDetailClientProps) {
               </p>
             </GlassCard>
           )}
-
         </div>
 
         {/* Right Side: Key Metrics & Deliverable Results */}
@@ -118,30 +116,33 @@ export function PortfolioDetailClient({ project }: PortfolioDetailClientProps) {
               <p className="text-foreground/85 text-sm leading-relaxed font-semibold italic">
                 &quot;{project.results}&quot;
               </p>
-              
+
               {/* Highlight standard numbers from results if present */}
               <div className="h-px bg-glass-border w-full my-4" />
               <div className="space-y-4 text-center">
                 <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                   <p className="text-3xl font-black text-emerald-400">99.9%</p>
-                  <p className="text-[10px] text-foreground/50 uppercase font-bold tracking-wider mt-1">Uptime SLA</p>
+                  <p className="text-[10px] text-foreground/50 uppercase font-bold tracking-wider mt-1">
+                    Uptime SLA
+                  </p>
                 </div>
                 <div className="p-4 rounded-xl bg-accent/10 border border-accent/20">
                   <p className="text-3xl font-black text-accent">Sub-1s</p>
-                  <p className="text-[10px] text-foreground/50 uppercase font-bold tracking-wider mt-1">Page Load Time</p>
+                  <p className="text-[10px] text-foreground/50 uppercase font-bold tracking-wider mt-1">
+                    Page Load Time
+                  </p>
                 </div>
               </div>
             </GlassCard>
           )}
         </div>
-
       </div>
 
       {/* Gallery lightboxes */}
       {project.galleryUrls && project.galleryUrls.length > 0 && (
         <div className="space-y-6">
           <h3 className="text-2xl font-extrabold tracking-tight">Project Gallery</h3>
-          
+
           <div className="grid sm:grid-cols-2 gap-6">
             {project.galleryUrls.map((url, idx) => (
               <div
@@ -198,7 +199,6 @@ export function PortfolioDetailClient({ project }: PortfolioDetailClientProps) {
           </motion.div>
         )}
       </AnimatePresence>
-
     </section>
   );
 }

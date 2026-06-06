@@ -1,29 +1,22 @@
-"use client";
+'use client';
 
-import { useEffect, useState, Suspense } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { LogIn, ArrowRight, AlertCircle, Info, CheckCircle2 } from "lucide-react";
-import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
-import { api } from "@/lib/axios";
-import Link from "next/link";
+import { useEffect, useState, Suspense } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import z from 'zod';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { LogIn, ArrowRight, AlertCircle, Info, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { api } from '@/lib/axios';
+import Link from 'next/link';
 
 // Validation schema
 const loginSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .min(1, "Email is required")
-    .email("Invalid email format"),
-  password: z
-    .string()
-    .min(1, "Password is required"),
+  email: z.string().trim().toLowerCase().min(1, 'Email is required').email('Invalid email format'),
+  password: z.string().min(1, 'Password is required'),
   rememberMe: z.boolean().optional(),
 });
 
@@ -31,56 +24,60 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 // Rate Limiter check (Failed login attempts: 5 per 15 minutes)
 const checkRateLimit = (): boolean => {
-  if (typeof window === "undefined") return false;
+  if (typeof window === 'undefined') return false;
   const now = Date.now();
-  const failedAttempts: number[] = JSON.parse(localStorage.getItem("failed_login_attempts") || "[]") as number[];
-  
+  const failedAttempts: number[] = JSON.parse(
+    localStorage.getItem('failed_login_attempts') || '[]'
+  ) as number[];
+
   // Keep attempts within the last 15 minutes (900000ms)
   const activeAttempts = failedAttempts.filter((t) => now - t < 900000);
-  localStorage.setItem("failed_login_attempts", JSON.stringify(activeAttempts));
-  
+  localStorage.setItem('failed_login_attempts', JSON.stringify(activeAttempts));
+
   return activeAttempts.length >= 5;
 };
 
 const recordFailedAttempt = () => {
-  if (typeof window === "undefined") return;
-  const failedAttempts: number[] = JSON.parse(localStorage.getItem("failed_login_attempts") || "[]") as number[];
+  if (typeof window === 'undefined') return;
+  const failedAttempts: number[] = JSON.parse(
+    localStorage.getItem('failed_login_attempts') || '[]'
+  ) as number[];
   failedAttempts.push(Date.now());
-  localStorage.setItem("failed_login_attempts", JSON.stringify(failedAttempts));
+  localStorage.setItem('failed_login_attempts', JSON.stringify(failedAttempts));
 };
 
 const clearFailedAttempts = () => {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem("failed_login_attempts");
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem('failed_login_attempts');
 };
 
 function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
-  // Specific inline error messages
-  const [errorMsg, setErrorMsg] = useState("");
-  const [resendEmail, setResendEmail] = useState("");
-  const [infoMsg, setInfoMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
 
-  const redirectParam = searchParams.get("redirect") || "";
+  // Specific inline error messages
+  const [errorMsg, setErrorMsg] = useState('');
+  const [resendEmail, setResendEmail] = useState('');
+  const [infoMsg, setInfoMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+
+  const redirectParam = searchParams.get('redirect') || '';
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
-    
-    const msgParam = searchParams.get("message");
+
+    const msgParam = searchParams.get('message');
     if (msgParam) {
       setSuccessMsg(msgParam);
     }
 
     // Redirect already logged in user
-    if (localStorage.getItem("isLoggedIn") === "true") {
-      router.push(redirectParam || "/dashboard");
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      router.push(redirectParam || '/dashboard');
     }
   }, [router, redirectParam, searchParams]);
 
@@ -91,20 +88,20 @@ function LoginContent() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       rememberMe: false,
     },
   });
 
   const onSubmit = async (values: LoginFormValues) => {
-    setErrorMsg("");
-    setResendEmail("");
-    setInfoMsg("");
-    setSuccessMsg("");
+    setErrorMsg('');
+    setResendEmail('');
+    setInfoMsg('');
+    setSuccessMsg('');
 
     if (checkRateLimit()) {
-      setErrorMsg("Too many attempts. Try again in 15 minutes.");
+      setErrorMsg('Too many attempts. Try again in 15 minutes.');
       return;
     }
 
@@ -118,39 +115,43 @@ function LoginContent() {
 
       if (result.success && result.user) {
         clearFailedAttempts();
-        
+
         // Save auth state
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userRole", result.user.role || "CUSTOMER");
-        localStorage.setItem("userName", result.user.fullName || "User");
-        
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userRole', result.user.role || 'CUSTOMER');
+        localStorage.setItem('userName', result.user.fullName || 'User');
+
         // Save remember state (sets HttpOnly refresh lifetime on backend; client-side saves config)
         if (values.rememberMe) {
-          localStorage.setItem("rememberUser", "true");
+          localStorage.setItem('rememberUser', 'true');
         }
 
         // Redirect flow
         if (redirectParam) {
           router.push(redirectParam);
-        } else if (result.user.role === "ADMIN" || result.user.role === "STAFF") {
-          router.push("/admin");
+        } else if (result.user.role === 'ADMIN' || result.user.role === 'STAFF') {
+          router.push('/admin');
         } else {
-          router.push("/dashboard");
+          router.push('/dashboard');
         }
       }
     } catch (err: unknown) {
       recordFailedAttempt();
-      
+
       const error = err as Error;
-      const msg = error.message || "";
-      if (msg.includes("verify your email") || msg.toLowerCase().includes("unverified")) {
-        setErrorMsg("Please verify your email.");
+      const msg = error.message || '';
+      if (msg.includes('verify your email') || msg.toLowerCase().includes('unverified')) {
+        setErrorMsg('Please verify your email.');
         setResendEmail(values.email);
-      } else if (msg.toLowerCase().includes("deactivated") || msg.toLowerCase().includes("suspended") || msg.toLowerCase().includes("block")) {
-        setErrorMsg("Your account has been suspended. Contact support.");
+      } else if (
+        msg.toLowerCase().includes('deactivated') ||
+        msg.toLowerCase().includes('suspended') ||
+        msg.toLowerCase().includes('block')
+      ) {
+        setErrorMsg('Your account has been suspended. Contact support.');
       } else {
         // Generic message preventing user enumeration
-        setErrorMsg("Invalid email or password");
+        setErrorMsg('Invalid email or password');
       }
     } finally {
       setIsLoading(false);
@@ -159,18 +160,18 @@ function LoginContent() {
 
   const handleResendVerification = async () => {
     if (!resendEmail) return;
-    setInfoMsg("Sending verification email...");
+    setInfoMsg('Sending verification email...');
     try {
       const res = await api.resendVerification(resendEmail);
       if (res.success) {
-        setSuccessMsg("Verification email resent successfully! Check your inbox.");
-        setInfoMsg("");
-        setResendEmail("");
+        setSuccessMsg('Verification email resent successfully! Check your inbox.');
+        setInfoMsg('');
+        setResendEmail('');
       }
     } catch (err: unknown) {
       const error = err as Error;
-      setErrorMsg(error.message || "Failed to resend verification link.");
-      setInfoMsg("");
+      setErrorMsg(error.message || 'Failed to resend verification link.');
+      setInfoMsg('');
     }
   };
 
@@ -187,7 +188,7 @@ function LoginContent() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="w-full max-w-md"
         >
           <GlassCard className="p-8 sm:p-10 shadow-2xl border-accent/20">
@@ -240,10 +241,12 @@ function LoginContent() {
 
               {/* Email */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">Email Address</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                  Email Address
+                </label>
                 <input
                   type="email"
-                  {...register("email")}
+                  {...register('email')}
                   className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm font-medium"
                   placeholder="you@company.com"
                 />
@@ -255,19 +258,26 @@ function LoginContent() {
               {/* Password */}
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">Password</label>
-                  <Link href="/forgot-password" className="text-xs text-accent hover:underline font-bold">
+                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                    Password
+                  </label>
+                  <Link
+                    href="/forgot-password"
+                    className="text-xs text-accent hover:underline font-bold"
+                  >
                     Forgot password?
                   </Link>
                 </div>
                 <input
                   type="password"
-                  {...register("password")}
+                  {...register('password')}
                   className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm font-medium"
                   placeholder="••••••••"
                 />
                 {errors.password && (
-                  <p className="text-xs text-rose-500 font-medium pl-1">{errors.password.message}</p>
+                  <p className="text-xs text-rose-500 font-medium pl-1">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
@@ -276,10 +286,13 @@ function LoginContent() {
                 <input
                   type="checkbox"
                   id="rememberMe"
-                  {...register("rememberMe")}
+                  {...register('rememberMe')}
                   className="rounded border-glass-border text-accent focus:ring-accent bg-foreground/[0.02] w-4 h-4 cursor-pointer"
                 />
-                <label htmlFor="rememberMe" className="text-xs text-foreground/70 font-semibold cursor-pointer">
+                <label
+                  htmlFor="rememberMe"
+                  className="text-xs text-foreground/70 font-semibold cursor-pointer"
+                >
                   Remember Me (extends login token)
                 </label>
               </div>
@@ -290,13 +303,17 @@ function LoginContent() {
                 disabled={isLoading}
                 className="group w-full h-12 mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
               >
-                {isLoading ? "Signing in..." : "Sign In"}
-                {!isLoading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+                {isLoading ? 'Signing in...' : 'Sign In'}
+                {!isLoading && (
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                )}
               </button>
 
               <div className="relative flex items-center py-4">
                 <div className="flex-grow border-t border-glass-border"></div>
-                <span className="flex-shrink-0 mx-4 text-foreground/45 text-[10px] font-bold uppercase tracking-widest">OR</span>
+                <span className="flex-shrink-0 mx-4 text-foreground/45 text-[10px] font-bold uppercase tracking-widest">
+                  OR
+                </span>
                 <div className="flex-grow border-t border-glass-border"></div>
               </div>
 

@@ -20,7 +20,7 @@ export interface BlogComment {
   postId: number;
   commentText: string;
   createdAt: string;
-  status: "PENDING" | "APPROVED" | "REJECTED";
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
   user: {
     fullName: string;
     profilePhotoUrl: string | null;

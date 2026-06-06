@@ -1,27 +1,31 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const faqs = [
   {
-    question: "What exactly does APXTeck do?",
-    answer: "We are a full-service IT company specializing in high-end web development, mobile applications, advanced UI/UX design, and data-driven SEO/Digital Marketing strategies."
+    question: 'What exactly does APXTeck do?',
+    answer:
+      'We are a full-service IT company specializing in high-end web development, mobile applications, advanced UI/UX design, and data-driven SEO/Digital Marketing strategies.',
   },
   {
-    question: "Do you offer custom pricing for projects?",
-    answer: "Absolutely. Every project is unique, so we tailor our pricing based on the scope, complexity, and specific requirements of your business."
+    question: 'Do you offer custom pricing for projects?',
+    answer:
+      'Absolutely. Every project is unique, so we tailor our pricing based on the scope, complexity, and specific requirements of your business.',
   },
   {
-    question: "What technologies do you use?",
-    answer: "We strictly use modern, scalable tech stacks. Our frontend expertise revolves around React, Next.js, and Framer Motion. For backends, we excel in Node.js, PostgreSQL, and Prisma."
+    question: 'What technologies do you use?',
+    answer:
+      'We strictly use modern, scalable tech stacks. Our frontend expertise revolves around React, Next.js, and Framer Motion. For backends, we excel in Node.js, PostgreSQL, and Prisma.',
   },
   {
-    question: "How long does a typical project take?",
-    answer: "A standard corporate website takes 2-4 weeks, while complex SaaS or e-commerce platforms can take 2-4 months depending on feature requirements."
-  }
+    question: 'How long does a typical project take?',
+    answer:
+      'A standard corporate website takes 2-4 weeks, while complex SaaS or e-commerce platforms can take 2-4 months depending on feature requirements.',
+  },
 ];
 
 export function FaqSection() {
@@ -53,7 +57,7 @@ export function FaqSection() {
         <div className="space-y-4">
           {faqs.map((faq, index) => {
             const isActive = activeIndex === index;
-            
+
             return (
               <motion.div
                 key={index}
@@ -62,8 +66,8 @@ export function FaqSection() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 className={cn(
-                  "border border-glass-border rounded-2xl overflow-hidden transition-colors",
-                  isActive ? "bg-accent/5 border-accent/30" : "bg-transparent hover:bg-white/5"
+                  'border border-glass-border rounded-2xl overflow-hidden transition-colors',
+                  isActive ? 'bg-accent/5 border-accent/30' : 'bg-transparent hover:bg-white/5'
                 )}
               >
                 <button
@@ -73,8 +77,8 @@ export function FaqSection() {
                   <span className="font-semibold text-lg">{faq.question}</span>
                   <ChevronDown
                     className={cn(
-                      "w-5 h-5 text-accent transition-transform duration-300",
-                      isActive ? "rotate-180" : ""
+                      'w-5 h-5 text-accent transition-transform duration-300',
+                      isActive ? 'rotate-180' : ''
                     )}
                   />
                 </button>
@@ -82,9 +86,9 @@ export function FaqSection() {
                   {isActive && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
+                      animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
                     >
                       <div className="px-6 pb-6 text-foreground/70 leading-relaxed">
                         {faq.answer}

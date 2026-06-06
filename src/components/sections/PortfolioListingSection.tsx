@@ -1,29 +1,28 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { ExternalLink, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { Portfolio } from "@/app/types/portfolio.types";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { ExternalLink, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { Portfolio } from '@/app/types/portfolio.types';
 
 interface PortfolioListingSectionProps {
   initialPortfolios: Portfolio[];
 }
 
 export function PortfolioListingSection({ initialPortfolios }: PortfolioListingSectionProps) {
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState('All');
 
-  const serviceTypes = ["All", ...Array.from(new Set(initialPortfolios.map((p) => p.serviceType)))];
+  const serviceTypes = ['All', ...Array.from(new Set(initialPortfolios.map((p) => p.serviceType)))];
 
   const filteredPortfolios = initialPortfolios.filter((p) => {
-    if (activeTab === "All") return true;
+    if (activeTab === 'All') return true;
     return p.serviceType.toLowerCase() === activeTab.toLowerCase();
   });
 
   return (
     <section className="py-12 max-w-7xl mx-auto px-6 space-y-12">
-      
       {/* Category Tabs Filter */}
       <div className="flex justify-center flex-wrap gap-2.5 mb-8">
         {serviceTypes.map((type) => (
@@ -32,8 +31,8 @@ export function PortfolioListingSection({ initialPortfolios }: PortfolioListingS
             onClick={() => setActiveTab(type)}
             className={`px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 border ${
               activeTab === type
-                ? "bg-accent border-accent text-white shadow-lg shadow-accent/15"
-                : "glass-panel border-glass-border text-foreground/70 hover:bg-white/5"
+                ? 'bg-accent border-accent text-white shadow-lg shadow-accent/15'
+                : 'glass-panel border-glass-border text-foreground/70 hover:bg-white/5'
             }`}
           >
             {type}
@@ -55,7 +54,6 @@ export function PortfolioListingSection({ initialPortfolios }: PortfolioListingS
               className="h-full"
             >
               <GlassCard className="p-4 sm:p-4 group cursor-pointer flex flex-col justify-between h-full hover:border-white/20 hover:shadow-2xl transition-all duration-300">
-                
                 <div>
                   {/* Thumbnail Image */}
                   <div className="relative w-full h-52 rounded-2xl overflow-hidden mb-5 bg-accent/5">
@@ -95,7 +93,9 @@ export function PortfolioListingSection({ initialPortfolios }: PortfolioListingS
 
                 {/* Footer Details */}
                 <div className="pt-4 mt-6 border-t border-glass-border flex justify-between items-center text-xs text-foreground/50 px-2 mt-auto">
-                  <span>Client: <strong className="text-foreground/80">{item.clientName}</strong></span>
+                  <span>
+                    Client: <strong className="text-foreground/80">{item.clientName}</strong>
+                  </span>
                   <Link
                     href={`/portfolio/${item.slug}`}
                     className="hover:text-accent font-bold transition-colors flex items-center gap-1"
@@ -103,13 +103,11 @@ export function PortfolioListingSection({ initialPortfolios }: PortfolioListingS
                     View Case <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
-
               </GlassCard>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
-
     </section>
   );
 }

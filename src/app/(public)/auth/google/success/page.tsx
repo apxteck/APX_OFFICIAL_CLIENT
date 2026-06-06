@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Loader } from "lucide-react";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Loader } from 'lucide-react';
 
 export default function GoogleAuthSuccessPage() {
   const router = useRouter();
@@ -12,15 +12,15 @@ export default function GoogleAuthSuccessPage() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
 
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       // Set authenticated indicators
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", "CUSTOMER"); // Default Customer role assigned by OAuth
-      localStorage.setItem("userName", "Google Client");
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userRole', 'CUSTOMER'); // Default Customer role assigned by OAuth
+      localStorage.setItem('userName', 'Google Client');
 
       // Redirect immediately to dashboard portal
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push('/dashboard');
       }, 800);
     }
   }, [router]);
@@ -33,7 +33,8 @@ export default function GoogleAuthSuccessPage() {
         <Loader className="w-10 h-10 text-accent animate-spin" />
         <h2 className="text-xl font-extrabold tracking-tight">Authenticating with Google</h2>
         <p className="text-foreground/50 text-xs leading-relaxed">
-          Google authentication successful! Setting session states and redirecting you to your portal dashboard...
+          Google authentication successful! Setting session states and redirecting you to your
+          portal dashboard...
         </p>
       </div>
     </div>

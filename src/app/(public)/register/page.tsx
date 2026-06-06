@@ -1,87 +1,93 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { UserPlus, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import { api } from "@/lib/axios";
-import Link from "next/link";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import z from 'zod';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { UserPlus, ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import { api } from '@/lib/axios';
+import Link from 'next/link';
 
 // Zod validation schema matching specifications
-const registerSchema = z.object({
-  fullName: z
-    .string()
-    .min(2, "Full Name must be at least 2 characters")
-    .max(80, "Full Name must be at most 80 characters")
-    .regex(/^[a-zA-Z\s]+$/, "Full Name cannot contain numbers or special characters"),
-  email: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .min(1, "Email is required")
-    .email("Invalid email address"),
-  phone: z
-    .string()
-    .optional()
-    .refine((val) => !val || /^[6-9]\d{9}$/.test(val), {
-      message: "Phone number must be a valid 10-digit number starting with 6-9",
+const registerSchema = z
+  .object({
+    fullName: z
+      .string()
+      .min(2, 'Full Name must be at least 2 characters')
+      .max(80, 'Full Name must be at most 80 characters')
+      .regex(/^[a-zA-Z\s]+$/, 'Full Name cannot contain numbers or special characters'),
+    email: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .min(1, 'Email is required')
+      .email('Invalid email address'),
+    phone: z
+      .string()
+      .optional()
+      .refine((val) => !val || /^[6-9]\d{9}$/.test(val), {
+        message: 'Phone number must be a valid 10-digit number starting with 6-9',
+      }),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .regex(/[A-Z]/, 'Password must contain at least 1 uppercase letter')
+      .regex(/\d/, 'Password must contain at least 1 number'),
+    confirmPassword: z.string().min(1, 'Confirm Password is required'),
+    terms: z.boolean().refine((val) => val === true, {
+      message: 'You must accept the terms and conditions',
     }),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Password must contain at least 1 uppercase letter")
-    .regex(/\d/, "Password must contain at least 1 number"),
-  confirmPassword: z.string().min(1, "Confirm Password is required"),
-  terms: z.boolean().refine((val) => val === true, {
-    message: "You must accept the terms and conditions",
-  }),
-  botName: z.string().optional(), // Honeypot field
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+    botName: z.string().optional(), // Honeypot field
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 // Rate Limiting Logic (defined outside component to prevent render-time impure warnings)
 const checkRateLimit = (): boolean => {
-  if (typeof window === "undefined") return false;
+  if (typeof window === 'undefined') return false;
   const now = Date.now();
-  const attempts: number[] = JSON.parse(localStorage.getItem("register_attempts") || "[]") as number[];
-  
+  const attempts: number[] = JSON.parse(
+    localStorage.getItem('register_attempts') || '[]'
+  ) as number[];
+
   // Filter out attempts older than 15 minutes (15 * 60 * 1000 = 900,000 ms)
   const activeAttempts = attempts.filter((timestamp) => now - timestamp < 900000);
-  localStorage.setItem("register_attempts", JSON.stringify(activeAttempts));
+  localStorage.setItem('register_attempts', JSON.stringify(activeAttempts));
 
   return activeAttempts.length >= 5;
 };
 
 const recordAttempt = () => {
-  if (typeof window === "undefined") return;
-  const attempts: number[] = JSON.parse(localStorage.getItem("register_attempts") || "[]") as number[];
+  if (typeof window === 'undefined') return;
+  const attempts: number[] = JSON.parse(
+    localStorage.getItem('register_attempts') || '[]'
+  ) as number[];
   attempts.push(Date.now());
-  localStorage.setItem("register_attempts", JSON.stringify(attempts));
+  localStorage.setItem('register_attempts', JSON.stringify(attempts));
 };
 
 export default function RegisterPage() {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
     // Redirect if already logged in
-    if (localStorage.getItem("isLoggedIn") === "true") {
-      router.push("/dashboard");
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      router.push('/dashboard');
     }
   }, [router]);
 
@@ -92,30 +98,30 @@ export default function RegisterPage() {
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: "",
+      fullName: '',
+      email: '',
+      phone: '',
+      password: '',
+      confirmPassword: '',
       terms: false,
-      botName: "",
+      botName: '',
     },
   });
 
   const onSubmit = async (values: RegisterFormValues) => {
-    setErrorMsg("");
-    setSuccessMsg("");
+    setErrorMsg('');
+    setSuccessMsg('');
 
     // Bot Honeypot check
     if (values.botName) {
-      console.warn("Bot submission blocked via honeypot field.");
-      setErrorMsg("An error occurred during submission. Please try again.");
+      console.warn('Bot submission blocked via honeypot field.');
+      setErrorMsg('An error occurred during submission. Please try again.');
       return;
     }
 
     // Rate Limit check
     if (checkRateLimit()) {
-      setErrorMsg("Too many registration attempts. Try again in 15 minutes.");
+      setErrorMsg('Too many registration attempts. Try again in 15 minutes.');
       return;
     }
 
@@ -131,13 +137,13 @@ export default function RegisterPage() {
       });
 
       if (result.success) {
-        setSuccessMsg(result.message || "Check your email to verify your account.");
+        setSuccessMsg(result.message || 'Check your email to verify your account.');
       } else {
-        setErrorMsg(result.message || "Registration failed");
+        setErrorMsg(result.message || 'Registration failed');
       }
     } catch (err: unknown) {
       const error = err as Error;
-      setErrorMsg(error.message || "Registration failed. Try a different email address.");
+      setErrorMsg(error.message || 'Registration failed. Try a different email address.');
     } finally {
       setIsLoading(false);
     }
@@ -157,7 +163,7 @@ export default function RegisterPage() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
           className="w-full max-w-lg"
         >
           <GlassCard className="p-8 sm:p-10 shadow-2xl border-accent/20">
@@ -181,7 +187,9 @@ export default function RegisterPage() {
                   <CheckCircle2 className="w-9 h-9" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold tracking-tight text-emerald-500">Check Your Email</h3>
+                  <h3 className="text-xl font-bold tracking-tight text-emerald-500">
+                    Check Your Email
+                  </h3>
                   <p className="text-foreground/70 text-sm leading-relaxed max-w-sm mx-auto">
                     {successMsg}
                   </p>
@@ -210,7 +218,7 @@ export default function RegisterPage() {
                   <input
                     id="botName"
                     type="text"
-                    {...register("botName")}
+                    {...register('botName')}
                     tabIndex={-1}
                     autoComplete="off"
                   />
@@ -218,24 +226,30 @@ export default function RegisterPage() {
 
                 {/* Full Name */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">Full Name *</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                    Full Name *
+                  </label>
                   <input
                     type="text"
-                    {...register("fullName")}
+                    {...register('fullName')}
                     className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
                     placeholder="John Doe"
                   />
                   {errors.fullName && (
-                    <p className="text-xs text-rose-500 font-medium pl-1">{errors.fullName.message}</p>
+                    <p className="text-xs text-rose-500 font-medium pl-1">
+                      {errors.fullName.message}
+                    </p>
                   )}
                 </div>
 
                 {/* Email Address */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">Email Address *</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                    Email Address *
+                  </label>
                   <input
                     type="email"
-                    {...register("email")}
+                    {...register('email')}
                     className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
                     placeholder="you@company.com"
                   />
@@ -246,10 +260,12 @@ export default function RegisterPage() {
 
                 {/* Phone */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">Phone (Optional)</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                    Phone (Optional)
+                  </label>
                   <input
                     type="tel"
-                    {...register("phone")}
+                    {...register('phone')}
                     className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
                     placeholder="9876543210"
                   />
@@ -260,29 +276,37 @@ export default function RegisterPage() {
 
                 {/* Password */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">Password *</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                    Password *
+                  </label>
                   <input
                     type="password"
-                    {...register("password")}
+                    {...register('password')}
                     className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
                     placeholder="••••••••"
                   />
                   {errors.password && (
-                    <p className="text-xs text-rose-500 font-medium pl-1">{errors.password.message}</p>
+                    <p className="text-xs text-rose-500 font-medium pl-1">
+                      {errors.password.message}
+                    </p>
                   )}
                 </div>
 
                 {/* Confirm Password */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">Confirm Password *</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+                    Confirm Password *
+                  </label>
                   <input
                     type="password"
-                    {...register("confirmPassword")}
+                    {...register('confirmPassword')}
                     className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
                     placeholder="••••••••"
                   />
                   {errors.confirmPassword && (
-                    <p className="text-xs text-rose-500 font-medium pl-1">{errors.confirmPassword.message}</p>
+                    <p className="text-xs text-rose-500 font-medium pl-1">
+                      {errors.confirmPassword.message}
+                    </p>
                   )}
                 </div>
 
@@ -291,15 +315,15 @@ export default function RegisterPage() {
                   <label className="flex items-start gap-2.5 cursor-pointer select-none">
                     <input
                       type="checkbox"
-                      {...register("terms")}
+                      {...register('terms')}
                       className="mt-0.5 rounded border-glass-border text-accent focus:ring-accent bg-foreground/[0.02] w-4 h-4 cursor-pointer"
                     />
                     <span className="text-xs text-foreground/70 leading-relaxed font-medium">
-                      I agree to the{" "}
+                      I agree to the{' '}
                       <Link href="#" className="text-accent hover:underline font-bold">
                         Terms of Service
-                      </Link>{" "}
-                      and{" "}
+                      </Link>{' '}
+                      and{' '}
                       <Link href="#" className="text-accent hover:underline font-bold">
                         Privacy Policy
                       </Link>
@@ -316,14 +340,18 @@ export default function RegisterPage() {
                   disabled={isLoading}
                   className="group w-full h-12 mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
                 >
-                  {isLoading ? "Creating Account..." : "Sign Up"}
-                  {!isLoading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+                  {isLoading ? 'Creating Account...' : 'Sign Up'}
+                  {!isLoading && (
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  )}
                 </button>
 
                 {/* Google Sign-up integration link */}
                 <div className="relative flex items-center py-4">
                   <div className="flex-grow border-t border-glass-border"></div>
-                  <span className="flex-shrink-0 mx-4 text-foreground/45 text-[10px] font-bold uppercase tracking-widest">OR</span>
+                  <span className="flex-shrink-0 mx-4 text-foreground/45 text-[10px] font-bold uppercase tracking-widest">
+                    OR
+                  </span>
                   <div className="flex-grow border-t border-glass-border"></div>
                 </div>
 
@@ -353,7 +381,7 @@ export default function RegisterPage() {
                 </Link>
 
                 <p className="text-center text-xs text-foreground/60 mt-6 font-medium">
-                  Already have an account?{" "}
+                  Already have an account?{' '}
                   <Link href="/login" className="text-accent hover:underline font-bold">
                     Sign In
                   </Link>

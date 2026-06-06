@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight, Play, Volume2, VolumeX } from "lucide-react";
-import { api } from "@/lib/axios";
-import { HeroBanner } from "@/app/types/home.types";
+import { useEffect, useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { ArrowRight, ChevronLeft, ChevronRight, Play, Volume2, VolumeX } from 'lucide-react';
+import { api } from '@/lib/axios';
+import { HeroBanner } from '@/app/types/home.types';
 
 export function HeroSection() {
   const [banners, setBanners] = useState<HeroBanner[]>([]);
@@ -20,7 +20,7 @@ export function HeroSection() {
         const data = await api.fetchHeroBanners();
         setBanners(data);
       } catch (err) {
-        console.error("Failed to load hero banners", err);
+        console.error('Failed to load hero banners', err);
       } finally {
         setIsLoading(false);
       }
@@ -59,7 +59,9 @@ export function HeroSection() {
       <section className="relative h-screen w-full flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 rounded-full border-4 border-accent border-t-transparent animate-spin" />
-          <p className="text-foreground/60 text-sm font-medium tracking-wide">Loading experiences...</p>
+          <p className="text-foreground/60 text-sm font-medium tracking-wide">
+            Loading experiences...
+          </p>
         </div>
       </section>
     );
@@ -81,13 +83,13 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
+            transition={{ duration: 1, ease: 'easeInOut' }}
             className="absolute inset-0 w-full h-full"
           >
             {/* Dark tint overlay for reading contrast */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background/95 lg:to-background/80 z-20" />
 
-            {currentBanner.mediaType === "VIDEO" ? (
+            {currentBanner.mediaType === 'VIDEO' ? (
               <div className="relative w-full h-full">
                 <video
                   src={currentBanner.mediaUrl}
@@ -100,7 +102,7 @@ export function HeroSection() {
                 <button
                   onClick={() => setIsMuted(!isMuted)}
                   className="absolute bottom-28 right-8 z-30 w-12 h-12 rounded-full glass-panel border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
-                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                  aria-label={isMuted ? 'Unmute video' : 'Mute video'}
                 >
                   {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                 </button>
@@ -109,7 +111,7 @@ export function HeroSection() {
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={currentBanner.mediaUrl}
-                alt={currentBanner.title || "APXTeck hero banner"}
+                alt={currentBanner.title || 'APXTeck hero banner'}
                 className="w-full h-full object-cover"
               />
             )}
@@ -138,7 +140,7 @@ export function HeroSection() {
 
                 {/* Main Heading */}
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] text-white">
-                  {currentBanner.title?.split("—").map((part, i) => (
+                  {currentBanner.title?.split('—').map((part, i) => (
                     <span key={i} className="block">
                       {i === 1 ? (
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
@@ -148,12 +150,13 @@ export function HeroSection() {
                         part
                       )}
                     </span>
-                  )) || "Elevate Your Business"}
+                  )) || 'Elevate Your Business'}
                 </h1>
 
                 {/* Subtitle */}
                 <p className="text-lg text-slate-200 leading-relaxed max-w-xl">
-                  {currentBanner.subtitle || "Premium, advanced-level web applications with seamless animations and interactive designs."}
+                  {currentBanner.subtitle ||
+                    'Premium, advanced-level web applications with seamless animations and interactive designs.'}
                 </p>
 
                 {/* Action Buttons */}
@@ -221,7 +224,7 @@ export function HeroSection() {
               >
                 <div
                   className={`h-2 rounded-full transition-all duration-500 ${
-                    isActive ? "w-8 bg-accent" : "w-2 bg-white/40 hover:bg-white/60"
+                    isActive ? 'w-8 bg-accent' : 'w-2 bg-white/40 hover:bg-white/60'
                   }`}
                 />
               </button>

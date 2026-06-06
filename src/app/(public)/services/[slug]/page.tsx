@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { ServiceDetailClient } from "@/components/sections/ServiceDetailClient";
-import { api } from "@/lib/axios";
-import { Service, ServiceField } from "@/app/types/service.types";
-import { Testimonial } from "@/app/types/testimonial.types";
-import { Faq } from "@/app/types/faq.types";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import { ServiceDetailClient } from '@/components/sections/ServiceDetailClient';
+import { api } from '@/lib/axios';
+import { Service, ServiceField } from '@/app/types/service.types';
+import { Testimonial } from '@/app/types/testimonial.types';
+import { Faq } from '@/app/types/faq.types';
 
 export const revalidate = 60;
 
@@ -20,10 +20,10 @@ export async function generateStaticParams() {
     return services.map((s) => ({ slug: s.slug }));
   } catch {
     return [
-      { slug: "web-development" },
-      { slug: "seo-optimization" },
-      { slug: "ui-ux-design" },
-      { slug: "digital-marketing" },
+      { slug: 'web-development' },
+      { slug: 'seo-optimization' },
+      { slug: 'ui-ux-design' },
+      { slug: 'digital-marketing' },
     ];
   }
 }
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const services = await api.fetchServices();
     const service = services.find((s) => s.slug === slug);
-    if (!service) return { title: "Service Not Found" };
+    if (!service) return { title: 'Service Not Found' };
 
     return {
       title: `${service.name} — APXTECK`,
@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: `${service.name} — APXTECK`,
         description: service.description || `Premium ${service.name} solutions for Indian SMBs.`,
         url: `https://apxteck.com/services/${slug}`,
-        siteName: "APXTeck",
-        type: "website",
+        siteName: 'APXTeck',
+        type: 'website',
       },
       alternates: {
         canonical: `https://apxteck.com/services/${slug}`,
@@ -51,23 +51,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   } catch {
     return {
-      title: "Service Details — APXTeck",
+      title: 'Service Details — APXTeck',
     };
   }
 }
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  
+
   let services: Service[] = [];
   let testimonials: Testimonial[] = [];
   let faqs: Faq[] = [];
-  
+
   try {
     services = await api.fetchServices();
     testimonials = await api.fetchTestimonials();
   } catch (err) {
-    console.error("Failed to load server data", err);
+    console.error('Failed to load server data', err);
   }
 
   const service = services.find((s) => s.slug === slug);
@@ -79,7 +79,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   try {
     faqs = await api.fetchFaqs(service.slug);
   } catch (err) {
-    console.error("Failed to load FAQs", err);
+    console.error('Failed to load FAQs', err);
   }
 
   // Filter dynamic fields
@@ -90,20 +90,22 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   // Injected schema representation
   const jsonLdService = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": service.name,
-    "description": service.description,
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "APXTeck",
-      "telephone": "+919876543210"
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.name,
+    description: service.description,
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'APXTeck',
+      telephone: '+919876543210',
     },
-    "offers": service.price ? {
-      "@type": "Offer",
-      "price": service.price.replace(/[^0-9]/g, ""),
-      "priceCurrency": "INR"
-    } : undefined
+    offers: service.price
+      ? {
+          '@type': 'Offer',
+          price: service.price.replace(/[^0-9]/g, ''),
+          priceCurrency: 'INR',
+        }
+      : undefined,
   };
 
   return (

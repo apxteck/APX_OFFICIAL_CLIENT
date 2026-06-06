@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { useEffect, useState, useRef } from "react";
-import { motion, useInView, animate } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { api } from "@/lib/axios";
-import { StatsOverview } from "@/app/types/analytics.types";
-import { Users, CheckCircle2, Award, Clock } from "lucide-react";
+import { useEffect, useState, useRef } from 'react';
+import { motion, useInView, animate } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { api } from '@/lib/axios';
+import { StatsOverview } from '@/app/types/analytics.types';
+import { Users, CheckCircle2, Award, Clock } from 'lucide-react';
 
-function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
+function Counter({ value, suffix = '' }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const inView = useInView(ref, { once: true, margin: '-50px' });
 
   useEffect(() => {
     if (inView && ref.current) {
       const node = ref.current;
       const controls = animate(0, value, {
         duration: 2,
-        ease: "easeOut",
+        ease: 'easeOut',
         onUpdate(val) {
           node.textContent = Math.round(val).toLocaleString() + suffix;
         },
@@ -25,7 +25,11 @@ function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
     }
   }, [value, inView, suffix]);
 
-  return <span ref={ref} className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">0{suffix}</span>;
+  return (
+    <span ref={ref} className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
+      0{suffix}
+    </span>
+  );
 }
 
 export function StatsSection() {
@@ -38,7 +42,7 @@ export function StatsSection() {
         const data = await api.fetchStats();
         setStats(data);
       } catch (err) {
-        console.error("Failed to load stats", err);
+        console.error('Failed to load stats', err);
       } finally {
         setIsLoading(false);
       }
@@ -56,28 +60,28 @@ export function StatsSection() {
 
   const statItems = [
     {
-      label: "Clients Served",
+      label: 'Clients Served',
       value: stats.clientsServed,
-      suffix: "+",
+      suffix: '+',
       icon: Users,
-      color: "#0ea5e9", // Cyan
-      desc: "SMB partners across India",
+      color: '#0ea5e9', // Cyan
+      desc: 'SMB partners across India',
     },
     {
-      label: "Completed Projects",
+      label: 'Completed Projects',
       value: stats.projectsCompleted,
-      suffix: "+",
+      suffix: '+',
       icon: CheckCircle2,
-      color: "#10b981", // Emerald
-      desc: "Delivered on schedule",
+      color: '#10b981', // Emerald
+      desc: 'Delivered on schedule',
     },
     {
-      label: "Satisfaction Rate",
+      label: 'Satisfaction Rate',
       value: Math.floor(stats.satisfactionRate),
-      suffix: "%",
+      suffix: '%',
       icon: Award,
-      color: "#8b5cf6", // Purple
-      desc: "Pixel-perfect standards",
+      color: '#8b5cf6', // Purple
+      desc: 'Pixel-perfect standards',
     },
   ];
 
@@ -91,30 +95,33 @@ export function StatsSection() {
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5 pointer-events-none" />
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 items-center">
-            
             <div className="md:col-span-1 space-y-3">
               <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-accent/15 text-accent text-xs font-bold uppercase tracking-wider">
                 Metrics
               </div>
-              <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight">Our Journey In Numbers</h3>
+              <h3 className="text-2xl md:text-3xl font-extrabold tracking-tight">
+                Our Journey In Numbers
+              </h3>
               <p className="text-foreground/60 text-sm leading-relaxed">
                 Empowering brands with cutting-edge engineering and next-generation designs.
               </p>
             </div>
 
             <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-4 gap-6">
-              
               {statItems.map((item, idx) => {
                 const Icon = item.icon;
                 return (
-                  <div key={idx} className="flex flex-col items-center text-center p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+                  <div
+                    key={idx}
+                    className="flex flex-col items-center text-center p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]"
+                  >
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center border backdrop-blur-sm mb-4 transition-transform duration-300 hover:scale-105"
                       style={{
                         backgroundColor: `${item.color}14`,
                         borderColor: `${item.color}3a`,
                         color: item.color,
-                        boxShadow: `0 4px 12px -3px ${item.color}26, 0 0 8px 1px ${item.color}1a`
+                        boxShadow: `0 4px 12px -3px ${item.color}26, 0 0 8px 1px ${item.color}1a`,
                       }}
                     >
                       <Icon className="w-5 h-5" />
@@ -131,10 +138,11 @@ export function StatsSection() {
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center border backdrop-blur-sm mb-4 transition-transform duration-300 hover:scale-105"
                   style={{
-                    backgroundColor: "#ec489914",
-                    borderColor: "#ec48993a",
-                    color: "#ec4899",
-                    boxShadow: "0 4px 12px -3px rgba(236, 72, 153, 0.15), 0 0 8px 1px rgba(236, 72, 153, 0.1)"
+                    backgroundColor: '#ec489914',
+                    borderColor: '#ec48993a',
+                    color: '#ec4899',
+                    boxShadow:
+                      '0 4px 12px -3px rgba(236, 72, 153, 0.15), 0 0 8px 1px rgba(236, 72, 153, 0.1)',
                   }}
                 >
                   <Clock className="w-5 h-5" />
@@ -145,9 +153,7 @@ export function StatsSection() {
                 <p className="text-sm font-semibold text-foreground/80 mt-2">Active Support</p>
                 <p className="text-xs text-foreground/50 mt-1">Direct developer access</p>
               </div>
-
             </div>
-
           </div>
         </GlassCard>
       </div>

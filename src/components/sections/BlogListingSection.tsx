@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Search, Calendar, Clock, Heart, ChevronLeft, ChevronRight, User } from "lucide-react";
-import Link from "next/link";
-import { BlogPost } from "@/app/types/blog.types";
-import { AdBanner } from "@/components/ui/AdBanner";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { Search, Calendar, Clock, Heart, ChevronLeft, ChevronRight, User } from 'lucide-react';
+import Link from 'next/link';
+import { BlogPost } from '@/app/types/blog.types';
+import { AdBanner } from '@/components/ui/AdBanner';
 
 interface BlogListingSectionProps {
   initialBlogs: BlogPost[];
 }
 
-const categories = ["All", "Technology", "Tutorial", "Marketing", "Design", "SMB"];
+const categories = ['All', 'Technology', 'Tutorial', 'Marketing', 'Design', 'SMB'];
 
 export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
   const [blogs, setBlogs] = useState<BlogPost[]>(initialBlogs);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
   const [activeTag, setActiveTag] = useState<string | null>(null);
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6; // Set to 6 to easily demonstrate pagination and Ad placement
 
@@ -41,12 +41,11 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
       post.content.toLowerCase().includes(debouncedSearch.toLowerCase());
 
     const matchesCategory =
-      activeCategory === "All" ||
+      activeCategory === 'All' ||
       post.tags.some((t) => t.toLowerCase() === activeCategory.toLowerCase());
 
     const matchesTag =
-      !activeTag ||
-      post.tags.some((t) => t.toLowerCase() === activeTag.toLowerCase());
+      !activeTag || post.tags.some((t) => t.toLowerCase() === activeTag.toLowerCase());
 
     return matchesSearch && matchesCategory && matchesTag;
   });
@@ -64,13 +63,13 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
   const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return "Recent";
+    if (!dateStr) return 'Recent';
     try {
       const d = new Date(dateStr);
-      return d.toLocaleDateString("en-IN", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
+      return d.toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
       });
     } catch {
       return dateStr;
@@ -78,16 +77,12 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
   };
 
   // Pull all unique tags for chips list
-  const allTags = Array.from(
-    new Set(initialBlogs.flatMap((p) => p.tags))
-  );
+  const allTags = Array.from(new Set(initialBlogs.flatMap((p) => p.tags)));
 
   return (
     <section className="py-12 max-w-7xl mx-auto px-6 space-y-12">
-      
       {/* Search and Filters panel */}
       <div className="space-y-6">
-        
         {/* Search Input */}
         <div className="relative max-w-md mx-auto">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/45" />
@@ -111,8 +106,8 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
               }}
               className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider shrink-0 transition-all ${
                 activeCategory === cat
-                  ? "bg-accent text-white"
-                  : "glass-panel border-glass-border hover:bg-white/5"
+                  ? 'bg-accent text-white'
+                  : 'glass-panel border-glass-border hover:bg-white/5'
               }`}
             >
               {cat}
@@ -131,8 +126,8 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                   onClick={() => setActiveTag(isSelected ? null : tag)}
                   className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-colors border ${
                     isSelected
-                      ? "bg-accent/15 border-accent text-accent"
-                      : "bg-transparent border-glass-border text-foreground/50 hover:border-foreground/30 hover:text-foreground"
+                      ? 'bg-accent/15 border-accent text-accent'
+                      : 'bg-transparent border-glass-border text-foreground/50 hover:border-foreground/30 hover:text-foreground'
                   }`}
                 >
                   #{tag}
@@ -141,24 +136,24 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
             })}
           </div>
         )}
-
       </div>
 
       {/* Grid of Results */}
       {currentPosts.length === 0 ? (
         <div className="text-center py-20 border border-dashed border-glass-border rounded-3xl">
           <p className="text-foreground/50 text-base font-semibold mb-2">No posts found.</p>
-          <p className="text-foreground/40 text-xs">Try selecting a different filter key or keywords search.</p>
+          <p className="text-foreground/40 text-xs">
+            Try selecting a different filter key or keywords search.
+          </p>
         </div>
       ) : (
         <div className="space-y-12">
-          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentPosts.map((post, idx) => {
               // We inject the Mid Ad slot after the 6th card index (index 5) or midway through the list.
               // In this layout, if we show 6 cards per page, we can place the ad after index 3 (first row) dynamically!
               const showMidAd = idx === 3;
-              
+
               return (
                 <div key={post.id} className="contents">
                   <motion.div
@@ -169,7 +164,6 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                   >
                     <Link href={`/explore-news/${post.slug}`} className="block group h-full">
                       <GlassCard className="!p-0 overflow-hidden h-full flex flex-col hover:border-white/20 hover:shadow-2xl transition-all duration-300">
-                        
                         <div className="relative h-48 w-full overflow-hidden bg-accent/5">
                           {post.coverImageUrl && (
                             // eslint-disable-next-line @next/next/no-img-element
@@ -180,7 +174,7 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                             />
                           )}
                           <div className="absolute top-4 left-4 glass-panel border border-white/20 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
-                            {post.tags[0] || "Blog"}
+                            {post.tags[0] || 'Blog'}
                           </div>
                         </div>
 
@@ -199,27 +193,30 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                           <div className="pt-4 border-t border-glass-border flex items-center justify-between mt-auto">
                             <div className="flex items-center gap-2">
                               <div className="w-7 h-7 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-xs text-accent uppercase">
-                                {post.author?.fullName[0] || "A"}
+                                {post.author?.fullName[0] || 'A'}
                               </div>
-                              <span className="text-[10px] font-semibold text-foreground/60">{post.author?.fullName || "APX Lead"}</span>
+                              <span className="text-[10px] font-semibold text-foreground/60">
+                                {post.author?.fullName || 'APX Lead'}
+                              </span>
                             </div>
-                            <span className="text-[10px] text-foreground/45 font-medium">{formatDate(post.publishedAt)}</span>
+                            <span className="text-[10px] text-foreground/45 font-medium">
+                              {formatDate(post.publishedAt)}
+                            </span>
                           </div>
                         </div>
-
                       </GlassCard>
                     </Link>
                   </motion.div>
 
-                    {/* Inject Mid Ad slot dynamically */}
-                    {showMidAd && (
-                      <div className="col-span-full py-4">
-                        <AdBanner placement="BLOG_LIST_MID" />
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                  {/* Inject Mid Ad slot dynamically */}
+                  {showMidAd && (
+                    <div className="col-span-full py-4">
+                      <AdBanner placement="BLOG_LIST_MID" />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Pagination Controls */}
@@ -246,10 +243,8 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
               </button>
             </div>
           )}
-
         </div>
       )}
-
     </section>
   );
 }

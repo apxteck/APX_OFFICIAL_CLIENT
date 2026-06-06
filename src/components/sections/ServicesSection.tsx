@@ -1,24 +1,34 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Code2, Search, Smartphone, Rocket, Shield, Globe, ArrowRight, Clock, Tag } from "lucide-react";
-import Link from "next/link";
-import { api } from "@/lib/axios";
-import { Service } from "@/app/types/service.types";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import {
+  Code2,
+  Search,
+  Smartphone,
+  Rocket,
+  Shield,
+  Globe,
+  ArrowRight,
+  Clock,
+  Tag,
+} from 'lucide-react';
+import Link from 'next/link';
+import { api } from '@/lib/axios';
+import { Service } from '@/app/types/service.types';
 
 const getServiceIcon = (slug: string) => {
   switch (slug) {
-    case "web-development":
+    case 'web-development':
       return Code2;
-    case "seo-optimization":
+    case 'seo-optimization':
       return Search;
-    case "ui-ux-design":
+    case 'ui-ux-design':
       return Smartphone;
-    case "digital-marketing":
+    case 'digital-marketing':
       return Rocket;
-    case "cloud-solutions":
+    case 'cloud-solutions':
       return Globe;
     default:
       return Shield;
@@ -27,16 +37,16 @@ const getServiceIcon = (slug: string) => {
 
 const getServiceGlow = (slug: string) => {
   switch (slug) {
-    case "web-development":
-      return "#0ea5e9"; // Cyan
-    case "seo-optimization":
-      return "#8b5cf6"; // Purple
-    case "ui-ux-design":
-      return "#ec4899"; // Pink
-    case "digital-marketing":
-      return "#f59e0b"; // Amber
+    case 'web-development':
+      return '#0ea5e9'; // Cyan
+    case 'seo-optimization':
+      return '#8b5cf6'; // Purple
+    case 'ui-ux-design':
+      return '#ec4899'; // Pink
+    case 'digital-marketing':
+      return '#f59e0b'; // Amber
     default:
-      return "#10b981"; // Emerald
+      return '#10b981'; // Emerald
   }
 };
 
@@ -54,7 +64,7 @@ export function ServicesSection() {
           .sort((a, b) => a.sortOrder - b.sortOrder);
         setServices(activeServices);
       } catch (err) {
-        console.error("Failed to load services", err);
+        console.error('Failed to load services', err);
       } finally {
         setIsLoading(false);
       }
@@ -92,7 +102,8 @@ export function ServicesSection() {
             transition={{ delay: 0.1 }}
             className="text-foreground/75 max-w-2xl mx-auto text-lg leading-relaxed"
           >
-            High-end engineering meets elite creative designs. We deliver comprehensive IT solutions custom built for Indian SMBs.
+            High-end engineering meets elite creative designs. We deliver comprehensive IT solutions
+            custom built for Indian SMBs.
           </motion.p>
         </div>
 
@@ -128,7 +139,7 @@ export function ServicesSection() {
                           backgroundColor: `${glow}14`,
                           borderColor: `${glow}3a`,
                           color: glow,
-                          boxShadow: `0 8px 20px -6px ${glow}26, 0 0 15px 1px ${glow}1a`
+                          boxShadow: `0 8px 20px -6px ${glow}26, 0 0 15px 1px ${glow}1a`,
                         }}
                       >
                         <Icon className="w-6 h-6" />
@@ -136,7 +147,9 @@ export function ServicesSection() {
 
                       {/* Header */}
                       <div className="space-y-2">
-                        <h3 className="text-xl font-bold tracking-tight text-foreground">{service.name}</h3>
+                        <h3 className="text-xl font-bold tracking-tight text-foreground">
+                          {service.name}
+                        </h3>
                         <p className="text-foreground/70 text-sm leading-relaxed min-h-[72px]">
                           {service.description}
                         </p>
@@ -153,7 +166,10 @@ export function ServicesSection() {
                         {service.price && (
                           <div className="flex items-center gap-2">
                             <Tag className="w-3.5 h-3.5 text-emerald-500" />
-                            <span>Investment: <strong className="text-foreground">{service.price}</strong></span>
+                            <span>
+                              Investment:{' '}
+                              <strong className="text-foreground">{service.price}</strong>
+                            </span>
                           </div>
                         )}
                       </div>

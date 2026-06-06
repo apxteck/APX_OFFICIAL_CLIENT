@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { PortfolioDetailClient } from "@/components/sections/PortfolioDetailClient";
-import { api } from "@/lib/axios";
-import { Portfolio } from "@/app/types/portfolio.types";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import { PortfolioDetailClient } from '@/components/sections/PortfolioDetailClient';
+import { api } from '@/lib/axios';
+import { Portfolio } from '@/app/types/portfolio.types';
 
 export const revalidate = 300;
 
@@ -17,11 +17,7 @@ export async function generateStaticParams() {
     const portfolios = await api.fetchPortfolios();
     return portfolios.map((p) => ({ slug: p.slug }));
   } catch {
-    return [
-      { slug: "style-store" },
-      { slug: "coin-flow" },
-      { slug: "neuro-sync" },
-    ];
+    return [{ slug: 'style-store' }, { slug: 'coin-flow' }, { slug: 'neuro-sync' }];
   }
 }
 
@@ -30,17 +26,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const portfolios = await api.fetchPortfolios();
     const project = portfolios.find((p) => p.slug === slug);
-    if (!project) return { title: "Case Study Not Found" };
+    if (!project) return { title: 'Case Study Not Found' };
 
     return {
       title: `${project.clientName} Case Study — APXTECK`,
-      description: project.problem || `Read the detailed case study of our project with ${project.clientName}.`,
+      description:
+        project.problem ||
+        `Read the detailed case study of our project with ${project.clientName}.`,
       openGraph: {
         title: `${project.clientName} Case Study — APXTECK`,
-        description: project.problem || `Read the detailed case study of our project with ${project.clientName}.`,
+        description:
+          project.problem ||
+          `Read the detailed case study of our project with ${project.clientName}.`,
         url: `https://apxteck.com/portfolio/${slug}`,
-        siteName: "APXTeck",
-        type: "article",
+        siteName: 'APXTeck',
+        type: 'article',
         images: project.coverImageUrl ? [{ url: project.coverImageUrl }] : undefined,
       },
       alternates: {
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   } catch {
     return {
-      title: "Case Study Details — APXTeck",
+      title: 'Case Study Details — APXTeck',
     };
   }
 }
@@ -61,7 +61,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
   try {
     portfolios = await api.fetchPortfolios();
   } catch (err) {
-    console.error("Failed to load server portfolio", err);
+    console.error('Failed to load server portfolio', err);
   }
 
   const project = portfolios.find((p) => p.slug === slug);
@@ -70,15 +70,15 @@ export default async function PortfolioDetailPage({ params }: Props) {
   }
 
   const jsonLdArticle = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": `${project.clientName} Case Study - ${project.title}`,
-    "description": project.problem || project.results,
-    "image": project.coverImageUrl,
-    "publisher": {
-      "@type": "Organization",
-      "name": "APXTeck"
-    }
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: `${project.clientName} Case Study - ${project.title}`,
+    description: project.problem || project.results,
+    image: project.coverImageUrl,
+    publisher: {
+      '@type': 'Organization',
+      name: 'APXTeck',
+    },
   };
 
   return (

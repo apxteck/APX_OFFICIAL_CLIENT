@@ -1,37 +1,37 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { motion } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, MessageSquare } from "lucide-react";
-import { api } from "@/lib/axios";
-import { Service } from "@/app/types/service.types";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { motion } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
+import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, MessageSquare } from 'lucide-react';
+import { api } from '@/lib/axios';
+import { Service } from '@/app/types/service.types';
 
 const contactSchema = z.object({
   fullName: z
     .string()
-    .min(2, { message: "Name must be between 2 and 80 characters" })
-    .max(80, { message: "Name must be between 2 and 80 characters" }),
-  email: z.string().email({ message: "Please enter a valid email address" }),
+    .min(2, { message: 'Name must be between 2 and 80 characters' })
+    .max(80, { message: 'Name must be between 2 and 80 characters' }),
+  email: z.string().email({ message: 'Please enter a valid email address' }),
   phone: z
     .string()
     .optional()
-    .or(z.literal(""))
+    .or(z.literal(''))
     .refine((val) => !val || /^[6-9]\d{9}$/.test(val), {
-      message: "Please enter a valid 10-digit Indian phone number",
+      message: 'Please enter a valid 10-digit Indian phone number',
     }),
   businessName: z
     .string()
-    .max(100, { message: "Business Name can be at most 100 characters" })
+    .max(100, { message: 'Business Name can be at most 100 characters' })
     .optional(),
   serviceInterest: z.string().optional(),
   message: z
     .string()
-    .min(20, { message: "Message must be between 20 and 1000 characters" })
-    .max(1000, { message: "Message must be between 20 and 1000 characters" }),
+    .min(20, { message: 'Message must be between 20 and 1000 characters' })
+    .max(1000, { message: 'Message must be between 20 and 1000 characters' }),
   // Honeypot field for bot spam blocking
   website: z.string().max(100).optional(),
 });
@@ -44,7 +44,7 @@ interface ContactPageSectionProps {
 
 export function ContactPageSection({ services }: ContactPageSectionProps) {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -55,27 +55,27 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      phone: "",
-      businessName: "",
-      serviceInterest: "",
-      message: "",
-      website: "",
+      fullName: '',
+      email: '',
+      phone: '',
+      businessName: '',
+      serviceInterest: '',
+      message: '',
+      website: '',
     },
   });
 
   const onSubmit = async (values: ContactFormValues) => {
     // Honeypot bot protection check: if filled, fail silently or block
     if (values.website) {
-      console.warn("Spam Bot Detected.");
+      console.warn('Spam Bot Detected.');
       setIsSubmitSuccess(true); // fool the bot into thinking it succeeded
       reset();
       return;
     }
 
     setIsSubmitting(true);
-    setErrorMessage("");
+    setErrorMessage('');
     setIsSubmitSuccess(false);
 
     try {
@@ -85,10 +85,10 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
         setIsSubmitSuccess(true);
         reset();
       } else {
-        setErrorMessage(res.message || "Failed to submit enquiry.");
+        setErrorMessage(res.message || 'Failed to submit enquiry.');
       }
     } catch {
-      setErrorMessage("Network error occurred. Please try again.");
+      setErrorMessage('Network error occurred. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -96,16 +96,14 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
 
   return (
     <section className="py-12 max-w-7xl mx-auto px-6">
-      
       <div className="grid lg:grid-cols-12 gap-12 items-start">
-        
         {/* Left Column: Info Cards & Map */}
         <div className="lg:col-span-5 space-y-8">
-          
           <div className="space-y-4">
             <h1 className="text-4xl font-extrabold tracking-tight text-foreground">Get in Touch</h1>
             <p className="text-foreground/75 leading-relaxed">
-              Have questions about our custom services, API systems, or packages? Talk to our technology experts.
+              Have questions about our custom services, API systems, or packages? Talk to our
+              technology experts.
             </p>
           </div>
 
@@ -130,7 +128,8 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
               <div>
                 <h4 className="font-bold text-sm">Business Address</h4>
                 <p className="text-xs text-foreground/60 mt-1">
-                  102, Technology Innovation Incubator, Infotech Park, Hinjawadi Phase 1, Pune, MH, India
+                  102, Technology Innovation Incubator, Infotech Park, Hinjawadi Phase 1, Pune, MH,
+                  India
                 </p>
               </div>
             </div>
@@ -149,17 +148,17 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
               title="APXTeck Office Location"
             />
           </div>
-
         </div>
 
         {/* Right Column: Form */}
         <div className="lg:col-span-7">
           <GlassCard className="p-8 md:p-10 border border-glass-border">
-            
             {isSubmitSuccess && (
               <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 flex items-center gap-3 text-sm font-semibold">
                 <CheckCircle2 className="w-5 h-5 shrink-0" />
-                <span>Thank you! Your enquiry has been received. We will contact you in 24 hours.</span>
+                <span>
+                  Thank you! Your enquiry has been received. We will contact you in 24 hours.
+                </span>
               </div>
             )}
 
@@ -171,12 +170,11 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
             )}
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-              
               {/* Honeypot field (hidden completely from humans) */}
               <div className="hidden" aria-hidden="true">
                 <input
                   type="text"
-                  {...register("website")}
+                  {...register('website')}
                   tabIndex={-1}
                   autoComplete="off"
                   placeholder="Leave blank"
@@ -190,20 +188,23 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
                 </label>
                 <input
                   type="text"
-                  {...register("fullName")}
+                  {...register('fullName')}
                   className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all focus:ring-2 focus:ring-accent/50 ${
-                    errors.fullName ? "border-rose-500/50 focus:border-rose-500" : "border-glass-border focus:border-accent"
+                    errors.fullName
+                      ? 'border-rose-500/50 focus:border-rose-500'
+                      : 'border-glass-border focus:border-accent'
                   }`}
                   placeholder="e.g. Rahul Deshmukh"
                 />
                 {errors.fullName && (
-                  <p className="text-xs text-rose-500 font-medium pl-1">{errors.fullName.message}</p>
+                  <p className="text-xs text-rose-500 font-medium pl-1">
+                    {errors.fullName.message}
+                  </p>
                 )}
               </div>
 
               {/* Email & Phone Grid */}
               <div className="grid md:grid-cols-2 gap-5">
-                
                 {/* Email */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold uppercase tracking-wider text-foreground/75">
@@ -211,9 +212,11 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
                   </label>
                   <input
                     type="email"
-                    {...register("email")}
+                    {...register('email')}
                     className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all focus:ring-2 focus:ring-accent/50 ${
-                      errors.email ? "border-rose-500/50 focus:border-rose-500" : "border-glass-border focus:border-accent"
+                      errors.email
+                        ? 'border-rose-500/50 focus:border-rose-500'
+                        : 'border-glass-border focus:border-accent'
                     }`}
                     placeholder="name@company.com"
                   />
@@ -229,9 +232,11 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
                   </label>
                   <input
                     type="tel"
-                    {...register("phone")}
+                    {...register('phone')}
                     className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all focus:ring-2 focus:ring-accent/50 ${
-                      errors.phone ? "border-rose-500/50 focus:border-rose-500" : "border-glass-border focus:border-accent"
+                      errors.phone
+                        ? 'border-rose-500/50 focus:border-rose-500'
+                        : 'border-glass-border focus:border-accent'
                     }`}
                     placeholder="10-digit mobile"
                   />
@@ -239,7 +244,6 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
                     <p className="text-xs text-rose-500 font-medium pl-1">{errors.phone.message}</p>
                   )}
                 </div>
-
               </div>
 
               {/* Business Name */}
@@ -249,14 +253,18 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
                 </label>
                 <input
                   type="text"
-                  {...register("businessName")}
+                  {...register('businessName')}
                   className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all focus:ring-2 focus:ring-accent/50 ${
-                    errors.businessName ? "border-rose-500/50 focus:border-rose-500" : "border-glass-border focus:border-accent"
+                    errors.businessName
+                      ? 'border-rose-500/50 focus:border-rose-500'
+                      : 'border-glass-border focus:border-accent'
                   }`}
                   placeholder="e.g. Acme Tech Solutions"
                 />
                 {errors.businessName && (
-                  <p className="text-xs text-rose-500 font-medium pl-1">{errors.businessName.message}</p>
+                  <p className="text-xs text-rose-500 font-medium pl-1">
+                    {errors.businessName.message}
+                  </p>
                 )}
               </div>
 
@@ -266,7 +274,7 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
                   Service Interest
                 </label>
                 <select
-                  {...register("serviceInterest")}
+                  {...register('serviceInterest')}
                   className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80 dark:bg-zinc-950"
                 >
                   <option value="">Select a service category</option>
@@ -285,9 +293,11 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
                 </label>
                 <textarea
                   rows={5}
-                  {...register("message")}
+                  {...register('message')}
                   className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all resize-none focus:ring-2 focus:ring-accent/50 ${
-                    errors.message ? "border-rose-500/50 focus:border-rose-500" : "border-glass-border focus:border-accent"
+                    errors.message
+                      ? 'border-rose-500/50 focus:border-rose-500'
+                      : 'border-glass-border focus:border-accent'
                   }`}
                   placeholder="Please write at least 20 characters detailing your request requirements..."
                 />
@@ -303,19 +313,16 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
                 className="w-full group relative inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-accent text-white px-8 text-sm font-semibold transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-accent/25"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  {isSubmitting ? "Sending message..." : "Send Message"}
+                  {isSubmitting ? 'Sending message...' : 'Send Message'}
                   {!isSubmitting && (
                     <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   )}
                 </span>
               </button>
-
             </form>
           </GlassCard>
         </div>
-
       </div>
-
     </section>
   );
 }
