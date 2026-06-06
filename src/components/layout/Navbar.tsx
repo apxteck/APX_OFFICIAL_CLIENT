@@ -33,7 +33,7 @@ export function Navbar() {
         <div className="px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">
-            <div className="relative w-10 h-10 flex items-center justify-center transition-transform group-hover:scale-105">
+            <div className="relative w-20 h-8 flex items-center justify-center transition-transform group-hover:scale-105">
               <Image
                 src="/APXTeck.png"
                 alt="APXTeck Logo"
@@ -41,18 +41,17 @@ export function Navbar() {
                 className="object-contain drop-shadow-[0_0_15px_rgba(14,165,233,0.3)]"
               />
             </div>
-            <span className="text-xl font-bold tracking-tight hidden sm:block">APXTeck</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <Link href="/about" className="hover:text-accent transition-colors">
-              About
-            </Link>
             <Link href="/services" className="hover:text-accent transition-colors">
               Services
             </Link>
             <Link href="/portfolio" className="hover:text-accent transition-colors">
               Portfolio
+            </Link>
+            <Link href="/about" className="hover:text-accent transition-colors">
+              About
             </Link>
             <Link href="/insights-news" className="hover:text-accent transition-colors">
               Insights & News
@@ -91,13 +90,6 @@ export function Navbar() {
             className="md:hidden absolute top-full left-0 right-0 mt-4 p-4 glass-panel rounded-3xl flex flex-col gap-4 shadow-xl"
           >
             <Link
-              href="/about"
-              onClick={() => setIsOpen(false)}
-              className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
-            >
-              About
-            </Link>
-            <Link
               href="/services"
               onClick={() => setIsOpen(false)}
               className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
@@ -110,6 +102,13 @@ export function Navbar() {
               className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
             >
               Portfolio
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setIsOpen(false)}
+              className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
+            >
+              About
             </Link>
             <Link
               href="/insights-news"

@@ -113,14 +113,14 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
               <Mail className="w-5 h-5 text-accent shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-sm">Write to Us</h4>
-                <p className="text-xs text-foreground/60 mt-1">hello@apxteck.com</p>
+                <p className="text-xs text-foreground/60 mt-1">info@apxteck.com</p>
               </div>
             </div>
             <div className="p-5 rounded-2xl bg-foreground/[0.01] border border-glass-border flex gap-3">
               <Phone className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-sm">Call Our Office</h4>
-                <p className="text-xs text-foreground/60 mt-1">+91 98765 43210</p>
+                <p className="text-xs text-foreground/60 mt-1">+91 94052 82582</p>
               </div>
             </div>
             <div className="p-5 rounded-2xl bg-foreground/[0.01] border border-glass-border flex gap-3 sm:col-span-2">
@@ -128,8 +128,7 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
               <div>
                 <h4 className="font-bold text-sm">Business Address</h4>
                 <p className="text-xs text-foreground/60 mt-1">
-                  102, Technology Innovation Incubator, Infotech Park, Hinjawadi Phase 1, Pune, MH,
-                  India
+                  Flat No. 24, 3rd Floor, Balaji Residency Dighe, Manaji Nagar, Narhe, Pune. 411041
                 </p>
               </div>
             </div>
@@ -138,7 +137,7 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
           {/* Map Embed */}
           <div className="w-full h-64 rounded-3xl overflow-hidden border border-glass-border shadow-inner">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15127.886071850125!2d73.72970597321289!3d18.5753063546706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1m2s0x3bc2bbc10d8fa093%3A0xc3cf02b98218a0!2sHinjawadi%20Phase%201%2C%20Hinjawadi%2C%20Pune%2C%20Maharashtra%20411057!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+              src="https://maps.google.com/maps?q=Balaji%20Residency%20Dighe,%20Manaji%20Nagar,%20Narhe,%20Pune%20411041&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -275,11 +274,11 @@ export function ContactPageSection({ services }: ContactPageSectionProps) {
                 </label>
                 <select
                   {...register('serviceInterest')}
-                  className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80 dark:bg-zinc-950"
+                  className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80"
                 >
-                  <option value="">Select a service category</option>
+                  <option value="" className="bg-background text-foreground">Select a service category</option>
                   {services.map((service) => (
-                    <option key={service.id} value={service.name}>
+                    <option key={service.id} value={service.name} className="bg-background text-foreground">
                       {service.name}
                     </option>
                   ))}

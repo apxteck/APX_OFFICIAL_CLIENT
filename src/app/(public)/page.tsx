@@ -59,15 +59,15 @@ export default function Home() {
     '@type': 'LocalBusiness',
     name: 'APXTeck',
     image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3',
-    telephone: '+919876543210',
-    email: 'hello@apxteck.com',
+    telephone: '+919405282582',
+    email: 'info@apxteck.com',
     priceRange: '₹₹',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Tech Park',
+      streetAddress: 'Flat No. 24, 3rd Floor, Balaji Residency Dighe, Manaji Nagar, Narhe',
       addressLocality: 'Pune',
       addressRegion: 'Maharashtra',
-      postalCode: '411001',
+      postalCode: '411041',
       addressCountry: 'IN',
     },
   };
@@ -75,7 +75,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
       <MouseSpotlight />
-      <FloatingWhatsApp phoneNumber="919876543210" />
+      <FloatingWhatsApp phoneNumber="919405282582" />
 
       {/* Inject Structured Data */}
       <script

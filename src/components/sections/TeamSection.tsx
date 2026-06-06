@@ -116,7 +116,7 @@ export function TeamSection() {
                           </svg>
                         </a>
                         <a
-                          href="mailto:hello@apxteck.com"
+                          href="mailto:info@apxteck.com"
                           className="w-8 h-8 rounded-full glass-panel border border-glass-border flex items-center justify-center text-foreground/60 hover:text-accent hover:border-accent/40 active:scale-95 transition-all"
                           aria-label={`${member.fullName} Email`}
                         >

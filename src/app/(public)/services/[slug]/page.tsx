@@ -97,7 +97,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     provider: {
       '@type': 'LocalBusiness',
       name: 'APXTeck',
-      telephone: '+919876543210',
+      telephone: '+919405282582',
     },
     offers: service.price
       ? {

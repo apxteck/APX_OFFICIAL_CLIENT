@@ -346,12 +346,12 @@ export function ServiceDetailClient({
                     {field.fieldType === 'DROPDOWN' && (
                       <select
                         {...register(field.fieldKey, { required: field.isRequired })}
-                        className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent dark:bg-zinc-950"
+                        className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent"
                       >
-                        <option value="">{field.placeholder || 'Select option'}</option>
+                        <option value="" className="bg-background text-foreground">{field.placeholder || 'Select option'}</option>
                         {Array.isArray(field.options) &&
                           field.options.map((opt: string, oIdx: number) => (
-                            <option key={oIdx} value={opt}>
+                            <option key={oIdx} value={opt} className="bg-background text-foreground">
                               {opt}
                             </option>
                           ))}
@@ -379,7 +379,7 @@ export function ServiceDetailClient({
                       <input
                         type="date"
                         {...register(field.fieldKey, { required: field.isRequired })}
-                        className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent dark:bg-zinc-950"
+                        className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent"
                       />
                     )}
 

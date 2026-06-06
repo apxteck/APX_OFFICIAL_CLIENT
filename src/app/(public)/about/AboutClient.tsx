@@ -54,7 +54,7 @@ export function AboutClient() {
   return (
     <main className="flex-1 pt-24 relative overflow-hidden">
       <MouseSpotlight />
-      <FloatingWhatsApp phoneNumber="919876543210" />
+      <FloatingWhatsApp phoneNumber="919405282582" />
 
       {/* Hero Section */}
       <section className="relative py-32 flex items-center justify-center min-h-[60vh]">
@@ -145,7 +145,7 @@ export function AboutClient() {
                 alt="Team collaborating" 
                 className="object-cover w-full h-full opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
               
               {/* Floating Stat inside image */}
               <motion.div 
@@ -235,13 +235,13 @@ export function AboutClient() {
               alt="Pune Headquarters" 
               className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent p-8 flex flex-col justify-end">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-8 flex flex-col justify-end">
               <div className="flex items-center gap-3 text-accent mb-2">
                 <Building2 className="w-5 h-5" />
                 <span className="font-bold tracking-widest uppercase text-xs">Headquarters</span>
               </div>
-              <h3 className="text-2xl font-bold">Pune, Maharashtra</h3>
-              <p className="text-foreground/70 mt-2 text-sm max-w-md">Our central hub where design and engineering converge. Designed for collaborative sprints and deep focus work.</p>
+              <h3 className="text-2xl font-bold text-white">Pune, Maharashtra</h3>
+              <p className="text-white/80 mt-2 text-sm max-w-md">Our central hub where design and engineering converge. Designed for collaborative sprints and deep focus work.</p>
             </div>
           </motion.div>
 

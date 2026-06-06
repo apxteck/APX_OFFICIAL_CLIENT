@@ -122,7 +122,7 @@ export function ContactCTASection() {
                     </div>
                     <div>
                       <p className="font-bold text-sm text-foreground">Email Us</p>
-                      <p className="text-foreground/60 text-sm">hello@apxteck.com</p>
+                      <p className="text-foreground/60 text-sm">info@apxteck.com</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -131,7 +131,7 @@ export function ContactCTASection() {
                     </div>
                     <div>
                       <p className="font-bold text-sm text-foreground">Call Us</p>
-                      <p className="text-foreground/60 text-sm">+91 98765 43210</p>
+                      <p className="text-foreground/60 text-sm">+91 94052 82582</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -141,7 +141,7 @@ export function ContactCTASection() {
                     <div>
                       <p className="font-bold text-sm text-foreground">Visit Us</p>
                       <p className="text-foreground/60 text-sm">
-                        Tech Park, Pune, Maharashtra, India
+                        Flat No. 24, 3rd Floor, Balaji Residency Dighe, Manaji Nagar, Narhe, Pune. 411041
                       </p>
                     </div>
                   </div>
@@ -253,13 +253,13 @@ export function ContactCTASection() {
                   </label>
                   <select
                     {...register('serviceInterest')}
-                    className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80 dark:bg-zinc-950"
+                    className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80"
                   >
-                    <option value="" className="text-foreground/50">
+                    <option value="" className="text-foreground/50 bg-background">
                       Select a service of interest
                     </option>
                     {services.map((service) => (
-                      <option key={service.id} value={service.name} className="text-foreground">
+                      <option key={service.id} value={service.name} className="text-foreground bg-background">
                         {service.name}
                       </option>
                     ))}

@@ -65,7 +65,7 @@ export function ServicesClient() {
   return (
     <>
       <MouseSpotlight />
-      <FloatingWhatsApp phoneNumber="919876543210" />
+      <FloatingWhatsApp phoneNumber="919405282582" />
 
       {/* Hero Section */}
       <section className="relative py-32 flex items-center justify-center min-h-[50vh] overflow-hidden">
