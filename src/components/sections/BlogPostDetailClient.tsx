@@ -163,7 +163,7 @@ export function BlogPostDetailClient({
           Home
         </Link>
         <ChevronRight className="w-3.5 h-3.5" />
-        <Link href="/explore-news" className="hover:text-accent transition-colors">
+        <Link href="/insights-news" className="hover:text-accent transition-colors">
           Explore News
         </Link>
         <ChevronRight className="w-3.5 h-3.5" />
@@ -332,7 +332,7 @@ export function BlogPostDetailClient({
               <div className="p-6 rounded-2xl border border-glass-border bg-white/[0.01] text-center text-xs space-y-2">
                 <p className="text-foreground/50">You must be signed in to post comments.</p>
                 <Link
-                  href={`/login?redirect=/explore-news/${post.slug}`}
+                  href={`/login?redirect=/insights-news/${post.slug}`}
                   className="inline-block text-accent font-semibold hover:underline"
                 >
                   Sign In to Comment →
@@ -403,7 +403,7 @@ export function BlogPostDetailClient({
               <h4 className="font-bold text-sm mb-4">Related Insights</h4>
               <div className="space-y-4">
                 {relatedPosts.map((r) => (
-                  <Link key={r.id} href={`/explore-news/${r.slug}`} className="block group">
+                  <Link key={r.id} href={`/insights-news/${r.slug}`} className="block group">
                     <div className="space-y-1">
                       <h5 className="font-bold text-xs text-foreground group-hover:text-accent transition-colors line-clamp-2 leading-snug">
                         {r.title}

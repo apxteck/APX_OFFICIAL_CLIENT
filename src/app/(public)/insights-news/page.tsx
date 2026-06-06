@@ -3,8 +3,10 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { AdBanner } from '@/components/ui/AdBanner';
 import { BlogListingSection } from '@/components/sections/BlogListingSection';
+import { TechStackMarquee } from '@/components/sections/TechStackMarquee';
 import { api } from '@/lib/axios';
 import { BlogPost } from '@/app/types/blog.types';
+import { ExploreNewsClient } from './ExploreNewsClient';
 
 export const revalidate = 60;
 
@@ -16,12 +18,12 @@ export const metadata: Metadata = {
     title: 'IT Insights & News — APXTECK Blog',
     description:
       "Stay updated with APXTeck's technical news, Next.js optimization guides, UI/UX trends, and SEO tutorials built for Indian business owners.",
-    url: 'https://apxteck.com/explore-news',
+    url: 'https://apxteck.com/insights-news',
     siteName: 'APXTeck',
     type: 'website',
   },
   alternates: {
-    canonical: 'https://apxteck.com/explore-news',
+    canonical: 'https://apxteck.com/insights-news',
   },
 };
 
@@ -38,7 +40,7 @@ export default async function BlogListingPage() {
     '@type': 'Blog',
     name: 'APXTeck Blog',
     description: 'IT Insights and updates for growing Indian businesses.',
-    url: 'https://apxteck.com/explore-news',
+    url: 'https://apxteck.com/insights-news',
     publisher: {
       '@type': 'Organization',
       name: 'APXTeck',
@@ -54,39 +56,36 @@ export default async function BlogListingPage() {
 
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20">
-        {/* Page Hero */}
-        <section className="relative py-16 overflow-hidden flex items-center justify-center">
-          <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 via-transparent to-background -z-10" />
+      <main className="flex-1 pt-24 pb-20 overflow-hidden">
+        
+        {/* Animated Hero and Knowledge Hub Focus (Client component) */}
+        <ExploreNewsClient />
 
-          <div className="max-w-7xl mx-auto px-6 relative z-10 text-center space-y-4">
-            <div className="flex justify-center items-center gap-2 text-xs text-foreground/50 font-medium">
-              <Link href="/" className="hover:text-accent transition-colors">
-                Home
-              </Link>
-              <span>/</span>
-              <span className="text-foreground/80">Explore News</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-              Explore News & Insights
-            </h1>
-            <p className="text-foreground/70 max-w-2xl mx-auto text-base">
-              Articles and guidelines to help you build modern designs, scale system code, and rank
-              high.
-            </p>
-          </div>
-        </section>
+        <div className="max-w-7xl mx-auto px-6 mb-8 text-center">
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
+        </div>
 
-        {/* Ad Slot Top */}
-        <AdBanner placement="BLOG_LIST_TOP" />
+        {/* Ad Slot Top (Centered before Blog list) */}
+        <div className="max-w-7xl mx-auto px-6 mb-12 flex justify-center">
+          <AdBanner placement="BLOG_LIST_TOP" />
+        </div>
 
         {/* Client Side Blog Grid with debounced filters and pagination */}
+        {/* (This component internally renders BLOG_LIST_MID ads) */}
         <BlogListingSection initialBlogs={initialBlogs} />
+
+        {/* Ad Slot Bottom (After Blog list, before Marquee) */}
+        <div className="max-w-7xl mx-auto px-6 mt-16 mb-8 flex justify-center">
+          <AdBanner placement="BLOG_LIST_BOTTOM" />
+        </div>
+
+        {/* Tech Stack Marquee at the bottom */}
+        <div className="mt-12">
+          <TechStackMarquee />
+        </div>
       </main>
 
       <Footer />
     </div>
   );
 }
-
-import Link from 'next/link';

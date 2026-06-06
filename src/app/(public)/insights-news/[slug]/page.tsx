@@ -38,14 +38,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       openGraph: {
         title: `${post.title} — APXTECK`,
         description: post.excerpt || `Read our technical article: ${post.title}`,
-        url: `https://apxteck.com/explore-news/${slug}`,
+        url: `https://apxteck.com/insights-news/${slug}`,
         siteName: 'APXTeck',
         type: 'article',
         publishedTime: post.publishedAt || undefined,
         images: post.coverImageUrl ? [{ url: post.coverImageUrl }] : undefined,
       },
       alternates: {
-        canonical: `https://apxteck.com/explore-news/${slug}`,
+        canonical: `https://apxteck.com/insights-news/${slug}`,
       },
     };
   } catch {

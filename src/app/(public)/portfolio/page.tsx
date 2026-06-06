@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { PortfolioListingSection } from '@/components/sections/PortfolioListingSection';
+import { TechStackMarquee } from '@/components/sections/TechStackMarquee';
 import { api } from '@/lib/axios';
 import { Portfolio } from '@/app/types/portfolio.types';
-import Link from 'next/link';
+import { PortfolioClient } from './PortfolioClient';
 
 export const revalidate = 300;
 
@@ -60,31 +61,22 @@ export default async function PortfolioListingPage() {
 
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20">
-        {/* Page Hero */}
-        <section className="relative py-16 overflow-hidden flex items-center justify-center">
-          <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-transparent to-background -z-10" />
+      <main className="flex-1 pt-24 pb-20 overflow-hidden">
+        
+        {/* Animated Hero and Philosophy section (Client component) */}
+        <PortfolioClient />
 
-          <div className="max-w-7xl mx-auto px-6 relative z-10 text-center space-y-4">
-            <div className="flex justify-center items-center gap-2 text-xs text-foreground/50 font-medium">
-              <Link href="/" className="hover:text-accent transition-colors">
-                Home
-              </Link>
-              <span>/</span>
-              <span className="text-foreground/80">Portfolio</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-              Case Studies & Portfolios
-            </h1>
-            <p className="text-foreground/75 max-w-2xl mx-auto text-base">
-              A detailed look at challenging problems we solved, technical architectures we
-              deployed, and direct business metrics.
-            </p>
-          </div>
-        </section>
+        <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
+        </div>
 
         {/* Client side listing list with tabs */}
         <PortfolioListingSection initialPortfolios={portfolios} />
+
+        {/* Tech Stack Marquee at the bottom */}
+        <div className="mt-20">
+          <TechStackMarquee />
+        </div>
       </main>
 
       <Footer />

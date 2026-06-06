@@ -162,7 +162,7 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                     transition={{ duration: 0.3 }}
                     className="h-full"
                   >
-                    <Link href={`/explore-news/${post.slug}`} className="block group h-full">
+                    <Link href={`/insights-news/${post.slug}`} className="block group h-full">
                       <GlassCard className="!p-0 overflow-hidden h-full flex flex-col hover:border-white/20 hover:shadow-2xl transition-all duration-300">
                         <div className="relative h-48 w-full overflow-hidden bg-accent/5">
                           {post.coverImageUrl && (

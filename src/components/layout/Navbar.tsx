@@ -27,7 +27,7 @@ export function Navbar() {
     >
       <div
         className={`w-full max-w-5xl rounded-full border transition-all duration-300 shadow-2xl ${
-          isScrolled ? 'glass-panel' : 'bg-transparent border-transparent'
+          isScrolled ? 'glass-panel !backdrop-blur-3xl' : 'bg-transparent border-transparent'
         }`}
       >
         <div className="px-6 h-16 flex items-center justify-between">
@@ -54,8 +54,8 @@ export function Navbar() {
             <Link href="/portfolio" className="hover:text-accent transition-colors">
               Portfolio
             </Link>
-            <Link href="/explore-news" className="hover:text-accent transition-colors">
-              Explore & News
+            <Link href="/insights-news" className="hover:text-accent transition-colors">
+              Insights & News
             </Link>
             <Link href="/contact" className="hover:text-accent transition-colors">
               Contact
@@ -112,11 +112,11 @@ export function Navbar() {
               Portfolio
             </Link>
             <Link
-              href="/explore-news"
+              href="/insights-news"
               onClick={() => setIsOpen(false)}
               className="p-3 text-center rounded-xl hover:bg-white/10 font-medium"
             >
-              Explore & News
+              Insights & News
             </Link>
             <Link
               href="/contact"

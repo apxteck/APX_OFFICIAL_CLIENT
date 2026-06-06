@@ -106,7 +106,7 @@ export function BlogPreviewSection() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
               >
-                <Link href={`/explore-news/${post.slug}`} className="block group h-full">
+                <Link href={`/insights-news/${post.slug}`} className="block group h-full">
                   <GlassCard className="!p-0 overflow-hidden h-full flex flex-col hover:border-white/20 hover:shadow-2xl transition-all duration-300">
                     {/* Cover Image */}
                     <div className="relative h-52 w-full overflow-hidden">

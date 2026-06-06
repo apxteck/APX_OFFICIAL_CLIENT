@@ -3,9 +3,10 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { AdBanner } from '@/components/ui/AdBanner';
 import { ServicesListingSection } from '@/components/sections/ServicesListingSection';
+import { TechStackMarquee } from '@/components/sections/TechStackMarquee';
 import { api } from '@/lib/axios';
 import { Service } from '@/app/types/service.types';
-import Link from 'next/link';
+import { ServicesClient } from './ServicesClient';
 
 export const revalidate = 60;
 
@@ -82,31 +83,25 @@ export default async function ServicesListingPage() {
 
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20">
-        {/* Page Hero */}
-        <section className="relative py-20 overflow-hidden flex items-center justify-center">
-          <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-background -z-10" />
-          <div className="max-w-7xl mx-auto px-6 relative z-10 text-center space-y-4">
-            <div className="flex justify-center items-center gap-2 text-xs text-foreground/50 font-medium">
-              <Link href="/" className="hover:text-accent transition-colors">
-                Home
-              </Link>
-              <span>/</span>
-              <span className="text-foreground/80">Services</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">Our Services</h1>
-            <p className="text-foreground/75 max-w-2xl mx-auto text-base">
-              Explore our range of high-performance design, system architecture, and optimization
-              services crafted for Indian SMBs.
-            </p>
-          </div>
-        </section>
+      <main className="flex-1 pt-24 pb-20 overflow-hidden">
+        
+        {/* Animated Hero and Advantage section (Client component) */}
+        <ServicesClient />
+
+        <div className="max-w-7xl mx-auto px-6 mb-8 text-center">
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
+        </div>
 
         {/* Ad Slot Top (above listing grid) */}
         <AdBanner placement="BLOG_LIST_TOP" />
 
-        {/* Dynamic Service Grid Section */}
+        {/* Dynamic Service Grid Section (Client component but data passed from server) */}
         <ServicesListingSection initialServices={services} />
+
+        {/* Tech Stack Marquee at the bottom */}
+        <div className="mt-20">
+          <TechStackMarquee />
+        </div>
       </main>
 
       <Footer />

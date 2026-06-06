@@ -11,6 +11,10 @@ import { BlogPreviewSection } from '@/components/sections/BlogPreviewSection';
 import { FaqSection } from '@/components/sections/FaqSection';
 import { ContactCTASection } from '@/components/sections/ContactCTASection';
 import { AdBanner } from '@/components/ui/AdBanner';
+import { TechStackMarquee } from '@/components/sections/TechStackMarquee';
+import { ProcessSection } from '@/components/sections/ProcessSection';
+import { MouseSpotlight } from '@/components/ui/MouseSpotlight';
+import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
 
 // Config page for Incremental Static Regeneration (ISR)
 export const revalidate = 60;
@@ -70,6 +74,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+      <MouseSpotlight />
+      <FloatingWhatsApp phoneNumber="919876543210" />
+
       {/* Inject Structured Data */}
       <script
         type="application/ld+json"
@@ -85,9 +92,13 @@ export default function Home() {
       <main className="flex-1">
         <HeroSection />
 
+        <TechStackMarquee />
+
         <ServicesSection />
 
         <WhyChooseUsSection />
+
+        <ProcessSection />
 
         <StatsSection />
 

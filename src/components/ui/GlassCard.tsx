@@ -24,8 +24,10 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
         {/* Optional animated glow effect on hover */}
         {glowColor && (
           <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-3xl pointer-events-none"
-            style={{ backgroundColor: glowColor }}
+            className="absolute inset-0 opacity-0 group-hover:opacity-[0.15] transition-opacity duration-500 pointer-events-none"
+            style={{ 
+              background: `radial-gradient(circle at 50% 50%, ${glowColor}, ${glowColor}00 70%)` 
+            }}
           />
         )}
 
