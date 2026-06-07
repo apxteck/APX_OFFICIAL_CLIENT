@@ -28,7 +28,49 @@ const deliveryPhilosophy = [
   },
 ];
 
+const typewriterWords = [
+  "Engineered for Growth",
+  "Designed for Scale",
+  "Built for Performance",
+  "Optimized for Impact"
+];
+
+function useTypewriter(words: string[], typingSpeed = 100, deletingSpeed = 50, pauseDelay = 2000) {
+  const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+
+  useEffect(() => {
+    const currentWord = words[loopNum % words.length];
+    let timeout: NodeJS.Timeout;
+
+    if (isDeleting) {
+      timeout = setTimeout(() => {
+        setText(currentWord.substring(0, text.length - 1));
+        if (text.length <= 1) {
+          setIsDeleting(false);
+          setLoopNum(loopNum + 1);
+        }
+      }, deletingSpeed);
+    } else {
+      timeout = setTimeout(() => {
+        setText(currentWord.substring(0, text.length + 1));
+        if (text.length === currentWord.length) {
+          timeout = setTimeout(() => setIsDeleting(true), pauseDelay);
+        }
+      }, typingSpeed);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [text, isDeleting, loopNum, words, typingSpeed, deletingSpeed, pauseDelay]);
+
+  const currentFullWord = words[loopNum % words.length];
+
+  return { text, currentFullWord };
+}
+
 export function PortfolioClient() {
+  const { text: typewrittenText, currentFullWord } = useTypewriter(typewriterWords, 100, 50, 2500);
   const [phraseIndex, setPhraseIndex] = useState(0);
   const heroPhrases = [
     "A detailed look at challenging problems we solved and technical architectures we deployed.",
@@ -75,15 +117,39 @@ export function PortfolioClient() {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tight"
+            className="text-5xl md:text-7xl font-extrabold tracking-tight flex flex-col items-center gap-2"
           >
-            Our Best Work <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-cyan-400 to-emerald-400">
-              Engineered for Growth
-            </span>
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+            >
+              Our Best Work
+            </motion.span>
+            
+            <motion.span
+              initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              transition={{ delay: 0.5, duration: 0.8, type: "spring", bounce: 0.4 }}
+              className="flex items-center justify-center min-h-[1.2em] text-[7vw] sm:text-4xl md:text-5xl lg:text-7xl whitespace-nowrap"
+            >
+              <span className="relative flex items-center justify-center">
+                {/* Invisible placeholder for exact width of the CURRENT word to keep it perfectly centered */}
+                <span className="opacity-0 pointer-events-none select-none">{currentFullWord}</span>
+                
+                {/* Typing text overlay */}
+                <span className="absolute left-0 flex items-center whitespace-nowrap">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-cyan-400 to-emerald-400">
+                    {typewrittenText}
+                  </span>
+                  <motion.span
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ repeat: Infinity, duration: 0.8 }}
+                    className="w-1.5 md:w-2 h-[0.8em] bg-emerald-400 ml-1 md:ml-2 rounded-sm shrink-0 shadow-[0_0_12px_rgba(52,211,153,0.7)]"
+                  />
+                </span>
+              </span>
+            </motion.span>
           </motion.h1>
 
           <motion.div 

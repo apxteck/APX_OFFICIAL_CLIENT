@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, ChevronLeft, ChevronRight, Play, Volume2, VolumeX } from 'lucide-react';
 import { api } from '@/lib/axios';
@@ -13,6 +13,11 @@ export function HeroSection() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+
+  const { scrollY } = useScroll();
+  const yBg = useTransform(scrollY, [0, 1000], [0, 300]);
+  const yContent = useTransform(scrollY, [0, 600], [0, 150]);
+  const opacityContent = useTransform(scrollY, [0, 400], [1, 0]);
 
   useEffect(() => {
     async function loadBanners() {
@@ -76,7 +81,7 @@ export function HeroSection() {
       <div className="absolute bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-purple-500/15 rounded-full blur-[150px] pointer-events-none z-10 animate-pulse delay-1000" />
 
       {/* Main Media Slider */}
-      <div className="absolute inset-0 w-full h-full">
+      <motion.div style={{ y: yBg }} className="absolute inset-0 w-full h-full">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentBanner.id}
@@ -117,10 +122,10 @@ export function HeroSection() {
             )}
           </motion.div>
         </AnimatePresence>
-      </div>
+      </motion.div>
 
       {/* Foreground Content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center">
+      <motion.div style={{ y: yContent, opacity: opacityContent }} className="relative z-20 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-8 flex flex-col items-start gap-6 pt-16">
             <AnimatePresence mode="wait">
@@ -181,7 +186,7 @@ export function HeroSection() {
             </AnimatePresence>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Slide Navigation Controls */}
       {banners.length > 1 && (

@@ -15,6 +15,7 @@ import { TechStackMarquee } from '@/components/sections/TechStackMarquee';
 import { ProcessSection } from '@/components/sections/ProcessSection';
 import { MouseSpotlight } from '@/components/ui/MouseSpotlight';
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
+import { ScrollProgress } from '@/components/ui/ScrollProgress';
 
 // Config page for Incremental Static Regeneration (ISR)
 export const revalidate = 60;

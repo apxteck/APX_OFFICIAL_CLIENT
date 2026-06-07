@@ -71,7 +71,16 @@ export function ProcessSection() {
 
         <div className="relative">
           {/* Central Connecting Line (Visible on md+) */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-glass-border -translate-x-1/2" />
+          <motion.div 
+            initial={{ height: 0 }}
+            whileInView={{ height: "100%" }}
+            viewport={{ once: true }}
+            transition={{ duration: 2, ease: "easeInOut" }}
+            className="hidden md:block absolute left-1/2 top-0 w-px bg-gradient-to-b from-transparent via-accent/50 to-transparent -translate-x-1/2" 
+          />
+          
+          {/* Faint static background line so it doesn't look completely empty before animation */}
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-glass-border/30 -translate-x-1/2 -z-10" />
 
           <div className="space-y-12 md:space-y-24">
             {processSteps.map((step, index) => {
@@ -99,7 +108,13 @@ export function ProcessSection() {
                     <div className="relative h-full bg-background/95 backdrop-blur-2xl border border-white/5 p-8 rounded-[23px] flex flex-col z-10 hover:bg-background/90 transition-colors duration-300">
                       
                       {/* Huge Background Number */}
-                      <div className="absolute right-4 top-4 text-7xl font-extrabold text-foreground/[0.03] select-none pointer-events-none group-hover:text-foreground/[0.05] transition-colors">
+                      <div 
+                        className="absolute right-4 top-4 text-7xl md:text-8xl font-extrabold select-none pointer-events-none transition-all duration-500 opacity-20 group-hover:opacity-40 group-hover:scale-110 origin-top-right"
+                        style={{
+                          WebkitTextStroke: `2px ${step.color}`,
+                          color: 'transparent'
+                        }}
+                      >
                         {step.id}
                       </div>
                       

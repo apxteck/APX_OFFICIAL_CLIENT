@@ -46,7 +46,44 @@ const valuePropositions = [
   },
 ];
 
+const typewriterWords = ["Delivered", "Accelerated", "Engineered", "Mastered"];
+
+function useTypewriter(words: string[], typingSpeed = 120, deletingSpeed = 80, pauseDelay = 2000) {
+  const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+
+  useEffect(() => {
+    const currentWord = words[loopNum % words.length];
+    let timeout: NodeJS.Timeout;
+
+    if (isDeleting) {
+      timeout = setTimeout(() => {
+        setText(currentWord.substring(0, text.length - 1));
+        if (text.length <= 1) {
+          setIsDeleting(false);
+          setLoopNum(loopNum + 1);
+        }
+      }, deletingSpeed);
+    } else {
+      timeout = setTimeout(() => {
+        setText(currentWord.substring(0, text.length + 1));
+        if (text.length === currentWord.length) {
+          timeout = setTimeout(() => setIsDeleting(true), pauseDelay);
+        }
+      }, typingSpeed);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [text, isDeleting, loopNum, words, typingSpeed, deletingSpeed, pauseDelay]);
+
+  const currentFullWord = words[loopNum % words.length];
+
+  return { text, currentFullWord };
+}
+
 export function ServicesClient() {
+  const { text: typewrittenText, currentFullWord } = useTypewriter(typewriterWords, 100, 50, 2500);
   const [phraseIndex, setPhraseIndex] = useState(0);
   const heroPhrases = [
     "Explore our comprehensive suite of high-performance design and system architecture.",
@@ -90,15 +127,38 @@ export function ServicesClient() {
           </motion.div>
           
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tight"
+            className="text-5xl md:text-7xl font-extrabold tracking-tight flex flex-col items-center gap-2"
           >
-            Digital Transformation <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-purple-500 to-pink-500">
-              Delivered
-            </span>
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+            >
+              Digital Transformation
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              transition={{ delay: 0.5, duration: 0.8, type: "spring", bounce: 0.4 }}
+              className="flex items-center justify-center min-h-[1.2em] text-[7vw] sm:text-4xl md:text-5xl lg:text-7xl whitespace-nowrap"
+            >
+              <span className="relative flex items-center justify-center">
+                {/* Invisible placeholder for exact width of the CURRENT word to keep it perfectly centered */}
+                <span className="opacity-0 pointer-events-none select-none whitespace-nowrap">{currentFullWord}</span>
+                
+                {/* Typing text overlay */}
+                <span className="absolute left-0 flex items-center whitespace-nowrap">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-purple-500 to-pink-500">
+                    {typewrittenText}
+                  </span>
+                  <motion.span
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ repeat: Infinity, duration: 0.8 }}
+                    className="w-1.5 md:w-2 h-[0.8em] bg-accent ml-1 md:ml-2 rounded-sm shrink-0"
+                  />
+                </span>
+              </span>
+            </motion.span>
           </motion.h1>
           
           <motion.div 
@@ -119,6 +179,36 @@ export function ServicesClient() {
                 {heroPhrases[phraseIndex]}
               </motion.p>
             </AnimatePresence>
+          </motion.div>
+
+          {/* Highlights */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="flex flex-wrap justify-center gap-3 pt-6"
+          >
+            {[
+              { label: "100% In-House Engineers" },
+              { label: "24/7 Priority Support" },
+              { label: "Bank-Grade Security" },
+              { label: "Global Standards" }
+            ].map((point, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 + idx * 0.1, type: "spring", stiffness: 100 }}
+                whileHover={{ scale: 1.05 }}
+                className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/5 hover:bg-accent/10 border border-white/10 hover:border-accent/30 backdrop-blur-md shadow-lg hover:shadow-accent/20 text-sm font-semibold text-foreground/90 transition-all duration-300 cursor-default"
+              >
+                <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+                </span>
+                {point.label}
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>

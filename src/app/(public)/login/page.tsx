@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { api } from '@/lib/axios';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Validation schema
 const loginSchema = z.object({
@@ -196,9 +197,14 @@ function LoginContent() {
               <motion.div
                 initial={{ scale: 0.8 }}
                 animate={{ scale: 1 }}
-                className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent mb-4 shadow-[0_0_20px_rgba(14,165,233,0.2)]"
+                className="relative w-32 h-12 mb-6 drop-shadow-[0_0_15px_rgba(14,165,233,0.3)]"
               >
-                <LogIn className="w-7 h-7" />
+                <Image
+                  src="/APXTeck.png"
+                  alt="APXTeck Logo"
+                  fill
+                  className="object-contain"
+                />
               </motion.div>
               <h1 className="text-3xl font-extrabold tracking-tight">Welcome Back</h1>
               <p className="text-foreground/60 text-sm mt-2 text-center">
