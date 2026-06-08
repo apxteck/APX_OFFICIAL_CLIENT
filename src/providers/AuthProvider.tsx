@@ -21,6 +21,7 @@ interface User {
   email: string;
   phone: string;
   role: string;
+  permissions: Record<string, { canCreate: boolean; canRead: boolean; canUpdate: boolean; canDelete: boolean }>;
 }
 
 interface AuthContextType {
