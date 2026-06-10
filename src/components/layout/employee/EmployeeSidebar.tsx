@@ -97,7 +97,7 @@ export default function EmployeeSidebar() {
   // Filter NAV_GROUPS based on user permissions
   const filteredGroups = NAV_GROUPS.map(group => ({
     ...group,
-    items: group.items.filter(item => {
+    items: group.items.filter((item: any) => {
       if (item.alwaysShow) return true;
       // If the user has read access or any access to the module
       if (item.module && user?.permissions && user.permissions[item.module]) {

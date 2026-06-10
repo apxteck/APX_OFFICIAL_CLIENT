@@ -22,7 +22,7 @@ export default function ServiceRequestsPage() {
 
   const filteredRequests = requests.filter(req => 
     req.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    req.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    String(req.id).toLowerCase().includes(searchTerm.toLowerCase()) ||
     req.serviceType.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

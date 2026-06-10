@@ -37,7 +37,7 @@ export default function EditServicePage() {
             name: data.name || "",
             slug: data.slug || "",
             description: data.description || "",
-            price: data.price || "",
+            price: data.price ? String(data.price) : "",
             timeline: data.timeline || "",
             isActive: data.isActive ?? true,
             sortOrder: data.sortOrder || 0,

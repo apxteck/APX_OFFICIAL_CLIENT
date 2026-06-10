@@ -54,11 +54,11 @@ export default function ServiceFieldsBuilderPage() {
         servicesAdminService.getServiceById(serviceId),
         servicesAdminService.getServiceFields(serviceId)
       ]);
-      setService(serviceData);
+      setService(serviceData as unknown as Service);
       
       // Sort fields by sortOrder
       const sortedFields = [...(fieldsData || [])].sort((a, b) => a.sortOrder - b.sortOrder);
-      setFields(sortedFields);
+      setFields(sortedFields as unknown as ServiceField[]);
     } catch (error) {
       console.error("Failed to fetch data:", error);
       alert("Failed to load service fields.");

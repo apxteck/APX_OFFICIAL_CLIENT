@@ -7,7 +7,7 @@ export interface Payment {
   customerEmail: string;
   serviceId: number;
   serviceName: string;
-  serviceRequestId?: number;
+  serviceRequestId?: number | null;
   
   suggestedAmount: number | null;
   negotiatedAmount: number;
