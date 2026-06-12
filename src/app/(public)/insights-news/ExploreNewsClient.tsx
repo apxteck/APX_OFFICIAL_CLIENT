@@ -1,11 +1,12 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { MouseSpotlight } from '@/components/ui/MouseSpotlight';
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
+import Image from 'next/image';
 import { Newspaper, TrendingUp, MonitorSmartphone } from 'lucide-react';
+import { useInsightsHeroLogic } from './hooks/useInsightsHeroLogic';
 
 const knowledgeCategories = [
   {
@@ -28,63 +29,8 @@ const knowledgeCategories = [
   },
 ];
 
-const typewriterWords = [
-  "Industry Insights",
-  "Tech Trends & Updates",
-  "Deep Dive Articles",
-  "Digital Strategies"
-];
-
-function useTypewriter(words: string[], typingSpeed = 100, deletingSpeed = 50, pauseDelay = 2000) {
-  const [text, setText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
-
-  useEffect(() => {
-    const currentWord = words[loopNum % words.length];
-    let timeout: NodeJS.Timeout;
-
-    if (isDeleting) {
-      timeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length - 1));
-        if (text.length <= 1) {
-          setIsDeleting(false);
-          setLoopNum(loopNum + 1);
-        }
-      }, deletingSpeed);
-    } else {
-      timeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length + 1));
-        if (text.length === currentWord.length) {
-          timeout = setTimeout(() => setIsDeleting(true), pauseDelay);
-        }
-      }, typingSpeed);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [text, isDeleting, loopNum, words, typingSpeed, deletingSpeed, pauseDelay]);
-
-  const currentFullWord = words[loopNum % words.length];
-
-  return { text, currentFullWord };
-}
-
 export function ExploreNewsClient() {
-  const { text: typewrittenText, currentFullWord } = useTypewriter(typewriterWords);
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const heroPhrases = [
-    "Articles and guidelines to help you build modern designs and scale system architectures.",
-    "Learn how to rank high on global search engines and dominate your niche.",
-    "Deep dives into Next.js, backend scaling, and clean code principles.",
-    "Stay updated with industry tech trends and what they mean for your business."
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPhraseIndex((prev) => (prev + 1) % heroPhrases.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [heroPhrases.length]);
+  const { typewrittenText, currentFullWord, phraseIndex, heroPhrases } = useInsightsHeroLogic();
 
   return (
     <>
@@ -92,19 +38,25 @@ export function ExploreNewsClient() {
       <FloatingWhatsApp phoneNumber="919405282582" />
 
       {/* Animated Hero Section */}
-      <section className="relative py-32 flex items-center justify-center min-h-[50vh] overflow-hidden">
+      <section className="relative py-32 flex items-center justify-center min-h-[50vh] overflow-hidden" aria-labelledby="insights-hero-title">
         {/* Background Parallax Image */}
         <motion.div
           initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.15 }}
           transition={{ duration: 1.5, ease: 'easeOut' }}
-          className="absolute inset-0 bg-cover bg-center -z-20"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10" />
+          className="absolute inset-0 -z-20"
+        >
+          <Image
+            src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+            alt="APXTeck Insights and News Background"
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10" aria-hidden="true" />
 
         <div className="max-w-7xl mx-auto px-6 relative z-20 text-center space-y-8">
           <motion.div
@@ -117,6 +69,7 @@ export function ExploreNewsClient() {
           </motion.div>
 
           <motion.h1
+            id="insights-hero-title"
             className="text-5xl md:text-7xl font-extrabold tracking-tight flex flex-col items-center gap-2"
           >
             <motion.span
@@ -175,11 +128,12 @@ export function ExploreNewsClient() {
       </section>
 
       {/* Knowledge Hub Topics */}
-      <section className="py-20 relative max-w-7xl mx-auto px-6">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] pointer-events-none -z-10" />
+      <section className="py-20 relative max-w-7xl mx-auto px-6" aria-labelledby="knowledge-hub-title">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] pointer-events-none -z-10" aria-hidden="true" />
 
         <div className="text-center mb-16">
           <motion.h2
+            id="knowledge-hub-title"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -223,7 +177,7 @@ export function ExploreNewsClient() {
                       boxShadow: `0 4px 12px -3px ${val.color}26, 0 0 8px 1px ${val.color}1a`,
                     }}
                   >
-                    <Icon className="w-7 h-7" />
+                    <Icon className="w-7 h-7" aria-hidden="true" role="presentation" />
                   </div>
                   <h3 className="text-xl font-bold tracking-tight mb-3">{val.title}</h3>
                   <p className="text-foreground/60 text-sm leading-relaxed">{val.description}</p>

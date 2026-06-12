@@ -129,7 +129,7 @@ export default function TaskDetailPage() {
                 )}
               </h1>
               <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1">
-                Created by {task.createdByName || "Admin"} • {format(new Date(task.createdAt), "MMM dd, yyyy")}
+                Created by {task.createdBy?.fullName || "Admin"} • {format(new Date(task.createdAt), "MMM dd, yyyy")}
               </p>
             </div>
           </div>
@@ -228,10 +228,10 @@ export default function TaskDetailPage() {
                 <p className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Assignment</p>
                 <div className="flex items-center gap-3 bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 p-3 rounded-xl">
                   <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs border border-indigo-200 dark:border-indigo-500/20">
-                    {task.assignedToName ? task.assignedToName.charAt(0).toUpperCase() : '?'}
+                    {task.assignedTo?.fullName ? task.assignedTo.fullName.charAt(0).toUpperCase() : '?'}
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900 dark:text-white text-sm">{task.assignedToName || "Unassigned"}</p>
+                    <p className="font-bold text-gray-900 dark:text-white text-sm">{task.assignedTo?.fullName || "Unassigned"}</p>
                     <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Assigned User</p>
                   </div>
                 </div>

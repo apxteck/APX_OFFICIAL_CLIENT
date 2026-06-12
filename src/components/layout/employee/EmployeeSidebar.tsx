@@ -212,7 +212,7 @@ export default function EmployeeSidebar() {
                             animate={{ opacity: 1, width: "auto" }}
                             exit={{ opacity: 0, width: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="ml-3.5 text-[14px] whitespace-nowrap overflow-hidden"
+                            className="ml-3.5 text-[14px] whitespace-nowrap overflow-hidden text-ellipsis"
                           >
                             {link.name}
                           </motion.span>

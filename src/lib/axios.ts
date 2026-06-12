@@ -11,7 +11,7 @@ import { Testimonial } from '@/app/types/testimonial.types';
 import { TeamMember } from '@/app/types/user.types';
 
 export type MockApi = {
-  fetchAds: (...args: any[]) => Promise<Ad | null>;
+  fetchAds: (...args: any[]) => Promise<Ad[]>;
   fetchBlogComments: (...args: any[]) => Promise<BlogComment[]>;
   fetchBlogBySlug: (...args: any[]) => Promise<BlogPost | null>;
   fetchBlogs: (...args: any[]) => Promise<BlogPost[]>;
@@ -39,8 +39,8 @@ export type MockApi = {
   resendVerification: (...args: any[]) => Promise<any>;
   resetPassword: (...args: any[]) => Promise<any>;
   submitBlogComment: (...args: any[]) => Promise<any>;
-  submitEnquiry: (...args: any[]) => Promise<any>;
-  submitServiceRequest: (...args: any[]) => Promise<any>;
+  submitEnquiry: (data: any) => Promise<any>;
+  submitServiceRequest: (serviceId: number, formData: FormData) => Promise<any>;
   getMyRequests: (...args: any[]) => Promise<any>;
   getMyRequestById: (...args: any[]) => Promise<any>;
   getMyPayments: (...args: any[]) => Promise<any>;
@@ -87,16 +87,12 @@ export const api = {
     try {
       const url = placement ? `/advertisement/public?placement=${placement}` : '/advertisement/public';
       const response = await apiClient.get(url);
-      const ads = response.data?.data || [];
-      if (ads.length > 0) {
-        return ads[Math.floor(Math.random() * ads.length)];
-      }
-      return null;
+      return response.data?.data || [];
     } catch (error: any) {
       if (error?.response?.status !== 500 && error?.response?.status !== 404) {
         console.error('Failed to fetch ads:', error);
       }
-      return null;
+      return [];
     }
   },
   fetchStats: async () => ({} as unknown as StatsOverview),
@@ -243,14 +239,18 @@ export const api = {
       return { success: false, message: error.response?.data?.message || error.message };
     }
   },
-  submitEnquiry: async () => ({}),
+  submitEnquiry: async (data: any) => {
+    try {
+      const response = await apiClient.post('/enquiry', data);
+      return { success: response.data?.success, message: response.data?.message, data: response.data?.data };
+    } catch (error: any) {
+      console.error('Failed to submit enquiry:', error);
+      return { success: false, message: error.response?.data?.message || error.message };
+    }
+  },
   submitServiceRequest: async (serviceId: number, formData: FormData) => {
     try {
-      const response = await apiClient.post(`/service/request/create/${serviceId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await apiClient.post(`/service/request/create/${serviceId}`, formData);
       return { success: response.data?.success, message: response.data?.message, data: response.data?.data };
     } catch (error: any) {
       console.error('Failed to submit service request:', error);
@@ -286,11 +286,7 @@ export const api = {
   },
   updateMyRequest: async (id: number, formData: FormData) => {
     try {
-      const response = await apiClient.patch(`/service/request/my/update/${id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await apiClient.patch(`/service/request/my/update/${id}`, formData);
       return { success: response.data?.success, message: response.data?.message };
     } catch (error: any) {
       console.error('Failed to update request:', error);
@@ -302,6 +298,10 @@ export const api = {
       const response = await apiClient.get('/payment/my');
       return { success: true, data: response.data.data };
     } catch (error: any) {
+      if (error?.response?.status === 404) {
+        // Fallback mock if backend endpoint is not implemented yet
+        return { success: true, data: [] };
+      }
       console.error('Failed to fetch payments:', error);
       return { success: false, message: error.response?.data?.message || error.message };
     }

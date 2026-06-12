@@ -17,14 +17,30 @@ interface AdBannerProps {
 }
 
 export function AdBanner({ placement, className = '' }: AdBannerProps) {
-  const [ad, setAd] = useState<Ad | null>(null);
+  const [ads, setAds] = useState<Ad[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadAd() {
       try {
         const data = await api.fetchAds(placement);
-        setAd(data);
+        const fetchedAds = data || [];
+        
+        // Group by Ad Type to prevent mixing CLIENT and GOOGLE ads in the rotation
+        const clientAds = fetchedAds.filter((ad: Ad) => ad.adType === 'CLIENT');
+        const googleAds = fetchedAds.filter((ad: Ad) => ad.adType === 'GOOGLE');
+
+        let selectedGroup: Ad[] = [];
+        if (clientAds.length > 0 && googleAds.length > 0) {
+          selectedGroup = Math.random() > 0.5 ? clientAds : googleAds;
+        } else if (clientAds.length > 0) {
+          selectedGroup = clientAds;
+        } else {
+          selectedGroup = googleAds;
+        }
+
+        setAds(selectedGroup);
       } catch (err) {
         console.error(`Failed to load ad banner for ${placement}`, err);
       } finally {
@@ -33,6 +49,19 @@ export function AdBanner({ placement, className = '' }: AdBannerProps) {
     }
     loadAd();
   }, [placement]);
+
+  useEffect(() => {
+    // Only rotate CLIENT ads. GOOGLE ads manage their own rotation and 
+    // re-rendering Google script tags every 5 seconds causes errors.
+    if (ads.length > 1 && ads[0]?.adType === 'CLIENT') {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % ads.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [ads]);
+
+  const currentAd = ads[currentIndex] || null;
 
   return (
     <AnimatePresence mode="wait">
@@ -46,9 +75,9 @@ export function AdBanner({ placement, className = '' }: AdBannerProps) {
         >
           <div className={`w-full rounded-2xl bg-gray-100 dark:bg-white/5 animate-pulse border border-gray-200 dark:border-white/5 shadow-sm ${placement === 'BLOG_POST_SIDEBAR' ? 'h-[250px] md:h-[600px]' : 'h-[90px] md:h-[160px]'}`}></div>
         </motion.div>
-      ) : ad ? (
+      ) : currentAd ? (
         <motion.div
-          key="ad"
+          key={currentAd.id || 'ad'}
           initial={{ opacity: 0, y: 10, filter: 'blur(5px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -61,23 +90,23 @@ export function AdBanner({ placement, className = '' }: AdBannerProps) {
 
           {/* Glass Container */}
           <div className={`w-full h-auto rounded-2xl glass-panel border border-glass-border overflow-hidden flex items-center justify-center relative shadow-sm hover:shadow-lg hover:border-pink-500/20 transition-all duration-500 ${placement === 'BLOG_POST_SIDEBAR' ? 'min-h-[250px]' : 'min-h-[90px]'}`}>
-            {ad.adType === 'GOOGLE' && ad.adCode ? (
+            {currentAd.adType === 'GOOGLE' && currentAd.adCode ? (
               <div
                 className="w-full flex justify-center py-2"
-                dangerouslySetInnerHTML={{ __html: ad.adCode }}
+                dangerouslySetInnerHTML={{ __html: currentAd.adCode }}
               />
             ) : (
-              ad.bannerUrl && (
+              currentAd.bannerUrl && (
                 <a
-                  href={ad.targetUrl || '#'}
+                  href={currentAd.targetUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full block"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={ad.bannerUrl}
-                    alt={ad.clientName || 'APXTeck Sponsor Advertisement'}
+                    src={currentAd.bannerUrl}
+                    alt={currentAd.clientName || 'APXTeck Sponsor Advertisement'}
                     className={`w-full object-cover mx-auto transform group-hover:scale-[1.01] transition-transform duration-700 ${placement === 'BLOG_POST_SIDEBAR' ? 'h-full' : 'max-h-[160px]'}`}
                   />
                 </a>

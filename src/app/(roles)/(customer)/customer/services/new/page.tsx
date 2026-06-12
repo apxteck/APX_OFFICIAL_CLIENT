@@ -162,7 +162,7 @@ export default function AddNewServicePage() {
                           {service.name}
                         </h3>
                         {service.price && (
-                          <p className="text-xs text-gray-500 mt-1 font-medium">Starting at ${service.price}</p>
+                          <p className="text-xs text-gray-500 mt-1 font-medium">Starting at ₹{service.price}</p>
                         )}
                       </div>
                     </button>
@@ -238,9 +238,16 @@ export default function AddNewServicePage() {
                         ) : field.fieldType === 'FILE' ? (
                           <input 
                             type="file"
+                            accept="image/*,.pdf,.zip,.doc,.docx,.xls,.xlsx,.txt,.csv"
                             required={field.isRequired}
                             onChange={(e) => {
                               if (e.target.files && e.target.files[0]) {
+                                if (e.target.files[0].size > 50 * 1024 * 1024) {
+                                  setMessage({ type: 'error', text: `File "${e.target.files[0].name}" exceeds 50MB limit.` });
+                                  e.target.value = '';
+                                  return;
+                                }
+                                setMessage(null);
                                 handleInputChange(field.fieldKey, e.target.files[0], field.fieldType);
                               }
                             }}
@@ -263,9 +270,27 @@ export default function AddNewServicePage() {
                     <input 
                       type="file" 
                       multiple 
+                      accept="image/*,.pdf,.zip,.doc,.docx,.xls,.xlsx,.txt,.csv"
                       onChange={(e) => {
                         if (e.target.files) {
-                          setGenericFiles(prev => [...prev, ...Array.from(e.target.files!)]);
+                          const newFiles = Array.from(e.target.files!);
+                          const validFiles = newFiles.filter(f => f.size <= 50 * 1024 * 1024);
+                          
+                          if (validFiles.length < newFiles.length) {
+                             setMessage({ type: 'error', text: 'Some files exceed the 50MB limit and were not added.' });
+                          } else {
+                             setMessage(null);
+                          }
+
+                          setGenericFiles(prev => {
+                            // Filter out files that are already added based on name and size
+                            const uniqueNewFiles = validFiles.filter(newFile => 
+                              !prev.some(existingFile => 
+                                existingFile.name === newFile.name && existingFile.size === newFile.size
+                              )
+                            );
+                            return [...prev, ...uniqueNewFiles];
+                          });
                         }
                       }}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"

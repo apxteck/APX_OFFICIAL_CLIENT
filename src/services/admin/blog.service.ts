@@ -1,40 +1,13 @@
 import apiClient from '@/lib/api/axios';
 
-export type BlogPostStatus = "DRAFT" | "REVIEWED" | "PUBLISHED" | "REJECTED" | "UPDATED" | "REVIWED";
+import { 
+  BlogPostStatus, 
+  BlogCategory, 
+  AdminBlogPost as BlogPost, 
+  AdminBlogPostDetail as BlogPostDetail 
+} from '@/app/types/admin-blog.types';
 
-export interface BlogCategory {
-  id: string | number;
-  name: string;
-  slug: string;
-}
-
-export interface BlogPost {
-  id: string | number;
-  title: string;
-  slug: string;
-  status: BlogPostStatus;
-  category: any;
-  authorName: string;
-  author?: any;
-  isAiGenerated: boolean;
-  publishedAt?: string;
-  createdAt: string;
-}
-
-export interface BlogPostDetail extends BlogPost {
-  excerpt: string;
-  content: string;
-  coverImageUrl?: string;
-  tags: string[];
-  metaTitle?: string;
-  metaDescription?: string;
-  categoryId?: number;
-  aiMetadata?: {
-    source: string;
-    origin: string;
-    runDate: string;
-  };
-}
+export type { BlogPostStatus, BlogCategory, BlogPost, BlogPostDetail };
 
 export const blogService = {
   getPosts: async (params?: any): Promise<BlogPost[]> => {
@@ -43,6 +16,8 @@ export const blogService = {
       return (response.data?.data?.data || []).map((post: any) => ({
         ...post,
         authorName: post.author?.fullName || 'Unknown',
+        authorProfilePhoto: post.author?.profile?.profilePhotoUrl || null,
+        isAiGenerated: post.tags?.includes('__ai_generated') || false,
       }));
     } catch (error) {
       console.error('Failed to fetch posts', error);
@@ -58,6 +33,7 @@ export const blogService = {
       return {
         ...post,
         authorName: post.author?.fullName || 'Unknown',
+        authorProfilePhoto: post.author?.profile?.profilePhotoUrl || null,
         isAiGenerated: post.tags?.includes('__ai_generated') || false,
       };
     } catch (error) {

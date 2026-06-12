@@ -3,10 +3,12 @@ import { notFound } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { BlogPostDetailClient } from '@/components/sections/BlogPostDetailClient';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 import { api } from '@/lib/axios';
 import { BlogPost, BlogComment } from '@/app/types/blog.types';
 
 export const revalidate = 300;
+// Force recompile to pick up Author bio changes
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -104,13 +106,20 @@ export default async function BlogPostDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }}
       />
 
-      <Navbar />
+      <div className="notranslate" translate="no">
+        <Navbar />
+      </div>
+      <div className="notranslate" translate="no">
+        <LanguageSwitcher />
+      </div>
 
       <main className="flex-1 pt-24 pb-20">
         <BlogPostDetailClient post={post} relatedPosts={relatedPosts} initialComments={comments} />
       </main>
 
-      <Footer />
+      <div className="notranslate" translate="no">
+        <Footer />
+      </div>
     </div>
   );
 }

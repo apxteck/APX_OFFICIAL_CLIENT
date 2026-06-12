@@ -42,26 +42,32 @@ export default function DataTable<T extends { id: string | number }>({
     <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0px_4px_30px_rgba(0,0,0,0.2)] overflow-hidden transition-colors duration-300">
       {/* Table Toolbar */}
       <div className="p-6 border-b border-gray-100 dark:border-white/5 flex flex-col sm:flex-row gap-4 justify-between items-center bg-white dark:bg-[#111111]">
-        <div className="relative w-full sm:max-w-xs group">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="h-4 w-4 text-gray-400 dark:text-gray-500 group-focus-within:text-indigo-500 transition-colors" />
+        {onSearch ? (
+          <div className="relative w-full sm:max-w-xs group">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 text-gray-400 dark:text-gray-500 group-focus-within:text-indigo-500 transition-colors" />
+            </div>
+            <input
+              type="text"
+              className="block w-full pl-10 pr-3 py-2.5 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/5 rounded-xl text-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-gray-900 dark:text-white"
+              placeholder={searchPlaceholder}
+              onChange={(e) => onSearch(e.target.value)}
+            />
           </div>
-          <input
-            type="text"
-            className="block w-full pl-10 pr-3 py-2.5 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/5 rounded-xl text-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-gray-900 dark:text-white"
-            placeholder={searchPlaceholder}
-            onChange={(e) => onSearch?.(e.target.value)}
-          />
-        </div>
+        ) : (
+          <div className="flex-1" />
+        )}
         
         <div className="flex gap-3 w-full sm:w-auto">
-          <button 
-            onClick={onFilter}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/5 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm"
-          >
-            <ListFilter size={16} />
-            Filter
-          </button>
+          {onFilter && (
+            <button 
+              onClick={onFilter}
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/5 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm"
+            >
+              <ListFilter size={16} />
+              Filter
+            </button>
+          )}
           <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/5 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm">
             <SlidersHorizontal size={16} />
             View

@@ -14,6 +14,9 @@ export interface User {
   role: Role;
   isActive: boolean;
   createdAt: string;
+  profile?: {
+    profilePhotoUrl?: string;
+  };
 }
 
 export interface UserDocument {

@@ -1,11 +1,12 @@
 'use client';
 
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { ShieldCheck, Zap, Layers, BarChart3, Code2, Cpu } from 'lucide-react';
 import { MouseSpotlight } from '@/components/ui/MouseSpotlight';
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
+import { useServicesHeroLogic } from './hooks/useServicesHeroLogic';
 
 const valuePropositions = [
   {
@@ -46,58 +47,8 @@ const valuePropositions = [
   },
 ];
 
-const typewriterWords = ["Delivered", "Accelerated", "Engineered", "Mastered"];
-
-function useTypewriter(words: string[], typingSpeed = 120, deletingSpeed = 80, pauseDelay = 2000) {
-  const [text, setText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
-
-  useEffect(() => {
-    const currentWord = words[loopNum % words.length];
-    let timeout: NodeJS.Timeout;
-
-    if (isDeleting) {
-      timeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length - 1));
-        if (text.length <= 1) {
-          setIsDeleting(false);
-          setLoopNum(loopNum + 1);
-        }
-      }, deletingSpeed);
-    } else {
-      timeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length + 1));
-        if (text.length === currentWord.length) {
-          timeout = setTimeout(() => setIsDeleting(true), pauseDelay);
-        }
-      }, typingSpeed);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [text, isDeleting, loopNum, words, typingSpeed, deletingSpeed, pauseDelay]);
-
-  const currentFullWord = words[loopNum % words.length];
-
-  return { text, currentFullWord };
-}
-
 export function ServicesClient() {
-  const { text: typewrittenText, currentFullWord } = useTypewriter(typewriterWords, 100, 50, 2500);
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const heroPhrases = [
-    "Explore our comprehensive suite of high-performance design and system architecture.",
-    "Scaling growing businesses with cutting-edge technology and automation.",
-    "Delivering robust security, lightning speed, and data-driven insights.",
-    "Your dedicated engineering partner for enterprise-grade digital solutions."
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPhraseIndex((prev) => (prev + 1) % heroPhrases.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [heroPhrases.length]);
+  const { typewrittenText, currentFullWord, phraseIndex, heroPhrases } = useServicesHeroLogic();
 
   return (
     <>
@@ -105,16 +56,25 @@ export function ServicesClient() {
       <FloatingWhatsApp phoneNumber="919405282582" />
 
       {/* Hero Section */}
-      <section className="relative py-32 flex items-center justify-center min-h-[50vh] overflow-hidden">
+      <section className="relative py-32 flex items-center justify-center min-h-[50vh] overflow-hidden" aria-labelledby="hero-heading">
         {/* Background Parallax */}
         <motion.div
           initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.15 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute inset-0 bg-cover bg-center -z-20"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10" />
+          className="absolute inset-0 -z-20"
+        >
+          <Image
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+            alt="Digital abstract background showing interconnected nodes representing enterprise architecture"
+            fill
+            sizes="100vw"
+            priority
+            fetchPriority="high"
+            className="object-cover object-center"
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10" aria-hidden="true" />
 
         <div className="max-w-7xl mx-auto px-6 relative z-20 text-center space-y-8">
           <motion.div
@@ -122,11 +82,14 @@ export function ServicesClient() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/25 text-accent text-xs font-bold uppercase tracking-wider"
+            role="doc-subtitle"
+            aria-label="Capabilities and Solutions"
           >
             Capabilities & Solutions
           </motion.div>
           
           <motion.h1 
+            id="hero-heading"
             className="text-5xl md:text-7xl font-extrabold tracking-tight flex flex-col items-center gap-2"
           >
             <motion.span
@@ -187,6 +150,8 @@ export function ServicesClient() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
             className="flex flex-wrap justify-center gap-3 pt-6"
+            role="list"
+            aria-label="Service Highlights"
           >
             {[
               { label: "100% In-House Engineers" },
@@ -196,6 +161,7 @@ export function ServicesClient() {
             ].map((point, idx) => (
               <motion.div
                 key={idx}
+                role="listitem"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 + idx * 0.1, type: "spring", stiffness: 100 }}
@@ -214,11 +180,12 @@ export function ServicesClient() {
       </section>
 
       {/* Why Choose Our Services (The APXTeck Advantage) */}
-      <section className="py-20 relative max-w-7xl mx-auto px-6">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] pointer-events-none -z-10" />
+      <section className="py-20 relative max-w-7xl mx-auto px-6" aria-labelledby="advantage-heading">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] pointer-events-none -z-10" aria-hidden="true" />
 
         <div className="text-center mb-16">
           <motion.h2 
+            id="advantage-heading"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -237,12 +204,13 @@ export function ServicesClient() {
           </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
           {valuePropositions.map((val, idx) => {
             const Icon = val.icon;
             return (
-              <motion.div
+              <motion.article
                 key={idx}
+                role="listitem"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1, type: "spring", bounce: 0.3 }}
@@ -260,13 +228,14 @@ export function ServicesClient() {
                       color: val.color,
                       boxShadow: `0 4px 12px -3px ${val.color}26, 0 0 8px 1px ${val.color}1a`,
                     }}
+                    aria-hidden="true"
                   >
-                    <Icon className="w-7 h-7" />
+                    <Icon className="w-7 h-7" aria-hidden="true" role="presentation" />
                   </div>
                   <h3 className="text-xl font-bold tracking-tight mb-3 relative z-10">{val.title}</h3>
                   <p className="text-foreground/60 text-sm leading-relaxed relative z-10">{val.description}</p>
                 </GlassCard>
-              </motion.div>
+              </motion.article>
             );
           })}
         </div>

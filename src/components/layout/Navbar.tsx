@@ -5,11 +5,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { LogIn, Menu, X } from 'lucide-react';
+import { LogIn, Menu, X, LayoutDashboard, User, Search } from 'lucide-react';
+import { useAuth } from '@/providers/AuthProvider';
+import { SearchDialog } from './SearchDialog';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+  const { user, isAuthenticated, isLoading } = useAuth();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -63,20 +67,57 @@ export function Navbar() {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-4 shrink-0">
-            <ThemeToggle />
-            <Link
-              href="/login"
-              className="group relative inline-flex h-10 items-center justify-center gap-2 rounded-full bg-accent/10 border border-accent/20 px-5 text-sm font-medium text-accent transition-all hover:bg-accent hover:text-white active:scale-95"
+            <button
+              suppressHydrationWarning
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
             >
-              <LogIn className="w-4 h-4" />
-              <span>Login</span>
-            </Link>
+              <Search className="h-4 w-4" />
+              <span className="hidden lg:inline-block text-xs">Search...</span>
+              <kbd className="hidden lg:inline-flex h-5 items-center gap-1 rounded border border-white/20 bg-white/5 px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </button>
+            <ThemeToggle />
+            {isLoading ? (
+              <div className="w-[104px] h-10 rounded-full bg-accent/10 animate-pulse"></div>
+            ) : isAuthenticated ? (
+              <Link
+                href={`/${user?.role?.toLowerCase() || 'customer'}`}
+                className="group relative inline-flex h-10 items-center justify-center gap-2 rounded-full bg-accent/10 border border-accent/20 pl-2 pr-4 text-sm font-medium text-accent transition-all hover:bg-accent hover:text-white active:scale-95"
+              >
+                <div className="w-7 h-7 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden shrink-0">
+                  {user?.profilePhotoUrl ? (
+                    <img src={user.profilePhotoUrl} alt={user.fullName} className="w-full h-full object-cover" />
+                  ) : user?.fullName ? (
+                    <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user.fullName)}&background=4f46e5&color=fff`} alt={user.fullName} className="w-full h-full object-cover" />
+                  ) : (
+                    <User className="w-4 h-4" />
+                  )}
+                </div>
+                <span className="truncate max-w-[100px] font-semibold">{user?.fullName?.split(' ')[0] || "User"}</span>
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="group relative inline-flex h-10 items-center justify-center gap-2 rounded-full bg-accent/10 border border-accent/20 px-5 text-sm font-medium text-accent transition-all hover:bg-accent hover:text-white active:scale-95"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>Login</span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Toggle */}
           <div className="md:hidden flex items-center gap-4">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="text-foreground p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              <Search className="w-5 h-5" />
+            </button>
             <ThemeToggle />
-            <button onClick={() => setIsOpen(!isOpen)} className="text-foreground p-2">
+            <button suppressHydrationWarning onClick={() => setIsOpen(!isOpen)} className="text-foreground p-2">
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
@@ -124,16 +165,40 @@ export function Navbar() {
             >
               Contact
             </Link>
-            <Link
-              href="/login"
-              onClick={() => setIsOpen(false)}
-              className="p-3 text-center rounded-xl bg-accent text-white font-medium flex items-center justify-center gap-2"
-            >
-              <LogIn className="w-4 h-4" /> Login
-            </Link>
+            {isLoading ? (
+              <div className="h-12 rounded-xl bg-accent/10 animate-pulse"></div>
+            ) : isAuthenticated ? (
+              <Link
+                href={`/${user?.role?.toLowerCase() || 'customer'}`}
+                onClick={() => setIsOpen(false)}
+                className="p-3 text-center rounded-xl bg-accent text-white font-medium flex items-center justify-center gap-3"
+              >
+                {user?.profilePhotoUrl ? (
+                  <div className="w-6 h-6 rounded-full overflow-hidden shrink-0 border border-white/20">
+                    <img src={user.profilePhotoUrl} alt={user.fullName} className="w-full h-full object-cover" />
+                  </div>
+                ) : user?.fullName ? (
+                  <div className="w-6 h-6 rounded-full overflow-hidden shrink-0 border border-white/20">
+                    <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user.fullName)}&background=4f46e5&color=fff`} alt={user.fullName} className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <User className="w-4 h-4" />
+                )}
+                {user?.fullName?.split(' ')[0] || "User"}&apos;s Dashboard
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setIsOpen(false)}
+                className="p-3 text-center rounded-xl bg-accent text-white font-medium flex items-center justify-center gap-2"
+              >
+                <LogIn className="w-4 h-4" /> Login
+              </Link>
+            )}
           </motion.div>
         )}
       </div>
+      <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
     </header>
   );
 }

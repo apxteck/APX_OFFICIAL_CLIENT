@@ -10,9 +10,12 @@ export interface BlogPost {
   publishedAt: string | null;
   createdAt: string;
   views?: number;
+  authorDesignation?: string | null;
+  authorBio?: string | null;
   author?: {
     fullName: string;
-    profilePhotoUrl: string | null;
+    profilePhotoUrl?: string | null;
+    profile?: { profilePhotoUrl: string | null };
   };
   _count?: {
     likes: number;
@@ -28,6 +31,7 @@ export interface BlogComment {
   status: 'PENDING' | 'APPROVED' | 'REJECTED';
   user: {
     fullName: string;
-    profilePhotoUrl: string | null;
+    profilePhotoUrl?: string | null;
+    profile?: { profilePhotoUrl: string | null };
   };
 }

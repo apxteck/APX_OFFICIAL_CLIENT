@@ -10,7 +10,8 @@ import {
   FileText, 
   Loader2, 
   Trash2,
-  AlertCircle
+  AlertCircle,
+  ExternalLink
 } from "lucide-react";
 import { reimbursementService, Reimbursement } from "@/services/employee/reimbursements.service";
 
@@ -312,7 +313,7 @@ export default function EmployeeReimbursementsPage() {
                         {getStatusBadge(rmb.status)}
                       </div>
                       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400 font-medium">
-                        <span className="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-mono font-bold tracking-tight">#{rmb.id}</span>
+                        <span className="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-mono font-bold tracking-tight">RMB-{rmb.id}</span>
                         <span>•</span>
                         <span className="flex items-center gap-1">{rmb.category}</span>
                         <span>•</span>
@@ -327,17 +328,33 @@ export default function EmployeeReimbursementsPage() {
 
                     <div className="flex items-center justify-between sm:flex-col sm:items-end gap-2 shrink-0">
                       <span className="text-lg font-black text-gray-900 dark:text-white tracking-tight">₹{Number(rmb.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
                         {rmb.receiptUrl && (
-                          <a 
-                            href={rmb.receiptUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-[11px] font-bold text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 bg-indigo-500/10 px-2 py-1 rounded-md"
-                          >
-                            <FileText className="w-3 h-3" />
-                            View Proof
-                          </a>
+                          <div className="flex-1">
+                            {rmb.receiptUrl.match(/\.(jpeg|jpg|gif|png|webp|avif)$/i) ? (
+                              <a 
+                                href={rmb.receiptUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="relative block w-full h-16 rounded-lg overflow-hidden group border border-gray-200 dark:border-white/10"
+                              >
+                                <img src={rmb.receiptUrl} alt="Receipt Preview" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                                  <ExternalLink className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                                </div>
+                              </a>
+                            ) : (
+                              <a 
+                                href={rmb.receiptUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="w-full h-16 text-xs font-bold text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 flex flex-col items-center justify-center gap-1 bg-indigo-500/5 rounded-lg border border-indigo-100 dark:border-indigo-500/20 transition-colors"
+                              >
+                                <FileText className="w-4 h-4" />
+                                View Document
+                              </a>
+                            )}
+                          </div>
                         )}
                         {rmb.status === 'PENDING' && (
                           <button

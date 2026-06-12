@@ -1,29 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Mail, ShieldAlert } from 'lucide-react';
-import { api } from '@/lib/axios';
-import { TeamMember } from '@/app/types/user.types';
+import { useTeamLogic } from '@/hooks/useTeamLogic';
 
 export function TeamSection() {
-  const [team, setTeam] = useState<TeamMember[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadTeam() {
-      try {
-        const data = await api.fetchTeamMembers();
-        setTeam(data);
-      } catch (err) {
-        console.error('Failed to load team profiles', err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    loadTeam();
-  }, []);
+  const { team, isLoading } = useTeamLogic();
 
   return (
     <section className="py-24 relative overflow-hidden bg-background">

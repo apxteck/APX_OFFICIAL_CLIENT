@@ -88,8 +88,12 @@ apiClient.interceptors.response.use(
         processQueue(err, null);
         clearAccessToken();
 
-        if (typeof window !== 'undefined' && window.location.pathname !== '/login') {
-          window.location.href = '/login?session_expired=true';
+        if (typeof window !== 'undefined') {
+          const wasLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+          if (wasLoggedIn && window.location.pathname !== '/login') {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = '/login?session_expired=true';
+          }
         }
 
         return Promise.reject(err);

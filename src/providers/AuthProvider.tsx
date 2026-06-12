@@ -21,6 +21,7 @@ export interface User {
   email: string;
   phone: string;
   role: string;
+  profilePhotoUrl?: string;
   permissions: Record<string, { canCreate: boolean; canRead: boolean; canUpdate: boolean; canDelete: boolean }>;
 }
 
@@ -60,6 +61,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const userData = response.data?.user;
     if (userData) {
       setUser(userData);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('isLoggedIn', 'true');
+      }
     }
     return userData;
   };

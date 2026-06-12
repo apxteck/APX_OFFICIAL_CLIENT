@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { ScrollProgress } from '@/components/ui/ScrollProgress';
 import { AuthProvider } from '@/providers/AuthProvider';
+import { GoogleTranslateCleaner } from '@/components/ui/GoogleTranslateCleaner';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,12 +33,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col transition-colors duration-300 relative">
-        <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <GoogleTranslateCleaner />
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <AuthProvider>
             <ScrollProgress />
             {children}
-          </ThemeProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { dashboardService, EmployeeDashboardStats } from '@/services/admin/dashboard.service';
 import { useAuth } from '@/providers/AuthProvider';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -34,6 +35,8 @@ export default function EmployeeDashboard() {
   const [mounted, setMounted] = useState(false);
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [reimbursements, setReimbursements] = useState<ReimbursementItem[]>([]);
+  const [assignedRequests, setAssignedRequests] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
 
   // Reimbursement Form State
   const [claimTitle, setClaimTitle] = useState('');
@@ -44,50 +47,19 @@ export default function EmployeeDashboard() {
 
   useEffect(() => {
     setMounted(true);
-    // Populate mock employee-specific details
-    setTasks([
-      {
-        id: 'TSK-201',
-        title: 'Revamp website landing page animations',
-        priority: 'HIGH',
-        status: 'IN_PROGRESS',
-        dueDate: '2026-06-12',
-      },
-      {
-        id: 'TSK-202',
-        title: 'Set up ad slots and track click-through metrics',
-        priority: 'MEDIUM',
-        status: 'OPEN',
-        dueDate: '2026-06-15',
-      },
-      {
-        id: 'TSK-198',
-        title: 'Optimize Tailwind/NextJS image loading performance',
-        priority: 'LOW',
-        status: 'COMPLETED',
-        dueDate: '2026-06-08',
-      },
-    ]);
-
-    setReimbursements([
-      {
-        id: 'RMB-501',
-        title: 'B2B Client Lunch with TechFlow Solutions',
-        amount: 2800,
-        category: 'Meals & Entertainment',
-        status: 'APPROVED',
-        createdAt: '2026-06-03',
-      },
-      {
-        id: 'RMB-498',
-        title: 'AWS Hosting & Server Credits',
-        amount: 8500,
-        category: 'Software/SaaS',
-        status: 'PENDING',
-        createdAt: '2026-05-28',
-      },
-    ]);
+    fetchDashboardData();
   }, []);
+
+  const fetchDashboardData = async () => {
+    setLoading(true);
+    const stats = await dashboardService.getEmployeeStats();
+    if (stats) {
+      setTasks(stats.tasks || []);
+      setReimbursements(stats.reimbursements || []);
+      setAssignedRequests(stats.assignedRequestsCount || 0);
+    }
+    setLoading(false);
+  };
 
   const handleApplyReimbursement = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -186,7 +158,7 @@ export default function EmployeeDashboard() {
           <div className="bg-white dark:bg-[#111] border border-gray-100 dark:border-white/5 p-6 rounded-2xl flex items-center justify-between shadow-sm">
             <div>
               <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider">Assigned Requests</p>
-              <h3 className="text-3xl font-black mt-2 text-purple-500">4</h3>
+              <h3 className="text-3xl font-black mt-2 text-purple-500">{assignedRequests}</h3>
             </div>
             <div className="p-3 bg-purple-500/10 text-purple-500 rounded-xl">
               <ClipboardList className="w-6 h-6" />
@@ -200,7 +172,7 @@ export default function EmployeeDashboard() {
           <div className="lg:col-span-2 bg-white dark:bg-[#111] border border-gray-100 dark:border-white/5 p-6 sm:p-8 rounded-3xl space-y-6 shadow-sm">
             <div className="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-4">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white">Assigned Checklist</h3>
-              <span className="text-xs text-gray-500 dark:text-gray-400 font-medium font-mono">3 Tasks Listed</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 font-medium font-mono">{tasks.length} Tasks Listed</span>
             </div>
 
             <div className="space-y-4">
@@ -221,9 +193,9 @@ export default function EmployeeDashboard() {
                         {task.title}
                       </p>
                       <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                        <span className="font-mono font-bold text-indigo-500 dark:text-indigo-400">{task.id}</span>
+                        <span className="font-mono font-bold text-indigo-500 dark:text-indigo-400">TSK-{task.id}</span>
                         <span>•</span>
-                        <span>Due: {task.dueDate}</span>
+                        <span>Due: {new Date(task.dueDate).toLocaleDateString()}</span>
                       </div>
                     </div>
                   </div>
@@ -332,12 +304,12 @@ export default function EmployeeDashboard() {
               <tbody className="divide-y divide-gray-100 dark:divide-white/5 text-sm font-medium">
                 {reimbursements.map((rmb) => (
                   <tr key={rmb.id} className="hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition-colors group">
-                    <td className="py-4 px-4 font-mono text-indigo-500 dark:text-indigo-400 font-bold">{rmb.id}</td>
+                    <td className="py-4 px-4 font-mono text-indigo-500 dark:text-indigo-400 font-bold">RMB-{rmb.id}</td>
                     <td className="py-4 px-4 text-gray-900 dark:text-gray-200">{rmb.title}</td>
                     <td className="py-4 px-4 font-bold text-gray-900 dark:text-white">₹{rmb.amount.toLocaleString()}</td>
                     <td className="py-4 px-4 text-gray-500 dark:text-gray-400">{rmb.category}</td>
                     <td className="py-4 px-4">{getStatusBadge(rmb.status)}</td>
-                    <td className="py-4 px-4 text-right text-gray-500 dark:text-gray-400 font-mono text-xs">{rmb.createdAt}</td>
+                    <td className="py-4 px-4 text-right text-gray-500 dark:text-gray-400 font-mono text-xs">{new Date(rmb.createdAt).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>

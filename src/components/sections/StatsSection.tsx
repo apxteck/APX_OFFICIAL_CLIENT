@@ -1,10 +1,8 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 import { GlassCard } from '@/components/ui/GlassCard';
-import { api } from '@/lib/axios';
-import { StatsOverview } from '@/app/types/analytics.types';
 import { Users, CheckCircle2, Award, Clock } from 'lucide-react';
 
 function Counter({ value, suffix = '' }: { value: number; suffix?: string }) {
@@ -32,23 +30,10 @@ function Counter({ value, suffix = '' }: { value: number; suffix?: string }) {
   );
 }
 
-export function StatsSection() {
-  const [stats, setStats] = useState<StatsOverview | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+import { useStatsLogic } from '@/hooks/useStatsLogic';
 
-  useEffect(() => {
-    async function loadStats() {
-      try {
-        const data = await api.fetchStats();
-        setStats(data);
-      } catch (err) {
-        console.error('Failed to load stats', err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    loadStats();
-  }, []);
+export function StatsSection() {
+  const { stats, isLoading } = useStatsLogic();
 
   if (isLoading || !stats) {
     return (

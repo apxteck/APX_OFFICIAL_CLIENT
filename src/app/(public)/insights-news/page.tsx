@@ -2,30 +2,76 @@ import type { Metadata } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { AdBanner } from '@/components/ui/AdBanner';
-import { BlogListingSection } from '@/components/sections/BlogListingSection';
-import { TechStackMarquee } from '@/components/sections/TechStackMarquee';
 import { api } from '@/lib/axios';
 import { BlogPost } from '@/app/types/blog.types';
-import { ExploreNewsClient } from './ExploreNewsClient';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+import dynamic from 'next/dynamic';
+
+const ExploreNewsClient = dynamic(() => import('./ExploreNewsClient').then(mod => mod.ExploreNewsClient), { ssr: true });
+const BlogListingSection = dynamic(() => import('@/components/sections/BlogListingSection').then(mod => mod.BlogListingSection), { ssr: true });
+const TechStackMarquee = dynamic(() => import('@/components/sections/TechStackMarquee').then(mod => mod.TechStackMarquee), { ssr: true });
 
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: 'IT Insights & News — APXTECK Blog',
-  description:
-    "Stay updated with APXTeck's technical news, Next.js optimization guides, UI/UX trends, and SEO tutorials built for Indian business owners.",
-  openGraph: {
-    title: 'IT Insights & News — APXTECK Blog',
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'IT Insights & News | APXTeck Blog & Tutorials',
     description:
-      "Stay updated with APXTeck's technical news, Next.js optimization guides, UI/UX trends, and SEO tutorials built for Indian business owners.",
-    url: 'https://apxteck.com/insights-news',
-    siteName: 'APXTeck',
-    type: 'website',
-  },
-  alternates: {
-    canonical: 'https://apxteck.com/insights-news',
-  },
-};
+      "Stay updated with APXTeck's technical news, Next.js optimization guides, UI/UX trends, and SEO tutorials built for Indian business owners and startups.",
+    keywords: [
+      'IT insights',
+      'Next.js tutorials',
+      'SEO guides',
+      'UI/UX trends',
+      'APXTeck blog',
+      'tech news India',
+      'web development blog',
+    ],
+    authors: [{ name: 'APXTeck', url: 'https://apxteck.com' }],
+    creator: 'APXTeck',
+    publisher: 'APXTeck',
+    openGraph: {
+      title: 'IT Insights & News | APXTeck Blog & Tutorials',
+      description:
+        "Stay updated with APXTeck's technical news, Next.js optimization guides, UI/UX trends, and SEO tutorials built for Indian business owners and startups.",
+      url: 'https://apxteck.com/insights-news',
+      siteName: 'APXTeck',
+      type: 'website',
+      locale: 'en_IN',
+      images: [
+        {
+          url: 'https://apxteck.com/images/og/blog-insights.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'APXTeck IT Insights & News - Next.js, SEO, and UI/UX',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'IT Insights & News | APXTeck Blog',
+      description:
+        "Stay updated with APXTeck's technical news, Next.js optimization guides, and UI/UX trends.",
+      creator: '@apxteck',
+      site: '@apxteck',
+      images: ['https://apxteck.com/images/og/blog-insights.jpg'],
+    },
+    alternates: {
+      canonical: 'https://apxteck.com/insights-news',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+  };
+}
 
 export default async function BlogListingPage() {
   let initialBlogs: BlogPost[] = [];
@@ -38,13 +84,39 @@ export default async function BlogListingPage() {
   const jsonLdBlog = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'APXTeck Blog',
-    description: 'IT Insights and updates for growing Indian businesses.',
+    '@id': 'https://apxteck.com/insights-news/#blog',
+    name: 'APXTeck IT Insights & News',
+    description:
+      "Stay updated with APXTeck's technical news, Next.js optimization guides, UI/UX trends, and SEO tutorials.",
     url: 'https://apxteck.com/insights-news',
     publisher: {
       '@type': 'Organization',
       name: 'APXTeck',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://apxteck.com/logo.png',
+      },
     },
+    inLanguage: 'en-IN',
+  };
+
+  const jsonLdBreadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://apxteck.com/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Insights & News',
+        item: 'https://apxteck.com/insights-news',
+      },
+    ],
   };
 
   return (
@@ -53,39 +125,55 @@ export default async function BlogListingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBlog) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
+      />
 
-      <Navbar />
+      <header className="notranslate" translate="no">
+        <Navbar />
+      </header>
+      <div className="notranslate" translate="no" aria-label="Language Switcher">
+        <LanguageSwitcher />
+      </div>
 
-      <main className="flex-1 pt-24 pb-20 overflow-hidden">
+      <main className="flex-1 pt-24 pb-20 overflow-hidden" id="main-content" role="main" itemScope itemType="https://schema.org/Blog">
         
         {/* Animated Hero and Knowledge Hub Focus (Client component) */}
-        <ExploreNewsClient />
+        <article className="notranslate" translate="no">
+          <ExploreNewsClient />
+        </article>
 
-        <div className="max-w-7xl mx-auto px-6 mb-8 text-center">
+        <div className="max-w-7xl mx-auto px-6 mb-8 text-center notranslate" translate="no" aria-hidden="true">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
         </div>
 
         {/* Ad Slot Top (Centered before Blog list) */}
-        <div className="max-w-7xl mx-auto px-6 mb-12 flex justify-center">
+        <aside className="max-w-7xl mx-auto px-6 mb-12 flex justify-center notranslate" translate="no" aria-label="Top Advertisement">
           <AdBanner placement="BLOG_LIST_TOP" />
-        </div>
+        </aside>
 
         {/* Client Side Blog Grid with debounced filters and pagination */}
         {/* (This component internally renders BLOG_LIST_MID ads) */}
-        <BlogListingSection initialBlogs={initialBlogs} />
+        {/* WE WANT THIS TO BE TRANSLATABLE (partially) */}
+        <section aria-label="Blog Posts List">
+          <BlogListingSection initialBlogs={initialBlogs} />
+        </section>
 
         {/* Ad Slot Bottom (After Blog list, before Marquee) */}
-        <div className="max-w-7xl mx-auto px-6 mt-16 mb-8 flex justify-center">
+        <aside className="max-w-7xl mx-auto px-6 mt-16 mb-8 flex justify-center notranslate" translate="no" aria-label="Bottom Advertisement">
           <AdBanner placement="BLOG_LIST_MID" />
-        </div>
+        </aside>
 
         {/* Tech Stack Marquee at the bottom */}
-        <div className="mt-12">
+        <section className="mt-12 notranslate" translate="no" aria-label="Our Technology Stack">
           <TechStackMarquee />
-        </div>
+        </section>
       </main>
 
-      <Footer />
+      <footer className="notranslate" translate="no">
+        <Footer />
+      </footer>
     </div>
   );
 }

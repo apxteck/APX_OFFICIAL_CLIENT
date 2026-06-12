@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { Bell, Search, Menu } from "lucide-react";
+import { Bell, Search, Menu, Home } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useUiStore } from "@/store/uiStore";
 import { useAuth } from "@/providers/AuthProvider";
@@ -39,6 +40,16 @@ export default function CustomerTopbar() {
 
       <div className="flex items-center space-x-4 md:space-x-5 relative z-10">
         <div className="flex items-center space-x-3">
+          <Link href="/">
+            <button 
+              className="px-4 py-2 rounded-xl bg-white dark:bg-[#1a1a1a] flex items-center justify-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-[#222] shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all border border-gray-100 dark:border-white/5 hover:border-cyan-500/30"
+              title="Go to Public Home"
+            >
+              <Home size={16} />
+              <span className="hidden sm:inline">Home</span>
+            </button>
+          </Link>
+          
           <ThemeToggle />
 
           <button className="w-10 h-10 rounded-full bg-white dark:bg-[#1a1a1a] flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-[#222] shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all border border-gray-100 dark:border-white/5 hover:border-cyan-500/30">
@@ -53,10 +64,14 @@ export default function CustomerTopbar() {
 
         <div className="flex items-center pl-4 md:pl-5 border-l border-gray-200 dark:border-white/10 cursor-pointer group">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-100 to-cyan-50 dark:from-cyan-500/20 dark:to-cyan-500/10 overflow-hidden border border-cyan-200 dark:border-cyan-500/30 shadow-inner flex items-center justify-center group-hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all">
-              <div className="w-full h-full flex items-center justify-center text-cyan-600 dark:text-cyan-400 font-bold text-sm drop-shadow-sm">
-                {user?.fullName ? user.fullName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) : "US"}
-              </div>
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-100 to-cyan-50 dark:from-cyan-500/20 dark:to-cyan-500/10 overflow-hidden border border-cyan-200 dark:border-cyan-500/30 shadow-inner flex items-center justify-center group-hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all shrink-0">
+              {user?.profilePhotoUrl ? (
+                <img src={user.profilePhotoUrl} alt={user.fullName} className="w-full h-full object-cover" />
+              ) : user?.fullName ? (
+                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user.fullName)}&background=4f46e5&color=fff`} alt={user.fullName} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-cyan-600 dark:text-cyan-400 font-bold text-sm drop-shadow-sm">US</div>
+              )}
             </div>
             <div className="hidden md:flex flex-col">
               <span className="text-sm font-bold text-gray-900 dark:text-white leading-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">

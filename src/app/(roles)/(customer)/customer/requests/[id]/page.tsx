@@ -29,10 +29,27 @@ const getStatusConfig = (status: RequestStatus) => {
   }
 };
 
+interface ServiceRequestDetails {
+  id: number;
+  status: RequestStatus;
+  priority: string;
+  createdAt: string;
+  service?: {
+    name: string;
+    fields?: any[];
+  };
+  requestData?: any[];
+  fileUploads?: any[];
+  payments?: any[];
+  assignedTo?: {
+    fullName: string;
+  };
+}
+
 export default function CustomerRequestDetailsPage() {
   const { id } = useParams();
   
-  const [request, setRequest] = useState<any>(null);
+  const [request, setRequest] = useState<ServiceRequestDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [isCancelling, setIsCancelling] = useState(false);
   const [message, setMessage] = useState<{type: 'success' | 'error', text: string} | null>(null);
@@ -57,7 +74,7 @@ export default function CustomerRequestDetailsPage() {
   }, [id]);
 
   const handleEditToggle = () => {
-    if (!isEditing) {
+    if (!isEditing && request) {
       const initialData: Record<string, any> = {};
       request.requestData?.forEach((d: any) => {
         initialData[d.fieldKey] = d.fieldValue;
@@ -123,10 +140,45 @@ export default function CustomerRequestDetailsPage() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-10 h-10 text-cyan-500 animate-spin mb-4" />
-        <p className="text-gray-500 dark:text-gray-400 font-medium">Loading request details...</p>
-      </div>
+      <motion.div variants={container} initial="hidden" animate="show" className="max-w-5xl mx-auto space-y-8 pb-12 animate-pulse">
+        {/* Header Skeleton */}
+        <div className="bg-white dark:bg-[#111] p-6 md:p-8 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div className="flex items-start gap-4 w-full">
+            <div className="w-10 h-10 rounded-xl bg-gray-200 dark:bg-white/10 shrink-0"></div>
+            <div className="space-y-3 w-1/2">
+               <div className="flex gap-2"><div className="h-4 w-16 bg-gray-200 dark:bg-white/10 rounded"></div><div className="h-4 w-20 bg-gray-200 dark:bg-white/10 rounded"></div></div>
+               <div className="h-8 w-3/4 bg-gray-200 dark:bg-white/10 rounded"></div>
+            </div>
+          </div>
+          <div className="h-10 w-32 bg-gray-200 dark:bg-white/10 rounded-xl"></div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+           <div className="lg:col-span-2 space-y-8">
+              <div className="bg-white dark:bg-[#111] p-6 md:p-8 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm h-[300px]">
+                 <div className="h-6 w-1/3 bg-gray-200 dark:bg-white/10 rounded mb-6"></div>
+                 <div className="space-y-4">
+                    <div className="h-4 w-1/4 bg-gray-200 dark:bg-white/10 rounded"></div>
+                    <div className="h-4 w-full bg-gray-200 dark:bg-white/10 rounded"></div>
+                    <div className="h-4 w-3/4 bg-gray-200 dark:bg-white/10 rounded"></div>
+                 </div>
+              </div>
+           </div>
+           <div className="space-y-8">
+              <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm h-[200px]">
+                 <div className="h-5 w-1/2 bg-gray-200 dark:bg-white/10 rounded mb-6"></div>
+                 <div className="flex gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-lg bg-gray-200 dark:bg-white/10 shrink-0"></div>
+                    <div className="space-y-2 flex-1"><div className="h-3 w-1/3 bg-gray-200 dark:bg-white/10 rounded"></div><div className="h-4 w-1/2 bg-gray-200 dark:bg-white/10 rounded"></div></div>
+                 </div>
+                 <div className="flex gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-gray-200 dark:bg-white/10 shrink-0"></div>
+                    <div className="space-y-2 flex-1"><div className="h-3 w-1/3 bg-gray-200 dark:bg-white/10 rounded"></div><div className="h-4 w-1/2 bg-gray-200 dark:bg-white/10 rounded"></div></div>
+                 </div>
+              </div>
+           </div>
+        </div>
+      </motion.div>
     );
   }
 
@@ -236,7 +288,7 @@ export default function CustomerRequestDetailsPage() {
             {isEditing ? (
               <div className="space-y-6">
                 {serviceFields.length === 0 ? (
-                  <p className="text-gray-500 dark:text-gray-400 italic">This service does not have any specific requirement fields defined.</p>
+                  <p className="text-gray-500 dark:text-gray-400 italic">This service does not have any specific text requirement fields defined.</p>
                 ) : (
                   serviceFields.map((field: any) => (
                     <div key={field.id} className="space-y-2">
@@ -274,19 +326,26 @@ export default function CustomerRequestDetailsPage() {
                     </div>
                   ))
                 )}
+                <p className="text-xs text-gray-400 mt-2 italic">* File fields cannot be edited directly. Please upload new attachments below.</p>
               </div>
-            ) : textFields.length === 0 ? (
+            ) : projectDetails.length === 0 ? (
               <p className="text-gray-500 dark:text-gray-400 italic">No additional requirements were provided.</p>
             ) : (
               <div className="space-y-6">
-                {textFields.map((data: any) => (
+                {projectDetails.map((data: any) => (
                   <div key={data.id} className="border-b border-gray-100 dark:border-white/5 pb-4 last:border-0 last:pb-0">
                     <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-1">
                       {data.field?.fieldLabel || data.fieldKey}
                     </p>
-                    <p className="text-gray-900 dark:text-white whitespace-pre-wrap">
-                      {data.fieldValue || '-'}
-                    </p>
+                    {data.field?.fieldType === 'FILE' ? (
+                      <a href={data.fieldValue} target="_blank" rel="noreferrer" className="text-cyan-600 hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300 font-medium hover:underline flex items-center gap-2 w-fit">
+                        <FileText className="w-4 h-4" /> View Uploaded File
+                      </a>
+                    ) : (
+                      <p className="text-gray-900 dark:text-white whitespace-pre-wrap">
+                        {data.fieldValue || '-'}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -402,7 +461,10 @@ export default function CustomerRequestDetailsPage() {
 
           {/* Assigned Team */}
           <motion.div variants={item} className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm space-y-4">
-            <h3 className="font-bold text-gray-900 dark:text-white">Assigned To</h3>
+            <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <User className="w-5 h-5 text-cyan-500" />
+              Assigned To
+            </h3>
             {request.assignedTo ? (
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-500 font-bold">
@@ -420,6 +482,32 @@ export default function CustomerRequestDetailsPage() {
               </div>
             )}
           </motion.div>
+
+          {/* Billing & Payments */}
+          {payments.length > 0 && (
+            <motion.div variants={item} className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm space-y-4">
+              <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-cyan-500" />
+                Billing
+              </h3>
+              <div className="space-y-3">
+                {payments.map((payment: any) => (
+                  <div key={payment.id} className="p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-bold text-gray-900 dark:text-white">Amount</span>
+                      <span className="text-sm font-bold text-cyan-600 dark:text-cyan-400">₹{payment.negotiatedAmount}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-gray-500 dark:text-gray-400">Status</span>
+                      <span className={`font-semibold ${payment.status === 'PAID' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                        {payment.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
         </div>
       </div>

@@ -1,49 +1,52 @@
 import type { Metadata } from 'next';
-import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
+import dynamic from 'next/dynamic';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { ServicesSection } from '@/components/sections/ServicesSection';
-import { WhyChooseUsSection } from '@/components/sections/WhyChooseUsSection';
-import { StatsSection } from '@/components/sections/StatsSection';
-import { PortfolioSection } from '@/components/sections/PortfolioSection';
-import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
-import { BlogPreviewSection } from '@/components/sections/BlogPreviewSection';
-import { FaqSection } from '@/components/sections/FaqSection';
-import { ContactCTASection } from '@/components/sections/ContactCTASection';
-import { AdBanner } from '@/components/ui/AdBanner';
-import { TechStackMarquee } from '@/components/sections/TechStackMarquee';
-import { ProcessSection } from '@/components/sections/ProcessSection';
 import { MouseSpotlight } from '@/components/ui/MouseSpotlight';
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
-import { ScrollProgress } from '@/components/ui/ScrollProgress';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+
+const TechStackMarquee = dynamic(() => import('@/components/sections/TechStackMarquee').then(mod => mod.TechStackMarquee), { ssr: true });
+const ServicesSection = dynamic(() => import('@/components/sections/ServicesSection').then(mod => mod.ServicesSection), { ssr: true });
+const WhyChooseUsSection = dynamic(() => import('@/components/sections/WhyChooseUsSection').then(mod => mod.WhyChooseUsSection), { ssr: true });
+const ProcessSection = dynamic(() => import('@/components/sections/ProcessSection').then(mod => mod.ProcessSection), { ssr: true });
+const StatsSection = dynamic(() => import('@/components/sections/StatsSection').then(mod => mod.StatsSection), { ssr: true });
+const AdBanner = dynamic(() => import('@/components/ui/AdBanner').then(mod => mod.AdBanner), { ssr: true });
+const PortfolioSection = dynamic(() => import('@/components/sections/PortfolioSection').then(mod => mod.PortfolioSection), { ssr: true });
+const TestimonialsSection = dynamic(() => import('@/components/sections/TestimonialsSection').then(mod => mod.TestimonialsSection), { ssr: true });
+const BlogPreviewSection = dynamic(() => import('@/components/sections/BlogPreviewSection').then(mod => mod.BlogPreviewSection), { ssr: true });
+const FaqSection = dynamic(() => import('@/components/sections/FaqSection').then(mod => mod.FaqSection), { ssr: true });
+const ContactCTASection = dynamic(() => import('@/components/sections/ContactCTASection').then(mod => mod.ContactCTASection), { ssr: true });
 
 // Config page for Incremental Static Regeneration (ISR)
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: 'APXTECK — IT Services for Indian SMBs',
-  description:
-    'APXTeck provides premium IT services, Next.js web development, custom UI/UX, and search engine optimization custom tailored to scale Indian SMBs.',
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  return {
     title: 'APXTECK — IT Services for Indian SMBs',
     description:
       'APXTeck provides premium IT services, Next.js web development, custom UI/UX, and search engine optimization custom tailored to scale Indian SMBs.',
-    url: 'https://apxteck.com',
-    siteName: 'APXTeck',
-    images: [
-      {
-        url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=630&q=80',
-        width: 1200,
-        height: 630,
-        alt: 'APXTECK - IT Services for Indian SMBs',
-      },
-    ],
-    type: 'website',
-  },
-  alternates: {
-    canonical: 'https://apxteck.com',
-  },
-};
+    openGraph: {
+      title: 'APXTECK — IT Services for Indian SMBs',
+      description:
+        'APXTeck provides premium IT services, Next.js web development, custom UI/UX, and search engine optimization custom tailored to scale Indian SMBs.',
+      url: 'https://apxteck.com',
+      siteName: 'APXTeck',
+      images: [
+        {
+          url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=630&q=80',
+          width: 1200,
+          height: 630,
+          alt: 'APXTECK - IT Services for Indian SMBs',
+        },
+      ],
+      type: 'website',
+    },
+    alternates: {
+      canonical: 'https://apxteck.com',
+    },
+  };
+}
 
 export default function Home() {
   const jsonLdOrg = {
@@ -90,7 +93,7 @@ export default function Home() {
 
       <Navbar />
 
-      <main className="flex-1">
+      <main className="flex-1" role="main" itemScope itemType="https://schema.org/WebPage">
         <HeroSection />
 
         <TechStackMarquee />

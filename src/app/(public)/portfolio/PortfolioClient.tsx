@@ -1,11 +1,12 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { MouseSpotlight } from '@/components/ui/MouseSpotlight';
 import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
+import Image from 'next/image';
 import { Lightbulb, Code2, Rocket } from 'lucide-react';
+import { usePortfolioHeroLogic } from './hooks/usePortfolioHeroLogic';
 
 const deliveryPhilosophy = [
   {
@@ -28,63 +29,8 @@ const deliveryPhilosophy = [
   },
 ];
 
-const typewriterWords = [
-  "Engineered for Growth",
-  "Designed for Scale",
-  "Built for Performance",
-  "Optimized for Impact"
-];
-
-function useTypewriter(words: string[], typingSpeed = 100, deletingSpeed = 50, pauseDelay = 2000) {
-  const [text, setText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
-
-  useEffect(() => {
-    const currentWord = words[loopNum % words.length];
-    let timeout: NodeJS.Timeout;
-
-    if (isDeleting) {
-      timeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length - 1));
-        if (text.length <= 1) {
-          setIsDeleting(false);
-          setLoopNum(loopNum + 1);
-        }
-      }, deletingSpeed);
-    } else {
-      timeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length + 1));
-        if (text.length === currentWord.length) {
-          timeout = setTimeout(() => setIsDeleting(true), pauseDelay);
-        }
-      }, typingSpeed);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [text, isDeleting, loopNum, words, typingSpeed, deletingSpeed, pauseDelay]);
-
-  const currentFullWord = words[loopNum % words.length];
-
-  return { text, currentFullWord };
-}
-
 export function PortfolioClient() {
-  const { text: typewrittenText, currentFullWord } = useTypewriter(typewriterWords, 100, 50, 2500);
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const heroPhrases = [
-    "A detailed look at challenging problems we solved and technical architectures we deployed.",
-    "Showcasing direct business metrics achieved through premium engineering.",
-    "Real-world case studies of digital transformation for ambitious Indian SMBs.",
-    "Deep dives into our custom solutions, robust systems, and stunning designs."
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPhraseIndex((prev) => (prev + 1) % heroPhrases.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [heroPhrases.length]);
+  const { typewrittenText, currentFullWord, phraseIndex, heroPhrases } = usePortfolioHeroLogic();
 
   return (
     <>
@@ -98,13 +44,19 @@ export function PortfolioClient() {
           initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.15 }}
           transition={{ duration: 1.5, ease: 'easeOut' }}
-          className="absolute inset-0 bg-cover bg-center -z-20"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10" />
+          className="absolute inset-0 -z-20"
+        >
+          <Image
+            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+            alt="APXTeck Portfolio Background"
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10" aria-hidden="true" />
 
         <div className="max-w-7xl mx-auto px-6 relative z-20 text-center space-y-8">
           <motion.div
@@ -220,7 +172,7 @@ export function PortfolioClient() {
                       boxShadow: `0 4px 12px -3px ${val.color}26, 0 0 8px 1px ${val.color}1a`,
                     }}
                   >
-                    <Icon className="w-7 h-7" />
+                    <Icon className="w-7 h-7" aria-hidden="true" role="presentation" />
                   </div>
                   <h3 className="text-xl font-bold tracking-tight mb-3">{val.title}</h3>
                   <p className="text-foreground/60 text-sm leading-relaxed">{val.description}</p>

@@ -1,30 +1,56 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { PortfolioListingSection } from '@/components/sections/PortfolioListingSection';
-import { TechStackMarquee } from '@/components/sections/TechStackMarquee';
+const TechStackMarquee = dynamic(() => import('@/components/sections/TechStackMarquee').then(mod => mod.TechStackMarquee), { ssr: true });
 import { api } from '@/lib/axios';
 import { Portfolio } from '@/app/types/portfolio.types';
-import { PortfolioClient } from './PortfolioClient';
+
+// Dynamically import client components to reduce initial server payload and improve Core Web Vitals
+const PortfolioClient = dynamic(() => import('./PortfolioClient').then(mod => mod.PortfolioClient), {
+  ssr: true, // Keep SSR enabled for SEO
+});
+
+const PortfolioListingSection = dynamic(() => import('@/components/sections/PortfolioListingSection').then(mod => mod.PortfolioListingSection), {
+  ssr: true,
+});
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: 'Case Studies & Work Portfolio — APXTECK',
-  description:
-    "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
-  openGraph: {
-    title: 'Case Studies & Work Portfolio — APXTECK',
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Case Studies & Work Portfolio | APXTECK',
     description:
       "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
-    url: 'https://apxteck.com/portfolio',
-    siteName: 'APXTeck',
-    type: 'website',
-  },
-  alternates: {
-    canonical: 'https://apxteck.com/portfolio',
-  },
-};
+    openGraph: {
+      title: 'Case Studies & Work Portfolio | APXTECK',
+      description:
+        "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+      url: 'https://apxteck.com/portfolio',
+      siteName: 'APXTeck',
+      type: 'website',
+      images: [
+        {
+          url: 'https://apxteck.com/images/og/portfolio.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'APXTeck Portfolio Case Studies',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@apxteck',
+      title: 'Case Studies & Work Portfolio | APXTECK',
+      description:
+        "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+      images: ['https://apxteck.com/images/og/portfolio.jpg'],
+    },
+    alternates: {
+      canonical: 'https://apxteck.com/portfolio',
+    },
+  };
+}
 
 export default async function PortfolioListingPage() {
   let portfolios: Portfolio[] = [];
@@ -35,9 +61,12 @@ export default async function PortfolioListingPage() {
     console.error('Failed to load portfolio listing data', err);
   }
 
-  const jsonLdPortfolioList = {
+  // Schema Generation: ItemList for Portfolio Entries
+  const jsonLdItemList = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
+    name: 'APXTeck Case Studies',
+    description: "A collection of APXTeck's best work and case studies.",
     numberOfItems: portfolios.length,
     itemListElement: portfolios.map((p, index) => ({
       '@type': 'ListItem',
@@ -52,31 +81,81 @@ export default async function PortfolioListingPage() {
     })),
   };
 
+  // Schema Generation: BreadcrumbList
+  const jsonLdBreadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://apxteck.com/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Portfolio',
+        item: 'https://apxteck.com/portfolio',
+      },
+    ],
+  };
+
+  // Schema Generation: CollectionPage
+  const jsonLdCollectionPage = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Case Studies & Work Portfolio | APXTECK',
+    description:
+      "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+    url: 'https://apxteck.com/portfolio',
+    publisher: {
+      '@type': 'Organization',
+      name: 'APXTeck',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://apxteck.com/logo.png',
+      },
+    },
+  };
+
   return (
     <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+      {/* Inject Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPortfolioList) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdItemList) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdCollectionPage) }}
       />
 
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20 overflow-hidden">
-        
-        {/* Animated Hero and Philosophy section (Client component) */}
-        <PortfolioClient />
+      <main className="flex-1 pt-24 pb-20 overflow-hidden" role="main" itemScope itemType="https://schema.org/CollectionPage">
+        <article>
+          {/* Animated Hero and Philosophy section (Client component) */}
+          <PortfolioClient />
 
-        <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
-        </div>
+          <div className="max-w-7xl mx-auto px-6 mb-12 text-center" aria-hidden="true">
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
+          </div>
 
-        {/* Client side listing list with tabs */}
-        <PortfolioListingSection initialPortfolios={portfolios} />
+          {/* Client side listing list with tabs */}
+          <section aria-label="Portfolio Case Studies Listing">
+            <PortfolioListingSection initialPortfolios={portfolios} />
+          </section>
 
-        {/* Tech Stack Marquee at the bottom */}
-        <div className="mt-20">
-          <TechStackMarquee />
-        </div>
+          {/* Tech Stack Marquee at the bottom */}
+          <aside className="mt-20" aria-label="Our Technology Stack">
+            <TechStackMarquee />
+          </aside>
+        </article>
       </main>
 
       <Footer />

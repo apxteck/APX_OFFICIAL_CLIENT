@@ -4,9 +4,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { User, Lock, Bell, Building } from 'lucide-react';
 import { useAuth } from '@/providers/AuthProvider';
+import Link from 'next/link';
 
 export default function CustomerSettingsPage() {
   const { user } = useAuth();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const container = {
     hidden: { opacity: 0 },
@@ -20,6 +26,8 @@ export default function CustomerSettingsPage() {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }
   };
+
+  if (!mounted) return null;
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-8 max-w-4xl mx-auto">
@@ -48,7 +56,7 @@ export default function CustomerSettingsPage() {
               <input 
                 type="text" 
                 defaultValue={user?.fullName || ''}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all"
               />
             </div>
             <div className="space-y-1.5">
@@ -56,7 +64,7 @@ export default function CustomerSettingsPage() {
               <input 
                 type="email" 
                 defaultValue={user?.email || ''}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 opacity-70 cursor-not-allowed"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all opacity-70 cursor-not-allowed"
                 disabled
               />
             </div>
@@ -67,7 +75,7 @@ export default function CustomerSettingsPage() {
               <input 
                 type="tel" 
                 defaultValue={user?.phone || ''}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all"
               />
             </div>
             <div className="space-y-1.5">
@@ -75,7 +83,7 @@ export default function CustomerSettingsPage() {
               <input 
                 type="text" 
                 placeholder="Company Name"
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all"
               />
             </div>
           </div>
@@ -89,7 +97,7 @@ export default function CustomerSettingsPage() {
 
       {/* Other Settings Placeholder */}
       <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:border-indigo-500/30 transition-all cursor-pointer group flex items-center justify-between">
+        <Link href="/customer/settings/security" className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:border-indigo-500/30 transition-all cursor-pointer group flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center group-hover:scale-110 transition-transform">
               <Lock className="w-5 h-5" />
@@ -99,9 +107,9 @@ export default function CustomerSettingsPage() {
               <p className="text-xs text-gray-500 dark:text-gray-400">Update password</p>
             </div>
           </div>
-        </div>
+        </Link>
 
-        <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:border-amber-500/30 transition-all cursor-pointer group flex items-center justify-between">
+        <Link href="/customer/settings/notifications" className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:border-amber-500/30 transition-all cursor-pointer group flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center group-hover:scale-110 transition-transform">
               <Bell className="w-5 h-5" />
@@ -111,7 +119,7 @@ export default function CustomerSettingsPage() {
               <p className="text-xs text-gray-500 dark:text-gray-400">Email preferences</p>
             </div>
           </div>
-        </div>
+        </Link>
       </motion.div>
     </motion.div>
   );

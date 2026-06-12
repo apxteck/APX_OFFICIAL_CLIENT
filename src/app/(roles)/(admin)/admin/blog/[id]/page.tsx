@@ -3,11 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { blogService, BlogPostDetail, BlogCategory } from "@/services/admin/blog.service";
+import { usersService, User } from "@/services/admin/users.service";
 import { 
   ArrowLeft, Save, Image as ImageIcon, Sparkles, AlertCircle, 
   Settings, Type, Link as LinkIcon, List, Heading, Bold, Italic,
   AlignLeft, AlignCenter, Code, Eye
 } from "lucide-react";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 function Toast({ message, type, onClose }: { message: string; type: "success" | "error" | "loading"; onClose: () => void }) {
   useEffect(() => {
@@ -42,14 +44,21 @@ export default function BlogEditorPage() {
   const [status, setStatus] = useState("DRAFT");
   const [tags, setTags] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
   const [categories, setCategories] = useState<BlogCategory[]>([]);
   const [categoryId, setCategoryId] = useState<string>("");
+  const [authorId, setAuthorId] = useState<string>("");
+  const [authorDesignation, setAuthorDesignation] = useState<string>("");
+  const [authorBio, setAuthorBio] = useState<string>("");
+  const [users, setUsers] = useState<User[]>([]);
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "loading" } | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     blogService.getCategories().then(setCategories);
+    usersService.getUsers().then(setUsers);
+    
     if (params?.id && params.id !== "new") {
       blogService.getPostDetail(params.id as string).then(data => {
         if (data) {
@@ -61,6 +70,9 @@ export default function BlogEditorPage() {
           setTags(data.tags?.join(", ") || "");
           setMetaDescription(data.metaDescription || "");
           setCategoryId(data.categoryId ? data.categoryId.toString() : "");
+          setAuthorId(data.author?.id?.toString() || (data as any).authorId?.toString() || "");
+          setAuthorDesignation(data.authorDesignation || "");
+          setAuthorBio(data.authorBio || "");
         }
         setIsLoading(false);
       });
@@ -88,6 +100,9 @@ export default function BlogEditorPage() {
       formData.append("content", content);
       if (excerpt) formData.append("excerpt", excerpt);
       if (categoryId) formData.append("categoryId", categoryId);
+      formData.append("authorId", authorId);
+      if (authorDesignation) formData.append("authorDesignation", authorDesignation);
+      if (authorBio) formData.append("authorBio", authorBio);
       if (metaDescription) formData.append("metaDescription", metaDescription);
       
       const tagArray = tags.split(",").map(t => t.trim()).filter(Boolean);
@@ -120,7 +135,7 @@ export default function BlogEditorPage() {
   return (
     <div className="space-y-6 max-w-[1400px] mx-auto pb-12">
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#111111] p-4 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm sticky top-0 z-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#111111] p-4 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm sticky top-0 z-20">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => router.push('/admin/blog')}
@@ -146,7 +161,9 @@ export default function BlogEditorPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-xl font-bold text-sm transition-colors flex items-center gap-2">
+          <button 
+            onClick={() => setShowPreview(true)}
+            className="bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-xl font-bold text-sm transition-colors flex items-center gap-2">
             <Eye size={16} /> Preview
           </button>
           <button 
@@ -190,34 +207,18 @@ export default function BlogEditorPage() {
               />
             </div>
 
-            {/* Rich Text Editor Mock */}
+            {/* Advanced Rich Text Editor */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Content</label>
-              <div className="border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 transition-shadow bg-white dark:bg-[#151515]">
-                {/* Formatting Toolbar */}
-                <div className="flex flex-wrap items-center gap-1 p-2 bg-gray-50 dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-white/10">
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><Bold size={16} /></button>
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><Italic size={16} /></button>
-                  <div className="w-px h-6 bg-gray-300 dark:bg-white/10 mx-1"></div>
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><Heading size={16} /></button>
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><Type size={16} /></button>
-                  <div className="w-px h-6 bg-gray-300 dark:bg-white/10 mx-1"></div>
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><AlignLeft size={16} /></button>
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><AlignCenter size={16} /></button>
-                  <div className="w-px h-6 bg-gray-300 dark:bg-white/10 mx-1"></div>
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><List size={16} /></button>
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><LinkIcon size={16} /></button>
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><ImageIcon size={16} /></button>
-                  <button className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"><Code size={16} /></button>
-                </div>
-                {/* Editable Area */}
-                <div 
-                  className="p-6 min-h-[500px] text-gray-800 dark:text-gray-200 prose dark:prose-invert max-w-none focus:outline-none"
-                  contentEditable
-                  dangerouslySetInnerHTML={{ __html: content }}
-                  onInput={(e) => setContent(e.currentTarget.innerHTML)}
-                />
-              </div>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 flex justify-between">
+                <span>Content</span>
+                <span className="text-xs text-indigo-500 font-normal flex items-center gap-1">
+                  <Sparkles size={12} /> Advanced Editor Active
+                </span>
+              </label>
+              <RichTextEditor 
+                initialContent={content} 
+                onChange={setContent} 
+              />
             </div>
 
           </div>
@@ -282,6 +283,54 @@ export default function BlogEditorPage() {
                   ))}
                 </select>
               </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Author</label>
+                <select 
+                  value={authorId}
+                  onChange={async (e) => {
+                    const newAuthorId = e.target.value;
+                    setAuthorId(newAuthorId);
+                    if (newAuthorId) {
+                      try {
+                        const posts = await blogService.getPosts({ authorId: newAuthorId, limit: 1 });
+                        if (posts && posts.length > 0) {
+                          const latestPost = posts[0] as any;
+                          if (latestPost.authorDesignation) setAuthorDesignation(latestPost.authorDesignation);
+                          if (latestPost.authorBio) setAuthorBio(latestPost.authorBio);
+                        }
+                      } catch (err) {
+                        console.error("Failed to fetch author history", err);
+                      }
+                    }
+                  }}
+                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-medium rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-indigo-500">
+                  <option value="">Current User (Default)</option>
+                  {users.filter(u => ['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN'].includes(u.role?.name)).map(u => (
+                    <option key={u.id} value={u.id}>
+                      {u.fullName === "APX Blog Bot" ? "APX Teck" : u.fullName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Author Designation</label>
+                <input 
+                  type="text"
+                  value={authorDesignation}
+                  onChange={(e) => setAuthorDesignation(e.target.value)}
+                  placeholder="e.g. Technology Consultant"
+                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-medium rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Author Bio</label>
+                <textarea 
+                  value={authorBio}
+                  onChange={(e) => setAuthorBio(e.target.value)}
+                  placeholder="e.g. Professional engineers crafting clean code..."
+                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-medium rounded-xl px-4 py-2.5 min-h-[80px] focus:ring-2 focus:ring-indigo-500 resize-none"
+                />
+              </div>
             </div>
           </div>
 
@@ -344,6 +393,79 @@ export default function BlogEditorPage() {
 
         </div>
       </div>
+
+      {/* Preview Modal */}
+      {showPreview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm transition-all duration-300">
+          <div className="bg-white dark:bg-[#111111] rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col border border-gray-200 dark:border-white/10 animate-in fade-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5 backdrop-blur-sm">
+              <h3 className="text-lg font-black text-gray-900 dark:text-white flex items-center gap-2">
+                <Eye size={20} className="text-indigo-500" /> Live Article Preview
+              </h3>
+              <button 
+                onClick={() => setShowPreview(false)}
+                className="px-4 py-2 text-sm font-bold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white bg-white hover:bg-gray-100 dark:bg-[#151515] dark:hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-xl transition-all shadow-sm"
+              >
+                Close Preview
+              </button>
+            </div>
+            
+            {/* Modal Content */}
+            <div className="overflow-y-auto p-6 sm:p-10 space-y-12 flex-grow bg-white dark:bg-[#0a0a0a]">
+              
+              {/* Cover Image Preview */}
+              {(coverFile || post?.coverImageUrl) && (
+                <div className="w-full max-w-4xl mx-auto aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-white/5">
+                  <img 
+                    src={coverFile ? URL.createObjectURL(coverFile) : post?.coverImageUrl || ''} 
+                    alt="Cover Preview" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+              
+              {/* Article Header */}
+              <div className="space-y-6 text-center max-w-3xl mx-auto">
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  {tags.split(",").filter(t => t.trim()).map((tag, i) => (
+                    <span key={i} className="px-4 py-1.5 bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 text-xs font-bold rounded-full border border-indigo-100 dark:border-indigo-500/20">
+                      #{tag.trim()}
+                    </span>
+                  ))}
+                </div>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 dark:text-white leading-tight tracking-tight">
+                  {title || "Untitled Post"}
+                </h1>
+                {excerpt && (
+                  <p className="text-xl text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
+                    {excerpt}
+                  </p>
+                )}
+              </div>
+              
+              <hr className="border-gray-100 dark:border-white/5 w-24 mx-auto border-t-4 rounded-full my-8" />
+              
+              {/* Article Content */}
+              <div 
+                className="max-w-3xl mx-auto text-lg md:text-xl text-gray-800 dark:text-gray-200
+                           [&_h1]:text-4xl [&_h1]:sm:text-5xl [&_h1]:font-black [&_h1]:tracking-tight [&_h1]:text-gray-900 dark:[&_h1]:text-white [&_h1]:mb-6
+                           [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-gray-900 dark:[&_h2]:text-white [&_h2]:mb-4 [&_h2]:mt-8
+                           [&_h3]:text-2xl [&_h3]:font-bold [&_h3]:text-gray-900 dark:[&_h3]:text-white [&_h3]:mb-3 [&_h3]:mt-6
+                           [&_h4]:text-xl [&_h4]:font-bold [&_h4]:text-gray-900 dark:[&_h4]:text-white [&_h4]:mb-2 [&_h4]:mt-4
+                           [&_p]:mb-6 [&_p]:leading-relaxed
+                           [&_ul]:list-disc [&_ul]:pl-8 [&_ul]:mb-6 [&_ol]:list-decimal [&_ol]:pl-8 [&_ol]:mb-6 [&_li]:mb-2
+                           [&_a]:text-indigo-600 [&_a]:underline hover:[&_a]:text-indigo-500
+                           [&_img]:rounded-3xl [&_img]:shadow-xl [&_img]:mx-auto [&_img]:border [&_img]:border-gray-100 dark:[&_img]:border-white/5 [&_img]:my-8
+                           [&_pre]:bg-gray-900 [&_pre]:text-gray-100 [&_pre]:rounded-2xl [&_pre]:p-6 [&_pre]:shadow-inner [&_pre]:my-6 [&_code]:font-mono
+                           [&_blockquote]:border-l-4 [&_blockquote]:border-indigo-500 [&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:bg-gray-50 dark:[&_blockquote]:bg-white/5 [&_blockquote]:py-4 [&_blockquote]:pr-6 [&_blockquote]:rounded-r-2xl [&_blockquote]:my-6
+                           [&_table]:w-full [&_table]:border-collapse [&_table]:my-6 [&_th]:border [&_th]:border-gray-200 dark:[&_th]:border-white/10 [&_th]:p-4 [&_th]:bg-gray-50 dark:[&_th]:bg-white/5 [&_td]:border [&_td]:border-gray-200 dark:[&_td]:border-white/10 [&_td]:p-4"
+                dangerouslySetInnerHTML={{ __html: content || "<p class='text-gray-400 italic text-center'>Start writing to see the preview here...</p>" }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Search, Calendar, Clock, Heart, ChevronLeft, ChevronRight, User, Eye } from 'lucide-react';
@@ -22,7 +22,17 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
   const [activeTag, setActiveTag] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 6; // Set to 6 to easily demonstrate pagination and Ad placement
+  const postsPerPage = 12; // Show 12 posts per page (6 above ad, 6 below ad)
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    if (sectionRef.current) {
+      const yOffset = -100; // Adjust for sticky navbar
+      const y = sectionRef.current.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   // Debounce search query
   useEffect(() => {
@@ -80,9 +90,9 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
   const allTags = Array.from(new Set(initialBlogs.flatMap((p) => p.tags)));
 
   return (
-    <section className="py-12 max-w-7xl mx-auto px-6 space-y-12">
+    <section ref={sectionRef} className="py-12 max-w-7xl mx-auto px-6 space-y-12">
       {/* Search and Filters panel */}
-      <div className="space-y-6">
+      <div className="space-y-6 notranslate" translate="no">
         {/* Search Input */}
         <div className="relative max-w-md mx-auto">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/45" />
@@ -140,7 +150,7 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
 
       {/* Grid of Results */}
       {currentPosts.length === 0 ? (
-        <div className="text-center py-20 border border-dashed border-glass-border rounded-3xl">
+        <div className="text-center py-20 border border-dashed border-glass-border rounded-3xl notranslate" translate="no">
           <p className="text-foreground/50 text-base font-semibold mb-2">No posts found.</p>
           <p className="text-foreground/40 text-xs">
             Try selecting a different filter key or keywords search.
@@ -150,9 +160,8 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
         <div className="space-y-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentPosts.map((post, idx) => {
-              // We inject the Mid Ad slot after the 6th card index (index 5) or midway through the list.
-              // In this layout, if we show 6 cards per page, we can place the ad after index 3 (first row) dynamically!
-              const showMidAd = idx === 3;
+              // We inject the Mid Ad slot after the 6th card (index 5)
+              const showMidAd = idx === 5;
 
               return (
                 <div key={post.id} className="contents">
@@ -192,11 +201,19 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
 
                           <div className="pt-4 border-t border-glass-border flex items-center justify-between mt-auto">
                             <div className="flex items-center gap-2">
-                              <div className="w-7 h-7 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-xs text-accent uppercase">
-                                {post.author?.fullName[0] || 'A'}
+                              <div className="w-7 h-7 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-xs text-accent uppercase overflow-hidden shrink-0">
+                                {post.author?.profile?.profilePhotoUrl ? (
+                                  <img src={post.author.profile.profilePhotoUrl} alt={post.author.fullName} className="w-full h-full object-cover" />
+                                ) : post.author?.profilePhotoUrl ? (
+                                  <img src={post.author.profilePhotoUrl} alt={post.author.fullName} className="w-full h-full object-cover" />
+                                ) : post.author?.fullName ? (
+                                  <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(post.author.fullName.includes('APX Blog Bot') ? 'APX Teck' : post.author.fullName)}&background=4f46e5&color=fff`} alt={post.author.fullName} className="w-full h-full object-cover" />
+                                ) : (
+                                  'A'
+                                )}
                               </div>
                               <span className="text-[10px] font-semibold text-foreground/60">
-                                {post.author?.fullName || 'APX Lead'}
+                                {post.author?.fullName?.includes('APX Blog Bot') ? 'APX Teck' : (post.author?.fullName || 'APX Lead')}
                               </span>
                             </div>
                             <div className="flex items-center gap-3">
@@ -227,9 +244,9 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
 
           {/* Pagination Controls */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 pt-8 border-t border-glass-border">
+            <div className="flex justify-center items-center gap-4 pt-8 border-t border-glass-border notranslate" translate="no">
               <button
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
                 disabled={currentPage === 1}
                 className="w-10 h-10 rounded-xl glass-panel border border-glass-border flex items-center justify-center text-foreground hover:bg-white/5 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                 aria-label="Previous Page"
@@ -240,7 +257,7 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                 Page {currentPage} of {totalPages}
               </span>
               <button
-                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
                 disabled={currentPage === totalPages}
                 className="w-10 h-10 rounded-xl glass-panel border border-glass-border flex items-center justify-center text-foreground hover:bg-white/5 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                 aria-label="Next Page"

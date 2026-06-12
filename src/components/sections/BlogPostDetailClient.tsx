@@ -38,6 +38,7 @@ export function BlogPostDetailClient({
   const [comments, setComments] = useState<BlogComment[]>(initialComments);
   const [commentStatus, setCommentStatus] = useState('');
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  console.log("Author:", post.author?.fullName);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const {
@@ -203,7 +204,7 @@ export function BlogPostDetailClient({
   return (
     <section className="max-w-7xl mx-auto px-6">
       {/* Breadcrumbs */}
-      <div className="flex items-center gap-2 text-xs text-foreground/50 font-medium mb-8">
+      <div className="flex items-center gap-2 text-xs text-foreground/50 font-medium mb-8 notranslate" translate="no">
         <Link href="/" className="hover:text-accent transition-colors">
           Home
         </Link>
@@ -228,14 +229,20 @@ export function BlogPostDetailClient({
             </h1>
 
             {/* Author */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-y border-glass-border py-4 text-xs text-foreground/60">
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-y border-glass-border py-4 text-xs text-foreground/60 notranslate" translate="no">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-accent uppercase">
-                  {post.author?.fullName[0] || 'A'}
+                <div className="w-8 h-8 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-accent uppercase overflow-hidden shrink-0">
+                  {(post.author?.profilePhotoUrl || post.author?.profile?.profilePhotoUrl) ? (
+                    <img src={post.author.profilePhotoUrl || post.author.profile?.profilePhotoUrl || ""} alt={post.author.fullName || "Author"} className="w-full h-full object-cover" />
+                  ) : post.author?.fullName ? (
+                    <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(post.author.fullName.includes('APX Blog Bot') ? 'APX Teck' : post.author.fullName)}&background=4f46e5&color=fff`} alt={post.author.fullName} className="w-full h-full object-cover" />
+                  ) : (
+                    'A'
+                  )}
                 </div>
                 <div>
                   <p className="font-bold text-foreground">
-                    {post.author?.fullName || 'APX Architect'}
+                    {post.author?.fullName?.includes('APX Blog Bot') ? 'APX Teck' : (post.author?.fullName || 'APX Architect')}
                   </p>
                   <p className="text-[10px] text-foreground/45 mt-0.5">
                     {formatDate(post.publishedAt)}
@@ -329,7 +336,7 @@ export function BlogPostDetailClient({
           <AdBanner placement="BLOG_POST_BOTTOM" />
 
           {/* Like & Engagement Optimistic UI bar */}
-          <div className="flex flex-wrap items-center gap-6 py-5 px-8 rounded-3xl glass-panel border border-glass-border shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex flex-wrap items-center gap-6 py-5 px-8 rounded-3xl glass-panel border border-glass-border shadow-sm hover:shadow-md transition-shadow notranslate" translate="no">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleLike}
@@ -366,7 +373,7 @@ export function BlogPostDetailClient({
           </div>
 
           {/* Comments Panel */}
-          <div className="space-y-6 pt-12 border-t border-glass-border">
+          <div className="space-y-6 pt-12 border-t border-glass-border notranslate" translate="no">
             <h3 className="text-2xl font-bold tracking-tight">Article Comments</h3>
 
             {/* Form */}
@@ -435,8 +442,12 @@ export function BlogPostDetailClient({
                       key={comment.id}
                       className="p-5 rounded-2xl bg-foreground/[0.01] border border-glass-border flex gap-4"
                     >
-                      <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center font-bold text-accent text-xs shrink-0 uppercase">
-                        {comment.user.fullName[0]}
+                      <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center font-bold text-accent text-xs shrink-0 uppercase overflow-hidden">
+                        {(comment.user?.profilePhotoUrl || comment.user?.profile?.profilePhotoUrl) ? (
+                          <img src={comment.user.profilePhotoUrl || comment.user.profile?.profilePhotoUrl || ""} alt={comment.user.fullName || "User"} className="w-full h-full object-cover" />
+                        ) : (
+                          comment.user.fullName[0]
+                        )}
                       </div>
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
@@ -459,22 +470,25 @@ export function BlogPostDetailClient({
         </div>
 
         {/* Right Sidebar (Desktop layout) */}
-        <div className="lg:col-span-4 space-y-8">
+        <div className="lg:col-span-4 space-y-8 notranslate" translate="no">
           {/* Author Card */}
           <GlassCard className="p-6 border border-glass-border">
             <h4 className="font-bold text-sm mb-4">About Author</h4>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-accent uppercase">
-                {post.author?.fullName[0] || 'A'}
+              <div className="w-10 h-10 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-accent uppercase overflow-hidden shrink-0">
+                {(post.author?.profilePhotoUrl || post.author?.profile?.profilePhotoUrl) ? (
+                  <img src={post.author.profilePhotoUrl || post.author.profile?.profilePhotoUrl || ""} alt={post.author.fullName || "Author"} className="w-full h-full object-cover" />
+                ) : (
+                  post.author?.fullName[0] || 'A'
+                )}
               </div>
               <div>
-                <p className="font-extrabold text-sm">{post.author?.fullName || 'APX Author'}</p>
-                <p className="text-[10px] text-foreground/50">Technology Consultant</p>
+                <p className="font-extrabold text-sm">{post.author?.fullName?.includes('APX Blog Bot') ? 'APX Teck' : (post.author?.fullName || 'APX Author')}</p>
+                <p className="text-[10px] text-foreground/50">{post.authorDesignation || 'Technology Consultant'}</p>
               </div>
             </div>
             <p className="text-[11px] text-foreground/60 leading-relaxed mt-4">
-              Professional engineers crafting clean code architectures and visual portfolios for
-              SMBs.
+              {post.authorBio || 'Professional engineers crafting clean code architectures and visual portfolios for SMBs.'}
             </p>
           </GlassCard>
 

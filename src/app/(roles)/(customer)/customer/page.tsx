@@ -16,10 +16,12 @@ import {
   Zap
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { api } from '@/lib/axios';
 
 interface RequestItem {
   id: string;
+  rawId: number;
   serviceType: string;
   status: 'NEW' | 'IN_REVIEW' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
   priority: 'LOW' | 'MEDIUM' | 'HIGH';
@@ -28,29 +30,46 @@ interface RequestItem {
 
 export default function CustomerDashboard() {
   const { user } = useAuth();
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [activeRequests, setActiveRequests] = useState<RequestItem[]>([]);
   const [completedCount, setCompletedCount] = useState(0);
+  const [unpaidInvoices, setUnpaidInvoices] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
     async function loadDashboardData() {
-      const res = await api.getMyRequests();
-      const requests = res.data || [];
-      
-      const active = requests.filter((r: any) => !['COMPLETED', 'CANCELLED'].includes(r.status));
-      const completed = requests.filter((r: any) => r.status === 'COMPLETED').length;
-      
-      // Map back to RequestItem shape expected by the UI
-      setActiveRequests(active.map((r: any) => ({
-        id: `REQ-${r.id.toString().padStart(4, '0')}`,
-        rawId: r.id, // For linking
-        serviceType: r.service?.name || 'Custom Service',
-        status: r.status,
-        priority: r.priority,
-        createdAt: r.createdAt
-      })));
-      setCompletedCount(completed);
+      try {
+        const [reqRes, payRes] = await Promise.all([
+          api.getMyRequests(),
+          api.getMyPayments()
+        ]);
+
+        const requests = reqRes.data || [];
+        
+        const active = requests.filter((r: { status: string }) => !['COMPLETED', 'CANCELLED'].includes(r.status));
+        const completed = requests.filter((r: { status: string }) => r.status === 'COMPLETED').length;
+        
+        setActiveRequests(active.map((r: { id: number; service?: { name: string }; status: string; priority: string; createdAt: string }) => ({
+          id: `REQ-${r.id.toString().padStart(4, '0')}`,
+          rawId: r.id,
+          serviceType: r.service?.name || 'Custom Service',
+          status: r.status,
+          priority: r.priority,
+          createdAt: r.createdAt
+        })));
+        setCompletedCount(completed);
+
+        if (payRes.success && payRes.data) {
+          const pending = payRes.data.filter((p: { status: string }) => p.status === 'PENDING' || p.status === 'FAILED').length;
+          setUnpaidInvoices(pending);
+        }
+      } catch (error) {
+        console.error("Failed to load dashboard data", error);
+      } finally {
+        setLoading(false);
+      }
     }
     loadDashboardData();
   }, []);
@@ -115,53 +134,71 @@ export default function CustomerDashboard() {
               </p>
             </div>
           </div>
-          <button className="shrink-0 inline-flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 h-12 rounded-2xl shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] active:scale-[0.98] transition-all cursor-pointer">
+          <Link href="/customer/services" className="shrink-0 inline-flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 h-12 rounded-2xl shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] active:scale-[0.98] transition-all cursor-pointer">
             <Plus className="w-5 h-5" />
             <span>Request New Service</span>
-          </button>
+          </Link>
         </div>
       </motion.div>
 
       {/* Stats Grid */}
       <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md hover:border-cyan-500/30 transition-all group flex items-center justify-between">
-          <div>
-            <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Active Requests</p>
-            <div className="flex items-baseline gap-2">
-              <h3 className="text-4xl font-black text-gray-900 dark:text-white">{activeRequests.length}</h3>
-              <span className="text-sm font-medium text-cyan-500">In Progress</span>
+        {loading ? (
+          <>
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm animate-pulse h-[104px]">
+                <div className="flex items-center justify-between h-full">
+                  <div className="space-y-3 w-1/2">
+                    <div className="h-3 bg-gray-200 dark:bg-white/10 rounded w-full"></div>
+                    <div className="h-8 bg-gray-200 dark:bg-white/10 rounded w-1/2"></div>
+                  </div>
+                  <div className="w-14 h-14 rounded-2xl bg-gray-200 dark:bg-white/10"></div>
+                </div>
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
+            <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md hover:border-cyan-500/30 transition-all group flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Active Requests</p>
+                <div className="flex items-baseline gap-2">
+                  <h3 className="text-4xl font-black text-gray-900 dark:text-white">{activeRequests.length}</h3>
+                  <span className="text-sm font-medium text-cyan-500">In Progress</span>
+                </div>
+              </div>
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-100 to-cyan-50 dark:from-cyan-500/20 dark:to-cyan-500/5 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+                <ClipboardList className="w-7 h-7" />
+              </div>
             </div>
-          </div>
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-100 to-cyan-50 dark:from-cyan-500/20 dark:to-cyan-500/5 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
-            <ClipboardList className="w-7 h-7" />
-          </div>
-        </div>
 
-        <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md hover:border-amber-500/30 transition-all group flex items-center justify-between">
-          <div>
-            <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Unpaid Invoices</p>
-            <div className="flex items-baseline gap-2">
-              <h3 className="text-4xl font-black text-gray-900 dark:text-white">1</h3>
-              <span className="text-sm font-medium text-amber-500">Pending</span>
+            <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md hover:border-amber-500/30 transition-all group flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Unpaid Invoices</p>
+                <div className="flex items-baseline gap-2">
+                  <h3 className="text-4xl font-black text-gray-900 dark:text-white">{unpaidInvoices}</h3>
+                  <span className="text-sm font-medium text-amber-500">Pending</span>
+                </div>
+              </div>
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-500/20 dark:to-amber-500/5 flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
+                <CreditCard className="w-7 h-7" />
+              </div>
             </div>
-          </div>
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-500/20 dark:to-amber-500/5 flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform">
-            <CreditCard className="w-7 h-7" />
-          </div>
-        </div>
 
-        <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md hover:border-emerald-500/30 transition-all group flex items-center justify-between">
-          <div>
-            <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Projects Completed</p>
-            <div className="flex items-baseline gap-2">
-              <h3 className="text-4xl font-black text-gray-900 dark:text-white">{completedCount}</h3>
-              <span className="text-sm font-medium text-emerald-500">Total</span>
+            <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md hover:border-emerald-500/30 transition-all group flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Projects Completed</p>
+                <div className="flex items-baseline gap-2">
+                  <h3 className="text-4xl font-black text-gray-900 dark:text-white">{completedCount}</h3>
+                  <span className="text-sm font-medium text-emerald-500">Total</span>
+                </div>
+              </div>
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-100 to-emerald-50 dark:from-emerald-500/20 dark:to-emerald-500/5 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+                <CheckCircle2 className="w-7 h-7" />
+              </div>
             </div>
-          </div>
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-100 to-emerald-50 dark:from-emerald-500/20 dark:to-emerald-500/5 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
-            <CheckCircle2 className="w-7 h-7" />
-          </div>
-        </div>
+          </>
+        )}
       </motion.div>
 
       {/* Main Grid: Table & Info Panel */}
@@ -191,10 +228,20 @@ export default function CustomerDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-white/5 text-sm font-medium text-gray-800 dark:text-gray-200">
-                {activeRequests.slice(0, 5).map((req: any) => (
+                {loading ? (
+                  [1, 2, 3].map((i) => (
+                    <tr key={i} className="animate-pulse">
+                      <td className="py-4 pr-4"><div className="h-4 bg-gray-200 dark:bg-white/10 rounded w-20"></div></td>
+                      <td className="py-4 px-4"><div className="h-4 bg-gray-200 dark:bg-white/10 rounded w-32"></div></td>
+                      <td className="py-4 px-4"><div className="h-6 bg-gray-200 dark:bg-white/10 rounded w-20"></div></td>
+                      <td className="py-4 px-4"><div className="h-6 bg-gray-200 dark:bg-white/10 rounded w-16"></div></td>
+                      <td className="py-4 pl-4"><div className="h-4 bg-gray-200 dark:bg-white/10 rounded w-24 ml-auto"></div></td>
+                    </tr>
+                  ))
+                ) : activeRequests.slice(0, 5).map((req) => (
                   <tr 
                     key={req.id} 
-                    onClick={() => window.location.href = `/customer/requests/${req.rawId}`}
+                    onClick={() => router.push(`/customer/requests/${req.rawId}`)}
                     className="hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors group cursor-pointer"
                   >
                     <td className="py-4 pr-4 font-mono text-cyan-600 dark:text-cyan-400 font-bold">{req.id}</td>
@@ -218,7 +265,7 @@ export default function CustomerDashboard() {
                     </td>
                   </tr>
                 ))}
-                {activeRequests.length === 0 && (
+                {!loading && activeRequests.length === 0 && (
                   <tr>
                     <td colSpan={5} className="py-8 text-center text-gray-500 dark:text-gray-400">
                       No active service requests found.
@@ -251,7 +298,7 @@ export default function CustomerDashboard() {
               <p className="text-sm text-cyan-100/80 leading-relaxed font-medium">
                 Need custom configurations, layout changes, or urgent deployments? Chat with our team or raise high-priority tickets directly.
               </p>
-              <Link href="mailto:support@apxteck.com" className="w-full py-3 rounded-xl bg-white text-cyan-700 hover:bg-cyan-50 font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:scale-[0.98] transition-all cursor-pointer">
+              <Link href="/contact" className="w-full py-3 rounded-xl bg-white text-cyan-700 hover:bg-cyan-50 font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:scale-[0.98] transition-all cursor-pointer">
                 <span>Contact Account Manager</span>
                 <ExternalLink className="w-4 h-4" />
               </Link>
@@ -277,3 +324,4 @@ export default function CustomerDashboard() {
     </motion.div>
   );
 }
+
