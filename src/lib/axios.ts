@@ -27,6 +27,7 @@ export type MockApi = {
   fetchTestimonials: (...args: any[]) => Promise<Testimonial[]>;
   getAllCommentsAdmin: (...args: any[]) => Promise<any>;
   deleteBlogComment: (...args: any[]) => Promise<any>;
+  moderateComment: (id: number, status: 'APPROVED' | 'REJECTED') => Promise<any>;
   forgotPassword: (...args: any[]) => Promise<any>;
   getLikeStatus: (...args: any[]) => Promise<any>;
   incrementBlogView: (...args: any[]) => Promise<any>;
@@ -224,6 +225,15 @@ export const api = {
       return response.data;
     } catch (error: any) {
       console.error('Failed to delete comment:', error);
+      throw error;
+    }
+  },
+  moderateComment: async (id: number, status: 'APPROVED' | 'REJECTED') => {
+    try {
+      const response = await apiClient.patch(`/blog/comments/${id}/moderate`, { status });
+      return response.data;
+    } catch (error: any) {
+      console.error('Failed to moderate comment:', error);
       throw error;
     }
   },

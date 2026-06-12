@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '@/lib/axios';
 import { GlassCard } from '@/components/ui/GlassCard';
-import { Trash2, Loader2, MessageSquare, AlertCircle } from 'lucide-react';
+import { Trash2, Loader2, MessageSquare, AlertCircle, Check, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function BlogCommentsAdminPage() {
@@ -13,6 +13,7 @@ export default function BlogCommentsAdminPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [moderatingId, setModeratingId] = useState<number | null>(null);
 
   const fetchComments = async (p: number) => {
     setLoading(true);
@@ -54,6 +55,23 @@ export default function BlogCommentsAdminPage() {
     }
   };
 
+  const handleModerate = async (id: number, status: 'APPROVED' | 'REJECTED') => {
+    setModeratingId(id);
+    try {
+      const res = await api.moderateComment(id, status);
+      if (res.success) {
+        setComments(prev => prev.map(c => c.id === id ? { ...c, status } : c));
+      } else {
+        alert(res.message || `Failed to ${status.toLowerCase()} comment`);
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || `Error moderating comment`);
+    } finally {
+      setModeratingId(null);
+    }
+  };
+
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
@@ -91,6 +109,7 @@ export default function BlogCommentsAdminPage() {
                   <th className="px-6 py-4 font-semibold">User</th>
                   <th className="px-6 py-4 font-semibold">Blog Post</th>
                   <th className="px-6 py-4 font-semibold">Comment</th>
+                  <th className="px-6 py-4 font-semibold">Status</th>
                   <th className="px-6 py-4 font-semibold">Date</th>
                   <th className="px-6 py-4 font-semibold text-right">Actions</th>
                 </tr>
@@ -115,22 +134,69 @@ export default function BlogCommentsAdminPage() {
                     <td className="px-6 py-4 max-w-[300px]">
                       <p className="line-clamp-2" title={comment.commentText}>{comment.commentText}</p>
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {comment.status === 'APPROVED' && (
+                        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          Approved
+                        </span>
+                      )}
+                      {comment.status === 'PENDING' && (
+                        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                          Pending
+                        </span>
+                      )}
+                      {comment.status === 'REJECTED' && (
+                        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                          Rejected
+                        </span>
+                      )}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-400">
                       {new Date(comment.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => handleDelete(comment.id)}
-                        disabled={deletingId === comment.id}
-                        className="p-2 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors disabled:opacity-50"
-                        title="Delete Comment"
-                      >
-                        {deletingId === comment.id ? (
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                        ) : (
-                          <Trash2 className="w-4 h-4" />
+                      <div className="flex justify-end items-center gap-2">
+                        {comment.status === 'PENDING' && (
+                          <>
+                            <button
+                              onClick={() => handleModerate(comment.id, 'APPROVED')}
+                              disabled={deletingId !== null || moderatingId !== null}
+                              className="p-2 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-400/10 rounded-lg transition-colors disabled:opacity-50"
+                              title="Approve Comment"
+                            >
+                              {moderatingId === comment.id ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                              ) : (
+                                <Check className="w-4 h-4" />
+                              )}
+                            </button>
+                            <button
+                              onClick={() => handleModerate(comment.id, 'REJECTED')}
+                              disabled={deletingId !== null || moderatingId !== null}
+                              className="p-2 text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg transition-colors disabled:opacity-50"
+                              title="Reject Comment"
+                            >
+                              {moderatingId === comment.id ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                              ) : (
+                                <X className="w-4 h-4" />
+                              )}
+                            </button>
+                          </>
                         )}
-                      </button>
+                        <button
+                          onClick={() => handleDelete(comment.id)}
+                          disabled={deletingId === comment.id || moderatingId === comment.id}
+                          className="p-2 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors disabled:opacity-50"
+                          title="Delete Comment"
+                        >
+                          {deletingId === comment.id ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Trash2 className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
                     </td>
                   </motion.tr>
                 ))}
