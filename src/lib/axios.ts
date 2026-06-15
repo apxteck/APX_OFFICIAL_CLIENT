@@ -47,7 +47,7 @@ export type MockApi = {
   getMyPayments: (...args: any[]) => Promise<any>;
   updateMyRequest: (...args: any[]) => Promise<any>;
   cancelRequest: (...args: any[]) => Promise<any>;
-  verifyEmail: (...args: any[]) => Promise<any>;
+  verifyEmail: (token: string, email: string) => Promise<any>;
 } & typeof apiClient;
 
 export const api = {
@@ -238,7 +238,10 @@ export const api = {
     }
   },
   refreshToken: async () => ({}),
-  resendVerification: async () => ({}),
+  resendVerification: async (_email: string) => ({
+    success: false,
+    message: 'Resend is not available yet. Please contact support.',
+  }),
   resetPassword: async () => ({}),
   submitBlogComment: async (slug: string, commentText: string) => {
     try {
@@ -317,7 +320,19 @@ export const api = {
     }
   },
   updateProfile: async () => ({}),
-  verifyEmail: async () => ({}),
+  verifyEmail: async (token: string, email: string) => {
+    try {
+      const response = await apiClient.get('/auth/verify-email', {
+        params: { token, email },
+      });
+      return { success: response.data.success, message: response.data.message };
+    } catch (err: any) {
+      return {
+        success: false,
+        message: err.response?.data?.message || err.message || 'Verification failed.',
+      };
+    }
+  },
 } as unknown as MockApi;
 
 export default apiClient;

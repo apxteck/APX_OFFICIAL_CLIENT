@@ -9,6 +9,7 @@ export function useVerifyEmailLogic() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token') || '';
+  const email = searchParams.get('email') || '';
 
   const [isMounted, setIsMounted] = useState(false);
   const [verifying, setVerifying] = useState(true);
@@ -28,15 +29,15 @@ export function useVerifyEmailLogic() {
   useEffect(() => {
     setIsMounted(true);
 
-    if (!token) {
-      setErrorState('Verification token is missing.');
+    if (!token || !email) {
+      setErrorState('Verification link is invalid or incomplete.');
       setVerifying(false);
       return;
     }
 
     async function verify() {
       try {
-        const res = await api.verifyEmail(token);
+        const res = await api.verifyEmail(token, email);
         if (res.success) {
           if (res.message === 'Already verified.') {
             router.push('/login?message=Already verified.');
