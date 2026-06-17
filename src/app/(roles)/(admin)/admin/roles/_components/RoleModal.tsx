@@ -14,63 +14,63 @@ export function RoleModal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4 sm:p-6"
           onClick={handleCloseModal}
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-white dark:bg-[#111] w-full max-w-md rounded-3xl shadow-2xl border border-gray-100 dark:border-white/10 overflow-hidden"
+            className="bg-white/95 dark:bg-[#111111]/95 backdrop-blur-xl w-full max-w-md rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-gray-100/80 dark:border-white/10 overflow-hidden"
           >
-            <div className="flex justify-between items-center p-6 border-b border-gray-100 dark:border-white/10">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            <div className="flex justify-between items-center p-6 lg:p-8 border-b border-gray-100/80 dark:border-white/10">
+              <h3 className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">
                 {modalMode === "CREATE" ? "Create New Role" : "Edit Role"}
               </h3>
-              <button onClick={handleCloseModal} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
-                <X size={20} />
+              <button onClick={handleCloseModal} className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors bg-gray-50 hover:bg-gray-100 dark:bg-white/5 dark:hover:bg-white/10 p-2 rounded-full">
+                <X size={20} strokeWidth={2.5} />
               </button>
             </div>
             
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="p-6 lg:p-8 space-y-5">
               <div>
-                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">Role Name *</label>
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Role Name *</label>
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. MARKETING MANAGER"
-                  className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/50 outline-none uppercase dark:text-white"
+                  className="w-full bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-gray-200/80 dark:border-white/10 rounded-2xl px-5 py-4 text-[15px] focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/50 outline-none uppercase dark:text-white font-medium transition-all duration-300 shadow-sm hover:shadow-md"
                 />
-                <p className="text-xs text-gray-500 mt-1">Spaces will be automatically converted to underscores.</p>
+                <p className="text-[13px] font-medium text-gray-500 mt-2 ml-1">Spaces will be automatically converted to underscores.</p>
               </div>
               <div>
-                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">Description</label>
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Description</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Brief description of this role's responsibilities..."
                   rows={3}
-                  className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/50 outline-none dark:text-white resize-none"
+                  className="w-full bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-gray-200/80 dark:border-white/10 rounded-2xl px-5 py-4 text-[15px] focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/50 outline-none dark:text-white resize-none font-medium transition-all duration-300 shadow-sm hover:shadow-md"
                 />
               </div>
 
-              <div className="pt-4 flex gap-3">
+              <div className="pt-6 flex gap-4">
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="flex-1 px-4 py-2.5 rounded-xl font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                  className="flex-1 px-5 py-3.5 rounded-2xl font-bold text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-white/5 border border-gray-200/80 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/10 transition-all shadow-sm hover:shadow-md active:scale-95"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting || !formData.name}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-[0px_4px_14px_rgba(79,70,229,0.3)] disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+                  className="flex-1 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white px-5 py-3.5 rounded-2xl font-bold transition-all shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 active:scale-95"
                 >
-                  {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                  {isSubmitting && <Loader2 className="w-5 h-5 animate-spin" />}
                   {modalMode === "CREATE" ? "Create Role" : "Save Changes"}
                 </button>
               </div>

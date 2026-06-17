@@ -30,12 +30,18 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="relative w-16 h-16">
+              <div className="relative w-40 h-16">
                 <Image
-                  src="/APXTeck.png"
-                  alt="APXTeck Logo"
+                  src="/APX Teck - Final Logo -01.png"
+                  alt="APXTeck Logo Light"
                   fill
-                  className="object-contain drop-shadow-[0_0_15px_rgba(163,230,53,0.3)]"
+                  className="object-contain dark:hidden drop-shadow-[0_0_15px_rgba(163,230,53,0.3)]"
+                />
+                <Image
+                  src="/APX Teck - Final Logo -03.png"
+                  alt="APXTeck Logo Dark"
+                  fill
+                  className="object-contain hidden dark:block drop-shadow-[0_0_15px_rgba(163,230,53,0.3)]"
                 />
               </div>
             </Link>

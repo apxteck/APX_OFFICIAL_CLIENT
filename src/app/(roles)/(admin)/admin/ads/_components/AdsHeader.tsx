@@ -1,5 +1,6 @@
 import React from "react";
-import { MonitorPlay, PlusCircle } from "lucide-react";
+import { MonitorPlay, PlusCircle, DollarSign } from "lucide-react";
+import Link from "next/link";
 
 interface AdsHeaderProps {
   onCreateClick: () => void;
@@ -19,13 +20,22 @@ export function AdsHeader({ onCreateClick }: AdsHeaderProps) {
           Manage banner ads, Google AdSense codes, and placements across the platform.
         </p>
       </div>
-      <button 
-        onClick={onCreateClick}
-        className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center gap-2 shrink-0"
-      >
-        <PlusCircle size={18} />
-        Create Ad
-      </button>
+      <div className="flex items-center gap-3 shrink-0">
+        <Link 
+          href="/admin/ads/pricing"
+          className="bg-white hover:bg-gray-50 dark:bg-[#222] dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-xl font-bold text-sm transition-colors border border-gray-200 dark:border-white/10 flex items-center gap-2"
+        >
+          <DollarSign size={18} className="text-indigo-500" />
+          Pricing Slots
+        </Link>
+        <button 
+          onClick={onCreateClick}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center gap-2"
+        >
+          <PlusCircle size={18} />
+          Create Ad
+        </button>
+      </div>
     </div>
   );
 }

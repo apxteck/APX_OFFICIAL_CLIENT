@@ -55,6 +55,14 @@ export const useLeadsColumns = (): ColumnDef<Lead>[] => {
       )
     },
     {
+      header: "Assigned To",
+      cell: (lead) => (
+        <span className="font-medium text-gray-700 dark:text-gray-300">
+          {lead.assignedTo?.fullName || "Unassigned"}
+        </span>
+      )
+    },
+    {
       header: "Status",
       cell: (lead) => {
         const statusConfig: Record<string, any> = {

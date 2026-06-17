@@ -13,3 +13,13 @@ export interface Ad {
     | 'BLOG_POST_BOTTOM';
   isActive: boolean;
 }
+
+export interface AdPricingSlot {
+  id: number;
+  placement: string;
+  label: string | null;
+  pricePerDay: number;
+  pricePerWeek: number;
+  pricePerMonth: number;
+  isActive: boolean;
+}

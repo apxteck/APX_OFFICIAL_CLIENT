@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { api } from '@/lib/axios';
 import { BlogPost, BlogComment } from '@/app/types/blog.types';
 import { AdBanner } from '@/components/ui/AdBanner';
+import { AvailableAdSlots } from '@/components/ui/AvailableAdSlots';
 import { FaFacebookF, FaInstagram, FaXTwitter, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa6';
 
 interface BlogPostDetailClientProps {
@@ -514,8 +515,9 @@ export function BlogPostDetailClient({
           )}
 
           {/* Sticky Sidebar Advertisement */}
-          <div className="sticky top-28 pt-4">
+          <div className="sticky top-28 space-y-6 pt-4">
             <AdBanner placement="BLOG_POST_SIDEBAR" />
+            <AvailableAdSlots />
           </div>
         </div>
       </div>

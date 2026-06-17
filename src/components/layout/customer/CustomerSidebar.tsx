@@ -99,10 +99,17 @@ export default function CustomerSidebar() {
               <div className="flex-1 flex justify-center">
                 <div className="relative w-32 h-8 drop-shadow-[0_0_10px_rgba(6,182,212,0.3)]">
                   <Image
-                    src="/APXTeck.png"
-                    alt="APXTeck Logo"
+                    src="/APX Teck - Final Logo -01.png"
+                    alt="APXTeck Logo Light"
                     fill
-                    className="object-contain"
+                    className="object-contain dark:hidden"
+                    priority
+                  />
+                  <Image
+                    src="/APX Teck - Final Logo -03.png"
+                    alt="APXTeck Logo Dark"
+                    fill
+                    className="object-contain hidden dark:block"
                     priority
                   />
                 </div>

@@ -30,6 +30,11 @@ export const leadsService = {
     return response.data?.data;
   },
 
+  assignLead: async (id: number, assignedToId: number): Promise<Lead> => {
+    const response = await apiClient.patch(`/enquiry/leads/${id}`, { assignedToId });
+    return response.data?.data;
+  },
+
   getLeadFollowUps: async (leadId: number): Promise<LeadFollowUp[]> => {
     try {
       // In the backend, there isn't a direct get follow-ups by lead id endpoint that doesn't use POST /follow-ups/all
@@ -50,5 +55,15 @@ export const leadsService = {
     // The backend uses req.user.id implicitly? No, req.body.doneById.
     const response = await apiClient.post('/enquiry/follow-ups', data);
     return response.data?.data;
+  },
+
+  getAssignableEmployees: async (): Promise<any[]> => {
+    try {
+      const response = await apiClient.get('/enquiry/assignable-users');
+      return response.data?.data || [];
+    } catch (error) {
+      console.error("Failed to fetch assignable employees", error);
+      return [];
+    }
   }
 };

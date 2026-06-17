@@ -22,15 +22,16 @@ export function UsersTable() {
     {
       header: "User",
       cell: (user) => (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <UserAvatar 
             name={user.fullName} 
             src={user.profile?.profilePhotoUrl} 
             size="lg" 
+            className="shadow-sm border-2 border-white dark:border-[#111111]"
           />
           <div>
-            <p className="font-bold text-gray-900 dark:text-white">{user.fullName}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+            <p className="font-bold text-gray-900 dark:text-white text-sm">{user.fullName}</p>
+            <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium">{user.email}</p>
           </div>
         </div>
       ),
@@ -38,20 +39,20 @@ export function UsersTable() {
     {
       header: "Phone",
       accessorKey: "phone",
-      cell: (user) => <span className="font-medium">{user.phone}</span>
+      cell: (user) => <span className="font-medium text-gray-700 dark:text-gray-300">{user.phone || "-"}</span>
     },
     {
       header: "Role",
       cell: (user) => (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           {user.role?.name === "SUPER_ADMIN" ? (
-            <Shield size={14} className="text-emerald-500" />
+            <Shield size={16} className="text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
           ) : user.role?.name === "ADMIN" ? (
-            <Settings size={14} className="text-indigo-500" />
+            <Settings size={16} className="text-indigo-500 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
           ) : (
-            <UserIcon size={14} className="text-gray-500" />
+            <UserIcon size={16} className="text-gray-500" />
           )}
-          <span className="font-bold text-xs uppercase tracking-wider bg-gray-50 dark:bg-white/5 px-2.5 py-1 rounded-md text-gray-700 dark:text-gray-300">
+          <span className="font-extrabold text-[11px] uppercase tracking-wider bg-gray-100/80 dark:bg-white/5 px-3 py-1.5 rounded-lg text-gray-700 dark:text-gray-300 border border-gray-200/50 dark:border-white/10 shadow-sm backdrop-blur-sm">
             {user.role?.name || "UNKNOWN"}
           </span>
         </div>
@@ -60,11 +61,12 @@ export function UsersTable() {
     {
       header: "Status",
       cell: (user) => (
-        <span className={`px-2.5 py-1 text-xs font-bold rounded-md ${
+        <span className={`px-3 py-1.5 text-[11px] font-extrabold tracking-wider rounded-lg border shadow-sm backdrop-blur-sm inline-flex items-center gap-1.5 ${
           user.isActive 
-            ? "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" 
-            : "bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400"
+            ? "bg-emerald-100/80 border-emerald-200/50 dark:bg-emerald-500/10 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400" 
+            : "bg-red-100/80 border-red-200/50 dark:bg-red-500/10 dark:border-red-500/20 text-red-700 dark:text-red-400"
         }`}>
+          <span className={`w-1.5 h-1.5 rounded-full ${user.isActive ? "bg-emerald-500 animate-pulse" : "bg-red-500"}`}></span>
           {user.isActive ? "ACTIVE" : "INACTIVE"}
         </span>
       )
@@ -72,7 +74,7 @@ export function UsersTable() {
     {
       header: "Joined",
       cell: (user) => (
-        <span className="text-sm font-medium">
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
           {format(new Date(user.createdAt), "MMM dd, yyyy")}
         </span>
       )
@@ -83,11 +85,11 @@ export function UsersTable() {
         <div className="flex items-center gap-2">
           <Link 
             href={`/admin/users/${user.id}`}
-            className="px-3 py-1.5 rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 transition-colors"
+            className="px-4 py-2 rounded-xl text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 border border-indigo-100 dark:border-indigo-500/20 transition-all shadow-sm hover:shadow-md hover:shadow-indigo-500/10 active:scale-95"
           >
             View Profile
           </Link>
-          <button className="p-2 rounded-lg text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+          <button className="p-2 rounded-xl text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors active:scale-95">
             <MoreVertical size={16} />
           </button>
         </div>
@@ -98,7 +100,7 @@ export function UsersTable() {
   if (isLoading) {
     return (
       <div className="flex h-[80vh] items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-4 border-gray-200 dark:border-white/10 border-t-indigo-600 dark:border-t-indigo-500 animate-spin"></div>
+        <div className="w-10 h-10 rounded-full border-4 border-gray-200 dark:border-white/10 border-t-indigo-600 dark:border-t-indigo-500 animate-spin"></div>
       </div>
     );
   }

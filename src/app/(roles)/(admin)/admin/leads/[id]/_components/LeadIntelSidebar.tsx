@@ -1,8 +1,24 @@
-import React from "react";
-import { User as UserIcon, Mail, PhoneCall, ChevronRight, Compass, Tag } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { User as UserIcon, Mail, PhoneCall, ChevronRight, Compass, Tag, Check, ChevronsUpDown } from "lucide-react";
 import { Lead } from "@/app/types/lead.types";
+import { leadsService } from "@/services/admin/leads.service";
+import toast from "react-hot-toast";
 
-export function LeadIntelSidebar({ lead }: { lead: Lead }) {
+export function LeadIntelSidebar({ lead, onAssignLead }: { lead: Lead, onAssignLead?: (userId: number) => void }) {
+  const [users, setUsers] = useState<any[]>([]);
+  const [isAssigning, setIsAssigning] = useState(false);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await leadsService.getAssignableEmployees();
+        setUsers(data);
+      } catch (error) {
+        console.error("Failed to load users for assignment");
+      }
+    };
+    fetchUsers();
+  }, []);
   return (
     <div className="space-y-6">
       
@@ -61,6 +77,31 @@ export function LeadIntelSidebar({ lead }: { lead: Lead }) {
             <p className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Acquisition Source</p>
             <div className="bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 px-4 py-2.5 rounded-xl">
               <p className="font-medium text-gray-900 dark:text-white text-sm">{lead.source || "Unknown"}</p>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5"><UserIcon size={12}/> Assigned To</p>
+            <div className="bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 p-2.5 rounded-xl flex items-center justify-between">
+              <select
+                className="w-full bg-transparent border-none outline-none text-sm font-bold text-gray-900 dark:text-white cursor-pointer appearance-none"
+                value={lead.assignedToId || ""}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val && onAssignLead) {
+                    onAssignLead(Number(val));
+                  }
+                }}
+                disabled={isAssigning}
+              >
+                <option value="" disabled className="text-gray-500">Unassigned</option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id} className="text-gray-900 dark:text-white bg-white dark:bg-[#111111]">
+                    {user.fullName} ({user.role?.name || "Unknown"})
+                  </option>
+                ))}
+              </select>
+              <ChevronsUpDown size={14} className="text-gray-400 pointer-events-none" />
             </div>
           </div>
 

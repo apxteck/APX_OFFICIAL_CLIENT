@@ -42,6 +42,18 @@ export function useLeadDetailLogic(leadId: string) {
     }
   };
 
+  const handleAssignLead = async (assignedToId: number) => {
+    if (!lead) return;
+    const toastId = toast.loading("Assigning lead...");
+    try {
+      await leadsService.assignLead(lead.id, assignedToId);
+      toast.success(`Lead assigned successfully`, { id: toastId });
+      fetchData();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to assign lead", { id: toastId });
+    }
+  };
+
   const handleAddFollowUp = async (note: string, nextFollowUpAt: string) => {
     if (!lead) return;
     const toastId = toast.loading("Adding follow-up...");
@@ -71,6 +83,7 @@ export function useLeadDetailLogic(leadId: string) {
     followUps,
     isLoading,
     handleUpdateStatus,
-    handleAddFollowUp
+    handleAddFollowUp,
+    handleAssignLead
   };
 }

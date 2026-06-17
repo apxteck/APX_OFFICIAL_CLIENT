@@ -17,25 +17,30 @@ export function DashboardTabs() {
 
   return (
     <div className="mb-8 relative z-10">
-      <div className="flex flex-wrap gap-2 bg-gray-100/80 dark:bg-white/5 p-1.5 rounded-2xl w-full xl:max-w-max border border-gray-200/60 dark:border-white/5 shadow-sm">
+      <div className="flex flex-wrap gap-1.5 bg-gray-100/80 dark:bg-black/40 backdrop-blur-md p-1.5 rounded-[1.25rem] w-full xl:max-w-max border border-gray-200/60 dark:border-white/5 shadow-inner">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex-1 sm:flex-none text-center relative overflow-hidden ${
+            className={`px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 flex-1 sm:flex-none text-center relative overflow-hidden group ${
               activeTab === tab.id
-                ? "bg-white dark:bg-[#151515] text-indigo-600 dark:text-indigo-400 shadow-[0_2px_15px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_15px_rgba(0,0,0,0.3)] ring-1 ring-gray-200/50 dark:ring-white/10"
-                : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200/50 dark:hover:bg-white/5"
+                ? "text-indigo-600 dark:text-indigo-300"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
             }`}
           >
             <span className="relative z-10">{tab.label}</span>
             {activeTab === tab.id && (
               <motion.div
                 layoutId="active-tab"
-                className="absolute inset-0 bg-white dark:bg-[#151515] rounded-xl z-0"
+                className="absolute inset-0 bg-white dark:bg-white/10 rounded-2xl z-0 shadow-[0_2px_15px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_15px_rgba(255,255,255,0.05)] border border-gray-200/50 dark:border-white/10"
                 initial={false}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               />
+            )}
+            
+            {/* Subtle hover effect for inactive tabs */}
+            {activeTab !== tab.id && (
+              <div className="absolute inset-0 bg-gray-200/50 dark:bg-white/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" />
             )}
           </button>
         ))}

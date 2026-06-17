@@ -8,7 +8,7 @@ import { LeadIntelSidebar } from "./LeadIntelSidebar";
 import { LeadFollowUps } from "./LeadFollowUps";
 
 export function LeadDetailManager({ leadId }: { leadId: string }) {
-  const { lead, followUps, isLoading, handleAddFollowUp } = useLeadDetailLogic(leadId);
+  const { lead, followUps, isLoading, handleAddFollowUp, handleAssignLead } = useLeadDetailLogic(leadId);
 
   if (isLoading || !lead) {
     return (
@@ -34,7 +34,7 @@ export function LeadDetailManager({ leadId }: { leadId: string }) {
         </div>
 
         {/* Right Column: Lead Intel */}
-        <LeadIntelSidebar lead={lead} />
+        <LeadIntelSidebar lead={lead} onAssignLead={handleAssignLead} />
       </div>
       
     </div>

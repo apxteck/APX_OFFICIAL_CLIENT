@@ -19,6 +19,7 @@ export type MockApi = {
   fetchHeroBanners: (...args: any[]) => Promise<HeroBanner[]>;
   fetchPortfolios: (...args: any[]) => Promise<Portfolio[]>;
   fetchPortfolioBySlug: (...args: any[]) => Promise<Portfolio | null>;
+  fetchPricingSlots: (...args: any[]) => Promise<any[]>;
   fetchServiceFields: (...args: any[]) => Promise<ServiceField[]>;
   fetchServices: (...args: any[]) => Promise<Service[]>;
   fetchStats: (...args: any[]) => Promise<StatsOverview>;
@@ -150,6 +151,15 @@ export const api = {
     } catch (error) {
       console.error('Failed to fetch portfolio by slug:', error);
       return null;
+    }
+  },
+  fetchPricingSlots: async () => {
+    try {
+      const response = await apiClient.get('/advertisement/pricing-slots');
+      return response.data?.data || [];
+    } catch (error) {
+      console.error('Failed to fetch pricing slots:', error);
+      return [];
     }
   },
   fetchServiceFields: async (serviceId: number) => {

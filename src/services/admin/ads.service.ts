@@ -1,5 +1,5 @@
 import apiClient from "@/lib/api/axios";
-import { Ad } from "@/app/types/ad.types";
+import { Ad, AdPricingSlot } from "@/app/types/ad.types";
 
 export interface PaginationParams {
   page?: number;
@@ -78,6 +78,26 @@ export const adsService = {
       await apiClient.delete(`/advertisement/${id}`);
     } catch (error) {
       console.error(`Failed to delete ad ${id}:`, error);
+      throw error;
+    }
+  },
+
+  getPricingSlots: async (): Promise<AdPricingSlot[]> => {
+    try {
+      const response = await apiClient.get("/advertisement/pricing-slots");
+      return response.data?.data || [];
+    } catch (error) {
+      console.error("Failed to fetch pricing slots:", error);
+      throw error;
+    }
+  },
+
+  updatePricingSlot: async (id: number, data: Partial<AdPricingSlot>): Promise<AdPricingSlot> => {
+    try {
+      const response = await apiClient.patch(`/advertisement/pricing-slots/${id}`, data);
+      return response.data?.data;
+    } catch (error) {
+      console.error(`Failed to update pricing slot ${id}:`, error);
       throw error;
     }
   },

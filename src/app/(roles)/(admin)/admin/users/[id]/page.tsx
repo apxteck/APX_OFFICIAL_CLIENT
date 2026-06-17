@@ -210,10 +210,10 @@ export default function UserDetailPage() {
     setIsSaving(true);
     try {
       await usersService.updateUser(user.id, {
-        fullName: form.fullName,
-        email: form.email,
-        phone: form.phone,
-        roleId: parseInt(form.roleId),
+        fullName: form.fullName || undefined,
+        email: form.email || undefined,
+        phone: form.phone || undefined,
+        roleId: parseInt(form.roleId) || undefined,
         address: form.address,
         city: form.city,
         state: form.state,

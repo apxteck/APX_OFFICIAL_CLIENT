@@ -1,19 +1,25 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 
 export function UsersHeader() {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
       <div>
-        <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Users & Roles</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mt-1">Manage system users, role assignments, and module access permissions.</p>
+        <h1 className="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-indigo-800 to-gray-900 dark:from-white dark:via-indigo-300 dark:to-white">
+          Users & Roles
+        </h1>
+        <p className="text-gray-500 dark:text-gray-400 font-medium mt-2 text-base">
+          Manage system users, role assignments, and module access permissions.
+        </p>
       </div>
       <Link 
         href="/admin/users/create" 
-        className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-[0px_4px_14px_rgba(79,70,229,0.3)] inline-flex items-center gap-2"
+        className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]"
       >
-        + Add New User
+        <Plus size={18} strokeWidth={3} />
+        Add New User
       </Link>
     </div>
   );

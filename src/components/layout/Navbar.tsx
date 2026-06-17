@@ -38,10 +38,16 @@ export function Navbar() {
           <Link href="/" className="flex items-center gap-3 group shrink-0">
             <div className="relative w-20 h-8 flex items-center justify-center transition-transform group-hover:scale-105">
               <Image
-                src="/APXTeck.png"
-                alt="APXTeck Logo"
+                src="/APX Teck - Final Logo -01.png"
+                alt="APXTeck Logo Light"
                 fill
-                className="object-contain drop-shadow-[0_0_15px_rgba(14,165,233,0.3)]"
+                className="object-contain dark:hidden drop-shadow-[0_0_15px_rgba(14,165,233,0.3)]"
+              />
+              <Image
+                src="/APX Teck - Final Logo -03.png"
+                alt="APXTeck Logo Dark"
+                fill
+                className="object-contain hidden dark:block drop-shadow-[0_0_15px_rgba(14,165,233,0.3)]"
               />
             </div>
           </Link>

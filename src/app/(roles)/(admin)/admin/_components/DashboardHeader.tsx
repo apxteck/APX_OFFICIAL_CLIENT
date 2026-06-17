@@ -8,27 +8,29 @@ export function DashboardHeader() {
     <div className="flex flex-col xl:flex-row justify-between items-start gap-6 mb-2">
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
-            <LayoutDashboard className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center border border-indigo-500/20 shadow-inner">
+            <LayoutDashboard className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Admin Dashboard</h1>
+          <h1 className="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-indigo-800 to-gray-900 dark:from-white dark:via-indigo-300 dark:to-white">
+            Admin Dashboard
+          </h1>
         </div>
-        <p className="text-gray-500 dark:text-gray-400">Welcome back! Here is a summary of platform performance.</p>
+        <p className="text-gray-500 dark:text-gray-400 font-medium">Welcome back! Here is a summary of platform performance.</p>
       </div>
       
       {/* Quick Actions */}
-      <div className="flex flex-wrap items-center gap-3 w-full xl:w-auto p-2 bg-gray-50 dark:bg-white/5 rounded-2xl border border-gray-200/60 dark:border-white/5 shadow-sm">
+      <div className="flex flex-wrap items-center gap-3 w-full xl:w-auto p-2.5 bg-white/60 dark:bg-[#111111]/80 backdrop-blur-xl rounded-2xl border border-gray-200/80 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.1)]">
         <div className="px-3 flex items-center gap-2 border-r border-gray-200 dark:border-white/10 hidden sm:flex">
-           <Zap className="w-4 h-4 text-amber-500" />
-           <span className="text-sm font-bold text-gray-600 dark:text-gray-300">Quick Actions</span>
+           <Zap className="w-4 h-4 text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
+           <span className="text-sm font-bold text-gray-700 dark:text-gray-300">Quick Actions</span>
         </div>
-        <Link href="/admin/tasks/new" className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl transition-all shadow-sm shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-0.5 active:translate-y-0">
+        <Link href="/admin/tasks/new" className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white text-sm font-bold rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]">
           <Plus className="w-4 h-4" /> New Task
         </Link>
-        <Link href="/admin/users" className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#111] border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 hover:border-gray-300 dark:hover:border-white/20 text-gray-700 dark:text-gray-300 text-sm font-bold rounded-xl transition-all shadow-sm hover:-translate-y-0.5 active:translate-y-0">
+        <Link href="/admin/users" className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 text-sm font-bold rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]">
           <Users className="w-4 h-4" /> Add User
         </Link>
-        <Link href="/admin/blog" className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#111] border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 hover:border-gray-300 dark:hover:border-white/20 text-gray-700 dark:text-gray-300 text-sm font-bold rounded-xl transition-all shadow-sm hover:-translate-y-0.5 active:translate-y-0">
+        <Link href="/admin/blog" className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 text-sm font-bold rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]">
           <FileText className="w-4 h-4" /> Write Blog
         </Link>
       </div>
