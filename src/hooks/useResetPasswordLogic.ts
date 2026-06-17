@@ -9,6 +9,7 @@ export function useResetPasswordLogic() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token') || '';
+  const email = searchParams.get('email') || '';
 
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,8 +28,8 @@ export function useResetPasswordLogic() {
   });
 
   const onSubmit = async (values: ResetPasswordValues) => {
-    if (!token) {
-      setErrorMsg('Reset token is missing from URL.');
+    if (!token || !email) {
+      setErrorMsg('Reset token or email is missing from URL.');
       return;
     }
 
@@ -37,8 +38,9 @@ export function useResetPasswordLogic() {
 
     try {
       const result = await api.resetPassword({
+        email,
         token,
-        passwordHash: values.password,
+        newPassword: values.password,
       });
 
       if (result.success) {

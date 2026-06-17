@@ -38,7 +38,7 @@ export type MockApi = {
   refreshToken: (...args: any[]) => Promise<any>;
   register: (...args: any[]) => Promise<any>;
   resendVerification: (...args: any[]) => Promise<any>;
-  resetPassword: (...args: any[]) => Promise<any>;
+  resetPassword: (data: { email: string; token: string; newPassword: string }) => Promise<any>;
   submitBlogComment: (...args: any[]) => Promise<any>;
   submitEnquiry: (data: any) => Promise<any>;
   submitServiceRequest: (serviceId: number, formData: FormData) => Promise<any>;
@@ -174,13 +174,9 @@ export const api = {
   fetchTestimonials: async () => [],
   forgotPassword: async (email: string) => {
     try {
-      const response = await apiClient.post('/auth/forgotPassword', { email });
+      const response = await apiClient.post('/auth/forgot-password', { email });
       return { success: response.data.success, message: response.data.message };
     } catch (err: any) {
-      if (err.response?.status === 404) {
-        // Fallback mock if backend endpoint is not implemented yet
-        return { success: true, message: 'A password reset link has been sent to your email.' };
-      }
       return { success: false, message: err.response?.data?.message || err.message };
     }
   },
@@ -238,11 +234,25 @@ export const api = {
     }
   },
   refreshToken: async () => ({}),
-  resendVerification: async (_email: string) => ({
-    success: false,
-    message: 'Resend is not available yet. Please contact support.',
-  }),
-  resetPassword: async () => ({}),
+  resendVerification: async (email: string) => {
+    try {
+      const response = await apiClient.post('/auth/resend-verification-email', { email });
+      return { success: response.data?.success, message: response.data?.message };
+    } catch (err: any) {
+      return {
+        success: false,
+        message: err.response?.data?.message || err.message || 'Failed to resend verification email.',
+      };
+    }
+  },
+  resetPassword: async (data: { email: string; token: string; newPassword: string }) => {
+    try {
+      const response = await apiClient.post('/auth/reset-password', data);
+      return { success: response.data.success, message: response.data.message };
+    } catch (err: any) {
+      return { success: false, message: err.response?.data?.message || err.message };
+    }
+  },
   submitBlogComment: async (slug: string, commentText: string) => {
     try {
       const response = await apiClient.post(`/blog/public/posts/${slug}/comments`, { commentText });
