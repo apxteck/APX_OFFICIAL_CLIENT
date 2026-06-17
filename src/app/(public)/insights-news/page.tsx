@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { AdBanner } from '@/components/ui/AdBanner';
+import { AvailableAdSlots } from '@/components/ui/AvailableAdSlots';
 import { api } from '@/lib/axios';
 import { BlogPost } from '@/app/types/blog.types';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
@@ -148,9 +149,14 @@ export default async function BlogListingPage() {
           <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
         </div>
 
-        {/* Ad Slot Top (Centered before Blog list) */}
-        <aside className="max-w-7xl mx-auto px-6 mb-12 flex justify-center notranslate" translate="no" aria-label="Top Advertisement">
-          <AdBanner placement="BLOG_LIST_TOP" />
+        {/* Ad Slot Top and Pricing (Stacked Horizontally) */}
+        <aside className="max-w-7xl mx-auto px-6 mb-12 flex flex-col items-center gap-8 notranslate" translate="no" aria-label="Top Advertisement">
+          <div className="w-full max-w-full overflow-hidden flex justify-center bg-foreground/[0.02] border border-glass-border rounded-3xl p-4">
+            <AdBanner placement="BLOG_LIST_TOP" />
+          </div>
+          <div className="w-full">
+            <AvailableAdSlots layout="horizontal" />
+          </div>
         </aside>
 
         {/* Client Side Blog Grid with debounced filters and pagination */}

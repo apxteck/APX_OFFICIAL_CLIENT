@@ -1,15 +1,48 @@
 "use client";
 
 import React, { useState } from "react";
-import { DollarSign, Edit, AlertCircle, Calendar, Clock, CreditCard } from "lucide-react";
+import { DollarSign, Edit, AlertCircle, Calendar, Clock, CreditCard, Plus, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { usePricingSlotsLogic } from "../_hooks/usePricingSlotsLogic";
 import PricingSlotModal from "../_components/PricingSlotModal";
 import { AdPricingSlot } from "@/app/types/ad.types";
 
 export default function Page() {
-  const { slots, isLoading, updateSlot, handleToggleActive } = usePricingSlotsLogic();
-  const [editingSlot, setEditingSlot] = useState<AdPricingSlot | null>(null);
+  const { slots, isLoading, createSlot, updateSlot, deleteSlot, handleToggleActive } = usePricingSlotsLogic();
+  const [editingSlot, setEditingSlot] = useState<Partial<AdPricingSlot> | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
+
+  const handleCreateNew = () => {
+    setEditingSlot({
+      placement: "BLOG_LIST_TOP",
+      label: "",
+      pricePerDay: 0,
+      pricePerWeek: 0,
+      pricePerMonth: 0,
+      isActive: true,
+    });
+    setIsCreating(true);
+  };
+
+  const handleCloseModal = () => {
+    setEditingSlot(null);
+    setIsCreating(false);
+  };
+
+  const handleSave = async (id: number | null, data: Partial<AdPricingSlot>) => {
+    if (isCreating) {
+      return await createSlot(data);
+    } else if (id !== null) {
+      return await updateSlot(id, data);
+    }
+    return false;
+  };
+
+  const handleDelete = async (id: number) => {
+    if (window.confirm("Are you sure you want to delete this pricing slot?")) {
+      await deleteSlot(id);
+    }
+  };
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -26,6 +59,13 @@ export default function Page() {
             Configure slot pricing and packages.
           </p>
         </div>
+        <button 
+          onClick={handleCreateNew}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors flex items-center gap-2 shadow-sm"
+        >
+          <Plus size={18} />
+          Create Pricing Slot
+        </button>
       </div>
 
       {isLoading ? (
@@ -67,6 +107,14 @@ export default function Page() {
                 </div>
               </button>
 
+              <button 
+                onClick={() => handleDelete(slot.id)}
+                className="absolute top-4 right-16 z-10 p-2 rounded-full border border-red-200 dark:border-red-900/30 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 shadow-sm bg-white dark:bg-[#151515] flex items-center justify-center transition-colors"
+                title="Delete Pricing Slot"
+              >
+                <Trash2 size={14} />
+              </button>
+
               <div className="p-6 flex-1 flex flex-col">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center">
@@ -88,21 +136,21 @@ export default function Page() {
                       <Clock size={14} className="text-gray-400" />
                       Daily
                     </div>
-                    <span className="font-bold text-gray-900 dark:text-white">${slot.pricePerDay.toFixed(2)}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">${Number(slot.pricePerDay).toFixed(2)}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 font-medium">
                       <Calendar size={14} className="text-gray-400" />
                       Weekly
                     </div>
-                    <span className="font-bold text-gray-900 dark:text-white">${slot.pricePerWeek.toFixed(2)}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">${Number(slot.pricePerWeek).toFixed(2)}</span>
                   </div>
                   <div className="flex items-center justify-between pt-3 mt-3 border-t border-gray-200 dark:border-white/10">
                     <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 font-medium">
                       <CreditCard size={14} className="text-indigo-500" />
                       Monthly
                     </div>
-                    <span className="font-black text-lg text-indigo-600 dark:text-indigo-400">${slot.pricePerMonth.toFixed(2)}</span>
+                    <span className="font-black text-lg text-indigo-600 dark:text-indigo-400">${Number(slot.pricePerMonth).toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -124,8 +172,9 @@ export default function Page() {
       {editingSlot && (
         <PricingSlotModal 
           slot={editingSlot} 
-          onClose={() => setEditingSlot(null)} 
-          onSave={updateSlot} 
+          isCreating={isCreating}
+          onClose={handleCloseModal} 
+          onSave={handleSave} 
         />
       )}
     </div>

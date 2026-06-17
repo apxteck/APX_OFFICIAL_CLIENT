@@ -92,12 +92,31 @@ export const adsService = {
     }
   },
 
+  createPricingSlot: async (data: Partial<AdPricingSlot>): Promise<AdPricingSlot> => {
+    try {
+      const response = await apiClient.post("/advertisement/createPricingSlot", data);
+      return response.data?.data;
+    } catch (error) {
+      console.error("Failed to create pricing slot:", error);
+      throw error;
+    }
+  },
+
   updatePricingSlot: async (id: number, data: Partial<AdPricingSlot>): Promise<AdPricingSlot> => {
     try {
       const response = await apiClient.patch(`/advertisement/pricing-slots/${id}`, data);
       return response.data?.data;
     } catch (error) {
       console.error(`Failed to update pricing slot ${id}:`, error);
+      throw error;
+    }
+  },
+
+  deletePricingSlot: async (id: number): Promise<void> => {
+    try {
+      await apiClient.delete(`/advertisement/deletePricingSlot/${id}`);
+    } catch (error) {
+      console.error(`Failed to delete pricing slot ${id}:`, error);
       throw error;
     }
   },

@@ -3,12 +3,13 @@ import { Edit, XCircle, CheckCircle2 } from "lucide-react";
 import { AdPricingSlot } from "@/app/types/ad.types";
 
 interface PricingSlotModalProps {
-  slot: AdPricingSlot | null;
+  slot: Partial<AdPricingSlot> | null;
   onClose: () => void;
-  onSave: (id: number, data: Partial<AdPricingSlot>) => Promise<boolean>;
+  onSave: (id: number | null, data: Partial<AdPricingSlot>) => Promise<boolean>;
+  isCreating?: boolean;
 }
 
-export default function PricingSlotModal({ slot, onClose, onSave }: PricingSlotModalProps) {
+export default function PricingSlotModal({ slot, onClose, onSave, isCreating = false }: PricingSlotModalProps) {
   const [formData, setFormData] = useState<Partial<AdPricingSlot>>({
     label: "",
     pricePerDay: 0,
@@ -22,6 +23,7 @@ export default function PricingSlotModal({ slot, onClose, onSave }: PricingSlotM
     if (slot) {
       setFormData({
         label: slot.label || "",
+        placement: slot.placement || "BLOG_LIST_TOP",
         pricePerDay: slot.pricePerDay || 0,
         pricePerWeek: slot.pricePerWeek || 0,
         pricePerMonth: slot.pricePerMonth || 0,
@@ -52,7 +54,7 @@ export default function PricingSlotModal({ slot, onClose, onSave }: PricingSlotM
       pricePerMonth: Number(formData.pricePerMonth) || 0,
     };
     
-    const success = await onSave(slot.id, payload);
+    const success = await onSave(isCreating ? null : slot.id!, payload);
     setIsSubmitting(false);
     if (success) onClose();
   };
@@ -63,7 +65,7 @@ export default function PricingSlotModal({ slot, onClose, onSave }: PricingSlotM
         <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-[#151515]/50">
           <h2 className="text-xl font-black text-gray-900 dark:text-white flex items-center gap-2">
             <Edit className="text-indigo-500" size={20} />
-            Edit Pricing Slot
+            {isCreating ? 'Create Pricing Slot' : 'Edit Pricing Slot'}
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors bg-white dark:bg-[#222] p-1.5 rounded-full border border-gray-200 dark:border-white/10">
             <XCircle size={20} />
@@ -73,12 +75,28 @@ export default function PricingSlotModal({ slot, onClose, onSave }: PricingSlotM
         <form id="pricing-form" onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-6">
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Placement ID</label>
-            <input 
-              type="text" 
-              value={slot.placement}
-              disabled
-              className="w-full bg-gray-100 dark:bg-[#222] text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium cursor-not-allowed"
-            />
+            {isCreating ? (
+              <select
+                name="placement"
+                value={formData.placement || "BLOG_LIST_TOP"}
+                onChange={handleChange as any}
+                className="w-full bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+              >
+                <option value="BLOG_LIST_TOP">BLOG_LIST_TOP</option>
+                <option value="BLOG_LIST_MID">BLOG_LIST_MID</option>
+                <option value="BLOG_POST_TOP">BLOG_POST_TOP</option>
+                <option value="BLOG_POST_MID">BLOG_POST_MID</option>
+                <option value="BLOG_POST_BOTTOM">BLOG_POST_BOTTOM</option>
+                <option value="BLOG_POST_SIDEBAR">BLOG_POST_SIDEBAR</option>
+              </select>
+            ) : (
+              <input 
+                type="text" 
+                value={slot.placement}
+                disabled
+                className="w-full bg-gray-100 dark:bg-[#222] text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium cursor-not-allowed"
+              />
+            )}
           </div>
 
           <div className="space-y-1.5">

@@ -15,7 +15,11 @@ interface PricingSlot {
   isActive: boolean;
 }
 
-export function AvailableAdSlots() {
+interface AvailableAdSlotsProps {
+  layout?: 'vertical' | 'horizontal';
+}
+
+export function AvailableAdSlots({ layout = 'vertical' }: AvailableAdSlotsProps) {
   const [slots, setSlots] = useState<PricingSlot[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,8 +43,8 @@ export function AvailableAdSlots() {
   }
 
   return (
-    <GlassCard className="p-6 border border-glass-border">
-      <div className="flex items-center gap-3 mb-4">
+    <GlassCard className={`p-6 border border-glass-border ${layout === 'horizontal' ? 'w-full' : ''}`}>
+      <div className={`flex items-center gap-3 mb-4 ${layout === 'horizontal' ? 'justify-center mb-6' : ''}`}>
         <div className="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center">
           <Tag size={18} className="text-indigo-500" />
         </div>
@@ -50,7 +54,7 @@ export function AvailableAdSlots() {
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className={layout === 'horizontal' ? 'grid grid-cols-1 md:grid-cols-3 gap-6' : 'space-y-4'}>
         {slots.slice(0, 3).map((slot) => (
           <div key={slot.id} className="p-3 rounded-xl bg-foreground/[0.02] border border-glass-border">
             <h5 className="font-bold text-xs text-foreground mb-2">
@@ -78,8 +82,8 @@ export function AvailableAdSlots() {
         ))}
       </div>
       
-      <div className="mt-4">
-        <button className="w-full bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-xl text-xs font-bold transition-colors">
+      <div className={`mt-4 ${layout === 'horizontal' ? 'flex justify-center mt-8' : ''}`}>
+        <button className={`${layout === 'horizontal' ? 'w-auto px-8' : 'w-full'} bg-accent/10 hover:bg-accent/20 text-accent py-2.5 rounded-xl text-xs font-bold transition-colors`}>
           Contact for Booking
         </button>
       </div>
