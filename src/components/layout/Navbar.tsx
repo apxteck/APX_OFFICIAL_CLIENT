@@ -8,12 +8,15 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { LogIn, Menu, X, LayoutDashboard, User, Search } from 'lucide-react';
 import { useAuth } from '@/providers/AuthProvider';
 import { SearchDialog } from './SearchDialog';
+import { usePathname } from 'next/navigation';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const { user, isAuthenticated, isLoading } = useAuth();
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -29,11 +32,7 @@ export function Navbar() {
         isScrolled ? 'pt-3' : 'pt-6'
       }`}
     >
-      <div
-        className={`w-full max-w-5xl rounded-full border transition-all duration-300 shadow-2xl ${
-          isScrolled ? 'glass-panel !backdrop-blur-3xl' : 'bg-transparent border-transparent'
-        }`}
-      >
+      <div className="w-full max-w-5xl rounded-full transition-all duration-300 shadow-2xl glass-panel bg-background/60 !backdrop-blur-2xl">
         <div className="px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">

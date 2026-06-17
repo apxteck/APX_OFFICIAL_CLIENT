@@ -3,12 +3,12 @@
 import React from "react";
 import { useLeadDetailLogic } from "../_hooks/useLeadDetailLogic";
 import { LeadDetailHeader } from "./LeadDetailHeader";
-import { LeadPipeline } from "./LeadPipeline";
 import { LeadMessageView } from "./LeadMessageView";
 import { LeadIntelSidebar } from "./LeadIntelSidebar";
+import { LeadFollowUps } from "./LeadFollowUps";
 
 export function LeadDetailManager({ leadId }: { leadId: string }) {
-  const { lead, isLoading, handleUpdateStatus } = useLeadDetailLogic(leadId);
+  const { lead, followUps, isLoading, handleAddFollowUp } = useLeadDetailLogic(leadId);
 
   if (isLoading || !lead) {
     return (
@@ -21,16 +21,16 @@ export function LeadDetailManager({ leadId }: { leadId: string }) {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       
-      {/* Header Pipeline Visualizer */}
+      {/* Header Visualizer */}
       <div className="bg-white dark:bg-[#111111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm space-y-6">
-        <LeadDetailHeader lead={lead} onUpdateStatus={handleUpdateStatus} />
-        <LeadPipeline status={lead.status} onUpdateStatus={handleUpdateStatus} />
+        <LeadDetailHeader lead={lead} />
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Left Column: Message View */}
+        {/* Left Column: Message View & Follow Ups */}
         <div className="xl:col-span-2 space-y-6">
           <LeadMessageView message={lead.message} />
+          <LeadFollowUps followUps={followUps} onAddFollowUp={handleAddFollowUp} />
         </div>
 
         {/* Right Column: Lead Intel */}

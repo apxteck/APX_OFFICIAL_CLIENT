@@ -23,7 +23,14 @@ export function useFaqFormLogic(
     formState: { errors },
   } = useForm<FaqFormData>({
     resolver: zodResolver(faqSchema),
-    defaultValues: {
+    mode: "onChange",
+    defaultValues: editingFaq ? {
+      question: editingFaq.question,
+      answer: editingFaq.answer,
+      category: editingFaq.category || "General",
+      sortOrder: editingFaq.sortOrder,
+      isPublished: editingFaq.isPublished,
+    } : {
       question: "",
       answer: "",
       category: "General",
@@ -33,24 +40,10 @@ export function useFaqFormLogic(
   });
 
   useEffect(() => {
-    if (editingFaq) {
-      reset({
-        question: editingFaq.question,
-        answer: editingFaq.answer,
-        category: editingFaq.category || "General",
-        sortOrder: editingFaq.sortOrder,
-        isPublished: editingFaq.isPublished,
-      });
-    } else {
-      reset({
-        question: "",
-        answer: "",
-        category: "General",
-        sortOrder: nextSortOrder,
-        isPublished: true,
-      });
+    if (!editingFaq) {
+      setValue("sortOrder", nextSortOrder);
     }
-  }, [editingFaq, reset, nextSortOrder]);
+  }, [nextSortOrder, editingFaq, setValue]);
 
   const onSubmit = async (data: FaqFormData) => {
     setIsSubmitting(true);
@@ -74,6 +67,8 @@ export function useFaqFormLogic(
   };
 
   const isPublished = watch("isPublished");
+  const questionValue = watch("question");
+  const answerValue = watch("answer");
   const togglePublished = () => setValue("isPublished", !isPublished, { shouldValidate: true, shouldDirty: true });
 
   return {
@@ -83,5 +78,7 @@ export function useFaqFormLogic(
     isSubmitting,
     isPublished,
     togglePublished,
+    questionValue,
+    answerValue,
   };
 }

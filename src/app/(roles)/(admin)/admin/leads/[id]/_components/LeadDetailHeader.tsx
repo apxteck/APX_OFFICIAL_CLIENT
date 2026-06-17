@@ -1,15 +1,14 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
-import { ArrowLeft, CheckCircle2, Eye } from "lucide-react";
-import { Lead, LeadStatus } from "@/app/types/lead.types";
+import { ArrowLeft } from "lucide-react";
+import { Lead } from "@/app/types/lead.types";
 
 interface LeadDetailHeaderProps {
   lead: Lead;
-  onUpdateStatus: (status: LeadStatus) => void;
 }
 
-export function LeadDetailHeader({ lead, onUpdateStatus }: LeadDetailHeaderProps) {
+export function LeadDetailHeader({ lead }: LeadDetailHeaderProps) {
   const router = useRouter();
 
   return (
@@ -29,30 +28,6 @@ export function LeadDetailHeader({ lead, onUpdateStatus }: LeadDetailHeaderProps
             {lead.businessName ? `${lead.businessName} • ` : ''}Added {format(new Date(lead.createdAt), "MMM dd, yyyy")}
           </p>
         </div>
-      </div>
-      
-      <div className="flex gap-3">
-        {lead.status !== "CONVERTED" && (
-          <>
-            <button 
-              onClick={() => onUpdateStatus("SEEN")}
-              className="bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-100 dark:hover:bg-cyan-500/20 px-4 py-2.5 rounded-xl font-bold text-sm transition-colors border border-cyan-100 dark:border-cyan-500/20 flex items-center gap-2"
-            >
-              <Eye size={16} /> Mark as Seen
-            </button>
-            <button 
-              onClick={() => onUpdateStatus("CONVERTED")}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center gap-2"
-            >
-              <CheckCircle2 size={16} /> Convert Lead
-            </button>
-          </>
-        )}
-        {lead.status === "CONVERTED" && (
-          <div className="bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20 px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2">
-            <CheckCircle2 size={16} /> Lead Successfully Converted
-          </div>
-        )}
       </div>
     </div>
   );

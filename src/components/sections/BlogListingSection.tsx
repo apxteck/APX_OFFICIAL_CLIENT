@@ -102,6 +102,7 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl pl-11 pr-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
             placeholder="Search articles..."
+            suppressHydrationWarning
           />
         </div>
 
@@ -119,6 +120,7 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                   ? 'bg-accent border-accent text-white shadow-lg shadow-accent/30 scale-105'
                   : 'glass-panel border-glass-border hover:bg-white/5'
               }`}
+              suppressHydrationWarning
             >
               {cat}
             </button>
@@ -139,6 +141,7 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                       ? 'bg-accent/15 border-accent text-accent'
                       : 'bg-transparent border-glass-border text-foreground/50 hover:border-foreground/30 hover:text-foreground'
                   }`}
+                  suppressHydrationWarning
                 >
                   #{tag}
                 </button>
@@ -250,6 +253,7 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                 disabled={currentPage === 1}
                 className="w-10 h-10 rounded-xl glass-panel border border-glass-border flex items-center justify-center text-foreground hover:bg-white/5 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                 aria-label="Previous Page"
+                suppressHydrationWarning
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -261,6 +265,7 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                 disabled={currentPage === totalPages}
                 className="w-10 h-10 rounded-xl glass-panel border border-glass-border flex items-center justify-center text-foreground hover:bg-white/5 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                 aria-label="Next Page"
+                suppressHydrationWarning
               >
                 <ChevronRight className="w-5 h-5" />
               </button>

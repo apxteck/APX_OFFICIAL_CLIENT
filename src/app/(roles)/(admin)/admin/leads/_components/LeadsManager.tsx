@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import DataTable from "@/components/ui/admin/DataTable";
 import { LeadsHeader } from "./LeadsHeader";
@@ -10,6 +10,35 @@ import { useLeadsLogic } from "../_hooks/useLeadsLogic";
 export function LeadsManager() {
   const { leads, isLoading } = useLeadsLogic();
   const columns = useLeadsColumns();
+
+  const [currentSort, setCurrentSort] = useState("newest");
+
+  const sortOptions = [
+    { label: "Newest First", value: "newest" },
+    { label: "Oldest First", value: "oldest" },
+    { label: "Name (A-Z)", value: "name_asc" },
+    { label: "Name (Z-A)", value: "name_desc" },
+    { label: "Status", value: "status" },
+  ];
+
+  const sortedLeads = useMemo(() => {
+    return [...leads].sort((a, b) => {
+      switch (currentSort) {
+        case "newest":
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        case "oldest":
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        case "name_asc":
+          return (a.fullName || "").localeCompare(b.fullName || "");
+        case "name_desc":
+          return (b.fullName || "").localeCompare(a.fullName || "");
+        case "status":
+          return (a.status || "").localeCompare(b.status || "");
+        default:
+          return 0;
+      }
+    });
+  }, [leads, currentSort]);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-10">
@@ -27,7 +56,10 @@ export function LeadsManager() {
           ) : leads.length > 0 ? (
             <DataTable 
               columns={columns} 
-              data={leads} 
+              data={sortedLeads} 
+              sortOptions={sortOptions}
+              currentSort={currentSort}
+              onSortChange={setCurrentSort}
             />
           ) : (
             <div className="min-h-[400px] flex flex-col items-center justify-center p-8 text-center">

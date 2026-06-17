@@ -18,6 +18,7 @@ export const contactSchema = z.object({
     .max(100, { message: 'Business Name can be at most 100 characters' })
     .optional(),
   serviceInterest: z.string().optional(),
+  source: z.string().optional(),
   message: z
     .string()
     .min(20, { message: 'Message must be between 20 and 1000 characters' })

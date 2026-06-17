@@ -1,5 +1,5 @@
 import React from "react";
-import { Edit3, Eye, Trash2, CheckCircle2, FileText, XCircle, Clock, Sparkles, Heart, MessageSquare } from "lucide-react";
+import { Edit3, Eye, Trash2, CheckCircle2, FileText, XCircle, Clock, Sparkles, Heart, MessageSquare, Calendar } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { BlogPostStatus, AdminBlogPost as BlogPost } from "@/app/types/admin-blog.types";
 import UserAvatar from "@/components/ui/admin/UserAvatar";
@@ -59,22 +59,36 @@ export function BlogCard({ post, onDeleteClick, onUpdateStatus }: BlogCardProps)
         </div>
       </div>
 
-      <div className="mt-auto grid grid-cols-2 gap-4 mb-4">
-        <div className="bg-gray-50 dark:bg-[#151515] p-3 rounded-2xl border border-gray-100 dark:border-white/5">
+      <div className="mt-auto grid grid-cols-2 gap-3 mb-4">
+        <div className="bg-gray-50 dark:bg-[#151515] p-3 rounded-2xl border border-gray-100 dark:border-white/5 flex flex-col justify-center">
           <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-1">Author</p>
-          <div className="font-bold text-gray-900 dark:text-white flex items-center text-sm gap-2">
+          <div className="font-bold text-gray-900 dark:text-white flex items-center text-xs gap-2 truncate">
               <UserAvatar 
                 name={post.authorName} 
                 src={post.authorProfilePhoto} 
                 size="sm" 
               />
-            {post.authorName}
+            <span className="truncate">{post.authorName}</span>
           </div>
         </div>
-        <div className="bg-gray-50 dark:bg-[#151515] p-3 rounded-2xl border border-gray-100 dark:border-white/5">
+        <div className="bg-gray-50 dark:bg-[#151515] p-3 rounded-2xl border border-gray-100 dark:border-white/5 flex flex-col justify-center">
           <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-1">Category</p>
-          <p className="font-bold text-gray-900 dark:text-white text-sm">
+          <p className="font-bold text-gray-900 dark:text-white text-xs truncate">
             {post.category?.name || post.category || "Uncategorized"}
+          </p>
+        </div>
+        <div className="bg-gray-50 dark:bg-[#151515] p-3 rounded-2xl border border-gray-100 dark:border-white/5 flex flex-col justify-center">
+          <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-1 flex items-center gap-1.5">Created</p>
+          <p className="font-bold text-gray-900 dark:text-white text-xs flex items-center gap-1.5">
+            <Calendar size={12} className="text-indigo-500" />
+            {post.createdAt ? new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A'}
+          </p>
+        </div>
+        <div className="bg-gray-50 dark:bg-[#151515] p-3 rounded-2xl border border-gray-100 dark:border-white/5 flex flex-col justify-center">
+          <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-1 flex items-center gap-1.5">Updated</p>
+          <p className="font-bold text-gray-900 dark:text-white text-xs flex items-center gap-1.5">
+            <Clock size={12} className="text-indigo-500" />
+            {post.updatedAt ? new Date(post.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : (post.createdAt ? new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A')}
           </p>
         </div>
       </div>

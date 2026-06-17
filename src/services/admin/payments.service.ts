@@ -62,5 +62,10 @@ export const paymentsService = {
       payload
     );
     return data;
+  },
+
+  sendInvoiceEmail: async (id: number): Promise<{ success: boolean; message: string }> => {
+    const { data } = await apiClient.post(`/payment/${id}/send-invoice`);
+    return data;
   }
 };

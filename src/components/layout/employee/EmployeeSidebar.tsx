@@ -51,7 +51,7 @@ const NAV_GROUPS = [
       { name: "Services", href: "/admin/services", icon: Layers, module: "CONTENT_MANAGEMENT" },
       { name: "Blog", href: "/admin/blog", icon: FileText, module: "BLOG_MANAGEMENT" },
       { name: "Advertisements", href: "/admin/ads", icon: Monitor, module: "ADVERTISEMENT_MANAGEMENT" },
-      { name: "Content", href: "/admin/content/faqs", icon: Layout, module: "CONTENT_MANAGEMENT" },
+      { name: "FAQ", href: "/admin/faq/faqs", icon: Layout, module: "CONTENT_MANAGEMENT" },
     ]
   },
   {

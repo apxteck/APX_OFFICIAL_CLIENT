@@ -46,6 +46,15 @@ export const useLeadsColumns = (): ColumnDef<Lead>[] => {
       )
     },
     {
+      header: "Source",
+      accessorKey: "source",
+      cell: (lead) => (
+        <span className="font-medium text-gray-700 dark:text-gray-300">
+          {lead.source || "—"}
+        </span>
+      )
+    },
+    {
       header: "Status",
       cell: (lead) => {
         const statusConfig: Record<string, any> = {

@@ -53,7 +53,7 @@ function LoginFormComponent() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" aria-labelledby="login-heading" noValidate>
+        <form suppressHydrationWarning onSubmit={handleSubmit(onSubmit)} className="space-y-5" aria-labelledby="login-heading" noValidate>
           {errorMsg && (
             <div className="p-4 rounded-xl bg-red-50 border border-red-100 text-red-600 text-sm flex gap-3 items-center font-medium" role="alert">
               <AlertCircle className="w-5 h-5 shrink-0 text-red-500" aria-hidden="true" role="presentation" />
@@ -134,6 +134,7 @@ function LoginFormComponent() {
               />
               <button
                 type="button"
+                suppressHydrationWarning
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3.5 top-1/2 -translate-y-1/2 text-foreground/40 hover:text-foreground/70 focus:outline-none transition-colors"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
@@ -157,6 +158,7 @@ function LoginFormComponent() {
             <input
               type="checkbox"
               id="rememberMe"
+              suppressHydrationWarning
               {...register('rememberMe')}
               className="rounded border-foreground/20 text-accent focus:ring-accent bg-background w-4 h-4 cursor-pointer"
             />

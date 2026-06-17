@@ -1,28 +1,33 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { api } from '@/lib/axios';
-import { GlassCard } from '@/components/ui/GlassCard';
-import { Trash2, Loader2, MessageSquare, AlertCircle, Check, X } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Trash2, Loader2, MessageSquare, AlertCircle, Check, X, Search, Filter, ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 
 export default function BlogCommentsAdminPage() {
   const [comments, setComments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  
+  // Advanced State
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [moderatingId, setModeratingId] = useState<number | null>(null);
+  const [isBulkProcessing, setIsBulkProcessing] = useState(false);
 
-  const fetchComments = async (p: number) => {
+  const fetchComments = async () => {
     setLoading(true);
     try {
-      const res = await api.getAllCommentsAdmin(p, 20);
+      const res = await api.getAllCommentsAdmin(1, 1000); 
       if (res.success) {
         setComments(res.data?.data || []);
-        setTotalPages(res.data?.pagination?.totalPages || 1);
-        setPage(p);
       } else {
         setError(res.message || 'Failed to fetch comments');
       }
@@ -34,7 +39,7 @@ export default function BlogCommentsAdminPage() {
   };
 
   useEffect(() => {
-    fetchComments(1);
+    fetchComments();
   }, []);
 
   const handleDelete = async (id: number) => {
@@ -44,6 +49,7 @@ export default function BlogCommentsAdminPage() {
       const res = await api.deleteBlogComment(id);
       if (res.success) {
         setComments(prev => prev.filter(c => c.id !== id));
+        setSelectedIds(prev => prev.filter(selectedId => selectedId !== id));
       } else {
         alert(res.message || 'Failed to delete comment');
       }
@@ -72,87 +78,264 @@ export default function BlogCommentsAdminPage() {
     }
   };
 
+  const handleBulkAction = async (action: 'APPROVED' | 'REJECTED' | 'DELETE') => {
+    if (selectedIds.length === 0) return;
+    if (!window.confirm(`Are you sure you want to ${action.toLowerCase()} ${selectedIds.length} comments?`)) return;
+    
+    setIsBulkProcessing(true);
+    for (const id of selectedIds) {
+      if (action === 'DELETE') {
+        try {
+          await api.deleteBlogComment(id);
+          setComments(prev => prev.filter(c => c.id !== id));
+        } catch (e) {}
+      } else {
+        try {
+          await api.moderateComment(id, action);
+          setComments(prev => prev.map(c => c.id === id ? { ...c, status: action } : c));
+        } catch (e) {}
+      }
+    }
+    setSelectedIds([]);
+    setIsBulkProcessing(false);
+  };
+
+  const filteredComments = useMemo(() => {
+    return comments.filter(comment => {
+      const matchesSearch = 
+        comment.user?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        comment.user?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        comment.commentText?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        comment.post?.title?.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesStatus = statusFilter === 'ALL' || comment.status === statusFilter;
+
+      return matchesSearch && matchesStatus;
+    });
+  }, [comments, searchTerm, statusFilter]);
+
+  const totalFilteredPosts = filteredComments.length;
+  const totalPages = Math.max(1, Math.ceil(totalFilteredPosts / itemsPerPage));
+  const paginatedComments = filteredComments.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+    setSelectedIds([]);
+  }, [searchTerm, statusFilter, itemsPerPage]);
+
+  const toggleSelectAll = () => {
+    if (selectedIds.length === paginatedComments.length && paginatedComments.length > 0) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(paginatedComments.map(c => c.id));
+    }
+  };
+
+  const toggleSelect = (id: number) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  };
+
+  const renderPageNumbers = () => {
+    const pages = [];
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, '...', totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, '...', totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, '...', currentPage, '...', totalPages);
+      }
+    }
+
+    return pages.map((page, idx) => {
+      if (page === '...') {
+        return <span key={`ellipsis-${idx}`} className="w-10 h-10 flex items-center justify-center text-gray-700 dark:text-gray-400 font-bold text-lg tracking-widest pb-2">...</span>;
+      }
+      return (
+        <button
+          key={`page-${page}`}
+          onClick={() => setCurrentPage(page as number)}
+          className={`w-[42px] h-[42px] flex items-center justify-center rounded-xl font-bold transition-all border text-[15px] ${
+            currentPage === page
+              ? 'bg-[#3b82f6] border-[#3b82f6] text-white shadow-sm'
+              : 'bg-white dark:bg-[#151515] border-gray-200 dark:border-white/10 text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/5'
+          }`}
+        >
+          {page}
+        </button>
+      );
+    });
+  };
+
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 max-w-7xl mx-auto pb-10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-            <MessageSquare className="w-8 h-8 text-accent" />
-            Blog Comments
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl flex items-center justify-center">
+                <MessageSquare className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+            </div>
+            Advanced Comments
           </h1>
-          <p className="text-gray-400 mt-2">Manage user comments across all blog posts.</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm font-medium">Manage user comments, approve, reject, or delete them in bulk.</p>
         </div>
       </div>
 
       {error && (
-        <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 flex items-center gap-2">
+        <div className="p-4 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-2xl text-red-600 dark:text-red-400 flex items-center gap-2 font-medium">
           <AlertCircle className="w-5 h-5 shrink-0" />
           {error}
         </div>
       )}
 
-      <GlassCard className="p-0 overflow-hidden">
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <Loader2 className="w-8 h-8 animate-spin text-accent" />
+      <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
+        
+        {/* Search & Filter Bar */}
+        <div className="p-6 border-b border-gray-100 dark:border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input 
+              type="text" 
+              placeholder="Search comments by user, email, or content..." 
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl py-3 pl-12 pr-4 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 dark:text-white text-sm font-medium transition-all"
+            />
           </div>
-        ) : comments.length === 0 ? (
-          <div className="p-12 text-center text-gray-400">
-            <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-20" />
-            <p>No comments found.</p>
+          
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-gray-400" />
+                <span className="text-sm font-bold text-gray-600 dark:text-gray-300">Status:</span>
+            </div>
+            <select 
+              value={statusFilter}
+              onChange={e => setStatusFilter(e.target.value)}
+              className="appearance-none bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none font-bold py-2.5 pl-4 pr-10 cursor-pointer"
+            >
+              <option value="ALL">All Comments</option>
+              <option value="PENDING">Pending</option>
+              <option value="APPROVED">Approved</option>
+              <option value="REJECTED">Rejected</option>
+            </select>
           </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-gray-300">
-              <thead className="text-xs uppercase bg-white/5 text-gray-400">
+        </div>
+
+        {/* Bulk Actions */}
+        {selectedIds.length > 0 && (
+          <div className="bg-indigo-50 dark:bg-indigo-500/10 border-b border-indigo-100 dark:border-indigo-500/20 p-4 flex items-center justify-between animate-in fade-in slide-in-from-top-4">
+            <span className="text-indigo-600 dark:text-indigo-400 font-bold text-sm">
+              {selectedIds.length} comment(s) selected
+            </span>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => handleBulkAction('APPROVED')}
+                disabled={isBulkProcessing}
+                className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold transition-colors disabled:opacity-50 flex items-center gap-2"
+              >
+                <Check className="w-4 h-4" /> Approve Selected
+              </button>
+              <button 
+                onClick={() => handleBulkAction('REJECTED')}
+                disabled={isBulkProcessing}
+                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold transition-colors disabled:opacity-50 flex items-center gap-2"
+              >
+                <X className="w-4 h-4" /> Reject Selected
+              </button>
+              <button 
+                onClick={() => handleBulkAction('DELETE')}
+                disabled={isBulkProcessing}
+                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl text-xs font-bold transition-colors disabled:opacity-50 flex items-center gap-2"
+              >
+                <Trash2 className="w-4 h-4" /> Delete Selected
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="overflow-auto min-h-[400px]">
+          {loading ? (
+            <div className="flex flex-col justify-center items-center h-64 gap-3">
+              <div className="w-8 h-8 border-4 border-indigo-100 dark:border-indigo-500/20 border-t-indigo-600 dark:border-t-indigo-400 rounded-full animate-spin"></div>
+              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Loading comments...</p>
+            </div>
+          ) : paginatedComments.length === 0 ? (
+            <div className="flex flex-col justify-center items-center h-64 gap-4">
+              <div className="w-16 h-16 bg-gray-50 dark:bg-[#151515] rounded-full flex items-center justify-center border border-gray-100 dark:border-white/5">
+                <MessageSquare className="w-8 h-8 text-gray-400" />
+              </div>
+              <div className="text-center">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">No comments found</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">We couldn't find any comments matching your filters.</p>
+              </div>
+            </div>
+          ) : (
+            <table className="w-full text-left text-sm whitespace-nowrap">
+              <thead className="bg-gray-50 dark:bg-[#151515] text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-white/5">
                 <tr>
-                  <th className="px-6 py-4 font-semibold">User</th>
-                  <th className="px-6 py-4 font-semibold">Blog Post</th>
-                  <th className="px-6 py-4 font-semibold">Comment</th>
-                  <th className="px-6 py-4 font-semibold">Status</th>
-                  <th className="px-6 py-4 font-semibold">Date</th>
-                  <th className="px-6 py-4 font-semibold text-right">Actions</th>
+                  <th className="px-6 py-4 font-bold uppercase tracking-wider text-[11px] w-10">
+                    <input 
+                      type="checkbox" 
+                      checked={selectedIds.length === paginatedComments.length && paginatedComments.length > 0}
+                      onChange={toggleSelectAll}
+                      className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-[#222] cursor-pointer"
+                    />
+                  </th>
+                  <th className="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">User Info</th>
+                  <th className="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">Content</th>
+                  <th className="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">Status</th>
+                  <th className="px-6 py-4 font-bold uppercase tracking-wider text-[11px] text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/10">
-                {comments.map((comment) => (
-                  <motion.tr
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    key={comment.id}
-                    className="hover:bg-white/5 transition-colors group"
-                  >
+              <tbody className="divide-y divide-gray-100 dark:divide-white/5 bg-white dark:bg-[#111111]">
+                {paginatedComments.map((comment) => (
+                  <tr key={comment.id} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
                     <td className="px-6 py-4">
-                      <div className="font-medium text-white">{comment.user?.fullName}</div>
-                      <div className="text-xs text-gray-500">{comment.user?.email}</div>
+                      <input 
+                        type="checkbox" 
+                        checked={selectedIds.includes(comment.id)}
+                        onChange={() => toggleSelect(comment.id)}
+                        className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-[#222] cursor-pointer"
+                      />
                     </td>
-                    <td className="px-6 py-4 max-w-[200px] truncate" title={comment.post?.title}>
-                      <a href={`/insights-news/${comment.post?.slug}`} target="_blank" rel="noreferrer" className="text-accent hover:underline">
-                        {comment.post?.title}
-                      </a>
+                    <td className="px-6 py-4">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-gray-900 dark:text-white text-sm">{comment.user?.fullName || 'Unknown User'}</span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">{comment.user?.email}</span>
+                        <span className="text-[10px] text-gray-400 dark:text-gray-500 mt-1">{new Date(comment.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                      </div>
                     </td>
-                    <td className="px-6 py-4 max-w-[300px]">
-                      <p className="line-clamp-2" title={comment.commentText}>{comment.commentText}</p>
+                    <td className="px-6 py-4 whitespace-normal min-w-[300px]">
+                      <div className="flex flex-col gap-1.5">
+                        <a href={`/insights-news/${comment.post?.slug}`} target="_blank" rel="noreferrer" className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline inline-block truncate max-w-[400px]">
+                          On: {comment.post?.title}
+                        </a>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2 leading-relaxed bg-gray-50 dark:bg-[#151515] p-3 rounded-xl border border-gray-100 dark:border-white/5">
+                          "{comment.commentText}"
+                        </p>
+                      </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4">
                       {comment.status === 'APPROVED' && (
-                        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                          Approved
+                        <span className="px-3 py-1.5 text-xs font-bold rounded-xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20 inline-flex items-center gap-1.5">
+                          <Check className="w-3.5 h-3.5" /> Approved
                         </span>
                       )}
                       {comment.status === 'PENDING' && (
-                        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                          Pending
+                        <span className="px-3 py-1.5 text-xs font-bold rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-amber-500/20 inline-flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5" /> Pending
                         </span>
                       )}
                       {comment.status === 'REJECTED' && (
-                        <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
-                          Rejected
+                        <span className="px-3 py-1.5 text-xs font-bold rounded-xl bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 border border-red-100 dark:border-red-500/20 inline-flex items-center gap-1.5">
+                          <X className="w-3.5 h-3.5" /> Rejected
                         </span>
                       )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-gray-400">
-                      {new Date(comment.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end items-center gap-2">
@@ -160,73 +343,89 @@ export default function BlogCommentsAdminPage() {
                           <>
                             <button
                               onClick={() => handleModerate(comment.id, 'APPROVED')}
-                              disabled={deletingId !== null || moderatingId !== null}
-                              className="p-2 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-400/10 rounded-lg transition-colors disabled:opacity-50"
+                              disabled={deletingId !== null || moderatingId !== null || isBulkProcessing}
+                              className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:text-emerald-400 dark:hover:bg-emerald-500/10 rounded-xl transition-colors disabled:opacity-50 border border-transparent hover:border-emerald-200 dark:hover:border-emerald-500/20"
                               title="Approve Comment"
                             >
-                              {moderatingId === comment.id ? (
-                                <Loader2 className="w-4 h-4 animate-spin" />
-                              ) : (
-                                <Check className="w-4 h-4" />
-                              )}
+                              {moderatingId === comment.id ? <Loader2 className="w-4 h-4 animate-spin text-emerald-500" /> : <Check className="w-4 h-4" />}
                             </button>
                             <button
                               onClick={() => handleModerate(comment.id, 'REJECTED')}
-                              disabled={deletingId !== null || moderatingId !== null}
-                              className="p-2 text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 rounded-lg transition-colors disabled:opacity-50"
+                              disabled={deletingId !== null || moderatingId !== null || isBulkProcessing}
+                              className="p-2 text-gray-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:text-amber-400 dark:hover:bg-amber-500/10 rounded-xl transition-colors disabled:opacity-50 border border-transparent hover:border-amber-200 dark:hover:border-amber-500/20"
                               title="Reject Comment"
                             >
-                              {moderatingId === comment.id ? (
-                                <Loader2 className="w-4 h-4 animate-spin" />
-                              ) : (
-                                <X className="w-4 h-4" />
-                              )}
+                              {moderatingId === comment.id ? <Loader2 className="w-4 h-4 animate-spin text-amber-500" /> : <X className="w-4 h-4" />}
                             </button>
                           </>
                         )}
                         <button
                           onClick={() => handleDelete(comment.id)}
-                          disabled={deletingId === comment.id || moderatingId === comment.id}
-                          className="p-2 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors disabled:opacity-50"
+                          disabled={deletingId === comment.id || moderatingId === comment.id || isBulkProcessing}
+                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-500/10 rounded-xl transition-colors disabled:opacity-50 border border-transparent hover:border-red-200 dark:hover:border-red-500/20"
                           title="Delete Comment"
                         >
-                          {deletingId === comment.id ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                          ) : (
-                            <Trash2 className="w-4 h-4" />
-                          )}
+                          {deletingId === comment.id ? <Loader2 className="w-4 h-4 animate-spin text-red-500" /> : <Trash2 className="w-4 h-4" />}
                         </button>
                       </div>
                     </td>
-                  </motion.tr>
+                  </tr>
                 ))}
               </tbody>
             </table>
+          )}
+        </div>
+
+        {/* Pagination Controls */}
+        {!loading && totalFilteredPosts > 0 && (
+          <div className="flex flex-col xl:flex-row items-center justify-between border-t border-gray-100 dark:border-white/5 bg-white dark:bg-[#111111] p-6 gap-6">
+            <div className="flex flex-wrap items-center gap-5">
+              <div className="text-[15px] font-bold text-[#333] dark:text-gray-200">
+                Results: {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, totalFilteredPosts)} of {totalFilteredPosts}
+              </div>
+              <div className="relative">
+                <select 
+                  value={itemsPerPage}
+                  onChange={(e) => {
+                    setItemsPerPage(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="appearance-none bg-[#f1f3f5] dark:bg-[#222] text-[#333] dark:text-gray-200 font-bold text-[14px] rounded-xl pl-4 pr-9 py-2.5 outline-none cursor-pointer border border-transparent dark:border-white/5 hover:bg-[#e9ecef] dark:hover:bg-[#2a2a2a] transition-colors"
+                >
+                  <option value={10}>10</option>
+                  <option value={15}>15</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                </select>
+                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-700 dark:text-gray-400">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2.5">
+              <button
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                className="w-[42px] h-[42px] flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#151515] text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <ChevronLeft size={20} strokeWidth={2.5} />
+              </button>
+              
+              {renderPageNumbers()}
+
+              <button
+                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                className="w-[42px] h-[42px] flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#151515] text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <ChevronRight size={20} strokeWidth={2.5} />
+              </button>
+            </div>
           </div>
         )}
 
-        {totalPages > 1 && (
-          <div className="p-4 border-t border-white/10 flex justify-center gap-2">
-            <button
-              disabled={page === 1}
-              onClick={() => fetchComments(page - 1)}
-              className="px-4 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-50 rounded-lg transition-colors text-sm"
-            >
-              Previous
-            </button>
-            <span className="px-4 py-2 text-sm text-gray-400">
-              Page {page} of {totalPages}
-            </span>
-            <button
-              disabled={page === totalPages}
-              onClick={() => fetchComments(page + 1)}
-              className="px-4 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-50 rounded-lg transition-colors text-sm"
-            >
-              Next
-            </button>
-          </div>
-        )}
-      </GlassCard>
+      </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ export interface EnquiryPayload {
   phone?: string;
   businessName?: string;
   serviceInterest?: string;
+  source?: string;
   message: string;
 }
 
@@ -23,4 +24,14 @@ export interface Lead {
   message?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface LeadFollowUp {
+  id: number;
+  leadId: number;
+  doneById: number;
+  note: string;
+  followedAt: string;
+  nextFollowUpAt: string;
+  doneBy?: { fullName: string };
 }

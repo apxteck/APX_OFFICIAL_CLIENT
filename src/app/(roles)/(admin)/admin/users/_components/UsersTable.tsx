@@ -9,7 +9,14 @@ import { User } from "@/services/admin/users.service";
 import { useUsersLogic } from "../_hooks/useUsersLogic";
 
 export function UsersTable() {
-  const { filteredUsers, isLoading, setSearchTerm } = useUsersLogic();
+  const { filteredUsers, isLoading, setSearchTerm, currentSort, setCurrentSort } = useUsersLogic();
+
+  const sortOptions = [
+    { label: "Newest Joined", value: "newest" },
+    { label: "Oldest Joined", value: "oldest" },
+    { label: "Name (A-Z)", value: "name_asc" },
+    { label: "Name (Z-A)", value: "name_desc" },
+  ];
 
   const columns = useMemo<ColumnDef<User>[]>(() => [
     {
@@ -102,6 +109,9 @@ export function UsersTable() {
       columns={columns}
       searchPlaceholder="Search by name, email, or phone..."
       onSearch={setSearchTerm}
+      sortOptions={sortOptions}
+      currentSort={currentSort}
+      onSortChange={setCurrentSort}
     />
   );
 }

@@ -18,6 +18,7 @@ export interface AdminBlogPost {
   isAiGenerated: boolean;
   publishedAt?: string;
   createdAt: string;
+  updatedAt?: string;
   views?: number;
   tags?: string[];
   _count?: { likes: number; comments: number };

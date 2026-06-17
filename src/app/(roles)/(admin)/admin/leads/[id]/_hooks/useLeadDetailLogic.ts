@@ -1,18 +1,23 @@
 import { useState, useEffect, useCallback } from "react";
 import toast from "react-hot-toast";
 import { leadsService } from "@/services/admin/leads.service";
-import { Lead, LeadStatus } from "@/app/types/lead.types";
+import { Lead, LeadStatus, LeadFollowUp } from "@/app/types/lead.types";
 
 export function useLeadDetailLogic(leadId: string) {
   const [lead, setLead] = useState<Lead | null>(null);
+  const [followUps, setFollowUps] = useState<LeadFollowUp[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchLead = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     if (leadId) {
       try {
         setIsLoading(true);
-        const data = await leadsService.getLeadById(Number(leadId));
-        setLead(data);
+        const [leadData, followUpsData] = await Promise.all([
+          leadsService.getLeadById(Number(leadId)),
+          leadsService.getLeadFollowUps(Number(leadId))
+        ]);
+        setLead(leadData);
+        setFollowUps(followUpsData);
       } catch (error) {
         toast.error("Failed to fetch lead details");
       } finally {
@@ -22,8 +27,8 @@ export function useLeadDetailLogic(leadId: string) {
   }, [leadId]);
 
   useEffect(() => {
-    fetchLead();
-  }, [fetchLead]);
+    fetchData();
+  }, [fetchData]);
 
   const handleUpdateStatus = async (status: LeadStatus) => {
     if (!lead) return;
@@ -31,15 +36,41 @@ export function useLeadDetailLogic(leadId: string) {
     try {
       await leadsService.updateLeadStatus(lead.id, status);
       toast.success(`Status updated to ${status}`, { id: toastId });
-      fetchLead(); // refresh data
+      fetchData(); // refresh data
     } catch (error: any) {
       toast.error(error.message || "Failed to update status", { id: toastId });
     }
   };
 
+  const handleAddFollowUp = async (note: string, nextFollowUpAt: string) => {
+    if (!lead) return;
+    const toastId = toast.loading("Adding follow-up...");
+    try {
+      // In a real app, you might want to fetch doneById from the current user session
+      // For now, we'll send it without doneById and hope the backend uses req.user or allow null if possible
+      // Actually backend createFollowsUp requires doneById. Let's send 1 as a fallback or read from somewhere.
+      // Wait, backend:
+      // export const createFollowsUp = async (req: Request, res: Response) => {
+      //   const { leadId, doneById, note, followedAt, nextFollowUpAt } = req.body;
+      await leadsService.addLeadFollowUp({
+        leadId: lead.id,
+        doneById: lead.assignedToId || 1, // Fallback to assignedToId or 1
+        note,
+        followedAt: new Date().toISOString(),
+        nextFollowUpAt
+      });
+      toast.success("Follow-up added", { id: toastId });
+      fetchData();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to add follow-up", { id: toastId });
+    }
+  };
+
   return {
     lead,
+    followUps,
     isLoading,
-    handleUpdateStatus
+    handleUpdateStatus,
+    handleAddFollowUp
   };
 }

@@ -18,6 +18,8 @@ export function FaqFormModal({ editingFaq, onClose, onSuccess, nextSortOrder }: 
     isSubmitting,
     isPublished,
     togglePublished,
+    questionValue,
+    answerValue,
   } = useFaqFormLogic(editingFaq, onClose, onSuccess, nextSortOrder);
 
   return (
@@ -40,6 +42,7 @@ export function FaqFormModal({ editingFaq, onClose, onSuccess, nextSortOrder }: 
             <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Question *</label>
             <input 
               {...register("question")}
+              value={questionValue}
               placeholder="e.g. What services do you offer?"
               className={`w-full bg-gray-50 dark:bg-[#151515] border rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-gray-900 dark:text-white ${errors.question ? "border-red-500" : "border-gray-200 dark:border-white/10"}`}
             />
@@ -50,6 +53,7 @@ export function FaqFormModal({ editingFaq, onClose, onSuccess, nextSortOrder }: 
             <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Answer *</label>
             <textarea 
               {...register("answer")}
+              value={answerValue}
               placeholder="Provide a detailed answer..."
               className={`w-full bg-gray-50 dark:bg-[#151515] border rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-gray-900 dark:text-white min-h-[120px] ${errors.answer ? "border-red-500" : "border-gray-200 dark:border-white/10"}`}
             />

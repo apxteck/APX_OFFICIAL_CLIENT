@@ -158,23 +158,45 @@ export function ContactForm({ services }: ContactFormProps) {
           )}
         </div>
 
-        {/* Service Interest */}
-        <div className="space-y-1.5">
-          <label htmlFor="serviceInterest" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
-            Service Interest
-          </label>
-          <select
-            id="serviceInterest"
-            {...register('serviceInterest')}
-            className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80"
-          >
-            <option value="" className="bg-background text-foreground">Select a service category</option>
-            {services.map((service) => (
-              <option key={service.id} value={service.name} className="bg-background text-foreground">
-                {service.name}
-              </option>
-            ))}
-          </select>
+        {/* Service Interest & Source Grid */}
+        <div className="grid md:grid-cols-2 gap-5">
+          {/* Service Interest */}
+          <div className="space-y-1.5">
+            <label htmlFor="serviceInterest" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+              Service Interest
+            </label>
+            <select
+              id="serviceInterest"
+              {...register('serviceInterest')}
+              className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80"
+            >
+              <option value="" className="bg-background text-foreground">Select a service category</option>
+              {services.map((service) => (
+                <option key={service.id} value={service.name} className="bg-background text-foreground">
+                  {service.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Source */}
+          <div className="space-y-1.5">
+            <label htmlFor="source" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+              How did you hear about us?
+            </label>
+            <select
+              id="source"
+              {...register('source')}
+              className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80"
+            >
+              <option value="" className="bg-background text-foreground">Select a source</option>
+              <option value="Google Search" className="bg-background text-foreground">Google Search</option>
+              <option value="Social Media" className="bg-background text-foreground">Social Media</option>
+              <option value="Friend/Referral" className="bg-background text-foreground">Friend/Referral</option>
+              <option value="Advertisement" className="bg-background text-foreground">Advertisement</option>
+              <option value="Other" className="bg-background text-foreground">Other</option>
+            </select>
+          </div>
         </div>
 
         {/* Message */}

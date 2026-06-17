@@ -24,7 +24,7 @@ export interface RolePermissionsResponse {
 export const rolesService = {
   getRoles: async (): Promise<Role[]> => {
     try {
-      const response = await apiClient.get("/role/roles?limit=100");
+      const response = await apiClient.get("/role/getAllRoles");
       const rData = response.data;
       if (Array.isArray(rData)) return rData;
       if (rData?.data && Array.isArray(rData.data)) return rData.data;
@@ -41,7 +41,7 @@ export const rolesService = {
 
   createRole: async (data: { name: string, description: string, permissions?: PermRow[] }): Promise<any> => {
     try {
-      const response = await apiClient.post("/role/roles", data);
+      const response = await apiClient.post("/role/create", data);
       return response.data;
     } catch (error) {
       console.error("Failed to create role", error);
@@ -51,7 +51,7 @@ export const rolesService = {
 
   updateRole: async (id: number, data: { name?: string, description?: string }): Promise<any> => {
     try {
-      const response = await apiClient.patch(`/role/roles/${id}`, data);
+      const response = await apiClient.patch(`/role/updateRole/${id}`, data);
       return response.data;
     } catch (error) {
       console.error("Failed to update role", error);
@@ -61,7 +61,7 @@ export const rolesService = {
 
   deleteRole: async (id: number): Promise<any> => {
     try {
-      const response = await apiClient.delete(`/role/roles/${id}`);
+      const response = await apiClient.delete(`/role/deleteRole/${id}`);
       return response.data;
     } catch (error) {
       console.error("Failed to delete role", error);

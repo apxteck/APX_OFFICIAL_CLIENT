@@ -6,11 +6,13 @@ interface UsersState {
   roles: Role[];
   isLoading: boolean;
   searchTerm: string;
+  currentSort: string;
 
   setUsers: (users: User[]) => void;
   setRoles: (roles: Role[]) => void;
   setIsLoading: (isLoading: boolean) => void;
   setSearchTerm: (term: string) => void;
+  setCurrentSort: (sort: string) => void;
 }
 
 export const useUsersStore = create<UsersState>((set) => ({
@@ -18,9 +20,11 @@ export const useUsersStore = create<UsersState>((set) => ({
   roles: [],
   isLoading: true,
   searchTerm: "",
+  currentSort: "newest",
 
   setUsers: (users) => set({ users }),
   setRoles: (roles) => set({ roles }),
   setIsLoading: (isLoading) => set({ isLoading }),
   setSearchTerm: (searchTerm) => set({ searchTerm }),
+  setCurrentSort: (currentSort) => set({ currentSort }),
 }));

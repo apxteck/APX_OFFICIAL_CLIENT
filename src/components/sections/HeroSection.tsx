@@ -92,7 +92,7 @@ export function HeroSection() {
             className="absolute inset-0 w-full h-full"
           >
             {/* Dark tint overlay for reading contrast */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background/95 lg:to-background/80 z-20" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90 lg:to-black/80 z-20" />
 
             {currentBanner.mediaType === 'VIDEO' ? (
               <div className="relative w-full h-full">

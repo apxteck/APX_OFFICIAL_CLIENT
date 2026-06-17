@@ -5,7 +5,8 @@ import { useUiStore } from "@/store/uiStore";
 import {
   BarChart2, Users, ClipboardList, CreditCard, FileText,
   TrendingUp, CheckSquare, Receipt, Monitor, Layout,
-  Settings, Layers, Shield, Key, Briefcase, MessageSquare
+  Settings, Layers, Shield, Key, Briefcase, MessageSquare,
+  Box, Archive
 } from "lucide-react";
 
 export const NAV_GROUPS = [
@@ -23,11 +24,15 @@ export const NAV_GROUPS = [
       { name: "Module Access", href: "/admin/permissions", icon: Key, module: "USER_ROLE_MANAGEMENT" },
       { name: "Service Requests", href: "/admin/requests", icon: ClipboardList, module: "ORDER_PAYMENT_MANAGEMENT" },
       { name: "Payments", href: "/admin/payments", icon: CreditCard, module: "ORDER_PAYMENT_MANAGEMENT" },
+      { name: "Payment Analytics", href: "/admin/payments/analytics", icon: TrendingUp, module: "ORDER_PAYMENT_MANAGEMENT" },
+      { name: "Company Assets", href: "/admin/company-assets", icon: Box, module: "EMPLOYEE_MANAGEMENT" },
+      { name: "Company Vault", href: "/admin/company-vault", icon: Archive, module: "EMPLOYEE_MANAGEMENT" },
     ]
   },
   {
     title: "OPERATIONS",
     items: [
+      { name: "Enquiries", href: "/admin/enquiries", icon: MessageSquare, module: "LEADS_ACCESS_MANAGEMENT" },
       { name: "Leads & CRM", href: "/admin/leads", icon: TrendingUp, module: "LEADS_ACCESS_MANAGEMENT" },
       { name: "Tasks", href: "/admin/tasks", icon: CheckSquare, module: "TASK_NOTIFICATION_MANAGEMENT" },
       { name: "Reimbursements", href: "/admin/reimbursements", icon: Receipt, module: "ORDER_PAYMENT_MANAGEMENT" },
@@ -41,7 +46,7 @@ export const NAV_GROUPS = [
       { name: "Blog", href: "/admin/blog", icon: FileText, module: "BLOG_MANAGEMENT" },
       { name: "Blog Comments", href: "/admin/blog/comments", icon: MessageSquare, module: "BLOG_MANAGEMENT" },
       { name: "Advertisements", href: "/admin/ads", icon: Monitor, module: "ADVERTISEMENT_MANAGEMENT" },
-      { name: "Content", href: "/admin/content/faqs", icon: Layout, module: "CONTENT_MANAGEMENT" },
+      { name: "FAQ", href: "/admin/faq/faqs", icon: Layout, module: "CONTENT_MANAGEMENT" },
     ]
   },
   {
