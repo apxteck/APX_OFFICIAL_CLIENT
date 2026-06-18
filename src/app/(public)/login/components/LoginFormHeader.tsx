@@ -12,11 +12,19 @@ export function LoginFormHeader() {
         className="relative w-40 h-14 mb-4"
       >
         <Image
-          src="/APXTeck.png"
-          alt="APXTeck Logo"
+          src="/APX Teck - Final Logo -01.png"
+          alt="APXTeck Logo Light"
           fill
           sizes="160px"
-          className="object-contain"
+          className="object-contain dark:hidden"
+          priority
+        />
+        <Image
+          src="/APX Teck - Final Logo -03.png"
+          alt="APXTeck Logo Dark"
+          fill
+          sizes="160px"
+          className="object-contain hidden dark:block"
           priority
         />
       </motion.div>
