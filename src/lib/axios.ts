@@ -1,3 +1,4 @@
+//hello
 import apiClient from '@/lib/api/axios';
 import { Ad } from '@/app/types/ad.types';
 import { setAccessToken } from '@/lib/api/token-manager';
@@ -173,7 +174,7 @@ export const api = {
       return [];
     }
   },  
-  
+
   fetchServices: async () => {
     try {
       const response = await apiClient.get('/service/getAll');
