@@ -172,8 +172,7 @@ export const api = {
       console.error('Failed to fetch service fields:', error);
       return [];
     }
-  },
-  
+  },  
   fetchServices: async () => {
     try {
       const response = await apiClient.get('/service/getAll');
