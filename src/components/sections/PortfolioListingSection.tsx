@@ -68,6 +68,7 @@ export function PortfolioListingSection({ initialPortfolios }: PortfolioListingS
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <Link
                         href={`/portfolio/${item.slug}`}
+                        aria-label={`Read Case Study: ${item.title}`}
                         className="glass-panel border border-white/30 px-5 py-2 rounded-full text-white text-xs font-semibold flex items-center gap-2 hover:bg-white/10 active:scale-95 transition-all"
                       >
                         Read Case Study <ExternalLink className="w-3.5 h-3.5" />
@@ -98,6 +99,7 @@ export function PortfolioListingSection({ initialPortfolios }: PortfolioListingS
                   </span>
                   <Link
                     href={`/portfolio/${item.slug}`}
+                    aria-label={`View full details for ${item.title}`}
                     className="hover:text-accent font-bold transition-colors flex items-center gap-1"
                   >
                     View Case <ArrowRight className="w-3.5 h-3.5" />

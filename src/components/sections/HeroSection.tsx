@@ -118,6 +118,7 @@ export function HeroSection() {
                 src={currentBanner.mediaUrl}
                 alt={currentBanner.title || 'APXTeck hero banner'}
                 className="w-full h-full object-cover"
+                fetchPriority="high"
               />
             )}
           </motion.div>
@@ -169,14 +170,16 @@ export function HeroSection() {
                   {currentBanner.ctaText && currentBanner.ctaLink && (
                     <Link
                       href={currentBanner.ctaLink}
+                      aria-label={`Navigate to ${currentBanner.ctaText}`}
                       className="group relative inline-flex h-14 items-center justify-center gap-2 rounded-full bg-accent hover:bg-accent/90 px-8 text-sm font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-lg shadow-accent/30 overflow-hidden"
                     >
                       <span>{currentBanner.ctaText}</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" role="presentation" />
                     </Link>
                   )}
                   <Link
                     href="#contact"
+                    aria-label="Send a quick enquiry to APXTeck"
                     className="inline-flex h-14 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 text-sm font-semibold backdrop-blur-md transition-all hover:scale-105 active:scale-95"
                   >
                     Quick Enquiry

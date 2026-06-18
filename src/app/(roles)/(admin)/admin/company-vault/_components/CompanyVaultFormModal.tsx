@@ -53,7 +53,7 @@ export default function CompanyVaultFormModal({ onClose, formLogic }: Props) {
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+            className="min-w-[44px] min-h-[44px] rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
           >
             <X size={20} />
           </button>
@@ -69,7 +69,7 @@ export default function CompanyVaultFormModal({ onClose, formLogic }: Props) {
                 name="key"
                 defaultValue={editingDocument?.key}
                 placeholder="e.g. INCORPORATION_CERT_2023"
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all uppercase"
+                className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all uppercase"
               />
               <p className="text-xs text-gray-500">Must be a unique identifier.</p>
             </div>
@@ -81,7 +81,7 @@ export default function CompanyVaultFormModal({ onClose, formLogic }: Props) {
                 defaultValue={editingDocument?.description || ''}
                 rows={3}
                 placeholder="Brief description of the document..."
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all resize-none"
+                className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all resize-none"
               />
             </div>
 
@@ -124,14 +124,14 @@ export default function CompanyVaultFormModal({ onClose, formLogic }: Props) {
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-6 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-white/5 transition-colors disabled:opacity-50"
+              className="px-6 py-2.5 min-h-[44px] rounded-xl text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-white/5 transition-colors disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors disabled:opacity-50 flex items-center gap-2"
+              className="px-6 py-2.5 min-h-[44px] rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>

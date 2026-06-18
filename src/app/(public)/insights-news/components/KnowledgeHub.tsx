@@ -6,10 +6,10 @@ import { knowledgeCategories } from '../constants';
 
 export function KnowledgeHub() {
   return (
-    <section className="py-20 relative max-w-7xl mx-auto px-6" aria-labelledby="knowledge-hub-title">
+    <section className="py-12 sm:py-16 md:py-20 relative max-w-7xl mx-auto px-4 sm:px-6 w-full" aria-labelledby="knowledge-hub-title">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] pointer-events-none -z-10" aria-hidden="true" />
 
-      <div className="text-center mb-16">
+      <div className="text-center mb-10 sm:mb-12 md:mb-16 w-full">
         <motion.h2
           id="knowledge-hub-title"
           initial={{ opacity: 0, y: 20 }}
@@ -24,13 +24,13 @@ export function KnowledgeHub() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           viewport={{ once: true }}
-          className="text-foreground/60 max-w-2xl mx-auto mt-4 text-lg"
+          className="text-foreground/60 w-full max-w-2xl mx-auto mt-3 sm:mt-4 text-base sm:text-lg px-2 sm:px-0"
         >
           Explore our curated categories designed to keep you at the cutting edge of the digital landscape.
         </motion.p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 w-full">
         {knowledgeCategories.map((val, idx) => {
           const Icon = val.icon;
           return (
@@ -40,10 +40,10 @@ export function KnowledgeHub() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.15, type: 'spring', bounce: 0.3 }}
               viewport={{ once: true, margin: '-50px' }}
-              className="h-full"
+              className="h-full w-full"
             >
               <GlassCard
-                className="h-full p-8 border border-glass-border hover:border-white/10 transition-colors duration-500"
+                className="h-full p-6 sm:p-8 border border-glass-border hover:border-white/10 transition-colors duration-500 w-full flex flex-col items-center sm:items-start text-center sm:text-left"
                 glowColor={val.color}
               >
                 <div

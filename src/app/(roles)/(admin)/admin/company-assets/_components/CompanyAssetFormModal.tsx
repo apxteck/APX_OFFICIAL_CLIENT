@@ -52,7 +52,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+            className="min-w-[44px] min-h-[44px] rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
           >
             <X size={20} />
           </button>
@@ -66,7 +66,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                 required
                 name="type"
                 defaultValue={editingAsset?.type || ''}
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
+                className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
               >
                 <option value="" disabled>Select an asset type...</option>
                 <option value="DOMAIN">Domain</option>
@@ -86,7 +86,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                 name="title"
                 defaultValue={editingAsset?.title}
                 placeholder="e.g. MacBook Pro M2"
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
+                className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
               />
             </div>
             
@@ -97,7 +97,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                 name="referenceNumber"
                 defaultValue={editingAsset?.referenceNumber || ''}
                 placeholder="e.g. SRN-2023-01"
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
+                className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
               />
             </div>
             <div className="space-y-2">
@@ -107,7 +107,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                 name="provider"
                 defaultValue={editingAsset?.provider || ''}
                 placeholder="e.g. Apple Inc."
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
+                className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
               />
             </div>
 
@@ -118,7 +118,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                   type="date"
                   name="issuedDate"
                   defaultValue={editingAsset?.issuedDate ? new Date(editingAsset.issuedDate).toISOString().split('T')[0] : ''}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
+                  className="w-full pl-10 pr-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
                 />
                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               </div>
@@ -130,7 +130,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                   type="date"
                   name="expiryDate"
                   defaultValue={editingAsset?.expiryDate ? new Date(editingAsset.expiryDate).toISOString().split('T')[0] : ''}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
+                  className="w-full pl-10 pr-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
                 />
                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               </div>
@@ -145,7 +145,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                   name="renewalCost"
                   defaultValue={editingAsset?.renewalCost || ''}
                   placeholder="0.00"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
+                  className="w-full pl-10 pr-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
                 />
                 <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
               </div>
@@ -157,7 +157,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                 required
                 name="status"
                 defaultValue={editingAsset?.status || 'ACTIVE'}
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
+                className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
               >
                 <option value="ACTIVE">Active</option>
                 <option value="EXPIRING_SOON">Expiring Soon</option>
@@ -190,7 +190,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
               defaultValue={editingAsset?.notes || ''}
               rows={3}
               placeholder="Any additional information..."
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all resize-none"
+              className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all resize-none"
             />
           </div>
           
@@ -199,14 +199,14 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-6 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-white/5 transition-colors disabled:opacity-50"
+              className="px-6 py-2.5 min-h-[44px] rounded-xl text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-white/5 transition-colors disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors disabled:opacity-50 flex items-center gap-2"
+              className="px-6 py-2.5 min-h-[44px] rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>

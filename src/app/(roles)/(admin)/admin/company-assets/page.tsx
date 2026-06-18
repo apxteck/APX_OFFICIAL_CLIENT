@@ -1,16 +1,32 @@
-"use client";
+import React, { Suspense } from "react";
+import { Metadata } from "next";
+import { CompanyAssetsManager } from "./_components/CompanyAssetsManager";
+import CompanyAssetsLoading from "./loading";
+import { companyAssetsService } from "@/services/admin/companyAssets.service";
+import { CompanyAsset } from "@/services/admin/companyAssets.service";
 
-import React from "react";
-import dynamic from "next/dynamic";
+export const metadata: Metadata = {
+  title: "Company Assets | APXTeck Admin",
+  description: "Manage physical and digital company resources.",
+};
 
-const CompanyAssetsManager = dynamic(() => import("./_components/CompanyAssetsManager").then(mod => mod.CompanyAssetsManager), {
-  ssr: false,
-});
+async function CompanyAssetsDataFetcher() {
+  let initialAssets: CompanyAsset[] = [];
+  try {
+    const response = await companyAssetsService.getAllCompanyAssets({ limit: 100 });
+    initialAssets = response.data || [];
+  } catch (error) {
+    console.error("Failed to fetch initial company assets:", error);
+  }
+  return <CompanyAssetsManager initialAssets={initialAssets} />;
+}
 
 export default function CompanyAssetsPage() {
   return (
-    <div className="space-y-6">
-      <CompanyAssetsManager />
-    </div>
+    <Suspense fallback={<CompanyAssetsLoading />}>
+      <div className="space-y-6">
+        <CompanyAssetsDataFetcher />
+      </div>
+    </Suspense>
   );
 }

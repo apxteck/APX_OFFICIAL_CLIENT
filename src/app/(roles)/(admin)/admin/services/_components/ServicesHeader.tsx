@@ -1,11 +1,11 @@
-"use client";
 import React from "react";
 import { Layers, PlusCircle } from "lucide-react";
-import { useServicesLogic } from "../_hooks/useServicesLogic";
 
-export function ServicesHeader() {
-  const { navigateToCreate } = useServicesLogic();
+interface Props {
+  navigateToCreate: () => void;
+}
 
+export function ServicesHeader({ navigateToCreate }: Props) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div>
@@ -21,7 +21,7 @@ export function ServicesHeader() {
       </div>
       <button 
         onClick={navigateToCreate}
-        className="bg-[#39FF14] hover:bg-[#32e012] text-black px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center gap-2 shrink-0"
+        className="bg-[#39FF14] hover:bg-[#32e012] text-black px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center justify-center gap-2 shrink-0"
       >
         <PlusCircle size={18} />
         Create Service

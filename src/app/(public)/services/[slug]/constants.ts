@@ -4,18 +4,26 @@ export const getServiceJsonLd = (service: Service) => {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
+    '@id': `https://apxteck.com/services/${service.slug}/#service`,
     name: service.name,
     description: service.description,
+    url: `https://apxteck.com/services/${service.slug}`,
+    isPartOf: {
+      '@id': 'https://apxteck.com/#website',
+    },
     provider: {
       '@type': 'LocalBusiness',
+      '@id': 'https://apxteck.com/#localbusiness',
       name: 'APXTeck',
       telephone: '+919405282582',
+      image: 'https://apxteck.com/logo.png',
     },
     offers: service.price
       ? {
           '@type': 'Offer',
           price: service.price.replace(/[^0-9]/g, ''),
           priceCurrency: 'INR',
+          url: `https://apxteck.com/services/${service.slug}`,
         }
       : undefined,
   };

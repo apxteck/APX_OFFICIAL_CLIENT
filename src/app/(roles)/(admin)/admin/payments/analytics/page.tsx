@@ -75,7 +75,7 @@ export default function PaymentAnalyticsPage() {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto text-white">
+    <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 md:p-8 text-white pb-safe">
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <TrendingUp className="text-indigo-500 w-8 h-8" />

@@ -6,10 +6,20 @@ import { Shield, User as UserIcon, Settings, MoreVertical } from "lucide-react";
 import DataTable, { ColumnDef } from "@/components/ui/admin/DataTable";
 import UserAvatar from "@/components/ui/admin/UserAvatar";
 import { User } from "@/services/admin/users.service";
-import { useUsersLogic } from "../_hooks/useUsersLogic";
 
-export function UsersTable() {
-  const { filteredUsers, isLoading, setSearchTerm, currentSort, setCurrentSort } = useUsersLogic();
+interface Props {
+  filteredUsers: User[];
+  setSearchTerm: (term: string) => void;
+  currentSort: string;
+  setCurrentSort: (sort: string) => void;
+}
+
+export function UsersTable({
+  filteredUsers,
+  setSearchTerm,
+  currentSort,
+  setCurrentSort
+}: Props) {
 
   const sortOptions = [
     { label: "Newest Joined", value: "newest" },
@@ -85,25 +95,17 @@ export function UsersTable() {
         <div className="flex items-center gap-2">
           <Link 
             href={`/admin/users/${user.id}`}
-            className="px-4 py-2 rounded-xl text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 border border-indigo-100 dark:border-indigo-500/20 transition-all shadow-sm hover:shadow-md hover:shadow-indigo-500/10 active:scale-95"
+            className="px-4 py-2 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 border border-indigo-100 dark:border-indigo-500/20 transition-all shadow-sm hover:shadow-md hover:shadow-indigo-500/10 active:scale-95"
           >
             View Profile
           </Link>
-          <button className="p-2 rounded-xl text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors active:scale-95">
+          <button className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors active:scale-95">
             <MoreVertical size={16} />
           </button>
         </div>
       )
     }
   ], []);
-
-  if (isLoading) {
-    return (
-      <div className="flex h-[80vh] items-center justify-center">
-        <div className="w-10 h-10 rounded-full border-4 border-gray-200 dark:border-white/10 border-t-indigo-600 dark:border-t-indigo-500 animate-spin"></div>
-      </div>
-    );
-  }
 
   return (
     <DataTable 

@@ -29,9 +29,9 @@ export default function LoginClient() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="w-full max-w-md relative z-10"
+      className="w-full max-w-md relative z-10 px-4 sm:px-0"
     >
-      <div className="glass-panel p-8 sm:p-10 rounded-3xl relative z-10">
+      <div className="glass-panel p-6 sm:p-8 md:p-10 rounded-[2rem] sm:rounded-3xl relative z-10 flex flex-col w-full">
         <LoginFormHeader />
 
         <form suppressHydrationWarning onSubmit={handleSubmit(onSubmit)} className="space-y-5" aria-labelledby="login-heading" noValidate>
@@ -59,12 +59,14 @@ export default function LoginClient() {
 
           <GoogleLoginButton />
 
-          <p className="text-center text-sm text-foreground/60 mt-6 font-medium">
-            {"Don't have an account? "}
-            <Link href="/register" className="text-accent hover:text-accent/80 font-bold transition-colors">
-              Create Account
-            </Link>
-          </p>
+          <div className="text-center mt-6">
+            <p className="text-sm text-foreground/60 font-medium inline-flex items-center gap-1">
+              {"Don't have an account? "}
+              <Link href="/register" className="text-accent hover:text-accent/80 font-bold transition-colors inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-2 rounded-full" aria-label="Create a new APXTeck Account">
+                Create Account
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </motion.div>

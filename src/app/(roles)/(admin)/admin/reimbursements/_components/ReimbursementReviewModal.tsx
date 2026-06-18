@@ -1,11 +1,22 @@
-"use client";
 import React from "react";
 import { IndianRupee, ExternalLink, FileText, XCircle, CheckCircle2 } from "lucide-react";
-import { useReimbursementsLogic } from "../_hooks/useReimbursementsLogic";
+import { Reimbursement } from "@/services/admin/reimbursements.service";
 
-export function ReimbursementReviewModal() {
-  const { selectedRequest, setSelectedRequest, reviewNote, setReviewNote, handleUpdateStatus } = useReimbursementsLogic();
+interface Props {
+  selectedRequest: Reimbursement | null;
+  reviewNote: string;
+  setReviewNote: (note: string) => void;
+  onClose: () => void;
+  onUpdateStatus: (id: number, status: Reimbursement["status"], note?: string) => void;
+}
 
+export function ReimbursementReviewModal({
+  selectedRequest,
+  reviewNote,
+  setReviewNote,
+  onClose,
+  onUpdateStatus
+}: Props) {
   if (!selectedRequest) return null;
 
   return (
@@ -18,8 +29,8 @@ export function ReimbursementReviewModal() {
             Review Request
           </h2>
           <button 
-            onClick={() => { setSelectedRequest(null); setReviewNote(""); }}
-            className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+            onClick={onClose}
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
           >
             <XCircle size={20} />
           </button>
@@ -119,29 +130,29 @@ export function ReimbursementReviewModal() {
           {selectedRequest.status === "PENDING" ? (
             <div className="flex gap-3">
               <button 
-                onClick={() => handleUpdateStatus(selectedRequest.id, "REJECTED", reviewNote)}
-                className="flex-1 px-4 py-3 bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 hover:border-red-500 hover:text-red-600 dark:hover:text-red-400 rounded-xl font-bold text-sm transition-colors text-gray-700 dark:text-gray-300"
+                onClick={() => onUpdateStatus(selectedRequest.id, "REJECTED", reviewNote)}
+                className="flex-1 px-4 py-3 min-h-[44px] bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 hover:border-red-500 hover:text-red-600 dark:hover:text-red-400 rounded-xl font-bold text-sm transition-colors text-gray-700 dark:text-gray-300"
               >
                 Reject
               </button>
               <button 
-                onClick={() => handleUpdateStatus(selectedRequest.id, "APPROVED", reviewNote)}
-                className="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm transition-colors shadow-sm"
+                onClick={() => onUpdateStatus(selectedRequest.id, "APPROVED", reviewNote)}
+                className="flex-1 px-4 py-3 min-h-[44px] bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm transition-colors shadow-sm"
               >
                 Approve
               </button>
             </div>
           ) : selectedRequest.status === "APPROVED" ? (
             <button 
-              onClick={() => handleUpdateStatus(selectedRequest.id, "PAID")}
-              className="w-full px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center justify-center gap-2"
+              onClick={() => onUpdateStatus(selectedRequest.id, "PAID")}
+              className="w-full px-4 py-3 min-h-[44px] bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center justify-center gap-2"
             >
               <CheckCircle2 size={18} /> Mark as Paid
             </button>
           ) : (
             <button 
-              onClick={() => { setSelectedRequest(null); setReviewNote(""); }}
-              className="w-full px-4 py-3 bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 text-gray-800 dark:text-white rounded-xl font-bold text-sm transition-colors"
+              onClick={onClose}
+              className="w-full px-4 py-3 min-h-[44px] bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 text-gray-800 dark:text-white rounded-xl font-bold text-sm transition-colors"
             >
               Close
             </button>

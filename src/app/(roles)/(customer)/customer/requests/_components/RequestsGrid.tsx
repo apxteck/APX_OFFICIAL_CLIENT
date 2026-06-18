@@ -3,8 +3,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ClipboardList, ArrowRight, Clock, CheckCircle2, XCircle, AlertCircle, User, Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRequestsLogic } from '../_hooks/useRequestsLogic';
-import { RequestStatus } from '../_store/useRequestsStore';
+import { ServiceRequest, RequestStatus } from '../types';
 
 const getStatusConfig = (status: RequestStatus) => {
   switch (status) {
@@ -23,9 +22,14 @@ const getStatusConfig = (status: RequestStatus) => {
   }
 };
 
-export function RequestsGrid() {
-  const { isLoading, filteredRequests, searchQuery, statusFilter } = useRequestsLogic();
+interface RequestsGridProps {
+  isLoading: boolean;
+  filteredRequests: ServiceRequest[];
+  searchQuery: string;
+  statusFilter: string;
+}
 
+export function RequestsGrid({ isLoading, filteredRequests, searchQuery, statusFilter }: RequestsGridProps) {
   const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }

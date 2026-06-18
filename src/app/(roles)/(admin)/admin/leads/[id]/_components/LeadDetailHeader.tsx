@@ -16,7 +16,7 @@ export function LeadDetailHeader({ lead }: LeadDetailHeaderProps) {
       <div className="flex items-center gap-4">
         <button 
           onClick={() => router.push('/admin/leads')}
-          className="p-2 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-xl transition-colors"
+          className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-xl transition-colors"
         >
           <ArrowLeft size={20} className="text-gray-600 dark:text-gray-400" />
         </button>

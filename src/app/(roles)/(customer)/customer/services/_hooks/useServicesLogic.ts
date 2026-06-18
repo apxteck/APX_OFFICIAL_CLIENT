@@ -1,28 +1,38 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { api } from '@/lib/axios';
-import { useServicesStore } from '../_store/useServicesStore';
+import { ServiceRequest } from '../types';
 
-export const useServicesLogic = () => {
-  const store = useServicesStore();
+export const useServicesLogic = (initialServices: ServiceRequest[]) => {
+  const [services, setServices] = useState<ServiceRequest[]>(initialServices);
+  const [isLoading, setIsLoading] = useState<boolean>(initialServices.length === 0);
 
   useEffect(() => {
+    let mounted = true;
+
     async function fetchMyServices() {
       try {
-        store.setIsLoading(true);
-        // Fetching all requests to display as services
+        if (services.length === 0) setIsLoading(true);
         const res = await api.getMyRequests();
-        // Only keep non-cancelled requests for "My Services" view
-        const activeRequests = (res.data || []).filter((r: any) => r.status !== 'CANCELLED');
-        store.setServices(activeRequests);
+        if (mounted && res.data) {
+          const activeRequests = res.data.filter((r: any) => r.status !== 'CANCELLED');
+          setServices(activeRequests);
+        } else if (mounted && Array.isArray(res)) {
+          const activeRequests = res.filter((r: any) => r.status !== 'CANCELLED');
+          setServices(activeRequests);
+        }
       } catch (error) {
         console.error("Failed to load services:", error);
       } finally {
-        store.setIsLoading(false);
+        if (mounted) setIsLoading(false);
       }
     }
-    fetchMyServices();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  return store;
+    fetchMyServices();
+
+    return () => {
+      mounted = false;
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return { services, isLoading };
 };

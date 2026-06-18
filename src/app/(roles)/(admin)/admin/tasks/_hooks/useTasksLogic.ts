@@ -1,30 +1,29 @@
-import { useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { tasksService, Task } from "@/services/admin/tasks.service";
-import { useTasksStore } from "../_store/useTasksStore";
 
-export const useTasksLogic = () => {
-  const store = useTasksStore();
+export const useTasksLogic = (initialTasks: Task[] = []) => {
   const router = useRouter();
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<number | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchTasks = () => {
-    store.setIsLoading(true);
+    setIsLoading(true);
     tasksService.getTasks()
       .then(data => {
-        store.setTasks(data);
-        store.setIsLoading(false);
+        setTasks(data);
+        setIsLoading(false);
       })
       .catch((err) => {
         toast.error("Failed to load tasks");
-        store.setIsLoading(false);
+        setIsLoading(false);
       });
   };
-
-  useEffect(() => {
-    fetchTasks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleUpdateStatus = async (id: number, status: Task["status"]) => {
     const toastId = toast.loading("Updating status...");
@@ -38,38 +37,45 @@ export const useTasksLogic = () => {
   };
 
   const handleDeleteTaskClick = (id: number) => {
-    store.setTaskToDelete(id);
-    store.setIsDeleteModalOpen(true);
+    setTaskToDelete(id);
+    setIsDeleteModalOpen(true);
   };
 
   const confirmDeleteTask = async () => {
-    if (!store.taskToDelete) return;
-    store.setIsDeleting(true);
+    if (!taskToDelete) return;
+    setIsDeleting(true);
     try {
-      await tasksService.deleteTask(store.taskToDelete);
+      await tasksService.deleteTask(taskToDelete);
       toast.success("Task deleted successfully");
-      store.setIsDeleteModalOpen(false);
+      setIsDeleteModalOpen(false);
       fetchTasks();
     } catch (err: any) {
       toast.error(err.message || "Failed to delete task");
     } finally {
-      store.setIsDeleting(false);
-      store.setTaskToDelete(null);
+      setIsDeleting(false);
+      setTaskToDelete(null);
     }
   };
 
   const filteredTasks = useMemo(() => {
-    return store.tasks.filter(task => 
-      task.title.toLowerCase().includes(store.searchTerm.toLowerCase()) ||
-      (task.assignedTo?.fullName && task.assignedTo.fullName.toLowerCase().includes(store.searchTerm.toLowerCase()))
+    return tasks.filter(task => 
+      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (task.assignedTo?.fullName && task.assignedTo.fullName.toLowerCase().includes(searchTerm.toLowerCase()))
     );
-  }, [store.tasks, store.searchTerm]);
+  }, [tasks, searchTerm]);
 
   const navigateToCreate = () => router.push('/admin/tasks/new');
   const navigateToDetails = (id: number) => router.push(`/admin/tasks/${id}`);
 
   return {
-    ...store,
+    tasks,
+    isLoading,
+    searchTerm,
+    setSearchTerm,
+    isDeleteModalOpen,
+    setIsDeleteModalOpen,
+    taskToDelete,
+    isDeleting,
     filteredTasks,
     handleUpdateStatus,
     handleDeleteTaskClick,

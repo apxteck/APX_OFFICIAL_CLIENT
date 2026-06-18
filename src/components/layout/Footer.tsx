@@ -23,14 +23,14 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="relative mt-32 border-t border-glass-border overflow-hidden">
+    <footer className="relative mt-12 md:mt-20 border-t border-glass-border overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-accent/5 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="md:col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="relative w-40 h-16">
+      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-12">
+          <div className="md:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
+            <Link href="/" className="inline-flex justify-center md:justify-start mb-6">
+              <div className="relative w-48 h-16">
                 <Image
                   src="/APX Teck - Final Logo -01.png"
                   alt="APXTeck Logo Light"
@@ -45,18 +45,18 @@ export function Footer() {
                 />
               </div>
             </Link>
-            <p className="text-foreground/70 max-w-sm">
+            <p className="text-foreground/70 max-w-sm mx-auto md:mx-0">
               Crafting premium digital experiences, advanced web applications, and data-driven SEO
               strategies for the modern web.
             </p>
-            <div className="flex flex-wrap gap-4 mt-8">
+            <div className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4 mt-8">
               {/* Facebook */}
               <a
                 href="https://www.facebook.com/share/18ayv4SZDZ/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#1877F2] hover:scale-110 hover:bg-[#1877F2]/10 transition-all shadow-sm"
+                className="w-11 h-11 md:w-10 md:h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#1877F2] hover:scale-110 hover:bg-[#1877F2]/10 transition-all shadow-sm"
               >
                 <FaFacebookF className="w-5 h-5" />
               </a>
@@ -67,7 +67,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#E4405F] hover:scale-110 hover:bg-[#E4405F]/10 transition-all shadow-sm"
+                className="w-11 h-11 md:w-10 md:h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#E4405F] hover:scale-110 hover:bg-[#E4405F]/10 transition-all shadow-sm"
               >
                 <FaInstagram className="w-5 h-5" />
               </a>
@@ -78,7 +78,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X (Twitter)"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-white hover:scale-110 hover:bg-white/10 transition-all shadow-sm"
+                className="w-11 h-11 md:w-10 md:h-10 rounded-full glass-panel flex items-center justify-center hover:text-white hover:scale-110 hover:bg-white/10 transition-all shadow-sm"
               >
                 <FaXTwitter className="w-5 h-5" />
               </a>
@@ -89,7 +89,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Threads"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-white hover:scale-110 hover:bg-white/10 transition-all shadow-sm"
+                className="w-11 h-11 md:w-10 md:h-10 rounded-full glass-panel flex items-center justify-center hover:text-white hover:scale-110 hover:bg-white/10 transition-all shadow-sm"
               >
                 <FaThreads className="w-5 h-5" />
               </a>
@@ -100,7 +100,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#0A66C2] hover:scale-110 hover:bg-[#0A66C2]/10 transition-all shadow-sm"
+                className="w-11 h-11 md:w-10 md:h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#0A66C2] hover:scale-110 hover:bg-[#0A66C2]/10 transition-all shadow-sm"
               >
                 <FaLinkedinIn className="w-5 h-5" />
               </a>
@@ -111,7 +111,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#FF0000] hover:scale-110 hover:bg-[#FF0000]/10 transition-all shadow-sm"
+                className="w-11 h-11 md:w-10 md:h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#FF0000] hover:scale-110 hover:bg-[#FF0000]/10 transition-all shadow-sm"
               >
                 <FaYoutube className="w-5 h-5" />
               </a>
@@ -122,7 +122,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Pinterest"
-                className="w-10 h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#E60023] hover:scale-110 hover:bg-[#E60023]/10 transition-all shadow-sm"
+                className="w-11 h-11 md:w-10 md:h-10 rounded-full glass-panel flex items-center justify-center hover:text-[#E60023] hover:scale-110 hover:bg-[#E60023]/10 transition-all shadow-sm"
               >
                 <FaPinterestP className="w-5 h-5" />
               </a>
@@ -130,13 +130,14 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
-            <h3 className="font-semibold mb-6">Services</h3>
-            <ul className="space-y-4 text-foreground/70 text-sm">
+          <div className="grid grid-cols-2 col-span-1 md:col-span-2 gap-8 w-full text-left">
+            <div>
+            <h3 className="font-semibold mb-4 md:mb-6">Services</h3>
+            <ul className="space-y-2 md:space-y-4 text-foreground/70 text-sm">
               {services.length > 0 ? (
                 services.map((service) => (
                   <li key={service.id}>
-                    <Link href={`/services/${service.slug}`} className="hover:text-accent transition-colors">
+                    <Link href={`/services/${service.slug}`} className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
                       {service.name}
                     </Link>
                   </li>
@@ -144,17 +145,17 @@ export function Footer() {
               ) : (
                 <>
                   <li>
-                    <Link href="/services" className="hover:text-accent transition-colors">
+                    <Link href="/services" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
                       Web Development
                     </Link>
                   </li>
                   <li>
-                    <Link href="/services" className="hover:text-accent transition-colors">
+                    <Link href="/services" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
                       UI/UX Design
                     </Link>
                   </li>
                   <li>
-                    <Link href="/services" className="hover:text-accent transition-colors">
+                    <Link href="/services" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
                       SEO Optimization
                     </Link>
                   </li>
@@ -164,29 +165,30 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-6">Company</h3>
-            <ul className="space-y-4 text-foreground/70 text-sm">
+            <h3 className="font-semibold mb-4 md:mb-6">Company</h3>
+            <ul className="space-y-2 md:space-y-4 text-foreground/70 text-sm">
               <li>
-                <Link href="/about" className="hover:text-accent transition-colors">
+                <Link href="/about" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-accent transition-colors">
+                <Link href="#" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-accent transition-colors">
+                <Link href="#" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-accent transition-colors">
+                <Link href="#" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
                   Terms of Service
                 </Link>
               </li>
             </ul>
+          </div>
           </div>
         </div>
 

@@ -18,7 +18,7 @@ export function ServiceDetailStickyCTA({ serviceName, scrollToForm }: Props) {
       </div>
       <button
         onClick={scrollToForm}
-        className="bg-accent hover:bg-accent/90 text-white font-semibold text-xs px-5 py-2.5 rounded-full shadow-md shadow-accent/15 cursor-pointer"
+        className="bg-accent hover:bg-accent/90 text-white font-semibold text-xs px-5 py-2.5 min-h-[44px] rounded-full shadow-md shadow-accent/15 cursor-pointer flex items-center justify-center"
       >
         Request Service
       </button>

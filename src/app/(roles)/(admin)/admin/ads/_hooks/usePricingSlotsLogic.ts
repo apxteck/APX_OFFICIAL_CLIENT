@@ -3,9 +3,13 @@ import { adsService } from "@/services/admin/ads.service";
 import { AdPricingSlot } from "@/app/types/ad.types";
 import toast from "react-hot-toast";
 
-export function usePricingSlotsLogic() {
-  const [slots, setSlots] = useState<AdPricingSlot[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function usePricingSlotsLogic(initialSlots: AdPricingSlot[] = []) {
+  const [slots, setSlots] = useState<AdPricingSlot[]>(initialSlots);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setSlots(initialSlots);
+  }, [initialSlots]);
 
   const fetchSlots = useCallback(async () => {
     try {
@@ -20,9 +24,6 @@ export function usePricingSlotsLogic() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchSlots();
-  }, [fetchSlots]);
 
   const createSlot = async (data: Partial<AdPricingSlot>) => {
     try {

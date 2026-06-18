@@ -2,9 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import toast from "react-hot-toast";
 import { enquiriesService, Enquiry, EnquiryStatus } from "@/services/admin/enquiries.service";
 
-export function useEnquiriesLogic() {
-  const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function useEnquiriesLogic(initialEnquiries: Enquiry[] = []) {
+  const [enquiries, setEnquiries] = useState<Enquiry[]>(initialEnquiries);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setEnquiries(initialEnquiries);
+  }, [initialEnquiries]);
 
   const fetchEnquiries = useCallback(async () => {
     try {
@@ -18,9 +22,6 @@ export function useEnquiriesLogic() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchEnquiries();
-  }, [fetchEnquiries]);
 
   const handleUpdateStatus = async (id: number, status: EnquiryStatus) => {
     const toastId = toast.loading("Updating status...");

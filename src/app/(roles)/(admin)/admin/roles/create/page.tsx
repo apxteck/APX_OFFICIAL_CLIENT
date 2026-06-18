@@ -1,58 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Link from "next/link";
 import { ArrowLeft, Save, Shield } from "lucide-react";
 import { motion } from "framer-motion";
-import { rolesService } from "@/services/admin/roles.service";
+import { useCreateRoleLogic } from "../_hooks/useCreateRoleLogic";
 
 export default function CreateRolePage() {
-  const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-  });
-  const [error, setError] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    // For role name, typically we uppercase it and replace spaces with underscores to match enum style
-    if (name === "name") {
-      setFormData(prev => ({ ...prev, [name]: value.toUpperCase().replace(/\s+/g, '_') }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    
-    if (!formData.name) {
-      setError("Role name is required");
-      return;
-    }
-
-    try {
-      setIsSubmitting(true);
-      await rolesService.createRole(formData);
-      router.push("/admin/roles");
-    } catch (err: any) {
-      setError(err?.response?.data?.message || "Failed to create role");
-      setIsSubmitting(false);
-    }
-  };
+  const { isSubmitting, formData, error, handleChange, handleSubmit } = useCreateRoleLogic();
 
   return (
-    <div className="max-w-4xl mx-auto pb-12">
+    <div className="w-full max-w-4xl mx-auto pb-safe pb-12 px-4 sm:px-6 md:px-8">
       {/* Header section */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <Link 
             href="/admin/roles"
-            className="p-2 bg-white dark:bg-[#111111] hover:bg-gray-50 dark:hover:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl transition-colors"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 bg-white dark:bg-[#111111] hover:bg-gray-50 dark:hover:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl transition-colors"
           >
             <ArrowLeft size={20} className="text-gray-600 dark:text-gray-400" />
           </Link>
@@ -91,7 +55,7 @@ export default function CreateRolePage() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="e.g. MARKETING_MANAGER"
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-gray-900 dark:text-white font-mono uppercase"
+                className="w-full px-4 py-3 min-h-[44px] bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-gray-900 dark:text-white font-mono uppercase"
                 required
               />
               <p className="text-xs text-gray-500 mt-2">Use uppercase letters and underscores only.</p>
@@ -107,7 +71,7 @@ export default function CreateRolePage() {
                 onChange={handleChange}
                 placeholder="Describe what this role is used for..."
                 rows={4}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-gray-900 dark:text-white resize-none"
+                className="w-full px-4 py-3 min-h-[44px] bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-gray-900 dark:text-white resize-none"
               ></textarea>
             </div>
           </div>
@@ -115,14 +79,14 @@ export default function CreateRolePage() {
           <div className="pt-6 border-t border-gray-100 dark:border-white/5 flex justify-end gap-4">
             <Link 
               href="/admin/roles"
-              className="px-6 py-3 rounded-xl font-bold text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+              className="px-6 py-3 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-3 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-[0px_4px_14px_rgba(79,70,229,0.3)] flex items-center gap-2"
+              className="px-6 py-3 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-[0px_4px_14px_rgba(79,70,229,0.3)] gap-2"
             >
               {isSubmitting ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

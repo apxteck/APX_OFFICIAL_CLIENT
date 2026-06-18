@@ -1,8 +1,13 @@
 "use client";
+
 import React from "react";
 import { motion } from "framer-motion";
-import { useDashboardLogic } from "../_hooks/useDashboardLogic";
-import { Tab } from "../_store/useDashboardStore";
+import { Tab } from "../_hooks/useDashboardLogic";
+
+interface Props {
+  activeTab: Tab;
+  setActiveTab: (tab: Tab) => void;
+}
 
 const tabs: { id: Tab; label: string }[] = [
   { id: "overview", label: "Overview" },
@@ -12,9 +17,7 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "operations", label: "CRM & Operations" },
 ];
 
-export function DashboardTabs() {
-  const { activeTab, setActiveTab } = useDashboardLogic();
-
+export function DashboardTabs({ activeTab, setActiveTab }: Props) {
   return (
     <div className="mb-8 relative z-10">
       <div className="flex flex-wrap gap-1.5 bg-gray-100/80 dark:bg-black/40 backdrop-blur-md p-1.5 rounded-[1.25rem] w-full xl:max-w-max border border-gray-200/60 dark:border-white/5 shadow-inner">
@@ -22,7 +25,7 @@ export function DashboardTabs() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 flex-1 sm:flex-none text-center relative overflow-hidden group ${
+            className={`px-5 py-2.5 min-h-[44px] rounded-2xl text-sm font-bold transition-all duration-300 flex-1 sm:flex-none text-center relative overflow-hidden group flex items-center justify-center ${
               activeTab === tab.id
                 ? "text-indigo-600 dark:text-indigo-300"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"

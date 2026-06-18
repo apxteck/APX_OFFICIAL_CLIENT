@@ -7,8 +7,10 @@ import { LeadsHeader } from "./LeadsHeader";
 import { useLeadsColumns } from "./LeadsColumns";
 import { useLeadsLogic } from "../_hooks/useLeadsLogic";
 
-export function LeadsManager() {
-  const { leads, isLoading } = useLeadsLogic();
+import { Lead } from "@/app/types/lead.types";
+
+export function LeadsManager({ initialLeads = [] }: { initialLeads?: Lead[] }) {
+  const { leads, isLoading } = useLeadsLogic(initialLeads);
   const columns = useLeadsColumns();
 
   const [currentSort, setCurrentSort] = useState("newest");
@@ -41,7 +43,7 @@ export function LeadsManager() {
   }, [leads, currentSort]);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-10">
+    <div className="space-y-6 w-full max-w-7xl mx-auto pb-safe pb-10 px-4 sm:px-6 md:px-8">
       <LeadsHeader />
 
       <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">

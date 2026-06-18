@@ -11,7 +11,7 @@ interface TeamSectionProps {
 
 export function TeamSection({ team }: TeamSectionProps) {
   return (
-    <section className="py-24 relative overflow-hidden bg-background">
+    <section className="py-12 md:py-20 relative overflow-hidden bg-background">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20 space-y-4">
           <motion.div

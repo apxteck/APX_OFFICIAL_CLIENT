@@ -1,11 +1,14 @@
 export const jsonLdLocalBusiness = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
+  '@id': 'https://apxteck.com/#localbusiness',
   name: 'APXTeck',
-  image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3',
+  image: 'https://apxteck.com/logo.png',
+  logo: 'https://apxteck.com/logo.png',
   telephone: '+919405282582',
   email: 'info@apxteck.com',
   url: 'https://apxteck.com',
+  description: 'Premium web development, custom software engineering, and technical SEO agency based in Pune, India.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Flat No. 24, 3rd Floor, Balaji Residency Dighe, Manaji Nagar, Narhe',
@@ -27,16 +30,25 @@ export const jsonLdLocalBusiness = {
       closes: '18:00',
     },
   ],
+  sameAs: [
+    'https://www.linkedin.com/company/apxteck',
+    'https://twitter.com/apxteck',
+    'https://www.facebook.com/apxteck'
+  ]
 };
 
 export const jsonLdContactPage = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
-  name: 'Contact APXTeck',
+  '@id': 'https://apxteck.com/contact/#webpage',
+  name: 'Contact APXTeck - Web Development & SEO Experts',
   description: 'Get in touch with APXTeck for premium software development and SEO consultancies.',
   url: 'https://apxteck.com/contact',
+  isPartOf: {
+    '@id': 'https://apxteck.com/#website',
+  },
   mainEntity: {
-    '@id': 'https://apxteck.com/#organization',
+    '@id': 'https://apxteck.com/#localbusiness',
   },
 };
 

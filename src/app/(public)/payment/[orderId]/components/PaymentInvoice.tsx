@@ -26,7 +26,7 @@ export function PaymentInvoice({ payment, isPaid, isCancelled }: PaymentInvoiceP
       </div>
 
       {/* Invoice Details Card */}
-      <div className="bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-800 p-6 space-y-4 mb-6 relative group hover:border-indigo-100 dark:hover:border-indigo-900/30 transition-colors">
+      <div className="bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-800 p-5 sm:p-6 space-y-4 mb-6 relative group hover:border-indigo-100 dark:hover:border-indigo-900/30 transition-colors">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-transparent dark:from-indigo-900/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none"></div>
         
         <div className="flex justify-between items-center pb-4 border-b border-gray-200 dark:border-gray-800 border-dashed">

@@ -2,10 +2,14 @@ import { useState, useEffect, useCallback } from "react";
 import { adsService } from "@/services/admin/ads.service";
 import { Ad } from "@/app/types/ad.types";
 
-export function useAdsLogic() {
-  const [ads, setAds] = useState<Ad[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function useAdsLogic(initialAds: Ad[] = []) {
+  const [ads, setAds] = useState<Ad[]>(initialAds);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    setAds(initialAds);
+  }, [initialAds]);
 
   const fetchAds = useCallback(async () => {
     try {
@@ -20,9 +24,7 @@ export function useAdsLogic() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchAds();
-  }, [fetchAds]);
+
 
   const handleDelete = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this ad? This action cannot be undone.")) {

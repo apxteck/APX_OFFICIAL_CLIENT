@@ -31,7 +31,7 @@ export function PortfolioSection() {
   }, []);
 
   return (
-    <section id="portfolio" className="py-32 relative bg-background">
+    <section id="portfolio" className="py-16 md:py-24 relative bg-background">
       {/* Background blur blobs */}
       <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
 

@@ -59,7 +59,7 @@ export function TestimonialsSection() {
   const current = testimonials[currentIndex];
 
   return (
-    <section id="testimonials" className="py-32 relative overflow-hidden bg-background">
+    <section id="testimonials" className="py-16 md:py-24 relative overflow-hidden bg-background">
       {/* Background glow overlay */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none -z-10" />
 

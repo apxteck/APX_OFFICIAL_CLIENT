@@ -6,25 +6,41 @@ import GoogleAuthClient from './GoogleAuthClient';
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Google Authentication Success | APXTeck',
-    description: 'Successfully authenticated with Google. Redirecting to your dashboard...',
+    description: 'Successfully authenticated with Google. We are securely setting up your session and redirecting you to your personalized APXTeck web development dashboard.',
     robots: {
       index: false, // We do not index auth redirect pages
       follow: false,
     },
     alternates: {
       canonical: 'https://apxteck.com/auth/google/success',
+      languages: {
+        'en-US': 'https://apxteck.com/auth/google/success',
+        'en-IN': 'https://apxteck.com/en-in/auth/google/success',
+      },
     },
     openGraph: {
       title: 'Google Authentication Success | APXTeck',
-      description: 'Successfully authenticated with Google. Redirecting to your dashboard...',
+      description: 'Successfully authenticated with Google. We are securely setting up your session and redirecting you to your personalized APXTeck web development dashboard.',
       url: 'https://apxteck.com/auth/google/success',
       siteName: 'APXTeck',
+      locale: 'en_IN',
       type: 'website',
+      images: [
+        {
+          url: 'https://apxteck.com/og-google-auth.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'APXTeck Google Authentication Success',
+        },
+      ],
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title: 'Google Authentication Success | APXTeck',
-      description: 'Successfully authenticated with Google.',
+      description: 'Successfully authenticated with Google. We are securely setting up your session and redirecting you to your personalized APXTeck web development dashboard.',
+      creator: '@apxteck',
+      site: '@apxteck',
+      images: ['https://apxteck.com/twitter-google-auth.jpg'],
     },
   };
 }
@@ -35,15 +51,22 @@ export default function GoogleAuthSuccessPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'Google Authentication Success',
-    description: 'Authentication redirect page for APXTeck.',
+    name: 'Google Authentication Success - APXTeck Secure Login',
+    description: 'Authentication redirect page for APXTeck. Securely processing your Google login to access premium IT and web development services.',
     url: 'https://apxteck.com/auth/google/success',
+    publisher: {
+      '@type': 'Organization',
+      name: 'APXTeck',
+      logo: 'https://apxteck.com/logo.png',
+      url: 'https://apxteck.com',
+    },
+    isPartOf: { '@id': 'https://apxteck.com/#website' },
   };
 
   return (
     // Semantic HTML5: <main>
     <main 
-      className="flex flex-col min-h-screen items-center justify-center bg-background text-foreground"
+      className="flex flex-col min-h-dvh w-full overflow-x-hidden items-center justify-center bg-background text-foreground pt-safe pb-safe"
       role="main"
       aria-label="Google Authentication Success"
     >
@@ -55,7 +78,7 @@ export default function GoogleAuthSuccessPage() {
       
       {/* Semantic HTML5: <article> for the independent piece of UI */}
       <article 
-        className="flex flex-col items-center gap-6 p-8 rounded-3xl glass-panel border border-glass-border shadow-xl max-w-sm text-center w-full mx-4"
+        className="flex flex-col items-center gap-4 md:gap-6 p-6 sm:p-8 rounded-[2rem] glass-panel border border-glass-border shadow-lg md:shadow-xl max-w-sm text-center w-full mx-4"
         itemScope
         itemType="https://schema.org/WebPage"
         aria-live="polite"

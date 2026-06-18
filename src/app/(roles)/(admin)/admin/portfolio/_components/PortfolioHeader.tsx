@@ -1,10 +1,7 @@
 "use client";
 import React from "react";
 import { Briefcase, PlusCircle } from "lucide-react";
-import { usePortfolioLogic } from "../_hooks/usePortfolioLogic";
-
-export function PortfolioHeader() {
-  const { navigateToCreate } = usePortfolioLogic();
+export function PortfolioHeader({ onCreateClick }: { onCreateClick: () => void }) {
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -20,8 +17,8 @@ export function PortfolioHeader() {
         </p>
       </div>
       <button 
-        onClick={navigateToCreate}
-        className="bg-[#39FF14] hover:bg-[#32e012] text-black px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center gap-2 shrink-0"
+        onClick={onCreateClick}
+        className="bg-[#39FF14] hover:bg-[#32e012] text-black px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center justify-center min-h-[44px] gap-2 shrink-0"
       >
         <PlusCircle size={18} />
         Create Portfolio

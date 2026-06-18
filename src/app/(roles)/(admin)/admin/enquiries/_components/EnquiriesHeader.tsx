@@ -3,7 +3,7 @@ import { MessageSquare } from "lucide-react";
 
 export function EnquiriesHeader() {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
       <div>
         <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-3">
           <div className="p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-600 dark:text-indigo-400">

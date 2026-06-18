@@ -1,10 +1,13 @@
 "use client";
 import React, { useRef } from "react";
 import { Download, Upload, Trash } from "lucide-react";
-import { useSettingsStore } from "../../_store/useSettingsStore";
+import { ToastState } from "../SettingsManager";
 
-export function DataCacheTab() {
-  const { setToast } = useSettingsStore();
+interface Props {
+  setToast: (toast: ToastState) => void;
+}
+
+export function DataCacheTab({ setToast }: Props) {
   const fileReaderRef = useRef<HTMLInputElement>(null);
 
   const handleExport = () => {
@@ -65,7 +68,7 @@ export function DataCacheTab() {
             <Download className="text-indigo-500 mb-3" size={28} />
             <h3 className="font-bold text-gray-900 dark:text-white mb-1">Export Settings</h3>
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Download a JSON backup of your current local dashboard configurations.</p>
-            <button onClick={handleExport} className="bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 px-4 py-2 rounded-lg text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+            <button onClick={handleExport} className="bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 px-4 py-2 min-h-[44px] flex items-center justify-center rounded-lg text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
               Download JSON
             </button>
           </div>
@@ -75,7 +78,7 @@ export function DataCacheTab() {
             <h3 className="font-bold text-gray-900 dark:text-white mb-1">Import Settings</h3>
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Restore your dashboard settings from a previously downloaded JSON file.</p>
             <input type="file" ref={fileReaderRef} accept=".json" onChange={handleImport} className="hidden" />
-            <button onClick={() => fileReaderRef.current?.click()} className="bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 px-4 py-2 rounded-lg text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+            <button onClick={() => fileReaderRef.current?.click()} className="bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 px-4 py-2 min-h-[44px] flex items-center justify-center rounded-lg text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
               Upload JSON
             </button>
           </div>
@@ -86,7 +89,7 @@ export function DataCacheTab() {
         <div>
           <h3 className="font-bold text-red-600 mb-1 flex items-center gap-2"><Trash size={16} /> Danger Zone</h3>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Wipe all local storage, preferences, and session data. This is useful for resetting a broken UI state.</p>
-          <button onClick={handleClearCache} className="bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-500/10 dark:hover:bg-red-500/20 px-4 py-2 rounded-lg text-sm font-bold transition-colors">
+          <button onClick={handleClearCache} className="bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-500/10 dark:hover:bg-red-500/20 px-4 py-2 min-h-[44px] flex items-center justify-center rounded-lg text-sm font-bold transition-colors">
             Clear Local Cache
           </button>
         </div>

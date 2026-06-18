@@ -31,7 +31,7 @@ export function FaqSection() {
   }, []);
 
   return (
-    <section className="py-32 relative">
+    <section className="py-16 md:py-24 relative">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-16">
           <motion.h2

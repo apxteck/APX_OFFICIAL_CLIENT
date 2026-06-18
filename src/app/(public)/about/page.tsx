@@ -43,16 +43,20 @@ async function StatsSectionLoader() {
 // Extreme Technical SEO & Dynamic Metadata Generation
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'About APXTECK — Our Story & Team | Top IT Agency Pune',
+    title: 'About Our Story & Elite Team | APXTeck',
     description:
-      "Learn about APXTeck's background, founding mission, core values, and our elite team of software engineers, designers, and SEO specialists.",
+      "Discover APXTeck's founding story, mission, and core values. Meet our elite in-house team of Next.js software engineers, designers, and SEO experts in Pune.",
     alternates: {
       canonical: 'https://apxteck.com/about',
+      languages: {
+        'en-US': 'https://apxteck.com/about',
+        'en-IN': 'https://apxteck.com/en-in/about',
+      },
     },
     openGraph: {
-      title: 'About APXTECK — Our Story & Team',
+      title: 'About Our Story & Elite Team | APXTeck',
       description:
-        "Learn about APXTeck's background, founding mission, core values, and our elite team of software engineers, designers, and SEO specialists.",
+        "Discover APXTeck's founding story, mission, and core values. Meet our elite in-house team of Next.js software engineers, designers, and SEO experts in Pune.",
       url: 'https://apxteck.com/about',
       siteName: 'APXTeck',
       images: [
@@ -60,7 +64,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: 'https://apxteck.com/og-about.jpg',
           width: 1200,
           height: 630,
-          alt: 'APXTeck Team and Mission',
+          alt: 'APXTeck Elite Engineering Team and Mission',
         },
       ],
       locale: 'en_IN',
@@ -68,10 +72,12 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'About APXTECK — Our Story & Team',
+      title: 'About Our Story & Elite Team | APXTeck',
       description:
-        "Learn about APXTeck's background, founding mission, core values, and our elite team of software engineers, designers, and SEO specialists.",
+        "Discover APXTeck's founding story, mission, and core values. Meet our elite in-house team of Next.js software engineers, designers, and SEO experts in Pune.",
       images: ['https://apxteck.com/twitter-about.jpg'],
+      creator: '@apxteck',
+      site: '@apxteck',
     },
     robots: {
       index: true,
@@ -96,10 +102,13 @@ export default function AboutPage() {
         '@type': 'AboutPage',
         '@id': 'https://apxteck.com/about/#webpage',
         url: 'https://apxteck.com/about',
-        name: 'About APXTeck — Our Story & Team',
+        name: 'About Our Story & Elite Team | APXTeck',
         description:
-          'Learn about APXTeck - Our founding story, mission, core values, and our team of IT professionals.',
+          "Discover APXTeck's founding story, mission, and core values. Meet our elite in-house team of Next.js software engineers, designers, and SEO experts in Pune.",
         isPartOf: { '@id': 'https://apxteck.com/#website' },
+        about: {
+          '@id': 'https://apxteck.com/#organization'
+        }
       },
       {
         '@type': 'Organization',
@@ -107,16 +116,32 @@ export default function AboutPage() {
         name: 'APXTeck',
         url: 'https://apxteck.com',
         logo: 'https://apxteck.com/logo.png',
-        description: 'Elite web development and digital marketing agency based in Pune, India.',
+        image: 'https://apxteck.com/logo.png',
+        description: 'Elite web development, Next.js engineering, and technical SEO agency based in Pune, India.',
         address: {
           '@type': 'PostalAddress',
+          streetAddress: 'Pune IT Park',
           addressLocality: 'Pune',
           addressRegion: 'Maharashtra',
+          postalCode: '411001',
           addressCountry: 'IN',
         },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+91-9405282582',
+          contactType: 'customer service',
+          areaServed: 'IN',
+          availableLanguage: ['English', 'Hindi']
+        },
+        sameAs: [
+          'https://www.linkedin.com/company/apxteck',
+          'https://twitter.com/apxteck',
+          'https://www.facebook.com/apxteck'
+        ]
       },
       {
         '@type': 'BreadcrumbList',
+        '@id': 'https://apxteck.com/about/#breadcrumb',
         itemListElement: [
           {
             '@type': 'ListItem',
@@ -136,7 +161,7 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGraph) }}
@@ -144,8 +169,8 @@ export default function AboutPage() {
 
       <Navbar />
 
-      <main className="flex-1 pt-24 relative overflow-hidden" role="main">
-        <article itemScope itemType="https://schema.org/AboutPage">
+      <main className="flex-1 pt-20 md:pt-24 pb-safe relative overflow-x-hidden w-full" role="main">
+        <article itemScope itemType="https://schema.org/AboutPage" className="w-full flex flex-col">
           <MouseSpotlight />
           <FloatingWhatsApp phoneNumber="919405282582" />
 

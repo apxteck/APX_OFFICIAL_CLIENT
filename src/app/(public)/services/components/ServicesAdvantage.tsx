@@ -45,7 +45,7 @@ const valuePropositions = [
 
 export function ServicesAdvantage() {
   return (
-    <section className="py-20 relative max-w-7xl mx-auto px-6" aria-labelledby="advantage-heading">
+    <section className="py-16 sm:py-20 relative max-w-7xl mx-auto px-4 sm:px-6 w-full" aria-labelledby="advantage-heading">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] pointer-events-none -z-10" aria-hidden="true" />
 
       <div className="text-center mb-16">
@@ -82,7 +82,7 @@ export function ServicesAdvantage() {
               viewport={{ once: true, margin: "-50px" }}
             >
               <GlassCard
-                className="h-full p-8 border border-glass-border hover:border-white/10 transition-colors duration-500 relative group overflow-hidden"
+                className="h-full p-6 sm:p-8 border border-glass-border hover:border-white/10 transition-colors duration-500 relative group overflow-hidden"
                 glowColor={val.color}
               >
                 <div

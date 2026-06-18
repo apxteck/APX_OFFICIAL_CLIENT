@@ -1,37 +1,53 @@
-import { useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { api } from '@/lib/axios';
-import { useRequestsStore } from '../_store/useRequestsStore';
+import { ServiceRequest } from '../types';
 
-export const useRequestsLogic = () => {
-  const store = useRequestsStore();
+export const useRequestsLogic = (initialRequests: ServiceRequest[]) => {
+  const [requests, setRequests] = useState<ServiceRequest[]>(initialRequests);
+  const [isLoading, setIsLoading] = useState<boolean>(initialRequests.length === 0);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('ALL');
 
   useEffect(() => {
+    let mounted = true;
+
     async function loadRequests() {
       try {
-        store.setIsLoading(true);
+        if (requests.length === 0) setIsLoading(true);
         const res = await api.getMyRequests();
-        store.setRequests(res.data || []);
+        if (mounted && res.data) {
+          setRequests(res.data);
+        }
       } catch (error) {
         console.error("Failed to load requests:", error);
       } finally {
-        store.setIsLoading(false);
+        if (mounted) setIsLoading(false);
       }
     }
+
     loadRequests();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    return () => {
+      mounted = false;
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const filteredRequests = useMemo(() => {
-    return store.requests.filter(req => {
-      const matchesSearch = req.service?.name?.toLowerCase().includes(store.searchQuery.toLowerCase()) || 
-                            `REQ-${req.id}`.toLowerCase().includes(store.searchQuery.toLowerCase());
-      const matchesStatus = store.statusFilter === 'ALL' || req.status === store.statusFilter;
+    return requests.filter(req => {
+      const matchesSearch = req.service?.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                            `REQ-${req.id}`.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesStatus = statusFilter === 'ALL' || req.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [store.requests, store.searchQuery, store.statusFilter]);
+  }, [requests, searchQuery, statusFilter]);
 
   return {
-    ...store,
+    requests,
+    isLoading,
+    searchQuery,
+    setSearchQuery,
+    statusFilter,
+    setStatusFilter,
     filteredRequests
   };
 };

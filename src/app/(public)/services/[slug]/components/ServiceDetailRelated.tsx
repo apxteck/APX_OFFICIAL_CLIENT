@@ -34,9 +34,10 @@ export function ServiceDetailRelated({ currentServiceSlug, allServices }: Props)
               <span className="font-semibold text-accent">{r.price}</span>
               <Link
                 href={`/services/${r.slug}`}
-                className="font-bold hover:text-accent transition-colors flex items-center gap-1"
+                aria-label={`View details for ${r.name}`}
+                className="font-bold hover:text-accent transition-colors flex items-center gap-1 min-h-[44px]"
               >
-                Details <ArrowRight className="w-3 h-3" />
+                Details <ArrowRight className="w-3 h-3" aria-hidden="true" role="presentation" />
               </Link>
             </div>
           </GlassCard>

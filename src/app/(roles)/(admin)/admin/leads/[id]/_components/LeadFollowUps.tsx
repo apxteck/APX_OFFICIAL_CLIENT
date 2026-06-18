@@ -30,7 +30,7 @@ export function LeadFollowUps({ followUps, onAddFollowUp }: LeadFollowUpsProps) 
         </h2>
         <button
           onClick={() => setIsAdding(!isAdding)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+          className="flex items-center justify-center min-h-[44px] px-4 gap-1.5 rounded-lg text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
         >
           <Plus size={16} /> Add Note
         </button>
@@ -55,20 +55,20 @@ export function LeadFollowUps({ followUps, onAddFollowUp }: LeadFollowUpsProps) 
               required
               value={nextFollowUpAt}
               onChange={(e) => setNextFollowUpAt(e.target.value)}
-              className="w-full bg-white dark:bg-[#111111] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-gray-900 dark:text-white"
+              className="w-full bg-white dark:bg-[#111111] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-gray-900 dark:text-white"
             />
           </div>
           <div className="flex justify-end gap-3 pt-2">
             <button
               type="button"
               onClick={() => setIsAdding(false)}
-              className="px-4 py-2 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+              className="min-h-[44px] px-4 py-2 flex items-center justify-center rounded-xl text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+              className="min-h-[44px] px-4 py-2 flex items-center justify-center rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
             >
               Save Follow-Up
             </button>

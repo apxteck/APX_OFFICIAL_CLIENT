@@ -32,8 +32,9 @@ export function Navbar() {
         isScrolled ? 'pt-3' : 'pt-6'
       }`}
     >
-      <div className="w-full max-w-5xl rounded-full transition-all duration-300 shadow-2xl glass-panel bg-background/60 !backdrop-blur-2xl">
-        <div className="px-6 h-16 flex items-center justify-between">
+      <div className="relative w-full max-w-5xl">
+        <div className="w-full rounded-full transition-all duration-300 shadow-2xl glass-panel bg-background/60 !backdrop-blur-2xl">
+          <div className="px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">
             <div className="relative w-20 h-8 flex items-center justify-center transition-transform group-hover:scale-105">
@@ -117,14 +118,19 @@ export function Navbar() {
           <div className="md:hidden flex items-center gap-4">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="text-foreground p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+              className="text-foreground p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors outline-none focus:outline-none focus:ring-0"
             >
               <Search className="w-5 h-5" />
             </button>
             <ThemeToggle />
-            <button suppressHydrationWarning onClick={() => setIsOpen(!isOpen)} className="text-foreground p-2">
+            <button 
+              suppressHydrationWarning 
+              onClick={() => setIsOpen(!isOpen)} 
+              className="text-foreground p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors outline-none focus:outline-none focus:ring-0"
+            >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
+          </div>
           </div>
         </div>
 
@@ -133,7 +139,7 @@ export function Navbar() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden absolute top-full left-0 right-0 mt-4 p-4 glass-panel rounded-3xl flex flex-col gap-4 shadow-xl"
+            className="md:hidden absolute top-[calc(100%+16px)] left-0 right-0 p-4 glass-panel bg-background/60 !backdrop-blur-2xl rounded-3xl flex flex-col gap-4 shadow-2xl"
           >
             <Link
               href="/services"

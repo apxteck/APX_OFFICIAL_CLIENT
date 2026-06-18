@@ -63,7 +63,7 @@ export function StatsSection({ stats }: { stats: StatsOverview }) {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden bg-background">
+    <section className="py-12 md:py-20 relative overflow-hidden bg-background">
       {/* Subtle overlay accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-accent/5 rounded-full blur-[120px] pointer-events-none -z-10" />
 

@@ -8,13 +8,14 @@ import { AdsList } from "./AdsList";
 import { AdsToast, ToastType } from "./AdsToast";
 import { useAdsLogic } from "../_hooks/useAdsLogic";
 import { useAdFormLogic } from "../_hooks/useAdFormLogic";
+import { Ad } from "@/app/types/ad.types";
 
 // Lazy load the modal since it's heavy and not immediately needed
 const AdFormModal = dynamic(() => import("./AdFormModal"), {
   ssr: false,
 });
 
-export function AdsManager() {
+export function AdsManager({ initialAds = [] }: { initialAds?: Ad[] }) {
   const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
   
   const {
@@ -26,7 +27,7 @@ export function AdsManager() {
     fetchAds,
     handleDelete,
     handleToggleActive,
-  } = useAdsLogic();
+  } = useAdsLogic(initialAds);
 
   const formLogic = useAdFormLogic({
     onSuccess: () => {
@@ -60,7 +61,7 @@ export function AdsManager() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-10">
+    <div className="space-y-6 w-full max-w-7xl mx-auto pb-safe pb-10 px-4 sm:px-6 md:px-8">
       <AdsHeader onCreateClick={formLogic.openCreateModal} />
 
       <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">

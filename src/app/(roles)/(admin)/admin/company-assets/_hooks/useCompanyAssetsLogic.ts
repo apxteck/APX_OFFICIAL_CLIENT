@@ -1,11 +1,16 @@
 import { useState, useCallback, useEffect } from 'react';
 import { CompanyAsset, companyAssetsService } from '@/services/admin/companyAssets.service';
 
-export function useCompanyAssetsLogic() {
-  const [assets, setAssets] = useState<CompanyAsset[]>([]);
-  const [filteredAssets, setFilteredAssets] = useState<CompanyAsset[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function useCompanyAssetsLogic(initialAssets: CompanyAsset[] = []) {
+  const [assets, setAssets] = useState<CompanyAsset[]>(initialAssets);
+  const [filteredAssets, setFilteredAssets] = useState<CompanyAsset[]>(initialAssets);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    setAssets(initialAssets);
+    setFilteredAssets(initialAssets);
+  }, [initialAssets]);
 
   const fetchAssets = useCallback(async () => {
     setIsLoading(true);
@@ -20,9 +25,6 @@ export function useCompanyAssetsLogic() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchAssets();
-  }, [fetchAssets]);
 
   useEffect(() => {
     if (!searchTerm.trim()) {

@@ -1,29 +1,14 @@
-import { useEffect, useMemo } from "react";
-import { dashboardService } from "@/services/admin/dashboard.service";
-import { useDashboardStore } from "../_store/useDashboardStore";
+import { useState, useMemo } from "react";
+import { DashboardStats } from "@/services/admin/dashboard.service";
 import { KPIData } from "@/services/admin/dashboardData";
 
-export const useDashboardLogic = () => {
-  const store = useDashboardStore();
+export type Tab = "overview" | "customers" | "revenue" | "content" | "operations";
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const data = await dashboardService.getAdminStats();
-        store.setStats(data);
-      } catch (error) {
-        console.error("Failed to fetch dashboard stats:", error);
-      } finally {
-        store.setIsLoading(false);
-      }
-    };
-    
-    fetchStats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+export const useDashboardLogic = (initialStats: DashboardStats | null) => {
+  const [activeTab, setActiveTab] = useState<Tab>("overview");
 
   const kpis = useMemo(() => {
-    const s = store.stats;
+    const s = initialStats;
     const customerKPIs: KPIData[] = s ? [
       { title: "Total Customers", value: s.customers.totalCustomers, trend: "up", percentage: 0 },
       { title: "New Requests (Today)", value: s.customers.newRequestsToday, trend: "up", percentage: 0 },
@@ -52,10 +37,12 @@ export const useDashboardLogic = () => {
     ] : [];
 
     return { customerKPIs, revenueKPIs, contentKPIs, leadsKPIs };
-  }, [store.stats]);
+  }, [initialStats]);
 
   return {
-    ...store,
+    activeTab,
+    setActiveTab,
+    stats: initialStats,
     ...kpis
   };
 };

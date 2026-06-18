@@ -1,11 +1,16 @@
 import { useState, useCallback, useEffect } from 'react';
 import { CompanyVaultDocument, companyVaultService } from '@/services/admin/companyVault.service';
 
-export function useCompanyVaultLogic() {
-  const [documents, setDocuments] = useState<CompanyVaultDocument[]>([]);
-  const [filteredDocuments, setFilteredDocuments] = useState<CompanyVaultDocument[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function useCompanyVaultLogic(initialDocuments: CompanyVaultDocument[] = []) {
+  const [documents, setDocuments] = useState<CompanyVaultDocument[]>(initialDocuments);
+  const [filteredDocuments, setFilteredDocuments] = useState<CompanyVaultDocument[]>(initialDocuments);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    setDocuments(initialDocuments);
+    setFilteredDocuments(initialDocuments);
+  }, [initialDocuments]);
 
   const fetchDocuments = useCallback(async () => {
     setIsLoading(true);
@@ -20,9 +25,6 @@ export function useCompanyVaultLogic() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchDocuments();
-  }, [fetchDocuments]);
 
   useEffect(() => {
     if (!searchTerm.trim()) {

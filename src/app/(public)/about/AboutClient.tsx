@@ -100,7 +100,7 @@ export function AboutClient() {
       <FloatingWhatsApp phoneNumber="919405282582" />
 
       {/* Hero Section */}
-      <section className="relative py-32 flex items-center justify-center min-h-[60vh]">
+      <section className="relative py-16 md:py-24 flex items-center justify-center min-h-[60vh]">
         {/* Background Parallax Image */}
         <motion.div
           initial={{ scale: 1.1, opacity: 0 }}
@@ -178,7 +178,7 @@ export function AboutClient() {
       </section>
 
       {/* Our Story (Animated Timeline Layout) */}
-      <section className="py-24 max-w-7xl mx-auto px-6 relative">
+      <section className="py-12 md:py-20 max-w-7xl mx-auto px-6 relative">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
@@ -234,7 +234,7 @@ export function AboutClient() {
       </section>
 
       {/* Mission & Vision Cards */}
-      <section className="py-24 bg-foreground/[0.02] border-y border-glass-border">
+      <section className="py-12 md:py-20 bg-foreground/[0.02] border-y border-glass-border">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -272,7 +272,7 @@ export function AboutClient() {
       </section>
 
       {/* Our Culture & Workspace (Pune Focus) */}
-      <section className="py-32 relative max-w-7xl mx-auto px-6">
+      <section className="py-16 md:py-24 relative max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -344,7 +344,7 @@ export function AboutClient() {
       </section>
 
       {/* Core Values Animated Grid */}
-      <section className="py-24 max-w-7xl mx-auto px-6 relative">
+      <section className="py-12 md:py-20 max-w-7xl mx-auto px-6 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[150px] pointer-events-none -z-10" />
         
         <div className="text-center mb-16">
@@ -407,7 +407,7 @@ export function AboutClient() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-24 text-center max-w-4xl mx-auto px-6">
+      <section className="py-12 md:py-20 text-center max-w-4xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}

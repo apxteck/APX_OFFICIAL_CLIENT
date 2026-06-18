@@ -1,19 +1,26 @@
-"use client";
 import React from "react";
 import { Briefcase, Eye, Edit, Trash2 } from "lucide-react";
-import { usePortfolioLogic } from "../_hooks/usePortfolioLogic";
+import { Portfolio } from "@/services/admin/portfolio.service";
 
-export function PortfolioGrid() {
-  const { 
-    filteredPortfolios, 
-    isLoading, 
-    searchTerm, 
-    handleTogglePublish, 
-    navigateToPublic, 
-    navigateToEdit, 
-    handleDelete 
-  } = usePortfolioLogic();
+interface Props {
+  filteredPortfolios: Portfolio[];
+  isLoading: boolean;
+  searchTerm: string;
+  onTogglePublish: (id: number, currentStatus: boolean) => void;
+  onNavigatePublic: (slug: string) => void;
+  onNavigateEdit: (id: number) => void;
+  onDelete: (id: number) => void;
+}
 
+export function PortfolioGrid({
+  filteredPortfolios,
+  isLoading,
+  searchTerm,
+  onTogglePublish,
+  onNavigatePublic,
+  onNavigateEdit,
+  onDelete,
+}: Props) {
   if (isLoading) {
     return (
       <div className="h-full flex items-center justify-center min-h-[400px]">
@@ -54,8 +61,8 @@ export function PortfolioGrid() {
             )}
             
             <button 
-              onClick={() => handleTogglePublish(portfolio.id, portfolio.isPublished)}
-              className="absolute top-4 right-4 z-10 p-1 rounded-full border border-gray-200 dark:border-white/10 shadow-sm bg-white dark:bg-[#151515] flex items-center justify-center"
+              onClick={() => onTogglePublish(portfolio.id, portfolio.isPublished)}
+              className="absolute top-4 right-4 z-10 p-1 min-w-[44px] min-h-[44px] rounded-full border border-gray-200 dark:border-white/10 shadow-sm bg-white dark:bg-[#151515] flex items-center justify-center"
               title={`Toggle Status (Currently ${portfolio.isPublished ? 'Published' : 'Draft'})`}
             >
               <div className={`w-8 h-4 rounded-full p-0.5 transition-colors ${portfolio.isPublished ? 'bg-emerald-500' : 'bg-gray-300 dark:bg-gray-700'}`}>
@@ -79,22 +86,22 @@ export function PortfolioGrid() {
 
             <div className="mt-auto pt-4 border-t border-gray-100 dark:border-white/5 flex items-center justify-end gap-2">
               <button 
-                onClick={() => navigateToPublic(portfolio.slug)}
-                className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-500/10 rounded-xl transition-colors border border-transparent hover:border-blue-200 dark:hover:border-blue-500/20"
+                onClick={() => onNavigatePublic(portfolio.slug)}
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-500/10 rounded-xl transition-colors border border-transparent hover:border-blue-200 dark:hover:border-blue-500/20"
                 title="View Public Page"
               >
                 <Eye size={18} />
               </button>
               <button 
-                onClick={() => navigateToEdit(portfolio.id)}
-                className="p-2 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:text-indigo-400 dark:hover:bg-indigo-500/10 rounded-xl transition-colors border border-transparent hover:border-indigo-200 dark:hover:border-indigo-500/20"
+                onClick={() => onNavigateEdit(portfolio.id)}
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:text-indigo-400 dark:hover:bg-indigo-500/10 rounded-xl transition-colors border border-transparent hover:border-indigo-200 dark:hover:border-indigo-500/20"
                 title="Edit Portfolio"
               >
                 <Edit size={18} />
               </button>
               <button 
-                onClick={() => handleDelete(portfolio.id)}
-                className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-500/10 rounded-xl transition-colors border border-transparent hover:border-red-200 dark:hover:border-red-500/20"
+                onClick={() => onDelete(portfolio.id)}
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-500/10 rounded-xl transition-colors border border-transparent hover:border-red-200 dark:hover:border-red-500/20"
                 title="Delete Portfolio"
               >
                 <Trash2 size={18} />

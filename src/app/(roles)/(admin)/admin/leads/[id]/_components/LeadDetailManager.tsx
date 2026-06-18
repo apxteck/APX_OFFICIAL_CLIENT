@@ -6,20 +6,18 @@ import { LeadDetailHeader } from "./LeadDetailHeader";
 import { LeadMessageView } from "./LeadMessageView";
 import { LeadIntelSidebar } from "./LeadIntelSidebar";
 import { LeadFollowUps } from "./LeadFollowUps";
+import { Lead, LeadFollowUp } from "@/app/types/lead.types";
 
-export function LeadDetailManager({ leadId }: { leadId: string }) {
-  const { lead, followUps, isLoading, handleAddFollowUp, handleAssignLead } = useLeadDetailLogic(leadId);
+interface Props {
+  initialLead: Lead;
+  initialFollowUps: LeadFollowUp[];
+}
 
-  if (isLoading || !lead) {
-    return (
-      <div className="flex h-[80vh] items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-4 border-gray-200 dark:border-white/10 border-t-indigo-600 dark:border-t-indigo-500 animate-spin"></div>
-      </div>
-    );
-  }
+export function LeadDetailManager({ initialLead, initialFollowUps }: Props) {
+  const { lead, followUps, handleAddFollowUp, handleAssignLead } = useLeadDetailLogic(initialLead, initialFollowUps);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+    <div className="space-y-6 w-full max-w-7xl mx-auto pb-safe pb-12 px-4 sm:px-6 md:px-8">
       
       {/* Header Visualizer */}
       <div className="bg-white dark:bg-[#111111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm space-y-6">

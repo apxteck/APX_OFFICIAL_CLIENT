@@ -36,7 +36,7 @@ const processSteps = [
 
 export function ProcessSection() {
   return (
-    <section className="py-32 relative bg-background overflow-hidden">
+    <section className="py-16 md:py-24 relative bg-background overflow-hidden">
       {/* Background accents */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[150px] pointer-events-none -z-10" />
 

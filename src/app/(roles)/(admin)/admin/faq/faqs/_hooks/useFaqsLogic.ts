@@ -3,10 +3,14 @@ import toast from "react-hot-toast";
 import { faqsService } from "@/services/admin/faqs.service";
 import { Faq } from "@/app/types/faq.types";
 
-export function useFaqsLogic() {
-  const [faqs, setFaqs] = useState<Faq[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function useFaqsLogic(initialFaqs: Faq[] = []) {
+  const [faqs, setFaqs] = useState<Faq[]>(initialFaqs);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    setFaqs(initialFaqs);
+  }, [initialFaqs]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingFaq, setEditingFaq] = useState<Faq | null>(null);
@@ -23,9 +27,6 @@ export function useFaqsLogic() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchFaqs();
-  }, [fetchFaqs]);
 
   const handleDelete = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this FAQ?")) {

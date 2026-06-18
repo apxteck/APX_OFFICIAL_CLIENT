@@ -7,8 +7,10 @@ import { EnquiriesHeader } from "./EnquiriesHeader";
 import { useEnquiriesColumns } from "./EnquiriesColumns";
 import { useEnquiriesLogic } from "../_hooks/useEnquiriesLogic";
 
-export function EnquiriesManager() {
-  const { enquiries, isLoading } = useEnquiriesLogic();
+import { Enquiry } from "@/services/admin/enquiries.service";
+
+export function EnquiriesManager({ initialEnquiries = [] }: { initialEnquiries?: Enquiry[] }) {
+  const { enquiries, isLoading } = useEnquiriesLogic(initialEnquiries);
   const columns = useEnquiriesColumns();
 
   const [currentSort, setCurrentSort] = useState("newest");
@@ -41,7 +43,7 @@ export function EnquiriesManager() {
   }, [enquiries, currentSort]);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-10">
+    <div className="space-y-6 w-full max-w-7xl mx-auto pb-safe pb-10 px-4 sm:px-6 md:px-8">
       <EnquiriesHeader />
 
       <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">

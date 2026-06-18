@@ -67,7 +67,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
             <Edit className="text-indigo-500" size={20} />
             {isCreating ? 'Create Pricing Slot' : 'Edit Pricing Slot'}
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors bg-white dark:bg-[#222] p-1.5 rounded-full border border-gray-200 dark:border-white/10">
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors bg-white dark:bg-[#222] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full border border-gray-200 dark:border-white/10">
             <XCircle size={20} />
           </button>
         </div>
@@ -80,7 +80,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
                 name="placement"
                 value={formData.placement || "BLOG_LIST_TOP"}
                 onChange={handleChange as any}
-                className="w-full bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                className="w-full bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
               >
                 <option value="BLOG_LIST_TOP">BLOG_LIST_TOP</option>
                 <option value="BLOG_LIST_MID">BLOG_LIST_MID</option>
@@ -94,7 +94,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
                 type="text" 
                 value={slot.placement}
                 disabled
-                className="w-full bg-gray-100 dark:bg-[#222] text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium cursor-not-allowed"
+                className="w-full bg-gray-100 dark:bg-[#222] text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium cursor-not-allowed"
               />
             )}
           </div>
@@ -107,7 +107,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
               value={formData.label || ""}
               onChange={handleChange}
               placeholder="e.g. Top Banner (728x90)"
-              className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+              className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
             />
           </div>
 
@@ -121,7 +121,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
                 step="0.01"
                 value={formData.pricePerDay}
                 onChange={handleChange}
-                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
               />
             </div>
             
@@ -134,7 +134,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
                 step="0.01"
                 value={formData.pricePerWeek}
                 onChange={handleChange}
-                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
               />
             </div>
 
@@ -147,7 +147,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
                 step="0.01"
                 value={formData.pricePerMonth}
                 onChange={handleChange}
-                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
               />
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
               />
               <label 
                 htmlFor="isActive"
-                className={`w-12 h-6 bg-gray-200 dark:bg-white/10 rounded-full cursor-pointer shadow-inner transition-all
+                className={`w-14 h-7 min-h-[44px] min-w-[44px] flex items-center bg-gray-200 dark:bg-white/10 rounded-full cursor-pointer shadow-inner transition-all
                   ${formData.isActive ? 'bg-emerald-500' : ''}
                   relative`}
               >
@@ -183,7 +183,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
           <button 
             type="button" 
             onClick={onClose}
-            className="px-6 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+            className="px-6 py-2.5 min-h-[44px] rounded-xl font-bold text-sm bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors flex items-center justify-center flex-1 sm:flex-none"
           >
             Cancel
           </button>
@@ -191,7 +191,7 @@ export default function PricingSlotModal({ slot, onClose, onSave, isCreating = f
             type="submit"
             form="pricing-form"
             disabled={isSubmitting}
-            className="px-6 py-2.5 rounded-xl font-bold text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 min-h-[44px] rounded-xl font-bold text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed flex-1 sm:flex-none"
           >
             <CheckCircle2 size={16} />
             {isSubmitting ? 'Saving...' : 'Save Changes'}

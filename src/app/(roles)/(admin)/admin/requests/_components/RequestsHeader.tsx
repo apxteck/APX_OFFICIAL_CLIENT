@@ -1,10 +1,10 @@
-"use client";
 import React from "react";
-import { useRequestsLogic } from "../_hooks/useRequestsLogic";
 
-export function RequestsHeader() {
-  const { navigateToCreate } = useRequestsLogic();
+interface Props {
+  navigateToCreate: () => void;
+}
 
+export function RequestsHeader({ navigateToCreate }: Props) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
       <div>

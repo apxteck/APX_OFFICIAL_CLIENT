@@ -34,7 +34,7 @@ export function BlogCard({ post, onDeleteClick, onUpdateStatus }: BlogCardProps)
           <select
           value={post.status}
           onChange={(e) => onUpdateStatus(String(post.id), e.target.value as BlogPostStatus)}
-          className={`appearance-none cursor-pointer pl-8 pr-4 py-1.5 text-[11px] font-bold rounded-lg border uppercase tracking-wider transition-colors outline-none ${config.bg} ${config.color} ${config.border} hover:opacity-80`}
+          className={`appearance-none cursor-pointer pl-8 pr-4 py-1.5 min-h-[44px] text-[11px] font-bold rounded-lg border uppercase tracking-wider transition-colors outline-none ${config.bg} ${config.color} ${config.border} hover:opacity-80`}
         >
           <option value="DRAFT">DRAFT</option>
           <option value="REVIEWED">REVIEWED</option>
@@ -45,7 +45,7 @@ export function BlogCard({ post, onDeleteClick, onUpdateStatus }: BlogCardProps)
         <StatusIcon size={14} className={`absolute left-2.5 top-1/2 -translate-y-1/2 ${config.color}`} pointerEvents="none" />
       </div>
 
-      <div className="flex gap-4 items-start mb-4 pr-40">
+      <div className="flex gap-4 items-start mb-4 pr-10 sm:pr-40">
         <div className="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
             {post.isAiGenerated ? <Sparkles size={24} /> : <FileText size={24} />}
         </div>
@@ -59,7 +59,7 @@ export function BlogCard({ post, onDeleteClick, onUpdateStatus }: BlogCardProps)
         </div>
       </div>
 
-      <div className="mt-auto grid grid-cols-2 gap-3 mb-4">
+      <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <div className="bg-gray-50 dark:bg-[#151515] p-3 rounded-2xl border border-gray-100 dark:border-white/5 flex flex-col justify-center">
           <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mb-1">Author</p>
           <div className="font-bold text-gray-900 dark:text-white flex items-center text-xs gap-2 truncate">
@@ -111,13 +111,13 @@ export function BlogCard({ post, onDeleteClick, onUpdateStatus }: BlogCardProps)
       <div className="flex items-center gap-2 pt-4 border-t border-gray-100 dark:border-white/5">
         <button 
           onClick={() => router.push(`/admin/blog/${post.id}`)}
-          className="flex-1 bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 hover:border-indigo-500 hover:text-indigo-600 dark:hover:border-indigo-400 dark:hover:text-indigo-400 px-4 py-2 rounded-xl font-bold text-xs transition-colors text-gray-700 dark:text-gray-300 flex items-center justify-center gap-2"
+          className="flex-1 min-h-[44px] bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 hover:border-indigo-500 hover:text-indigo-600 dark:hover:border-indigo-400 dark:hover:text-indigo-400 px-4 py-2 rounded-xl font-bold text-xs transition-colors text-gray-700 dark:text-gray-300 flex items-center justify-center gap-2"
         >
           <Edit3 size={14} /> Full Editor
         </button>
         {post.status === "PUBLISHED" && (
           <button 
-            className="p-2 text-gray-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:text-emerald-400 dark:hover:bg-emerald-500/10 rounded-xl transition-colors border border-transparent hover:border-emerald-200 dark:hover:border-emerald-500/20"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:text-emerald-400 dark:hover:bg-emerald-500/10 rounded-xl transition-colors border border-transparent hover:border-emerald-200 dark:hover:border-emerald-500/20"
             title="View Live"
           >
             <Eye size={18} />
@@ -125,7 +125,7 @@ export function BlogCard({ post, onDeleteClick, onUpdateStatus }: BlogCardProps)
         )}
         <button 
           onClick={() => onDeleteClick(String(post.id))}
-          className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-500/10 rounded-xl transition-colors border border-transparent hover:border-red-200 dark:hover:border-red-500/20"
+          className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-500/10 rounded-xl transition-colors border border-transparent hover:border-red-200 dark:hover:border-red-500/20"
           title="Delete Post"
         >
           <Trash2 size={18} />

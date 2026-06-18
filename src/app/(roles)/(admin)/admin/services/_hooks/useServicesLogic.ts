@@ -1,67 +1,77 @@
-import { useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { useServicesStore } from "../_store/useServicesStore";
-import { servicesService } from "@/services/admin/services.service";
+import { servicesService, Service } from "@/services/admin/services.service";
 
-export const useServicesLogic = () => {
-  const store = useServicesStore();
+export const useServicesLogic = (initialServices: Service[]) => {
   const router = useRouter();
+  
+  const [services, setServices] = useState<Service[]>(initialServices);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "loading" } | null>(null);
 
-  const fetchServices = async () => {
-    try {
-      store.setIsLoading(true);
-      const data = await servicesService.getServices();
-      store.setServices(data || []);
-    } catch (error) {
-      store.setToast({ message: "Failed to fetch services", type: "error" });
-    } finally {
-      store.setIsLoading(false);
+  const showToast = (message: string, type: "success" | "error" | "loading") => {
+    setToast({ message, type });
+    if (type !== "loading") {
+      setTimeout(() => setToast(null), 3000);
     }
   };
 
-  useEffect(() => {
-    fetchServices();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const fetchServices = async () => {
+    try {
+      setIsLoading(true);
+      const data = await servicesService.getServices();
+      setServices(data || []);
+    } catch (error) {
+      showToast("Failed to fetch services", "error");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleDelete = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this service? This action cannot be undone.")) {
       try {
-        store.setToast({ message: "Deleting service...", type: "loading" });
+        showToast("Deleting service...", "loading");
         await servicesService.deleteService(id);
-        store.setToast({ message: "Service deleted successfully", type: "success" });
+        showToast("Service deleted successfully", "success");
         fetchServices();
       } catch (error) {
-        store.setToast({ message: "Failed to delete service", type: "error" });
+        showToast("Failed to delete service", "error");
       }
     }
   };
 
   const handleToggleActive = async (id: number, currentStatus: boolean) => {
     try {
-      store.setToast({ message: "Updating status...", type: "loading" });
+      showToast("Updating status...", "loading");
       await servicesService.toggleServiceActive(id, !currentStatus);
-      store.setToast({ message: `Service is now ${!currentStatus ? 'Active' : 'Inactive'}`, type: "success" });
+      showToast(`Service is now ${!currentStatus ? 'Active' : 'Inactive'}`, "success");
       fetchServices();
     } catch (error) {
-      store.setToast({ message: "Failed to update service status", type: "error" });
+      showToast("Failed to update service status", "error");
     }
   };
 
   const filteredServices = useMemo(() => {
-    const term = store.searchTerm.toLowerCase();
-    return store.services.filter(service => 
+    const term = searchTerm.toLowerCase();
+    return services.filter(service => 
       service.name.toLowerCase().includes(term) ||
       service.slug.toLowerCase().includes(term)
     );
-  }, [store.services, store.searchTerm]);
+  }, [services, searchTerm]);
 
   const navigateToCreate = () => router.push('/admin/services/create');
   const navigateToManageFields = (id: number) => router.push(`/admin/services/${id}/fields`);
   const navigateToEdit = (id: number) => router.push(`/admin/services/${id}/edit`);
 
   return {
-    ...store,
+    services,
+    isLoading,
+    searchTerm,
+    setSearchTerm,
+    toast,
+    setToast,
     filteredServices,
     handleDelete,
     handleToggleActive,

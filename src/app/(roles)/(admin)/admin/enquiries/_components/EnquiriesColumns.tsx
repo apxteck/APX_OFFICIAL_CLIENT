@@ -44,7 +44,7 @@ const StatusCell = ({ enquiry }: { enquiry: Enquiry }) => {
           value={status}
           onChange={handleStatusChange}
           disabled={isUpdating}
-          className={`appearance-none pl-8 pr-6 py-1 text-[11px] font-bold rounded-lg border tracking-wide uppercase cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 ${config.bg} ${config.color} ${config.border}`}
+          className={`appearance-none pl-8 pr-6 min-h-[44px] py-1 text-[11px] font-bold rounded-lg border tracking-wide uppercase cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 ${config.bg} ${config.color} ${config.border}`}
         >
           {Object.keys(statusConfig).map((s) => (
             <option key={s} value={s}>{s}</option>
@@ -119,7 +119,7 @@ export const useEnquiriesColumns = (): ColumnDef<Enquiry>[] => {
         <div className="flex items-center gap-2">
           <button 
             onClick={() => router.push(`/admin/enquiries/${enquiry.id}`)}
-            className="px-3 py-1.5 rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 transition-colors"
+            className="min-h-[44px] px-4 rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 transition-colors flex items-center justify-center"
           >
             View Details
           </button>

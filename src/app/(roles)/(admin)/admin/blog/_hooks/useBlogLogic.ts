@@ -4,10 +4,14 @@ import { blogService } from "@/services/admin/blog.service";
 import { BlogPostStatus } from "@/app/types/admin-blog.types";
 import { AdminBlogPost as BlogPost } from "@/app/types/admin-blog.types";
 
-export function useBlogLogic() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function useBlogLogic(initialPosts: BlogPost[] = []) {
+  const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    setPosts(initialPosts);
+  }, [initialPosts]);
   
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,9 +39,7 @@ export function useBlogLogic() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
+
 
   const handleDeleteClick = (id: string) => {
     setPostToDelete(id);

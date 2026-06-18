@@ -1,14 +1,16 @@
-"use client";
 import React, { useMemo } from "react";
 import DataTable, { ColumnDef } from "@/components/ui/admin/DataTable";
 import { ServiceRequest } from "@/services/admin/requests.service";
 import { format } from "date-fns";
 import { MoreVertical, ShieldAlert, Clock, PlayCircle, CheckCircle, XCircle } from "lucide-react";
-import { useRequestsLogic } from "../_hooks/useRequestsLogic";
 
-export function RequestsTable() {
-  const { filteredRequests, isLoading, setSearchTerm, navigateToManage } = useRequestsLogic();
+interface Props {
+  filteredRequests: ServiceRequest[];
+  setSearchTerm: (term: string) => void;
+  navigateToManage: (id: string | number) => void;
+}
 
+export function RequestsTable({ filteredRequests, setSearchTerm, navigateToManage }: Props) {
   const columns: ColumnDef<ServiceRequest>[] = useMemo(() => [
     {
       header: "Request ID",
@@ -59,7 +61,6 @@ export function RequestsTable() {
           COMPLETED: { color: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-50/80 dark:bg-emerald-500/10", border: "border-emerald-200/50 dark:border-emerald-500/20", icon: CheckCircle },
           CANCELLED: { color: "text-red-700 dark:text-red-400", bg: "bg-red-50/80 dark:bg-red-500/10", border: "border-red-200/50 dark:border-red-500/20", icon: XCircle }
         };
-        // Fallback for unexpected statuses
         const config = statusConfig[req.status as keyof typeof statusConfig] || statusConfig.NEW;
         const Icon = config.icon;
 
@@ -96,14 +97,6 @@ export function RequestsTable() {
       )
     }
   ], [navigateToManage]);
-
-  if (isLoading) {
-    return (
-      <div className="flex h-[80vh] items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-4 border-gray-200 dark:border-white/10 border-t-indigo-600 dark:border-t-indigo-500 animate-spin"></div>
-      </div>
-    );
-  }
 
   return (
     <DataTable 

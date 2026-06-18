@@ -1,8 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Activity, Cpu, MonitorSmartphone, Laptop, Globe, Wifi } from "lucide-react";
+import { ToastState } from "../SettingsManager";
 
-export function SystemInfoTab() {
+interface Props {
+  setToast: (toast: ToastState) => void;
+}
+
+export function SystemInfoTab({ setToast }: Props) {
   const [browserInfo, setBrowserInfo] = useState({ agent: "", language: "", platform: "", online: true });
 
   useEffect(() => {

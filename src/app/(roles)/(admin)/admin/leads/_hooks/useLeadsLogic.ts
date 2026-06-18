@@ -3,9 +3,13 @@ import toast from "react-hot-toast";
 import { leadsService } from "@/services/admin/leads.service";
 import { Lead, LeadStatus } from "@/app/types/lead.types";
 
-export function useLeadsLogic() {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function useLeadsLogic(initialLeads: Lead[] = []) {
+  const [leads, setLeads] = useState<Lead[]>(initialLeads);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setLeads(initialLeads);
+  }, [initialLeads]);
 
   const fetchLeads = useCallback(async () => {
     try {
@@ -19,9 +23,6 @@ export function useLeadsLogic() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchLeads();
-  }, [fetchLeads]);
 
   const handleUpdateStatus = async (id: number, status: LeadStatus) => {
     const toastId = toast.loading("Updating status...");

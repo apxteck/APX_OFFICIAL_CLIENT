@@ -26,7 +26,7 @@ export function RegisterClient() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className="w-full max-w-lg"
     >
-      <GlassCard className="p-8 sm:p-10 shadow-2xl border-accent/20">
+      <GlassCard className="p-6 sm:p-8 md:p-10 shadow-2xl border-accent/20 w-full">
         <RegisterHeader />
 
         {successMsg ? (

@@ -2,12 +2,32 @@
 import React from "react";
 import { TasksHeader } from "./TasksHeader";
 import { TasksTable } from "./TasksTable";
+import { useTasksLogic } from "../_hooks/useTasksLogic";
+import { Task } from "@/services/admin/tasks.service";
 
-export default function TasksManager() {
+interface Props {
+  initialTasks: Task[];
+}
+
+export default function TasksManager({ initialTasks }: Props) {
+  const logic = useTasksLogic(initialTasks);
+
   return (
     <>
-      <TasksHeader />
-      <TasksTable />
+      <TasksHeader navigateToCreate={logic.navigateToCreate} />
+      <TasksTable 
+        filteredTasks={logic.filteredTasks}
+        isLoading={logic.isLoading}
+        searchTerm={logic.searchTerm}
+        setSearchTerm={logic.setSearchTerm}
+        handleUpdateStatus={logic.handleUpdateStatus}
+        handleDeleteTaskClick={logic.handleDeleteTaskClick}
+        navigateToDetails={logic.navigateToDetails}
+        isDeleteModalOpen={logic.isDeleteModalOpen}
+        setIsDeleteModalOpen={logic.setIsDeleteModalOpen}
+        confirmDeleteTask={logic.confirmDeleteTask}
+        isDeleting={logic.isDeleting}
+      />
     </>
   );
 }

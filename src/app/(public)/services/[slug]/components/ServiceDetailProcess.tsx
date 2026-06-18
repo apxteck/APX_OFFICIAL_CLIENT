@@ -11,7 +11,7 @@ export function ServiceDetailProcess({ slug }: Props) {
   const deliverables = getServiceDeliverables(slug);
 
   return (
-    <section className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 w-full grid lg:grid-cols-12 gap-12">
       <div className="lg:col-span-6 space-y-6">
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">What is Included</h2>
         <ul className="grid sm:grid-cols-2 gap-4">
@@ -35,9 +35,9 @@ export function ServiceDetailProcess({ slug }: Props) {
                 {step.step}
               </span>
               <div>
-                <h4 className="font-extrabold text-foreground tracking-tight text-base mb-1">
+                <h3 className="font-extrabold text-foreground tracking-tight text-base mb-1">
                   {step.title}
-                </h4>
+                </h3>
                 <p className="text-foreground/60 text-xs leading-relaxed">{step.desc}</p>
               </div>
             </div>

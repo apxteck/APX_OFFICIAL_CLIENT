@@ -1,52 +1,62 @@
-import { useEffect, useMemo } from "react";
-import { useReimbursementsStore } from "../_store/useReimbursementsStore";
+import { useState, useMemo } from "react";
 import { reimbursementsService, Reimbursement } from "@/services/admin/reimbursements.service";
 
-export const useReimbursementsLogic = () => {
-  const store = useReimbursementsStore();
+type ToastState = { message: string; type: "success" | "error" | "loading" } | null;
+
+export const useReimbursementsLogic = (initialReimbursements: Reimbursement[]) => {
+  const [reimbursements, setReimbursements] = useState<Reimbursement[]>(initialReimbursements);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedRequest, setSelectedRequest] = useState<Reimbursement | null>(null);
+  const [reviewNote, setReviewNote] = useState("");
+  const [toast, setToast] = useState<ToastState>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchReimbursements = async () => {
     try {
-      store.setIsLoading(true);
+      setIsLoading(true);
       const data = await reimbursementsService.getReimbursements();
-      store.setReimbursements(data);
+      setReimbursements(data || []);
     } catch (err) {
-      store.setToast({ message: "Failed to load reimbursements", type: "error" });
+      setToast({ message: "Failed to load reimbursements", type: "error" });
     } finally {
-      store.setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchReimbursements();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleUpdateStatus = async (id: number, status: Reimbursement["status"], note?: string) => {
     try {
-      store.setToast({ message: `Marking as ${status}...`, type: "loading" });
+      setToast({ message: `Marking as ${status}...`, type: "loading" });
       await reimbursementsService.updateReimbursementStatus(id, status, note);
-      store.setToast({ message: `Reimbursement ${status}`, type: "success" });
-      store.setSelectedRequest(null);
-      store.setReviewNote("");
+      setToast({ message: `Reimbursement ${status}`, type: "success" });
+      setSelectedRequest(null);
+      setReviewNote("");
       fetchReimbursements();
     } catch (err: any) {
-      store.setToast({ message: err.message || "Failed to update status", type: "error" });
+      setToast({ message: err.message || "Failed to update status", type: "error" });
     }
   };
 
   const filteredData = useMemo(() => {
-    const term = store.searchTerm.toLowerCase();
-    return store.reimbursements.filter(r => 
+    const term = searchTerm.toLowerCase();
+    return reimbursements.filter(r => 
       r.title.toLowerCase().includes(term) ||
       (r.user?.fullName && r.user.fullName.toLowerCase().includes(term)) ||
       r.category.toLowerCase().includes(term)
     );
-  }, [store.reimbursements, store.searchTerm]);
+  }, [reimbursements, searchTerm]);
 
   return {
-    ...store,
+    reimbursements,
     filteredData,
+    searchTerm,
+    setSearchTerm,
+    selectedRequest,
+    setSelectedRequest,
+    reviewNote,
+    setReviewNote,
+    toast,
+    setToast,
+    isLoading,
     handleUpdateStatus,
   };
 };

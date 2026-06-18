@@ -34,7 +34,7 @@ export default function AdFormModal({ onClose, formLogic }: AdFormModalProps) {
             {editingAd ? <Edit className="text-pink-500" size={20} /> : <PlusCircle className="text-pink-500" size={20} />}
             {editingAd ? 'Edit Advertisement' : 'Create Advertisement'}
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors bg-white dark:bg-[#222] p-1.5 rounded-full border border-gray-200 dark:border-white/10">
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors bg-white dark:bg-[#222] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full border border-gray-200 dark:border-white/10">
             <XCircle size={20} />
           </button>
         </div>
@@ -45,7 +45,7 @@ export default function AdFormModal({ onClose, formLogic }: AdFormModalProps) {
               <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ad Type</label>
               <select 
                 {...register("adType")}
-                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
+                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
               >
                 <option value="CLIENT">Client Banner</option>
                 <option value="GOOGLE">Google AdSense</option>
@@ -58,7 +58,7 @@ export default function AdFormModal({ onClose, formLogic }: AdFormModalProps) {
               <select 
                 value={targetPage} 
                 onChange={(e) => setTargetPage(e.target.value as "LIST" | "POST")}
-                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
+                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
               >
                 <option value="LIST">Blog List Page</option>
                 <option value="POST">Blog Post Details</option>
@@ -69,7 +69,7 @@ export default function AdFormModal({ onClose, formLogic }: AdFormModalProps) {
               <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Placement Slot</label>
               <select 
                 {...register("placement")}
-                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
+                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
               >
                 {targetPage === "LIST" ? (
                   <>
@@ -97,7 +97,7 @@ export default function AdFormModal({ onClose, formLogic }: AdFormModalProps) {
                   type="text" 
                   {...register("clientName")}
                   placeholder="e.g. APXTeck Hosting"
-                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
+                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
                 />
                 {(errors as any).clientName && <p className="text-xs text-red-500">{(errors as any).clientName.message as string}</p>}
               </div>
@@ -108,7 +108,7 @@ export default function AdFormModal({ onClose, formLogic }: AdFormModalProps) {
                   type="url" 
                   {...register("targetUrl")}
                   placeholder="https://client-website.com/promo"
-                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
+                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm font-medium focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
                 />
                 {(errors as any).targetUrl && <p className="text-xs text-red-500">{(errors as any).targetUrl.message as string}</p>}
               </div>
@@ -149,7 +149,7 @@ export default function AdFormModal({ onClose, formLogic }: AdFormModalProps) {
               <textarea 
                 {...register("adCode")}
                 placeholder="<script async src='...'></script><ins class='adsbygoogle' ...></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>"
-                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm font-mono focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all min-h-[200px]"
+                className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[200px] text-sm font-mono focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 outline-none transition-all"
               />
               {(errors as any).adCode && <p className="text-xs text-red-500">{(errors as any).adCode.message as string}</p>}
               <p className="text-xs text-gray-500 font-medium">Paste the entire embed code block from Google AdSense.</p>
@@ -166,7 +166,7 @@ export default function AdFormModal({ onClose, formLogic }: AdFormModalProps) {
               />
               <label 
                 htmlFor="isActive"
-                className={`w-12 h-6 bg-gray-200 dark:bg-white/10 rounded-full cursor-pointer shadow-inner transition-all
+                className={`w-14 h-7 min-h-[44px] min-w-[44px] flex items-center bg-gray-200 dark:bg-white/10 rounded-full cursor-pointer shadow-inner transition-all
                   ${isActive ? 'bg-emerald-500' : ''}
                   relative`}
               >
@@ -186,14 +186,14 @@ export default function AdFormModal({ onClose, formLogic }: AdFormModalProps) {
           <button 
             type="button" 
             onClick={onClose}
-            className="px-6 py-2.5 rounded-xl font-bold text-sm bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+            className="px-6 py-2.5 min-h-[44px] rounded-xl font-bold text-sm bg-white dark:bg-[#222] border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors flex items-center justify-center flex-1 sm:flex-none"
           >
             Cancel
           </button>
           <button 
             type="submit"
             form="ad-form"
-            className="px-6 py-2.5 rounded-xl font-bold text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md transition-colors flex items-center gap-2"
+            className="px-6 py-2.5 min-h-[44px] rounded-xl font-bold text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-md transition-colors flex items-center justify-center gap-2 flex-1 sm:flex-none"
           >
             <CheckCircle2 size={16} />
             {editingAd ? 'Save Changes' : 'Create Ad'}

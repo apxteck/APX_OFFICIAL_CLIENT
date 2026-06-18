@@ -60,6 +60,10 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     alternates: {
       canonical: 'https://apxteck.com/insights-news',
+      languages: {
+        'en-US': 'https://apxteck.com/insights-news',
+        'en-IN': 'https://apxteck.com/en-in/insights-news',
+      },
     },
     robots: {
       index: true,
@@ -77,7 +81,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function BlogListingPage() {
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBlog) }}
@@ -94,20 +98,20 @@ export default function BlogListingPage() {
         <LanguageSwitcher />
       </div>
 
-      <main className="flex-1 pt-24 pb-20 overflow-hidden" id="main-content" role="main" itemScope itemType="https://schema.org/Blog">
+      <main className="flex-1 pt-24 pb-20 overflow-x-hidden w-full pt-safe pb-safe" id="main-content" role="main" itemScope itemType="https://schema.org/Blog">
         
         {/* Animated Hero and Knowledge Hub Focus (Client component) */}
-        <article className="notranslate" translate="no">
+        <article className="notranslate w-full" translate="no">
           <ExploreNewsClient />
         </article>
 
-        <div className="max-w-7xl mx-auto px-6 mb-8 text-center notranslate" translate="no" aria-hidden="true">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 text-center notranslate w-full" translate="no" aria-hidden="true">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
         </div>
 
         {/* Ad Slot Top and Pricing (Stacked Horizontally) */}
-        <aside className="max-w-7xl mx-auto px-6 mb-12 flex flex-col items-center gap-8 notranslate" translate="no" aria-label="Top Advertisement">
-          <div className="w-full max-w-full overflow-hidden flex justify-center bg-foreground/[0.02] border border-glass-border rounded-3xl p-4">
+        <aside className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 md:mb-12 flex flex-col items-center gap-6 md:gap-8 notranslate w-full" translate="no" aria-label="Top Advertisement">
+          <div className="w-full max-w-full overflow-hidden flex justify-center bg-foreground/[0.02] border border-glass-border rounded-2xl md:rounded-3xl p-4">
             <AdBanner placement="BLOG_LIST_TOP" />
           </div>
           <div className="w-full">
@@ -118,24 +122,24 @@ export default function BlogListingPage() {
         {/* Client Side Blog Grid with debounced filters and pagination */}
         {/* (This component internally renders BLOG_LIST_MID ads) */}
         {/* WE WANT THIS TO BE TRANSLATABLE (partially) */}
-        <section aria-label="Blog Posts List">
+        <section aria-label="Blog Posts List" className="w-full px-4 sm:px-0">
           <Suspense fallback={<BlogSectionSkeleton />}>
             <BlogSectionLoader />
           </Suspense>
         </section>
 
         {/* Ad Slot Bottom (After Blog list, before Marquee) */}
-        <aside className="max-w-7xl mx-auto px-6 mt-16 mb-8 flex justify-center notranslate" translate="no" aria-label="Bottom Advertisement">
+        <aside className="max-w-7xl mx-auto px-4 sm:px-6 mt-12 md:mt-16 mb-8 flex justify-center notranslate w-full" translate="no" aria-label="Bottom Advertisement">
           <AdBanner placement="BLOG_LIST_MID" />
         </aside>
 
         {/* Tech Stack Marquee at the bottom */}
-        <section className="mt-12 notranslate" translate="no" aria-label="Our Technology Stack">
+        <section className="mt-8 md:mt-12 notranslate w-full" translate="no" aria-label="Our Technology Stack">
           <TechStackMarquee />
         </section>
       </main>
 
-      <footer className="notranslate" translate="no">
+      <footer className="notranslate w-full" translate="no">
         <Footer />
       </footer>
     </div>

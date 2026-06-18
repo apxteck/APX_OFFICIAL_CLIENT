@@ -10,33 +10,39 @@ export async function generateMetadata(): Promise<Metadata> {
     title: 'Reset Password | APXTeck',
     description: 'Create a new password for your APXTeck account securely.',
     alternates: {
-      canonical: 'https://www.apxteck.com/reset-password',
+      canonical: 'https://apxteck.com/reset-password',
+      languages: {
+        'en-US': 'https://apxteck.com/reset-password',
+        'en-IN': 'https://apxteck.com/en-in/reset-password',
+      },
     },
     robots: {
       index: false,
-      follow: true,
+      follow: false,
     },
     openGraph: {
       title: 'Reset Password | APXTeck',
       description: 'Create a new password for your APXTeck account securely.',
-      url: 'https://www.apxteck.com/reset-password',
+      url: 'https://apxteck.com/reset-password',
       siteName: 'APXTeck',
       images: [
         {
-          url: '/og-image.png',
+          url: 'https://apxteck.com/images/og/reset-password.jpg',
           width: 1200,
           height: 630,
           alt: 'APXTeck Reset Password',
         },
       ],
-      locale: 'en_US',
+      locale: 'en_IN',
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
+      creator: '@apxteck',
+      site: '@apxteck',
       title: 'Reset Password | APXTeck',
       description: 'Create a new password for your APXTeck account securely.',
-      images: ['/og-image.png'],
+      images: ['https://apxteck.com/images/og/reset-password.jpg'],
     },
   };
 }
@@ -47,7 +53,7 @@ export default function ResetPasswordPage() {
   const jsonLd = resetPasswordPageSchema;
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground font-sans selection:bg-accent/20 selection:text-accent transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh bg-background text-foreground font-sans selection:bg-accent/20 selection:text-accent transition-colors duration-300 w-full overflow-x-hidden">
       <Navbar />
       
       {/* JSON-LD Structured Data */}
@@ -56,7 +62,7 @@ export default function ResetPasswordPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main className="flex-1 flex items-center justify-center p-6 relative overflow-hidden pt-28 pb-16" aria-labelledby="reset-password-heading" role="main">
+      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 relative overflow-x-hidden pt-safe pb-safe pt-24 sm:pt-28 pb-12 sm:pb-16 w-full" aria-labelledby="reset-password-heading" role="main">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px] animate-pulse"></div>

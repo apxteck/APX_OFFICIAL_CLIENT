@@ -1,35 +1,52 @@
-import { useEffect } from "react";
-import { useNotificationsStore } from "../_store/useNotificationsStore";
-import { notificationsService } from "../_services/notificationsService";
+import { useState, useEffect } from "react";
+import { useNotificationStore } from "@/store/notification.store";
+import { Notification } from "@/app/services/api/notification.api";
 
-export const useNotificationsLogic = () => {
-  const { notifications, isLoading, setNotifications, setLoading } = useNotificationsStore();
+interface InitialData {
+  notifications: Notification[];
+  total: number;
+  unreadCount: number;
+}
+
+export function useNotificationsLogic(initialData: InitialData) {
+  const [filter, setFilter] = useState<"all" | "unread">("all");
+  
+  const {
+    notifications,
+    unreadCount,
+    hasMore,
+    isLoading,
+    loadMore,
+    markRead,
+    markAllRead,
+    clearNotifications,
+    hydrate
+  } = useNotificationStore();
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      setLoading(true);
-      try {
-        const data = await notificationsService.getNotifications();
-        setNotifications(data);
-      } catch (error) {
-        console.error("Failed to fetch notifications", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNotifications();
-  }, [setNotifications, setLoading]);
-
-  const handleGoBack = () => {
-    if (typeof window !== "undefined") {
-      window.history.back();
+    // Only hydrate if initialData exists, and the store internally will ensure
+    // it only hydrates if its own state is empty to prevent overrides.
+    if (initialData) {
+      hydrate(initialData);
     }
-  };
+  }, [initialData, hydrate]);
+
+  const filteredNotifications = notifications.filter(n => {
+    if (filter === "unread") return !n.isRead;
+    return true;
+  });
 
   return {
+    filter,
+    setFilter,
     notifications,
+    filteredNotifications,
+    unreadCount,
+    hasMore,
     isLoading,
-    handleGoBack,
+    loadMore,
+    markRead,
+    markAllRead,
+    clearNotifications,
   };
-};
+}

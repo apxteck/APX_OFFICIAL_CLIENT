@@ -169,10 +169,11 @@ export function ServicesListingSection({ initialServices }: ServicesListingSecti
                   <div className="pt-6 mt-6 border-t border-glass-border">
                     <Link
                       href={`/services/${service.slug}`}
+                      aria-label={`Get started with ${service.name}`}
                       className="w-full inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-foreground text-background font-semibold text-sm hover:scale-[1.02] active:scale-[0.98] transition-transform"
                     >
                       <span>Get Started</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" role="presentation" />
                     </Link>
                   </div>
                 </GlassCard>

@@ -39,7 +39,7 @@ export function LeadIntelSidebar({ lead, onAssignLead }: { lead: Lead, onAssignL
 
         <div className="space-y-4">
           {lead.email && (
-            <a href={`mailto:${lead.email}`} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-[#151515] rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-colors group">
+            <a href={`mailto:${lead.email}`} className="flex items-center justify-between min-h-[44px] p-3 bg-gray-50 dark:bg-[#151515] rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-colors group">
               <div className="flex items-center gap-3">
                 <Mail size={16} className="text-gray-400 group-hover:text-indigo-500 transition-colors" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{lead.email}</span>
@@ -48,7 +48,7 @@ export function LeadIntelSidebar({ lead, onAssignLead }: { lead: Lead, onAssignL
             </a>
           )}
           {lead.phone && (
-            <a href={`tel:${lead.phone}`} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-[#151515] rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-colors group">
+            <a href={`tel:${lead.phone}`} className="flex items-center justify-between min-h-[44px] p-3 bg-gray-50 dark:bg-[#151515] rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-colors group">
               <div className="flex items-center gap-3">
                 <PhoneCall size={16} className="text-gray-400 group-hover:text-indigo-500 transition-colors" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{lead.phone}</span>
@@ -82,7 +82,7 @@ export function LeadIntelSidebar({ lead, onAssignLead }: { lead: Lead, onAssignL
 
           <div>
             <p className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5 flex items-center gap-1.5"><UserIcon size={12}/> Assigned To</p>
-            <div className="bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 p-2.5 rounded-xl flex items-center justify-between">
+            <div className="bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 p-2.5 min-h-[44px] rounded-xl flex items-center justify-between">
               <select
                 className="w-full bg-transparent border-none outline-none text-sm font-bold text-gray-900 dark:text-white cursor-pointer appearance-none"
                 value={lead.assignedToId || ""}

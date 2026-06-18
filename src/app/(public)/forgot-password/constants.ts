@@ -1,9 +1,18 @@
 export const jsonLdForgotPassword = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Forgot Password | APXTeck",
-  "description": "Reset your APXTeck account password securely.",
+  "name": "Forgot Password - APXTeck Secure Access",
+  "description": "Securely reset your APXTeck account password. Regain access to your customized web development dashboard and IT services seamlessly and securely.",
   "url": "https://apxteck.com/forgot-password",
+  "isPartOf": {
+    "@id": "https://apxteck.com/#website"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "APXTeck",
+    "logo": "https://apxteck.com/logo.png",
+    "url": "https://apxteck.com"
+  },
   "mainEntity": {
     "@type": "Action",
     "name": "Reset Password",

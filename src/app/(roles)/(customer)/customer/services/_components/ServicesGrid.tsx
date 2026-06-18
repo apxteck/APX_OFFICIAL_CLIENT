@@ -3,11 +3,14 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Code, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { useServicesLogic } from '../_hooks/useServicesLogic';
+import { ServiceRequest } from '../types';
 
-export function ServicesGrid() {
-  const { isLoading, services } = useServicesLogic();
+interface ServicesGridProps {
+  services: ServiceRequest[];
+  isLoading: boolean;
+}
 
+export function ServicesGrid({ services, isLoading }: ServicesGridProps) {
   const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }
@@ -65,7 +68,7 @@ export function ServicesGrid() {
               }`}>
                 {req.status.replace('_', ' ')}
               </span>
-              <Link href={`/customer/requests/${req.id}`} className="text-xs font-bold text-cyan-600 hover:text-cyan-500 transition-colors flex items-center gap-1">
+              <Link href={`/customer/requests/${req.id}`} className="text-xs font-bold text-cyan-600 hover:text-cyan-500 transition-colors flex items-center justify-center min-h-[44px] px-2 gap-1">
                 Manage <ArrowRight className="w-3 h-3" />
               </Link>
             </div>

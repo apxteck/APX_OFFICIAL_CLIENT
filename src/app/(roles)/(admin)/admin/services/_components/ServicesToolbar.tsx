@@ -1,11 +1,12 @@
-"use client";
 import React from "react";
 import { Search } from "lucide-react";
-import { useServicesLogic } from "../_hooks/useServicesLogic";
 
-export function ServicesToolbar() {
-  const { searchTerm, setSearchTerm } = useServicesLogic();
+interface Props {
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+}
 
+export function ServicesToolbar({ searchTerm, setSearchTerm }: Props) {
   return (
     <div className="p-4 border-b border-gray-100 dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gray-50/50 dark:bg-[#1a1a1a]/50">
       <div className="relative max-w-md w-full">
@@ -15,7 +16,7 @@ export function ServicesToolbar() {
           placeholder="Search services by name or slug..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-[#111111] border border-gray-200 dark:border-white/10 rounded-xl text-sm font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all"
+          className="w-full pl-10 pr-4 py-2.5 min-h-[44px] bg-white dark:bg-[#111111] border border-gray-200 dark:border-white/10 rounded-xl text-sm font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all"
         />
       </div>
     </div>

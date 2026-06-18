@@ -3,8 +3,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ServicesHeader } from './ServicesHeader';
 import { ServicesGrid } from './ServicesGrid';
+import { ServiceRequest } from '../types';
+import { useServicesLogic } from '../_hooks/useServicesLogic';
 
-export default function ServicesManager() {
+interface ServicesManagerProps {
+  initialServices: ServiceRequest[];
+}
+
+export default function ServicesManager({ initialServices }: ServicesManagerProps) {
+  const { services, isLoading } = useServicesLogic(initialServices);
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -14,9 +22,9 @@ export default function ServicesManager() {
   };
 
   return (
-    <motion.div variants={container} initial="hidden" animate="show" className="space-y-8 pb-12">
+    <motion.div variants={container} initial="hidden" animate="show" className="w-full max-w-7xl mx-auto space-y-8 px-4 sm:px-6 md:px-8 pt-4 pb-safe">
       <ServicesHeader />
-      <ServicesGrid />
+      <ServicesGrid services={services} isLoading={isLoading} />
     </motion.div>
   );
 }

@@ -11,6 +11,10 @@ export async function generateMetadata(): Promise<Metadata> {
     description: 'Join APXTeck as a client partner and launch your digital projects with our expert software solutions.',
     alternates: {
       canonical: 'https://apxteck.com/register',
+      languages: {
+        'en-US': 'https://apxteck.com/register',
+        'en-IN': 'https://apxteck.com/en-in/register',
+      },
     },
     openGraph: {
       title: 'Create Account | APXTeck',
@@ -19,20 +23,22 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'APXTeck',
       images: [
         {
-          url: 'https://apxteck.com/og-register.jpg', // Replace with your actual OG image
+          url: 'https://apxteck.com/images/og/register.jpg', // Updated actual path
           width: 1200,
           height: 630,
           alt: 'APXTeck Registration',
         },
       ],
-      locale: 'en_US',
+      locale: 'en_IN',
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
+      creator: '@apxteck',
+      site: '@apxteck',
       title: 'Create Account | APXTeck',
       description: 'Join APXTeck as a client partner and launch your digital projects with our expert software solutions.',
-      images: ['https://apxteck.com/og-register.jpg'],
+      images: ['https://apxteck.com/images/og/register.jpg'],
     },
   };
 }
@@ -48,10 +54,10 @@ export default function RegisterPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+      <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
         <Navbar />
 
-        <main className="flex-1 flex items-center justify-center p-6 relative overflow-hidden pt-28 pb-16" role="main">
+        <main className="flex-1 flex items-center justify-center px-4 sm:px-6 relative overflow-x-hidden pt-safe pb-safe pt-24 sm:pt-28 pb-12 sm:pb-16 w-full" role="main">
           {/* Animated Glow Blobs (Server Rendered HTML, animated by CSS/Tailwind) */}
           <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px] pointer-events-none -z-10 animate-pulse" aria-hidden="true" />
           <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[90px] pointer-events-none -z-10 animate-pulse" aria-hidden="true" />

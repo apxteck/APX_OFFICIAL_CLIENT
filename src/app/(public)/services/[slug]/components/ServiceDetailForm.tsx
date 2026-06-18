@@ -24,8 +24,8 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
   const { register, handleSubmit, formState: { errors } } = form;
 
   return (
-    <section ref={formRef} className="max-w-3xl mx-auto px-6">
-      <GlassCard className="p-8 md:p-12 border border-glass-border relative overflow-hidden">
+    <section ref={formRef} className="max-w-3xl mx-auto px-4 sm:px-6 w-full">
+      <GlassCard className="p-6 sm:p-8 md:p-12 border border-glass-border relative overflow-hidden w-full">
         <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-purple-500/5 pointer-events-none" />
 
         <div className="text-center mb-8 space-y-2 relative z-10">
@@ -70,7 +70,7 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
                       type="text"
                       {...register(field.fieldKey, { required: field.isRequired })}
                       placeholder={field.placeholder || ''}
-                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none text-sm sm:text-base focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
                     />
                   )}
 
@@ -79,14 +79,14 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
                       rows={4}
                       {...register(field.fieldKey, { required: field.isRequired })}
                       placeholder={field.placeholder || ''}
-                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm resize-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none text-sm sm:text-base resize-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
                     />
                   )}
 
                   {field.fieldType === 'DROPDOWN' && (
                     <select
                       {...register(field.fieldKey, { required: field.isRequired })}
-                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent"
+                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none text-sm sm:text-base focus:ring-2 focus:ring-accent/50 focus:border-accent"
                     >
                       <option value="" className="bg-background text-foreground">{field.placeholder || 'Select option'}</option>
                       {Array.isArray(field.options) &&
@@ -102,7 +102,7 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
                     <input
                       type="file"
                       {...register(field.fieldKey, { required: field.isRequired })}
-                      className="w-full text-sm text-foreground/70 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-accent/10 file:text-accent hover:file:bg-accent/20 file:cursor-pointer"
+                      className="w-full text-sm sm:text-base text-foreground/70 min-h-[44px] file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-accent/10 file:text-accent hover:file:bg-accent/20 file:cursor-pointer"
                     />
                   )}
 
@@ -111,7 +111,7 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
                       type="number"
                       {...register(field.fieldKey, { required: field.isRequired })}
                       placeholder={field.placeholder || ''}
-                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none text-sm sm:text-base focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
                     />
                   )}
 
@@ -119,7 +119,7 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
                     <input
                       type="date"
                       {...register(field.fieldKey, { required: field.isRequired })}
-                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent"
+                      className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none text-sm sm:text-base focus:ring-2 focus:ring-accent/50 focus:border-accent"
                     />
                   )}
 
@@ -135,7 +135,7 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full group relative inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-accent text-white px-8 text-sm font-semibold transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-accent/25"
+              className="w-full group relative inline-flex h-14 min-h-[44px] sm:min-h-[56px] items-center justify-center gap-2 rounded-xl bg-accent text-white px-8 text-sm font-semibold transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-accent/25"
             >
               <Send className="w-4 h-4" />
               <span>

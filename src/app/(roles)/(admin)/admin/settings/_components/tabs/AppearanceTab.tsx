@@ -1,13 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
-import { useSettingsStore } from "../../_store/useSettingsStore";
+import { ToastState } from "../SettingsManager";
 
-export function AppearanceTab() {
+interface Props {
+  setToast: (toast: ToastState) => void;
+}
+
+export function AppearanceTab({ setToast }: Props) {
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
   const [compactMode, setCompactMode] = useState(false);
   const [accentColor, setAccentColor] = useState("indigo");
-  const { setToast } = useSettingsStore();
 
   const colors = [
     { id: "indigo", hex: "#4f46e5", name: "Indigo" },
@@ -47,7 +50,7 @@ export function AppearanceTab() {
               <button
                 key={color.id}
                 onClick={() => setAccentColor(color.id)}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-transform ${accentColor === color.id ? 'ring-2 ring-offset-2 ring-gray-900 dark:ring-white scale-110' : 'hover:scale-110'}`}
+                className={`w-11 h-11 rounded-full flex items-center justify-center transition-transform ${accentColor === color.id ? 'ring-2 ring-offset-2 ring-gray-900 dark:ring-white scale-110' : 'hover:scale-110'}`}
                 style={{ backgroundColor: color.hex }}
                 title={color.name}
               >
@@ -67,7 +70,7 @@ export function AppearanceTab() {
           </div>
           <div className="relative flex items-center shrink-0">
             <input type="checkbox" id="pref_anim" checked={animationsEnabled} onChange={(e) => setAnimationsEnabled(e.target.checked)} className="peer sr-only" />
-            <label htmlFor="pref_anim" className="w-12 h-6 bg-gray-200 dark:bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600 cursor-pointer"></label>
+            <label htmlFor="pref_anim" className="w-11 h-6 min-h-[24px] bg-gray-200 dark:bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600 cursor-pointer flex items-center"></label>
           </div>
         </div>
 
@@ -78,12 +81,12 @@ export function AppearanceTab() {
           </div>
           <div className="relative flex items-center shrink-0">
             <input type="checkbox" id="pref_comp" checked={compactMode} onChange={(e) => setCompactMode(e.target.checked)} className="peer sr-only" />
-            <label htmlFor="pref_comp" className="w-12 h-6 bg-gray-200 dark:bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600 cursor-pointer"></label>
+            <label htmlFor="pref_comp" className="w-11 h-6 min-h-[24px] bg-gray-200 dark:bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600 cursor-pointer flex items-center"></label>
           </div>
         </div>
 
         <div className="pt-8 border-t border-gray-100 dark:border-white/5">
-          <button onClick={savePreferences} className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-md transition-colors">
+          <button onClick={savePreferences} className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl text-sm font-bold shadow-md transition-colors">
             Save Appearance
           </button>
         </div>

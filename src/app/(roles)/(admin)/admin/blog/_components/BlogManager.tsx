@@ -7,8 +7,9 @@ import { BlogHeader } from "./BlogHeader";
 import { BlogSearch } from "./BlogSearch";
 import { BlogList } from "./BlogList";
 import { useBlogLogic } from "../_hooks/useBlogLogic";
+import { AdminBlogPost as BlogPost } from "@/app/types/admin-blog.types";
 
-export function BlogManager() {
+export function BlogManager({ initialPosts = [] }: { initialPosts?: BlogPost[] }) {
   const {
     filteredPosts,
     totalFilteredPosts,
@@ -26,7 +27,7 @@ export function BlogManager() {
     isDeleteModalOpen,
     setIsDeleteModalOpen,
     isDeleting,
-  } = useBlogLogic();
+  } = useBlogLogic(initialPosts);
 
   const renderPageNumbers = () => {
     const pages = [];
@@ -50,7 +51,7 @@ export function BlogManager() {
         <button
           key={`page-${page}`}
           onClick={() => setCurrentPage(page as number)}
-          className={`w-[42px] h-[42px] flex items-center justify-center rounded-xl font-bold transition-all border text-[15px] ${
+          className={`w-[44px] h-[44px] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl font-bold transition-all border text-[15px] ${
             currentPage === page
               ? 'bg-[#3b82f6] border-[#3b82f6] text-white shadow-sm'
               : 'bg-white dark:bg-[#151515] border-gray-200 dark:border-white/10 text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/5'
@@ -63,7 +64,7 @@ export function BlogManager() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-10">
+    <div className="space-y-6 w-full max-w-7xl mx-auto pb-safe pb-10 px-4 sm:px-6 md:px-8">
       <BlogHeader />
 
       <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
@@ -95,7 +96,7 @@ export function BlogManager() {
                     setItemsPerPage(Number(e.target.value));
                     setCurrentPage(1);
                   }}
-                  className="appearance-none bg-[#f1f3f5] dark:bg-[#222] text-[#333] dark:text-gray-200 font-bold text-[14px] rounded-xl pl-4 pr-9 py-2.5 outline-none cursor-pointer border border-transparent dark:border-white/5 hover:bg-[#e9ecef] dark:hover:bg-[#2a2a2a] transition-colors"
+                  className="appearance-none bg-[#f1f3f5] dark:bg-[#222] text-[#333] dark:text-gray-200 font-bold text-[14px] rounded-xl pl-4 pr-9 py-2.5 min-h-[44px] outline-none cursor-pointer border border-transparent dark:border-white/5 hover:bg-[#e9ecef] dark:hover:bg-[#2a2a2a] transition-colors"
                 >
                   <option value={10}>10</option>
                   <option value={15}>15</option>
@@ -113,7 +114,7 @@ export function BlogManager() {
               <button
                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className="w-[42px] h-[42px] flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#151515] text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-[44px] h-[44px] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#151515] text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronLeft size={20} strokeWidth={2.5} />
               </button>
@@ -123,7 +124,7 @@ export function BlogManager() {
               <button
                 onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
-                className="w-[42px] h-[42px] flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#151515] text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-[44px] h-[44px] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#151515] text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronRight size={20} strokeWidth={2.5} />
               </button>

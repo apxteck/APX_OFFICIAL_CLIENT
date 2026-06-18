@@ -38,7 +38,7 @@ export function ForgotPasswordInputForm({
           id="email"
           type="email"
           {...register('email')}
-          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm font-medium"
+          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm md:text-base font-medium"
           placeholder="you@company.com"
           aria-invalid={!!errors.email}
           aria-describedby={errors.email ? "email-error" : undefined}
@@ -54,7 +54,7 @@ export function ForgotPasswordInputForm({
       <button
         type="submit"
         disabled={isLoading}
-        className="group w-full h-12 mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
+        className="group w-full min-h-[44px] sm:min-h-[48px] mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
         aria-label={isLoading ? "Sending reset link" : "Send Reset Link"}
       >
         {isLoading ? 'Sending link...' : 'Send Reset Link'}
@@ -63,12 +63,14 @@ export function ForgotPasswordInputForm({
         )}
       </button>
 
-      <p className="text-center text-xs text-foreground/60 mt-6 font-medium">
-        Remember your password?{' '}
-        <Link href="/login" className="text-accent hover:underline font-bold">
-          Sign In
-        </Link>
-      </p>
+      <div className="text-center mt-6">
+        <p className="text-xs sm:text-sm text-foreground/60 font-medium inline-flex items-center gap-1">
+          Remember your password?{' '}
+          <Link href="/login" className="text-accent hover:underline font-bold inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-2 rounded-full transition-colors" aria-label="Sign In to Your APXTeck Account">
+            Sign In to Your Account
+          </Link>
+        </p>
+      </div>
     </form>
   );
 }

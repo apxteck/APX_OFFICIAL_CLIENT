@@ -37,17 +37,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!service) return { title: 'Service Not Found' };
 
     return {
-      title: `${service.name} — APXTECK`,
+      title: `${service.name} | APXTeck`,
       description: service.description || `Premium ${service.name} solutions for Indian SMBs.`,
       openGraph: {
-        title: `${service.name} — APXTECK`,
+        title: `${service.name} | APXTeck`,
         description: service.description || `Premium ${service.name} solutions for Indian SMBs.`,
         url: `https://apxteck.com/services/${slug}`,
         siteName: 'APXTeck',
         type: 'website',
+        locale: 'en_IN',
+        images: [
+          {
+            url: service.thumbnailUrl || 'https://apxteck.com/images/og/services-detail.jpg',
+            width: 1200,
+            height: 630,
+            alt: `${service.name} Services`,
+          },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        creator: '@apxteck',
+        site: '@apxteck',
+        title: `${service.name} | APXTeck`,
+        description: service.description || `Premium ${service.name} solutions for Indian SMBs.`,
+        images: [service.thumbnailUrl || 'https://apxteck.com/images/og/services-detail.jpg'],
       },
       alternates: {
         canonical: `https://apxteck.com/services/${slug}`,
+        languages: {
+          'en-US': `https://apxteck.com/services/${slug}`,
+          'en-IN': `https://apxteck.com/en-in/services/${slug}`,
+        },
       },
     };
   } catch {
@@ -92,7 +113,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   const jsonLdService = getServiceJsonLd(service);
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdService) }}
@@ -100,7 +121,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
       <Navbar />
 
-      <main className="flex-1 pt-20">
+      <main className="flex-1 pt-safe pb-safe pt-20 sm:pt-24 w-full overflow-x-hidden">
         <ServiceDetailClient
           service={service}
           fields={fields}

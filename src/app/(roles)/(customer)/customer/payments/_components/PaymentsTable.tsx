@@ -2,11 +2,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, AlertCircle } from 'lucide-react';
-import { usePaymentsLogic } from '../_hooks/usePaymentsLogic';
+import { Payment } from '../types';
 
-export function PaymentsTable() {
-  const { isLoading, payments } = usePaymentsLogic();
+interface PaymentsTableProps {
+  isLoading: boolean;
+  payments: Payment[];
+}
 
+export function PaymentsTable({ isLoading, payments }: PaymentsTableProps) {
   const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }
@@ -78,7 +81,7 @@ export function PaymentsTable() {
                   </td>
                   <td className="py-4 pl-4 text-right">
                     {payment.status === 'PAID' ? (
-                      <button className="text-gray-500 hover:text-cyan-500 transition-colors p-2 rounded-lg hover:bg-cyan-500/10 inline-flex">
+                      <button className="text-gray-500 hover:text-cyan-500 transition-colors p-2 min-w-[44px] min-h-[44px] items-center justify-center rounded-lg hover:bg-cyan-500/10 inline-flex">
                         <Download className="w-4 h-4" />
                       </button>
                     ) : (
@@ -86,7 +89,7 @@ export function PaymentsTable() {
                         href={payment.paymentLink || '#'} 
                         target={payment.paymentLink ? "_blank" : "_self"}
                         rel="noreferrer"
-                        className="text-cyan-600 hover:text-cyan-500 font-bold px-3 py-1.5 rounded-lg hover:bg-cyan-500/10 transition-colors inline-block"
+                        className="text-cyan-600 hover:text-cyan-500 font-bold px-3 py-1.5 min-h-[44px] inline-flex items-center justify-center rounded-lg hover:bg-cyan-500/10 transition-colors"
                       >
                         Pay
                       </a>

@@ -6,7 +6,7 @@ export function GoogleLoginButton() {
   return (
     <Link
       href={`${process.env.NEXT_PUBLIC_NODEJS_API_URL || 'http://localhost:8090/api/v1'}/auth/google`}
-      className="w-full h-12 rounded-xl bg-background border border-foreground/10 text-foreground font-semibold hover:bg-foreground/5 active:scale-[0.98] transition-all flex items-center justify-center gap-3 text-sm shadow-sm"
+      className="w-full min-h-[44px] sm:min-h-[48px] rounded-xl bg-background border border-foreground/10 text-foreground font-semibold hover:bg-foreground/5 active:scale-[0.98] transition-all flex items-center justify-center gap-3 text-sm sm:text-base shadow-sm"
       aria-label="Continue with Google"
     >
       <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">

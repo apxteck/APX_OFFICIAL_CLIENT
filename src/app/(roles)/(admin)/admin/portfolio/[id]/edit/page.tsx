@@ -1,45 +1,30 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import PortfolioForm from "../../_components/PortfolioForm";
-import { portfolioService, Portfolio } from "@/services/admin/portfolio.service";
+import React from "react";
+import { portfolioService } from "@/services/admin/portfolio.service";
 import { Layers } from "lucide-react";
+import Link from "next/link";
+import PortfolioForm from "../../_components/PortfolioForm";
 
-export default function EditPortfolioPage() {
-  const params = useParams();
-  const id = Number(params.id);
-  const router = useRouter();
+export default async function EditPortfolioPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const id = Number(resolvedParams.id);
 
-  const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (!id || isNaN(id)) {
-      router.push("/admin/portfolio");
-      return;
-    }
-
-    const fetchPortfolio = async () => {
-      try {
-        const data = await portfolioService.getPortfolioByIdAdmin(id);
-        setPortfolio(data);
-      } catch (error) {
-        console.error("Failed to load portfolio:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPortfolio();
-  }, [id, router]);
-
-  if (isLoading) {
+  if (isNaN(id)) {
     return (
-      <div className="flex h-64 items-center justify-center">
-        <div className="w-8 h-8 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" />
+      <div className="flex flex-col h-64 items-center justify-center gap-4">
+        <Layers size={48} className="text-gray-500" />
+        <h2 className="text-xl font-bold text-white">Invalid Portfolio ID</h2>
+        <Link href="/admin/portfolio" className="text-indigo-400 hover:text-indigo-300">
+          Return to Portfolio Management
+        </Link>
       </div>
     );
+  }
+
+  let portfolio = null;
+  try {
+    portfolio = await portfolioService.getPortfolioByIdAdmin(id);
+  } catch (error) {
+    console.error("Failed to load portfolio:", error);
   }
 
   if (!portfolio) {
@@ -47,15 +32,15 @@ export default function EditPortfolioPage() {
       <div className="flex flex-col h-64 items-center justify-center gap-4">
         <Layers size={48} className="text-gray-500" />
         <h2 className="text-xl font-bold text-white">Portfolio Not Found</h2>
-        <button onClick={() => router.push("/admin/portfolio")} className="text-indigo-400 hover:text-indigo-300">
+        <Link href="/admin/portfolio" className="text-indigo-400 hover:text-indigo-300">
           Return to Portfolio Management
-        </button>
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="w-full max-w-7xl mx-auto space-y-6 pb-safe px-4 sm:px-6 md:px-8">
       <PortfolioForm mode="edit" initialData={portfolio} />
     </div>
   );

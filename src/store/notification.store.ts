@@ -24,6 +24,7 @@ interface NotificationState {
   markAllReadLocal: () => void;
   clearNotifications: () => Promise<void>;
   clearNotificationsLocal: () => void;
+  hydrate: (data: { notifications: Notification[]; total: number; unreadCount: number }) => void;
 }
 
 export const useNotificationStore = create<NotificationState>((set, get) => ({
@@ -197,6 +198,21 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
       unreadCount: 0,
       total: 0,
       hasMore: false,
+    });
+  },
+
+  hydrate: (data) => {
+    set((state) => {
+      // Only hydrate if the store is currently empty, to prevent overriding fresh client-side fetches.
+      if (state.notifications.length === 0) {
+        return {
+          notifications: data.notifications,
+          total: data.total,
+          unreadCount: data.unreadCount,
+          hasMore: data.notifications.length < data.total,
+        };
+      }
+      return state;
     });
   },
 }));

@@ -93,7 +93,7 @@ export const useLeadsColumns = (): ColumnDef<Lead>[] => {
         <div className="flex items-center gap-2">
           <button 
             onClick={() => router.push(`/admin/leads/${lead.id}`)}
-            className="px-3 py-1.5 rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 transition-colors"
+            className="min-h-[44px] px-4 flex items-center justify-center rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 transition-colors"
           >
             View Details
           </button>

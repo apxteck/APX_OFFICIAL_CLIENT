@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 
 export default function Page() {
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 w-full max-w-7xl mx-auto pb-safe px-4 sm:px-6 md:px-8">
       {/* Header section */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-3">
             <div className="p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl text-indigo-600 dark:text-indigo-400">
@@ -36,7 +36,7 @@ export default function Page() {
         <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md mx-auto leading-relaxed">
           The <strong>Hero Banners</strong> frontend routing is active, but the backend APIs and data tables have not been connected yet. 
         </p>
-        <button className="mt-6 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-6 py-2.5 rounded-xl font-bold text-sm transition-colors border border-gray-200 dark:border-white/10">
+        <button className="mt-6 min-h-[44px] flex items-center justify-center bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-6 py-2.5 rounded-xl font-bold text-sm transition-colors border border-gray-200 dark:border-white/10">
           Go Back
         </button>
       </motion.div>

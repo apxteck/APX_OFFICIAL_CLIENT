@@ -41,7 +41,7 @@ export function ResetPasswordForm({ form, onSubmit, isLoading, errorMsg, token }
             type="password"
             disabled={!token}
             {...register('password')}
-            className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm font-medium disabled:opacity-50"
+            className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm sm:text-base font-medium disabled:opacity-50"
             placeholder="••••••••"
             aria-invalid={!!errors.password}
             aria-describedby={errors.password ? 'password-error' : undefined}
@@ -62,7 +62,7 @@ export function ResetPasswordForm({ form, onSubmit, isLoading, errorMsg, token }
             type="password"
             disabled={!token}
             {...register('confirmPassword')}
-            className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm font-medium disabled:opacity-50"
+            className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm sm:text-base font-medium disabled:opacity-50"
             placeholder="••••••••"
             aria-invalid={!!errors.confirmPassword}
             aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
@@ -77,7 +77,7 @@ export function ResetPasswordForm({ form, onSubmit, isLoading, errorMsg, token }
         <button
           type="submit"
           disabled={isLoading || !token}
-          className="group w-full h-12 mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
+          className="group w-full h-12 min-h-[44px] sm:min-h-[48px] mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
           aria-disabled={isLoading || !token}
         >
           {isLoading ? (

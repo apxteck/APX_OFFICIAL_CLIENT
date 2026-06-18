@@ -8,6 +8,9 @@ export const jsonLdBlog = {
   description:
     "Stay updated with APXTeck's technical news, Next.js optimization guides, UI/UX trends, and SEO tutorials.",
   url: 'https://apxteck.com/insights-news',
+  isPartOf: {
+    '@id': 'https://apxteck.com/#website',
+  },
   publisher: {
     '@type': 'Organization',
     name: 'APXTeck',

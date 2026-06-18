@@ -1,61 +1,57 @@
-import { useEffect } from "react";
-import { useRolesStore } from "../_store/useRolesStore";
+import { useState } from "react";
 import { rolesService, Role } from "@/services/admin/roles.service";
 
-export const useRolesLogic = () => {
-  const store = useRolesStore();
+export const useRolesLogic = (initialRoles: Role[]) => {
+  const [roles, setRoles] = useState<Role[]>(initialRoles);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<"CREATE" | "EDIT">("CREATE");
+  const [selectedRole, setSelectedRole] = useState<Role | null>(null);
+  const [formData, setFormData] = useState({ name: "", description: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchRoles = async () => {
-    store.setIsLoading(true);
     try {
       const result = await rolesService.getRoles();
-      store.setRoles(result);
+      setRoles(result);
     } catch (error) {
       console.error("Failed to load roles", error);
-    } finally {
-      store.setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchRoles();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleOpenModal = (mode: "CREATE" | "EDIT", role?: Role) => {
-    store.setModalMode(mode);
+    setModalMode(mode);
     if (mode === "EDIT" && role) {
-      store.setSelectedRole(role);
-      store.setFormData({ name: role.name, description: role.description || "" });
+      setSelectedRole(role);
+      setFormData({ name: role.name, description: role.description || "" });
     } else {
-      store.setSelectedRole(null);
-      store.setFormData({ name: "", description: "" });
+      setSelectedRole(null);
+      setFormData({ name: "", description: "" });
     }
-    store.setIsModalOpen(true);
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    store.setIsModalOpen(false);
-    store.setSelectedRole(null);
-    store.setFormData({ name: "", description: "" });
+    setIsModalOpen(false);
+    setSelectedRole(null);
+    setFormData({ name: "", description: "" });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    store.setIsSubmitting(true);
+    setIsSubmitting(true);
     try {
-      const formattedName = store.formData.name.toUpperCase().replace(/\s+/g, '_');
-      if (store.modalMode === "CREATE") {
-        await rolesService.createRole({ name: formattedName, description: store.formData.description });
-      } else if (store.modalMode === "EDIT" && store.selectedRole) {
-        await rolesService.updateRole(store.selectedRole.id, { name: formattedName, description: store.formData.description });
+      const formattedName = formData.name.toUpperCase().replace(/\s+/g, '_');
+      if (modalMode === "CREATE") {
+        await rolesService.createRole({ name: formattedName, description: formData.description });
+      } else if (modalMode === "EDIT" && selectedRole) {
+        await rolesService.updateRole(selectedRole.id, { name: formattedName, description: formData.description });
       }
       handleCloseModal();
       fetchRoles();
     } catch (error: any) {
       alert(error?.response?.data?.message || error.message || "Failed to save role");
     } finally {
-      store.setIsSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -71,7 +67,13 @@ export const useRolesLogic = () => {
   };
 
   return {
-    ...store,
+    roles,
+    isModalOpen,
+    modalMode,
+    selectedRole,
+    formData,
+    setFormData,
+    isSubmitting,
     handleOpenModal,
     handleCloseModal,
     handleSubmit,

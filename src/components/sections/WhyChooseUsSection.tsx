@@ -37,7 +37,7 @@ const features = [
 
 export function WhyChooseUsSection() {
   return (
-    <section className="py-32 relative overflow-hidden bg-background">
+    <section className="py-16 md:py-24 relative overflow-hidden bg-background">
       {/* Background gradients */}
       <div className="absolute top-1/4 -right-1/4 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
       <div className="absolute bottom-1/4 -left-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse delay-700" />

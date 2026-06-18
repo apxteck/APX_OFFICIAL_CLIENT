@@ -1,16 +1,21 @@
-"use client";
 import React from "react";
+// Removed dynamic import
+import { tasksService, Task } from "@/services/admin/tasks.service";
 
-import dynamic from "next/dynamic";
+import TasksManager from './_components/TasksManager';
 
-const TasksManager = dynamic(() => import("./_components/TasksManager"), {
-  ssr: false,
-});
+export default async function TasksPage() {
+  let initialTasks: Task[] = [];
+  try {
+    const fetchedTasks = await tasksService.getTasks();
+    if (fetchedTasks) initialTasks = fetchedTasks;
+  } catch (error) {
+    console.error("Failed to fetch initial tasks:", error);
+  }
 
-export default function TasksPage() {
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-10">
-      <TasksManager />
+    <div className="space-y-6 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pb-safe pt-4">
+      <TasksManager initialTasks={initialTasks} />
     </div>
   );
 }

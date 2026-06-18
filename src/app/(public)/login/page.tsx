@@ -10,39 +10,45 @@ const LoginClient = dynamic(() => import('./LoginClient'), { ssr: true });
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Sign In | APXTeck',
-    description: 'Log in to your APXTeck account to access your dashboard and manage your services.',
+    title: 'Sign In to Your Dashboard | APXTeck',
+    description: 'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
     alternates: {
-      canonical: 'https://www.apxteck.com/login',
+      canonical: 'https://apxteck.com/login',
+      languages: {
+        'en-US': 'https://apxteck.com/login',
+        'en-IN': 'https://apxteck.com/en-in/login',
+      },
     },
     openGraph: {
-      title: 'Sign In | APXTeck',
-      description: 'Log in to your APXTeck account to access your dashboard and manage your services.',
-      url: 'https://www.apxteck.com/login',
+      title: 'Sign In to Your Dashboard | APXTeck',
+      description: 'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
+      url: 'https://apxteck.com/login',
       siteName: 'APXTeck',
+      locale: 'en_IN',
+      type: 'website',
       images: [
         {
-          url: '/og-image.png',
+          url: 'https://apxteck.com/og-login.jpg',
           width: 1200,
           height: 630,
-          alt: 'APXTeck Login',
+          alt: 'APXTeck Secure Login Portal',
         },
       ],
-      locale: 'en_US',
-      type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Sign In | APXTeck',
-      description: 'Log in to your APXTeck account to access your dashboard and manage your services.',
-      images: ['/og-image.png'],
+      title: 'Sign In to Your Dashboard | APXTeck',
+      description: 'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
+      creator: '@apxteck',
+      site: '@apxteck',
+      images: ['https://apxteck.com/twitter-login.jpg'],
     },
   };
 }
 
 export default function LoginPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground font-sans selection:bg-accent/20 selection:text-accent transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh bg-background text-foreground font-sans selection:bg-accent/20 selection:text-accent transition-colors duration-300 w-full overflow-x-hidden">
       <Navbar />
       
       {/* JSON-LD Structured Data */}
@@ -51,7 +57,7 @@ export default function LoginPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main className="flex-1 flex items-center justify-center p-6 relative overflow-hidden pt-28 pb-16" aria-labelledby="login-heading" role="main">
+      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 relative overflow-x-hidden w-full pt-24 sm:pt-28 pb-safe" aria-labelledby="login-heading" role="main">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
           <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-accent/10 blur-[120px] dark:bg-accent/5"></div>

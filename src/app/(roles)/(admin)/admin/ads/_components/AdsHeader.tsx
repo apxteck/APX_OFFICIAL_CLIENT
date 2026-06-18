@@ -8,11 +8,11 @@ interface AdsHeaderProps {
 
 export function AdsHeader({ onCreateClick }: AdsHeaderProps) {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full">
       <div>
-        <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-3">
+        <h1 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white tracking-tight flex items-center gap-3">
           <div className="p-2 bg-pink-50 dark:bg-pink-500/10 rounded-xl text-pink-600 dark:text-pink-400">
-            <MonitorPlay size={24} />
+            <MonitorPlay size={24} className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           Advertisements
         </h1>
@@ -20,17 +20,17 @@ export function AdsHeader({ onCreateClick }: AdsHeaderProps) {
           Manage banner ads, Google AdSense codes, and placements across the platform.
         </p>
       </div>
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
         <Link 
           href="/admin/ads/pricing"
-          className="bg-white hover:bg-gray-50 dark:bg-[#222] dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-xl font-bold text-sm transition-colors border border-gray-200 dark:border-white/10 flex items-center gap-2"
+          className="bg-white hover:bg-gray-50 dark:bg-[#222] dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors border border-gray-200 dark:border-white/10 flex items-center justify-center gap-2 flex-1 sm:flex-none"
         >
           <DollarSign size={18} className="text-indigo-500" />
           Pricing Slots
         </Link>
         <button 
           onClick={onCreateClick}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center gap-2"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors shadow-md flex items-center justify-center gap-2 flex-1 sm:flex-none"
         >
           <PlusCircle size={18} />
           Create Ad

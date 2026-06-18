@@ -6,22 +6,26 @@ import DataTable, { ColumnDef } from "@/components/ui/admin/DataTable";
 import UserAvatar from "@/components/ui/admin/UserAvatar";
 import ConfirmModal from "@/components/ui/admin/ConfirmModal";
 import { Task } from "@/services/admin/tasks.service";
-import { useTasksLogic } from "../_hooks/useTasksLogic";
 
-export function TasksTable() {
-  const { 
-    filteredTasks, 
-    isLoading, 
-    searchTerm, 
-    setSearchTerm,
-    handleUpdateStatus, 
-    handleDeleteTaskClick, 
-    navigateToDetails,
-    isDeleteModalOpen,
-    setIsDeleteModalOpen,
-    confirmDeleteTask,
-    isDeleting
-  } = useTasksLogic();
+interface Props {
+  filteredTasks: Task[];
+  isLoading: boolean;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  handleUpdateStatus: (id: number, status: Task["status"]) => void;
+  handleDeleteTaskClick: (id: number) => void;
+  navigateToDetails: (id: number) => void;
+  isDeleteModalOpen: boolean;
+  setIsDeleteModalOpen: (isOpen: boolean) => void;
+  confirmDeleteTask: () => void;
+  isDeleting: boolean;
+}
+
+export function TasksTable({
+  filteredTasks, isLoading, searchTerm, setSearchTerm, handleUpdateStatus, 
+  handleDeleteTaskClick, navigateToDetails, isDeleteModalOpen, setIsDeleteModalOpen, 
+  confirmDeleteTask, isDeleting
+}: Props) {
 
   const columns = useMemo<ColumnDef<Task>[]>(() => [
     {
@@ -115,7 +119,7 @@ export function TasksTable() {
             <button 
               onClick={() => handleUpdateStatus(task.id, task.status === 'OPEN' ? 'IN_PROGRESS' : 'COMPLETED')}
               title={task.status === 'OPEN' ? "Start Task" : "Complete Task"}
-              className={`p-1.5 rounded-lg transition-colors border ${
+              className={`p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg transition-colors border ${
                 task.status === 'OPEN' 
                   ? 'text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 border-indigo-100 dark:border-indigo-500/20' 
                   : 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 border-emerald-100 dark:border-emerald-500/20'
@@ -127,7 +131,7 @@ export function TasksTable() {
 
           <button 
             onClick={() => navigateToDetails(task.id)}
-            className="px-3 py-1.5 rounded-lg text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-200 dark:border-white/10 transition-colors"
+            className="px-3 py-1.5 min-h-[44px] flex items-center justify-center rounded-lg text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-200 dark:border-white/10 transition-colors"
           >
             Details
           </button>
@@ -135,7 +139,7 @@ export function TasksTable() {
           <button 
             onClick={() => handleDeleteTaskClick(task.id)}
             title="Delete Task"
-            className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
+            className="p-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
           >
             <Trash2 size={16} />
           </button>
@@ -145,7 +149,7 @@ export function TasksTable() {
   ], [handleUpdateStatus, navigateToDetails, handleDeleteTaskClick]);
 
   return (
-    <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
+    <div className="bg-white dark:bg-[#111111] rounded-2xl md:rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
       <div className="flex-1 overflow-auto">
         {isLoading ? (
           <div className="min-h-[400px] flex items-center justify-center">

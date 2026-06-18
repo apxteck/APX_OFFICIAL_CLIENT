@@ -12,20 +12,37 @@ const ForgotPasswordForm = dynamic(() => import('./ForgotPasswordForm'), { ssr: 
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Forgot Password | APXTeck',
-    description: 'Reset your APXTeck account password securely.',
+    description: 'Securely reset your APXTeck account password. Regain access to your customized web development dashboard and IT services seamlessly and securely.',
     alternates: {
       canonical: 'https://apxteck.com/forgot-password',
+      languages: {
+        'en-US': 'https://apxteck.com/forgot-password',
+        'en-IN': 'https://apxteck.com/en-in/forgot-password',
+      },
     },
     openGraph: {
       title: 'Forgot Password | APXTeck',
-      description: 'Reset your APXTeck account password securely.',
+      description: 'Securely reset your APXTeck account password. Regain access to your customized web development dashboard and IT services seamlessly and securely.',
       url: 'https://apxteck.com/forgot-password',
+      siteName: 'APXTeck',
+      locale: 'en_IN',
       type: 'website',
+      images: [
+        {
+          url: 'https://apxteck.com/og-forgot-password.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'APXTeck Secure Password Reset',
+        },
+      ],
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title: 'Forgot Password | APXTeck',
-      description: 'Reset your APXTeck account password securely.',
+      description: 'Securely reset your APXTeck account password. Regain access to your customized web development dashboard and IT services seamlessly and securely.',
+      creator: '@apxteck',
+      site: '@apxteck',
+      images: ['https://apxteck.com/twitter-forgot-password.jpg'],
     },
   };
 }
@@ -33,10 +50,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function ForgotPasswordPage() {
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       <Navbar />
 
-      <main className="flex-1 flex items-center justify-center p-6 relative overflow-hidden pt-28 pb-16" role="main">
+      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 relative overflow-x-hidden w-full pt-24 sm:pt-28 pb-safe" role="main">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdForgotPassword) }}

@@ -7,7 +7,9 @@ import { FaqsList } from "./FaqsList";
 import { FaqFormModal } from "./FaqFormModal";
 import { useFaqsLogic } from "../_hooks/useFaqsLogic";
 
-export function FaqsManager() {
+import { Faq } from "@/app/types/faq.types";
+
+export function FaqsManager({ initialFaqs = [] }: { initialFaqs?: Faq[] }) {
   const {
     faqs,
     filteredFaqs,
@@ -22,7 +24,7 @@ export function FaqsManager() {
     editingFaq,
     openCreateModal,
     openEditModal
-  } = useFaqsLogic();
+  } = useFaqsLogic(initialFaqs);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-10">

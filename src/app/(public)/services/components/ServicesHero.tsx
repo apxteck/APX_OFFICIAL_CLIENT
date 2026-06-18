@@ -8,7 +8,7 @@ export function ServicesHero() {
   const { typewrittenText, currentFullWord, phraseIndex, heroPhrases } = useServicesHeroLogic();
 
   return (
-    <section className="relative py-32 flex items-center justify-center min-h-[50vh] overflow-hidden" aria-labelledby="hero-heading">
+    <section className="relative py-16 sm:py-24 flex items-center justify-center min-h-[50dvh] overflow-x-hidden w-full" aria-labelledby="hero-heading">
       {/* Background Parallax */}
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
@@ -28,7 +28,7 @@ export function ServicesHero() {
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10" aria-hidden="true" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-20 text-center space-y-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-20 text-center space-y-8 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -42,7 +42,7 @@ export function ServicesHero() {
         
         <motion.h1 
           id="hero-heading"
-          className="text-5xl md:text-7xl font-extrabold tracking-tight flex flex-col items-center gap-2"
+          className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight flex flex-col items-center gap-2"
         >
           <motion.span
             initial={{ opacity: 0, y: 20 }}

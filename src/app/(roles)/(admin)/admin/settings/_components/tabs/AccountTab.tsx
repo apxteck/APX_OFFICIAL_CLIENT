@@ -3,12 +3,15 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { User, Shield, Bell } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
-import { useSettingsStore } from "../../_store/useSettingsStore";
+import { ToastState } from "../SettingsManager";
 
-export function AccountTab() {
+interface Props {
+  setToast: (toast: ToastState) => void;
+}
+
+export function AccountTab({ setToast }: Props) {
   const { user } = useAuth();
   const [mounted, setMounted] = useState(false);
-  const { setToast } = useSettingsStore();
 
   useEffect(() => {
     setMounted(true);
@@ -42,7 +45,7 @@ export function AccountTab() {
               <input 
                 type="text" 
                 defaultValue={user?.fullName || ''}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 min-h-[44px] bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all text-gray-900 dark:text-white"
                 placeholder="Enter your full name"
               />
             </div>
@@ -51,7 +54,7 @@ export function AccountTab() {
               <input 
                 type="email" 
                 defaultValue={user?.email || ''}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all text-gray-500 cursor-not-allowed opacity-70"
+                className="w-full px-4 py-3 min-h-[44px] bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all text-gray-500 cursor-not-allowed opacity-70"
                 disabled
               />
             </div>
@@ -62,7 +65,7 @@ export function AccountTab() {
               <input 
                 type="tel" 
                 defaultValue={user?.phone || ''}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 min-h-[44px] bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all text-gray-900 dark:text-white"
                 placeholder="Enter phone number"
               />
             </div>
@@ -71,13 +74,13 @@ export function AccountTab() {
               <input 
                 type="text" 
                 defaultValue={user?.role || 'Admin'}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all text-gray-500 cursor-not-allowed opacity-70 capitalize"
+                className="w-full px-4 py-3 min-h-[44px] bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all text-gray-500 cursor-not-allowed opacity-70 capitalize"
                 disabled
               />
             </div>
           </div>
           <div className="pt-2 flex justify-end">
-            <button type="button" onClick={() => setToast({ message: 'Profile updated successfully', type: 'success' })} className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all active:scale-[0.98]">
+            <button type="button" onClick={() => setToast({ message: 'Profile updated successfully', type: 'success' })} className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 min-h-[44px] flex items-center justify-center rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all active:scale-[0.98]">
               Save Changes
             </button>
           </div>

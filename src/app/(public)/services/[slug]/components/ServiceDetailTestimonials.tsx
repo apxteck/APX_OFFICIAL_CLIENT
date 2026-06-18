@@ -19,7 +19,7 @@ export function ServiceDetailTestimonials({ serviceName, testimonials }: Props) 
   if (filteredTestimonials.length === 0) return null;
 
   return (
-    <section className="py-16 max-w-7xl mx-auto px-6">
+    <section className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 w-full">
       <div className="text-center mb-16 space-y-4">
         <h2 className="text-3xl font-extrabold tracking-tight">Service Case Feedbacks</h2>
         <p className="text-foreground/60 max-w-md mx-auto">

@@ -375,12 +375,12 @@ export function BlogPostDetailClient({
 
           {/* Comments Panel */}
           <div className="space-y-6 pt-12 border-t border-glass-border notranslate" translate="no">
-            <h3 className="text-2xl font-bold tracking-tight">Article Comments</h3>
+            <h2 className="text-2xl font-bold tracking-tight">Article Comments</h2>
 
             {/* Form */}
             {isLoggedIn ? (
               <GlassCard className="p-6 border border-glass-border relative z-10">
-                <h4 className="font-bold text-sm mb-4">Leave a Comment</h4>
+                <h3 className="font-bold text-sm mb-4">Leave a Comment</h3>
 
                 {commentStatus && (
                   <div className="mb-4 p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-semibold flex gap-2 items-center">
@@ -424,7 +424,7 @@ export function BlogPostDetailClient({
                   href={`/login?redirect=/insights-news/${post.slug}`}
                   className="inline-block text-accent font-semibold hover:underline"
                 >
-                  Sign In to Comment →
+                  Sign In to Join the Discussion →
                 </Link>
               </div>
             )}
@@ -474,7 +474,7 @@ export function BlogPostDetailClient({
         <div className="lg:col-span-4 space-y-8 notranslate" translate="no">
           {/* Author Card */}
           <GlassCard className="p-6 border border-glass-border">
-            <h4 className="font-bold text-sm mb-4">About Author</h4>
+            <h2 className="font-bold text-sm mb-4">About the Author</h2>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-accent uppercase overflow-hidden shrink-0">
                 {(post.author?.profilePhotoUrl || post.author?.profile?.profilePhotoUrl) ? (
@@ -496,7 +496,7 @@ export function BlogPostDetailClient({
           {/* Related Articles */}
           {relatedPosts.length > 0 && (
             <GlassCard className="p-6 border border-glass-border">
-              <h4 className="font-bold text-sm mb-4">Related Insights</h4>
+              <h2 className="font-bold text-sm mb-4">Related Insights</h2>
               <div className="space-y-4">
                 {relatedPosts.map((r) => (
                   <Link key={r.id} href={`/insights-news/${r.slug}`} className="block group">

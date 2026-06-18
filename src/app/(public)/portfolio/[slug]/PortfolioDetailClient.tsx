@@ -12,10 +12,10 @@ interface Props {
 
 export function PortfolioDetailClient({ project }: Props) {
   return (
-    <section className="max-w-5xl mx-auto px-6 space-y-12">
+    <section className="max-w-5xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12 w-full overflow-x-hidden">
       <PortfolioDetailHeader project={project} />
 
-      <div className="grid md:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-start w-full">
         <PortfolioDetailContent project={project} />
         <PortfolioDetailResults project={project} />
       </div>

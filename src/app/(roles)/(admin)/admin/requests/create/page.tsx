@@ -1,24 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { PlusCircle, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useCreateRequestLogic } from "../_hooks/useCreateRequestLogic";
 
 export default function CreateServiceRequestPage() {
-  const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      router.push("/admin/requests");
-    }, 1000);
-  };
+  const { isSubmitting, handleSubmit, navigateBack } = useCreateRequestLogic();
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
@@ -76,8 +65,9 @@ export default function CreateServiceRequestPage() {
             <select 
               className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none"
               required
+              defaultValue=""
             >
-              <option value="" disabled selected>Select a service type</option>
+              <option value="" disabled>Select a service type</option>
               <option value="WEB_DEVELOPMENT">Web Development</option>
               <option value="APP_DEVELOPMENT">App Development</option>
               <option value="SEO_MARKETING">SEO & Marketing</option>
@@ -99,7 +89,7 @@ export default function CreateServiceRequestPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-sm font-bold text-gray-900 dark:text-white">Priority Level</label>
-              <select className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none">
+              <select className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none" defaultValue="MEDIUM">
                 <option value="LOW">Low</option>
                 <option value="MEDIUM">Medium</option>
                 <option value="HIGH">High</option>
@@ -107,7 +97,7 @@ export default function CreateServiceRequestPage() {
             </div>
             <div className="space-y-2">
               <label className="text-sm font-bold text-gray-900 dark:text-white">Assigned Team Member</label>
-              <select className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none">
+              <select className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none" defaultValue="">
                 <option value="">-- Unassigned --</option>
                 <option value="user_1">Praveen Maurya</option>
                 <option value="user_2">Jane Doe</option>
@@ -119,7 +109,7 @@ export default function CreateServiceRequestPage() {
           <div className="pt-4 flex items-center justify-end gap-3 border-t border-gray-100 dark:border-white/5">
             <button 
               type="button"
-              onClick={() => router.back()}
+              onClick={navigateBack}
               className="px-6 py-2.5 rounded-xl font-bold text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
             >
               Cancel

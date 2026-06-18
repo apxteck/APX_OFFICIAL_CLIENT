@@ -1,12 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Code2 } from "lucide-react";
-import { useSettingsStore } from "../../_store/useSettingsStore";
+import { ToastState } from "../SettingsManager";
 
-export function DeveloperTab() {
+interface Props {
+  setToast: (toast: ToastState) => void;
+}
+
+export function DeveloperTab({ setToast }: Props) {
   const [devMode, setDevMode] = useState(false);
   const [networkLatency, setNetworkLatency] = useState(false);
-  const { setToast } = useSettingsStore();
 
   useEffect(() => {
     setDevMode(localStorage.getItem("apx_dev_mode") === "true");
@@ -36,7 +39,7 @@ export function DeveloperTab() {
           </div>
           <div className="relative flex items-center shrink-0">
             <input type="checkbox" id="dev_mode" checked={devMode} onChange={(e) => setDevMode(e.target.checked)} className="peer sr-only" />
-            <label htmlFor="dev_mode" className="w-12 h-6 bg-gray-300 dark:bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600 cursor-pointer"></label>
+            <label htmlFor="dev_mode" className="w-11 h-6 min-h-[24px] bg-gray-300 dark:bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600 cursor-pointer flex items-center"></label>
           </div>
         </div>
 
@@ -47,12 +50,12 @@ export function DeveloperTab() {
           </div>
           <div className="relative flex items-center shrink-0">
             <input type="checkbox" id="dev_latency" checked={networkLatency} onChange={(e) => setNetworkLatency(e.target.checked)} className="peer sr-only" />
-            <label htmlFor="dev_latency" className="w-12 h-6 bg-gray-200 dark:bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500 cursor-pointer"></label>
+            <label htmlFor="dev_latency" className="w-11 h-6 min-h-[24px] bg-gray-200 dark:bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500 cursor-pointer flex items-center"></label>
           </div>
         </div>
 
         <div className="pt-4">
-          <button onClick={saveDevSettings} className="bg-gray-900 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-gray-900 px-6 py-2.5 rounded-xl text-sm font-bold shadow-md transition-colors">
+          <button onClick={saveDevSettings} className="bg-gray-900 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-gray-900 px-6 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl text-sm font-bold shadow-md transition-colors">
             Apply Developer Settings
           </button>
         </div>

@@ -24,7 +24,7 @@ export function RegisterSuccess({ successMsg }: Props) {
       <div className="pt-4">
         <Link
           href="/login"
-          className="inline-flex h-11 items-center justify-center rounded-xl bg-accent hover:bg-accent/90 text-white px-6 text-sm font-semibold transition-transform hover:scale-102 active:scale-98 shadow-md"
+          className="inline-flex h-11 min-h-[44px] items-center justify-center rounded-xl bg-accent hover:bg-accent/90 text-white px-6 text-sm font-semibold transition-transform hover:scale-102 active:scale-98 shadow-md"
         >
           Back to Login
         </Link>

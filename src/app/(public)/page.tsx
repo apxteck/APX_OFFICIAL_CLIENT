@@ -22,28 +22,44 @@ const ContactCTASection = dynamic(() => import('@/components/sections/ContactCTA
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
+  const title = 'IT Services for Indian SMBs | APXTeck';
+  const description =
+    'APXTeck provides premium IT services, Next.js web development, custom UI/UX, and search engine optimization custom tailored to scale Indian SMBs.';
+  const url = 'https://apxteck.com';
+
   return {
-    title: 'APXTECK — IT Services for Indian SMBs',
-    description:
-      'APXTeck provides premium IT services, Next.js web development, custom UI/UX, and search engine optimization custom tailored to scale Indian SMBs.',
+    title,
+    description,
     openGraph: {
-      title: 'APXTECK — IT Services for Indian SMBs',
-      description:
-        'APXTeck provides premium IT services, Next.js web development, custom UI/UX, and search engine optimization custom tailored to scale Indian SMBs.',
-      url: 'https://apxteck.com',
+      title,
+      description,
+      url,
       siteName: 'APXTeck',
       images: [
         {
           url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=630&q=80',
           width: 1200,
           height: 630,
-          alt: 'APXTECK - IT Services for Indian SMBs',
+          alt: 'APXTeck - IT Services for Indian SMBs',
         },
       ],
       type: 'website',
+      locale: 'en_IN',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: '@apxteck',
+      site: '@apxteck',
+      title,
+      description,
+      images: ['https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=630&q=80'],
     },
     alternates: {
-      canonical: 'https://apxteck.com',
+      canonical: url,
+      languages: {
+        'en-US': url,
+        'en-IN': url.replace('apxteck.com', 'apxteck.com/en-in'),
+      },
     },
   };
 }
@@ -52,6 +68,7 @@ export default function Home() {
   const jsonLdOrg = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': 'https://apxteck.com/#website',
     name: 'APXTeck',
     url: 'https://apxteck.com',
     logo: 'https://apxteck.com/APXTeck.png',
@@ -61,6 +78,7 @@ export default function Home() {
   const jsonLdLocalBiz = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
+    '@id': 'https://apxteck.com/#localbusiness',
     name: 'APXTeck',
     image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3',
     telephone: '+919405282582',
@@ -77,7 +95,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       <MouseSpotlight />
       <FloatingWhatsApp phoneNumber="919405282582" />
 
@@ -93,7 +111,7 @@ export default function Home() {
 
       <Navbar />
 
-      <main className="flex-1" role="main" itemScope itemType="https://schema.org/WebPage">
+      <main className="flex-1 w-full overflow-x-hidden" role="main" itemScope itemType="https://schema.org/WebPage">
         <HeroSection />
 
         <TechStackMarquee />

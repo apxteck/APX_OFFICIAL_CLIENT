@@ -33,25 +33,41 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const post = await api.fetchBlogBySlug(slug);
     if (!post) return { title: 'Blog Not Found' };
 
+    const fallbackDescription = `Read our latest deep dive into ${post.title}. Discover expert insights on web development, SEO strategies, and technical architectures for your next IT project.`;
+    const description = post.excerpt || fallbackDescription;
+
     return {
-      title: `${post.title} — APXTECK`,
-      description: post.excerpt || `Read our technical article: ${post.title}`,
+      title: `${post.title} | APXTeck`,
+      description: description,
       openGraph: {
-        title: `${post.title} — APXTECK`,
-        description: post.excerpt || `Read our technical article: ${post.title}`,
+        title: `${post.title} | APXTeck`,
+        description: description,
         url: `https://apxteck.com/insights-news/${slug}`,
         siteName: 'APXTeck',
         type: 'article',
+        locale: 'en_IN',
         publishedTime: post.publishedAt || undefined,
         images: post.coverImageUrl ? [{ url: post.coverImageUrl }] : undefined,
       },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${post.title} | APXTeck`,
+        description: description,
+        creator: '@apxteck',
+        site: '@apxteck',
+        images: post.coverImageUrl ? [post.coverImageUrl] : undefined,
+      },
       alternates: {
         canonical: `https://apxteck.com/insights-news/${slug}`,
+        languages: {
+          'en-US': `https://apxteck.com/insights-news/${slug}`,
+          'en-IN': `https://apxteck.com/en-in/insights-news/${slug}`,
+        },
       },
     };
   } catch {
     return {
-      title: 'Blog Details — APXTeck',
+      title: 'Blog Details | APXTeck',
     };
   }
 }
@@ -86,21 +102,36 @@ export default async function BlogPostDetailPage({ params }: Props) {
   const jsonLdArticle = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': `https://apxteck.com/insights-news/${post.slug}/#article`,
     headline: post.title,
+    description: post.excerpt,
     image: post.coverImageUrl,
     datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
     author: {
       '@type': 'Person',
       name: post.author?.fullName || 'APXTeck Lead',
     },
     publisher: {
       '@type': 'Organization',
+      '@id': 'https://apxteck.com/#localbusiness',
       name: 'APXTeck',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://apxteck.com/logo.png',
+      },
+    },
+    isPartOf: {
+      '@id': 'https://apxteck.com/#website',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://apxteck.com/insights-news/${post.slug}`,
     },
   };
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdArticle) }}
@@ -113,11 +144,11 @@ export default async function BlogPostDetailPage({ params }: Props) {
         <LanguageSwitcher />
       </div>
 
-      <main className="flex-1 pt-24 pb-20">
+      <main className="flex-1 pt-20 sm:pt-24 pb-20 pt-safe pb-safe w-full overflow-x-hidden">
         <BlogPostDetailClient post={post} relatedPosts={relatedPosts} initialComments={comments} />
       </main>
 
-      <div className="notranslate" translate="no">
+      <div className="notranslate w-full" translate="no">
         <Footer />
       </div>
     </div>

@@ -21,10 +21,10 @@ export function ForgotPasswordSuccess({ successMsg }: ForgotPasswordSuccessProps
           {successMsg}
         </p>
       </div>
-      <div className="pt-4">
+      <div className="pt-4 flex items-center justify-center">
         <Link
           href="/login"
-          className="inline-flex h-11 items-center justify-center rounded-xl bg-accent hover:bg-accent/90 text-white px-6 text-sm font-semibold transition-transform hover:scale-102 active:scale-98 shadow-md"
+          className="inline-flex min-h-[44px] sm:min-h-[48px] w-full sm:w-auto items-center justify-center rounded-xl bg-accent hover:bg-accent/90 text-white px-8 text-sm sm:text-base font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-md"
           aria-label="Return to login page"
         >
           Back to Login

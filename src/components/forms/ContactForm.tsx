@@ -70,7 +70,7 @@ export function ContactForm({ services }: ContactFormProps) {
             aria-invalid={errors.fullName ? "true" : "false"}
             aria-describedby={errors.fullName ? "fullName-error" : undefined}
             {...register('fullName')}
-            className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all focus:ring-2 focus:ring-accent/50 ${
+            className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base transition-all focus:ring-2 focus:ring-accent/50 ${
               errors.fullName
                 ? 'border-rose-500/50 focus:border-rose-500'
                 : 'border-glass-border focus:border-accent'
@@ -85,9 +85,9 @@ export function ContactForm({ services }: ContactFormProps) {
         </div>
 
         {/* Email & Phone Grid */}
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 w-full">
           {/* Email */}
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 w-full">
             <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
               Email Address <span className="text-rose-500" aria-hidden="true">*</span>
             </label>
@@ -97,7 +97,7 @@ export function ContactForm({ services }: ContactFormProps) {
               aria-invalid={errors.email ? "true" : "false"}
               aria-describedby={errors.email ? "email-error" : undefined}
               {...register('email')}
-              className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all focus:ring-2 focus:ring-accent/50 ${
+              className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base transition-all focus:ring-2 focus:ring-accent/50 ${
                 errors.email
                   ? 'border-rose-500/50 focus:border-rose-500'
                   : 'border-glass-border focus:border-accent'
@@ -110,7 +110,7 @@ export function ContactForm({ services }: ContactFormProps) {
           </div>
 
           {/* Phone */}
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 w-full">
             <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
               Mobile Number (Indian)
             </label>
@@ -120,7 +120,7 @@ export function ContactForm({ services }: ContactFormProps) {
               aria-invalid={errors.phone ? "true" : "false"}
               aria-describedby={errors.phone ? "phone-error" : undefined}
               {...register('phone')}
-              className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all focus:ring-2 focus:ring-accent/50 ${
+              className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base transition-all focus:ring-2 focus:ring-accent/50 ${
                 errors.phone
                   ? 'border-rose-500/50 focus:border-rose-500'
                   : 'border-glass-border focus:border-accent'
@@ -144,7 +144,7 @@ export function ContactForm({ services }: ContactFormProps) {
             aria-invalid={errors.businessName ? "true" : "false"}
             aria-describedby={errors.businessName ? "businessName-error" : undefined}
             {...register('businessName')}
-            className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all focus:ring-2 focus:ring-accent/50 ${
+            className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base transition-all focus:ring-2 focus:ring-accent/50 ${
               errors.businessName
                 ? 'border-rose-500/50 focus:border-rose-500'
                 : 'border-glass-border focus:border-accent'
@@ -159,16 +159,16 @@ export function ContactForm({ services }: ContactFormProps) {
         </div>
 
         {/* Service Interest & Source Grid */}
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 w-full">
           {/* Service Interest */}
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 w-full">
             <label htmlFor="serviceInterest" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
               Service Interest
             </label>
             <select
               id="serviceInterest"
               {...register('serviceInterest')}
-              className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80"
+              className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80 cursor-pointer"
             >
               <option value="" className="bg-background text-foreground">Select a service category</option>
               {services.map((service) => (
@@ -180,14 +180,14 @@ export function ContactForm({ services }: ContactFormProps) {
           </div>
 
           {/* Source */}
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 w-full">
             <label htmlFor="source" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
               How did you hear about us?
             </label>
             <select
               id="source"
               {...register('source')}
-              className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none text-sm focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80"
+              className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80 cursor-pointer"
             >
               <option value="" className="bg-background text-foreground">Select a source</option>
               <option value="Google Search" className="bg-background text-foreground">Google Search</option>
@@ -210,7 +210,7 @@ export function ContactForm({ services }: ContactFormProps) {
             aria-invalid={errors.message ? "true" : "false"}
             aria-describedby={errors.message ? "message-error" : undefined}
             {...register('message')}
-            className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm transition-all resize-none focus:ring-2 focus:ring-accent/50 ${
+            className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm md:text-base transition-all resize-none focus:ring-2 focus:ring-accent/50 ${
               errors.message
                 ? 'border-rose-500/50 focus:border-rose-500'
                 : 'border-glass-border focus:border-accent'
@@ -227,7 +227,7 @@ export function ContactForm({ services }: ContactFormProps) {
           type="submit"
           disabled={isSubmitting}
           aria-disabled={isSubmitting}
-          className="w-full group relative inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-accent text-white px-8 text-sm font-semibold transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-accent/25"
+          className="w-full group relative inline-flex min-h-[44px] sm:min-h-[56px] items-center justify-center gap-2 rounded-xl bg-accent text-white px-8 py-3 sm:py-0 text-sm md:text-base font-semibold transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-accent/25"
         >
           <span className="relative z-10 flex items-center gap-2">
             {isSubmitting ? 'Sending message...' : 'Send Message'}

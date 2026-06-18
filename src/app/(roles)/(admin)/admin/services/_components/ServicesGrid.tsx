@@ -1,20 +1,28 @@
-"use client";
 import React from "react";
 import { Layers, IndianRupee, Edit, Trash2 } from "lucide-react";
-import { useServicesLogic } from "../_hooks/useServicesLogic";
+import { Service } from "@/services/admin/services.service";
 
-export function ServicesGrid() {
-  const { 
-    filteredServices, 
-    isLoading, 
-    searchTerm, 
-    handleToggleActive, 
-    navigateToManageFields, 
-    navigateToEdit, 
-    handleDelete 
-  } = useServicesLogic();
+interface Props {
+  filteredServices: Service[];
+  isLoading: boolean;
+  searchTerm: string;
+  handleToggleActive: (id: number, currentStatus: boolean) => void;
+  navigateToManageFields: (id: number) => void;
+  navigateToEdit: (id: number) => void;
+  handleDelete: (id: number) => void;
+}
 
-  if (isLoading) {
+export function ServicesGrid({
+  filteredServices,
+  isLoading,
+  searchTerm,
+  handleToggleActive,
+  navigateToManageFields,
+  navigateToEdit,
+  handleDelete
+}: Props) {
+
+  if (isLoading && filteredServices.length === 0) {
     return (
       <div className="h-full flex items-center justify-center min-h-[400px]">
         <div className="flex flex-col items-center gap-3">
@@ -46,7 +54,7 @@ export function ServicesGrid() {
           
           <button 
             onClick={() => handleToggleActive(service.id, service.isActive)}
-            className="absolute top-5 right-5 z-10 p-1 rounded-full border border-gray-200 dark:border-white/10 shadow-sm bg-white dark:bg-[#151515] flex items-center justify-center"
+            className="absolute top-5 right-5 z-10 p-1 min-w-[44px] min-h-[44px] rounded-full border border-gray-200 dark:border-white/10 shadow-sm bg-white dark:bg-[#151515] flex items-center justify-center"
             title={`Toggle Status (Currently ${service.isActive ? 'Active' : 'Inactive'})`}
           >
             <div className={`w-8 h-4 rounded-full p-0.5 transition-colors ${service.isActive ? 'bg-emerald-500' : 'bg-gray-300 dark:bg-gray-700'}`}>
@@ -90,20 +98,20 @@ export function ServicesGrid() {
           <div className="flex items-center gap-2 pt-4 border-t border-gray-100 dark:border-white/5">
             <button 
               onClick={() => navigateToManageFields(service.id)}
-              className="flex-1 bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 hover:border-indigo-500 hover:text-indigo-600 dark:hover:border-indigo-400 dark:hover:text-indigo-400 px-4 py-2 rounded-xl font-bold text-xs transition-colors text-gray-700 dark:text-gray-300"
+              className="flex-1 min-h-[44px] flex items-center justify-center bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 hover:border-indigo-500 hover:text-indigo-600 dark:hover:border-indigo-400 dark:hover:text-indigo-400 px-4 py-2 rounded-xl font-bold text-xs transition-colors text-gray-700 dark:text-gray-300"
             >
               Manage Fields
             </button>
             <button 
               onClick={() => navigateToEdit(service.id)}
-              className="p-2 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:text-indigo-400 dark:hover:bg-indigo-500/10 rounded-xl transition-colors border border-transparent hover:border-indigo-200 dark:hover:border-indigo-500/20"
+              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:text-indigo-400 dark:hover:bg-indigo-500/10 rounded-xl transition-colors border border-transparent hover:border-indigo-200 dark:hover:border-indigo-500/20"
               title="Edit Service"
             >
               <Edit size={18} />
             </button>
             <button 
               onClick={() => handleDelete(service.id)}
-              className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-500/10 rounded-xl transition-colors border border-transparent hover:border-red-200 dark:hover:border-red-500/20"
+              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-500/10 rounded-xl transition-colors border border-transparent hover:border-red-200 dark:hover:border-red-500/20"
               title="Delete Service"
             >
               <Trash2 size={18} />

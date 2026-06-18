@@ -14,7 +14,7 @@ export function ResetPasswordHeader() {
       >
         <Lock className="w-7 h-7" aria-hidden="true" role="presentation" />
       </motion.div>
-      <h1 id="reset-password-heading" className="text-3xl font-extrabold tracking-tight text-center">
+      <h1 id="reset-password-heading" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-center">
         New Password
       </h1>
       <p className="text-foreground/60 text-sm mt-2 text-center">

@@ -13,7 +13,7 @@ const TechStackMarquee = dynamic(() => import('@/components/sections/TechStackMa
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = 'IT Services for SMBs — APXTECK';
+  const title = 'IT Services for SMBs | APXTeck';
   const description =
     "Browse APXTeck's premium IT services: Next.js Web Development, UI/UX Design, SEO Optimization, and Digital Marketing tailored to scale Indian SMBs.";
   const url = 'https://apxteck.com/services';
@@ -23,6 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     alternates: {
       canonical: url,
+      languages: {
+        'en-US': url,
+        'en-IN': url.replace('apxteck.com', 'apxteck.com/en-in'),
+      },
     },
     openGraph: {
       title,
@@ -33,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: 'en_IN',
       images: [
         {
-          url: 'https://apxteck.com/og-services.png',
+          url: 'https://apxteck.com/images/og/services.jpg',
           width: 1200,
           height: 630,
           alt: 'APXTeck IT Services',
@@ -42,9 +46,11 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
+      creator: '@apxteck',
+      site: '@apxteck',
       title,
       description,
-      images: ['https://apxteck.com/og-services.png'],
+      images: ['https://apxteck.com/images/og/services.jpg'],
     },
   };
 }
@@ -78,7 +84,7 @@ export default async function ServicesListingPage() {
   const jsonLdServiceSchema = getServicesPageSchema(services);
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdServiceSchema) }}
@@ -86,12 +92,12 @@ export default async function ServicesListingPage() {
 
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20 overflow-hidden" role="main" aria-label="Main Services Content" itemScope itemType="https://schema.org/WebPage">
+      <main className="flex-1 pt-safe pb-safe pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-x-hidden w-full" role="main" aria-label="Main Services Content" itemScope itemType="https://schema.org/WebPage">
         
         {/* Animated Hero and Advantage section (Client component) */}
         <ServicesClient />
 
-        <div className="max-w-7xl mx-auto px-6 mb-8 text-center" aria-hidden="true">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 text-center" aria-hidden="true">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
         </div>
 
@@ -104,7 +110,7 @@ export default async function ServicesListingPage() {
         <ServicesListingSection initialServices={services} />
 
         {/* Tech Stack Marquee at the bottom */}
-        <section aria-label="Technologies we use" className="mt-20">
+        <section aria-label="Technologies we use" className="mt-16 sm:mt-20">
           <TechStackMarquee />
         </section>
       </main>

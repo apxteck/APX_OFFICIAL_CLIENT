@@ -1,11 +1,22 @@
 "use client";
+
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2 } from "lucide-react";
 import KPICard from "@/components/ui/admin/dashboard/KPICard";
 import ActivityFeed from "@/components/ui/admin/dashboard/ActivityFeed";
 import DashboardCharts from "@/components/ui/admin/dashboard/DashboardCharts";
-import { useDashboardLogic } from "../_hooks/useDashboardLogic";
+import { DashboardStats } from "@/services/admin/dashboard.service";
+import { KPIData } from "@/services/admin/dashboardData";
+import { Tab } from "../_hooks/useDashboardLogic";
+
+interface Props {
+  activeTab: Tab;
+  stats: DashboardStats | null;
+  customerKPIs: KPIData[];
+  revenueKPIs: KPIData[];
+  contentKPIs: KPIData[];
+  leadsKPIs: KPIData[];
+}
 
 const tabVariants: any = {
   hidden: { opacity: 0, y: 10 },
@@ -13,17 +24,7 @@ const tabVariants: any = {
   exit: { opacity: 0, y: -10, transition: { duration: 0.2, ease: "easeIn" } }
 };
 
-export function DashboardContent() {
-  const { activeTab, stats, isLoading, customerKPIs, revenueKPIs, contentKPIs, leadsKPIs } = useDashboardLogic();
-
-  if (isLoading) {
-    return (
-      <div className="min-h-[600px] flex items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-indigo-500" />
-      </div>
-    );
-  }
-
+export function DashboardContent({ activeTab, stats, customerKPIs, revenueKPIs, contentKPIs, leadsKPIs }: Props) {
   return (
     <div className="min-h-[600px] relative">
       <AnimatePresence mode="wait">

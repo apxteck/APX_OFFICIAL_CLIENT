@@ -20,16 +20,22 @@ export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Case Studies & Work Portfolio | APXTECK',
-    description:
-      "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+    title: 'Case Studies & Work Portfolio | APXTeck',
+    description: "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+    alternates: {
+      canonical: 'https://apxteck.com/portfolio',
+      languages: {
+        'en-US': 'https://apxteck.com/portfolio',
+        'en-IN': 'https://apxteck.com/en-in/portfolio',
+      },
+    },
     openGraph: {
-      title: 'Case Studies & Work Portfolio | APXTECK',
-      description:
-        "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+      title: 'Case Studies & Work Portfolio | APXTeck',
+      description: "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
       url: 'https://apxteck.com/portfolio',
       siteName: 'APXTeck',
       type: 'website',
+      locale: 'en_IN',
       images: [
         {
           url: 'https://apxteck.com/images/og/portfolio.jpg',
@@ -42,13 +48,10 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       site: '@apxteck',
-      title: 'Case Studies & Work Portfolio | APXTECK',
-      description:
-        "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+      creator: '@apxteck',
+      title: 'Case Studies & Work Portfolio | APXTeck',
+      description: "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
       images: ['https://apxteck.com/images/og/portfolio.jpg'],
-    },
-    alternates: {
-      canonical: 'https://apxteck.com/portfolio',
     },
   };
 }
@@ -68,7 +71,7 @@ export default async function PortfolioListingPage() {
   const jsonLdCollectionPage = portfolioCollectionPageSchema;
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       {/* Inject Structured Data */}
       <script
         type="application/ld+json"
@@ -85,22 +88,22 @@ export default async function PortfolioListingPage() {
 
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20 overflow-hidden" role="main" itemScope itemType="https://schema.org/CollectionPage">
-        <article>
+      <main className="flex-1 pt-24 pb-20 overflow-x-hidden w-full pt-safe pb-safe" role="main" itemScope itemType="https://schema.org/CollectionPage">
+        <article className="w-full">
           {/* Animated Hero and Philosophy section (Client component) */}
           <PortfolioClient />
 
-          <div className="max-w-7xl mx-auto px-6 mb-12 text-center" aria-hidden="true">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-12 text-center w-full" aria-hidden="true">
             <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
           </div>
 
           {/* Client side listing list with tabs */}
-          <section aria-label="Portfolio Case Studies Listing">
+          <section aria-label="Portfolio Case Studies Listing" className="w-full px-4 sm:px-0">
             <PortfolioListingSection initialPortfolios={portfolios} />
           </section>
 
           {/* Tech Stack Marquee at the bottom */}
-          <aside className="mt-20" aria-label="Our Technology Stack">
+          <aside className="mt-12 sm:mt-20 w-full" aria-label="Our Technology Stack">
             <TechStackMarquee />
           </aside>
         </article>

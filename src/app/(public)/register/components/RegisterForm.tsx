@@ -45,7 +45,7 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
         <input
           type="text"
           {...register('fullName')}
-          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
+          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm sm:text-base"
           placeholder="John Doe"
         />
         {errors.fullName && (
@@ -63,7 +63,7 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
         <input
           type="email"
           {...register('email')}
-          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
+          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm sm:text-base"
           placeholder="you@company.com"
         />
         {errors.email && (
@@ -79,7 +79,7 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
         <input
           type="tel"
           {...register('phone')}
-          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
+          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm sm:text-base"
           placeholder="9876543210"
         />
         {errors.phone && (
@@ -95,7 +95,7 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
         <input
           type="password"
           {...register('password')}
-          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
+          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm sm:text-base"
           placeholder="••••••••"
         />
         {errors.password && (
@@ -113,7 +113,7 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
         <input
           type="password"
           {...register('confirmPassword')}
-          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm"
+          className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm sm:text-base"
           placeholder="••••••••"
         />
         {errors.confirmPassword && (
@@ -125,7 +125,7 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
 
       {/* Terms Checkbox */}
       <div className="space-y-1.5">
-        <label className="flex items-start gap-2.5 cursor-pointer select-none">
+        <label className="flex items-start gap-3 cursor-pointer select-none min-h-[44px] py-1">
           <input
             type="checkbox"
             {...register('terms')}
@@ -133,11 +133,11 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
           />
           <span className="text-xs text-foreground/70 leading-relaxed font-medium">
             I agree to the{' '}
-            <Link href="/terms" className="text-accent hover:underline font-bold">
+            <Link href="/terms" aria-label="Read our Terms of Service" className="text-accent hover:underline font-bold">
               Terms of Service
             </Link>{' '}
             and{' '}
-            <Link href="/privacy" className="text-accent hover:underline font-bold">
+            <Link href="/privacy" aria-label="Read our Privacy Policy" className="text-accent hover:underline font-bold">
               Privacy Policy
             </Link>
           </span>
@@ -151,7 +151,7 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
       <button
         type="submit"
         disabled={isLoading}
-        className="group w-full h-12 mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
+        className="group w-full h-12 min-h-[44px] sm:min-h-[48px] mt-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-lg shadow-accent/25 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer"
       >
         {isLoading ? 'Creating Account...' : 'Sign Up'}
         {!isLoading && (
@@ -163,7 +163,7 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
 
       <p className="text-center text-xs text-foreground/60 mt-6 font-medium">
         Already have an account?{' '}
-        <Link href="/login" className="text-accent hover:underline font-bold">
+        <Link href="/login" aria-label="Sign in to your existing account" className="text-accent hover:underline font-bold min-h-[44px] inline-flex items-center">
           Sign In
         </Link>
       </p>

@@ -63,12 +63,16 @@ export const portfolioBreadcrumbSchema = {
 export const portfolioCollectionPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: 'Case Studies & Work Portfolio | APXTECK',
-  description:
-    "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+  '@id': 'https://apxteck.com/portfolio/#webpage',
+  name: 'Case Studies & Work Portfolio | APXTeck',
+  description: "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
   url: 'https://apxteck.com/portfolio',
+  isPartOf: {
+    '@id': 'https://apxteck.com/#website',
+  },
   publisher: {
     '@type': 'Organization',
+    '@id': 'https://apxteck.com/#localbusiness',
     name: 'APXTeck',
     logo: {
       '@type': 'ImageObject',

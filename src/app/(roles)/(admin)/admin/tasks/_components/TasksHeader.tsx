@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
 import { ListTodo } from "lucide-react";
-import { useTasksLogic } from "../_hooks/useTasksLogic";
 
-export function TasksHeader() {
-  const { navigateToCreate } = useTasksLogic();
+interface Props {
+  navigateToCreate: () => void;
+}
 
+export function TasksHeader({ navigateToCreate }: Props) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div>
@@ -21,7 +22,7 @@ export function TasksHeader() {
       </div>
       <button 
         onClick={navigateToCreate}
-        className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-sm self-start sm:self-auto"
+        className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm transition-colors shadow-sm self-start sm:self-auto"
       >
         + Create Task
       </button>

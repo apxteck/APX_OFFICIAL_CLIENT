@@ -1,28 +1,34 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useNotificationStore } from "@/store/notification.store";
+import React from "react";
 import { NotificationItem } from "@/components/NotificationItem";
 import { Bell, Inbox, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNotificationsLogic } from "../_hooks/useNotificationsLogic";
+import { Notification } from "@/app/services/api/notification.api";
 
-export function NotificationsCenter() {
-  const [filter, setFilter] = useState<"all" | "unread">("all");
+interface Props {
+  initialData?: {
+    notifications: Notification[];
+    total: number;
+    unreadCount: number;
+  };
+}
+
+export function NotificationsCenter({ initialData }: Props) {
   const {
+    filter,
+    setFilter,
     notifications,
+    filteredNotifications,
     unreadCount,
     hasMore,
     isLoading,
-    loadNotifications,
     loadMore,
     markRead,
     markAllRead,
     clearNotifications,
-  } = useNotificationStore();
-
-  useEffect(() => {
-    loadNotifications(1);
-  }, []);
+  } = useNotificationsLogic(initialData || { notifications: [], total: 0, unreadCount: 0 });
 
   const handleMarkAllRead = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -33,11 +39,6 @@ export function NotificationsCenter() {
     e.stopPropagation();
     clearNotifications();
   };
-
-  const filteredNotifications = notifications.filter(n => {
-    if (filter === "unread") return !n.isRead;
-    return true;
-  });
 
   return (
     <motion.div 
@@ -53,7 +54,7 @@ export function NotificationsCenter() {
             <div className="flex gap-2">
               <button
                 onClick={() => setFilter("all")}
-                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all border ${
+                className={`px-4 py-2 min-h-[44px] text-xs font-bold flex items-center justify-center rounded-xl transition-all border ${
                   filter === "all"
                     ? "bg-indigo-600 border-indigo-600 text-white shadow-[0_4px_14px_rgba(79,70,229,0.3)]"
                     : "bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
@@ -63,7 +64,7 @@ export function NotificationsCenter() {
               </button>
               <button
                 onClick={() => setFilter("unread")}
-                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all border flex items-center gap-2 ${
+                className={`px-4 py-2 min-h-[44px] text-xs font-bold rounded-xl transition-all border flex items-center justify-center gap-2 ${
                   filter === "unread"
                     ? "bg-indigo-600 border-indigo-600 text-white shadow-[0_4px_14px_rgba(79,70,229,0.3)]"
                     : "bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
@@ -83,7 +84,7 @@ export function NotificationsCenter() {
             {unreadCount > 0 && (
               <button
                 onClick={handleMarkAllRead}
-                className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors flex items-center gap-1.5"
+                className="text-xs font-bold min-h-[44px] text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors flex items-center justify-center gap-1.5"
               >
                 Mark all as read
               </button>
@@ -91,7 +92,7 @@ export function NotificationsCenter() {
             {notifications.length > 0 && (
               <button
                 onClick={handleClearNotifications}
-                className="text-xs font-bold text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 transition-colors flex items-center gap-1.5"
+                className="text-xs font-bold min-h-[44px] text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 transition-colors flex items-center justify-center gap-1.5"
               >
                 Clear all
               </button>
@@ -148,7 +149,7 @@ export function NotificationsCenter() {
             <button
               onClick={loadMore}
               disabled={isLoading}
-              className="px-6 py-2.5 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 font-bold text-xs rounded-xl border border-gray-200 dark:border-white/10 flex items-center gap-1.5 transition-colors disabled:opacity-50"
+              className="px-6 py-2.5 min-h-[44px] bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 font-bold text-xs rounded-xl border border-gray-200 dark:border-white/10 flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
             >
               {isLoading ? (
                 <>

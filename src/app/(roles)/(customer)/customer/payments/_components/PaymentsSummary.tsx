@@ -2,11 +2,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Download, Clock } from 'lucide-react';
-import { usePaymentsLogic } from '../_hooks/usePaymentsLogic';
+import { Payment } from '../types';
 
-export function PaymentsSummary() {
-  const { isLoading, amountDue, lastPayment } = usePaymentsLogic();
+interface PaymentsSummaryProps {
+  isLoading: boolean;
+  amountDue: number;
+  lastPayment: Payment | null;
+}
 
+export function PaymentsSummary({ isLoading, amountDue, lastPayment }: PaymentsSummaryProps) {
   const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }
@@ -28,7 +32,7 @@ export function PaymentsSummary() {
               <h3 className="text-4xl font-black text-white mb-6">₹{amountDue.toFixed(2)}</h3>
               <button 
                 disabled={amountDue === 0}
-                className="flex items-center justify-center gap-2 w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold px-5 py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)]"
+                className="flex items-center justify-center min-h-[44px] gap-2 w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold px-5 py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)]"
               >
                 <CreditCard className="w-5 h-5" />
                 <span>{amountDue > 0 ? 'Pay Now' : 'No Pending Dues'}</span>
@@ -54,7 +58,7 @@ export function PaymentsSummary() {
             </div>
             <button 
               disabled={!lastPayment}
-              className="flex items-center justify-center gap-2 w-full bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 font-bold px-5 py-3 rounded-xl transition-all border border-gray-200 dark:border-white/5 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center min-h-[44px] gap-2 w-full bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 font-bold px-5 py-3 rounded-xl transition-all border border-gray-200 dark:border-white/5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Download className="w-4 h-4" />
               <span>Download Receipt</span>

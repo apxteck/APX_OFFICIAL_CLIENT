@@ -37,13 +37,13 @@ export function PaymentClient({ orderId }: PaymentClientProps) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="w-full max-w-[520px] relative z-10"
+      className="w-full max-w-[520px] relative z-10 px-4 sm:px-0"
     >
       <div className="bg-white dark:bg-[#12121a] rounded-[2rem] shadow-2xl dark:shadow-indigo-900/10 border border-gray-100 dark:border-gray-800/60 overflow-hidden backdrop-blur-xl">
         
         <PaymentHeader isPaid={isPaid} isCancelled={isCancelled} />
 
-        <div className="p-8">
+        <div className="p-5 sm:p-8">
           <PaymentInvoice payment={payment} isPaid={isPaid} isCancelled={isCancelled} />
           
           <PaymentActions 
@@ -56,7 +56,7 @@ export function PaymentClient({ orderId }: PaymentClientProps) {
           />
         </div>
         
-        <div className="bg-gray-50 dark:bg-[#15151e] p-4 text-center border-t border-gray-100 dark:border-gray-800/60">
+        <div className="bg-gray-50 dark:bg-[#15151e] p-4 sm:p-5 text-center border-t border-gray-100 dark:border-gray-800/60">
           <p className="text-xs text-gray-400 dark:text-gray-500">
             &copy; {new Date().getFullYear()} APX Teck. All rights reserved.<br/>
             If you have any questions, please <a href="mailto:support@apxteck.com" className="text-indigo-500 hover:underline">contact our support team</a>.

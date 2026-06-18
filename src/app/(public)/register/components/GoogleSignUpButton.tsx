@@ -15,7 +15,7 @@ export function GoogleSignUpButton() {
 
       <Link
         href={`${process.env.NEXT_PUBLIC_NODEJS_API_URL || 'http://localhost:8090/api/v1'}/auth/google`}
-        className="w-full h-12 rounded-xl bg-background/30 border border-glass-border hover:bg-foreground/5 font-semibold active:scale-[0.99] transition-all flex items-center justify-center gap-3 text-sm text-foreground"
+        className="w-full h-12 min-h-[44px] sm:min-h-[48px] rounded-xl bg-background/30 border border-glass-border hover:bg-foreground/5 font-semibold active:scale-[0.99] transition-all flex items-center justify-center gap-3 text-sm text-foreground"
       >
         <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true" role="presentation">
           <path

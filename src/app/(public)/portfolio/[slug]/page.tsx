@@ -40,25 +40,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const imageUrl = project.coverImageUrl || 'https://apxteck.com/images/og/portfolio-detail.jpg';
 
     return {
-      title,
+      title: `${project.clientName} Case Study | APXTeck`,
       description,
       openGraph: {
-        title,
+        title: `${project.clientName} Case Study | APXTeck`,
         description,
         url,
         siteName: 'APXTeck',
         type: 'article',
+        locale: 'en_IN',
         images: [{ url: imageUrl, width: 1200, height: 630, alt: `${project.clientName} Case Study` }],
       },
       twitter: {
         card: 'summary_large_image',
         site: '@apxteck',
-        title,
+        creator: '@apxteck',
+        title: `${project.clientName} Case Study | APXTeck`,
         description,
         images: [imageUrl],
       },
       alternates: {
         canonical: url,
+        languages: {
+          'en-US': url,
+          'en-IN': url.replace('apxteck.com', 'apxteck.com/en-in'),
+        },
       },
     };
   } catch {
@@ -87,7 +93,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
   const jsonLdBreadcrumb = generateDetailBreadcrumbSchema(project, slug);
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-accent/30 bg-background text-foreground transition-colors duration-300">
+    <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       {/* Inject Structured Data */}
       <script
         type="application/ld+json"
@@ -100,8 +106,8 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20">
-        <article>
+      <main className="flex-1 pt-20 sm:pt-24 pb-20 pt-safe pb-safe w-full overflow-x-hidden">
+        <article className="w-full">
           <PortfolioDetailClient project={project} />
         </article>
       </main>

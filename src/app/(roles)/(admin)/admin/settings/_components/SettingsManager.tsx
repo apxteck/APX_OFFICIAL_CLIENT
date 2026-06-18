@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, Image as ImageIcon, Palette, Database, Code2, Monitor, Settings } from "lucide-react";
-import { useSettingsStore, TabType } from "../_store/useSettingsStore";
 
 import { AccountTab } from "./tabs/AccountTab";
 import { HeroBannersTab } from "./tabs/HeroBannersTab";
@@ -11,16 +11,25 @@ import { DataCacheTab } from "./tabs/DataCacheTab";
 import { DeveloperTab } from "./tabs/DeveloperTab";
 import { SystemInfoTab } from "./tabs/SystemInfoTab";
 import { Toast } from "./Toast";
+import { HeroBanner } from "@/app/types/home.types";
 
-export default function SettingsManager() {
-  const { activeTab, setActiveTab, toast, setToast } = useSettingsStore();
+export type TabType = "account" | "hero" | "appearance" | "data" | "developer" | "system";
+export type ToastState = { message: string; type: "success" | "error" | "loading" } | null;
+
+interface Props {
+  initialBanners: HeroBanner[];
+}
+
+export default function SettingsManager({ initialBanners }: Props) {
+  const [activeTab, setActiveTab] = useState<TabType>("account");
+  const [toast, setToast] = useState<ToastState>(null);
 
   const TabButton = ({ id, icon, title }: { id: TabType, icon: React.ReactNode, title: string }) => {
     const isActive = activeTab === id;
     return (
       <button 
         onClick={() => setActiveTab(id)}
-        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl font-bold text-sm transition-all ${
+        className={`w-full flex items-center justify-between min-h-[44px] px-4 py-3 rounded-xl font-bold text-sm transition-all ${
           isActive 
             ? "bg-indigo-600 text-white shadow-md" 
             : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/5"
@@ -69,12 +78,12 @@ export default function SettingsManager() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              {activeTab === "account" && <AccountTab />}
-              {activeTab === "hero" && <HeroBannersTab />}
-              {activeTab === "appearance" && <AppearanceTab />}
-              {activeTab === "data" && <DataCacheTab />}
-              {activeTab === "developer" && <DeveloperTab />}
-              {activeTab === "system" && <SystemInfoTab />}
+              {activeTab === "account" && <AccountTab setToast={setToast} />}
+              {activeTab === "hero" && <HeroBannersTab initialBanners={initialBanners} setToast={setToast} />}
+              {activeTab === "appearance" && <AppearanceTab setToast={setToast} />}
+              {activeTab === "data" && <DataCacheTab setToast={setToast} />}
+              {activeTab === "developer" && <DeveloperTab setToast={setToast} />}
+              {activeTab === "system" && <SystemInfoTab setToast={setToast} />}
             </motion.div>
           </AnimatePresence>
         </div>

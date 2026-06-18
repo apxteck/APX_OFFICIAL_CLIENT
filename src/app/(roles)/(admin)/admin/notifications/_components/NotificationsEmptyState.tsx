@@ -3,10 +3,11 @@
 import React from "react";
 import { AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { useNotificationsLogic } from "../_hooks/useNotificationsLogic";
+import { useRouter } from "next/navigation";
 
 export default function NotificationsEmptyState() {
-  const { handleGoBack } = useNotificationsLogic();
+  const router = useRouter();
+  const handleGoBack = () => router.back();
 
   return (
     <motion.div 
@@ -24,7 +25,7 @@ export default function NotificationsEmptyState() {
       </p>
       <button 
         onClick={handleGoBack}
-        className="mt-6 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-6 py-2.5 rounded-xl font-bold text-sm transition-colors border border-gray-200 dark:border-white/10"
+        className="mt-6 min-h-[44px] flex items-center justify-center bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-6 py-2.5 rounded-xl font-bold text-sm transition-colors border border-gray-200 dark:border-white/10"
       >
         Go Back
       </button>

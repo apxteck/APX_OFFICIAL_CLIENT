@@ -1,34 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, User, Mail, Phone, Calendar, CheckCircle } from "lucide-react";
 import { enquiriesService, Enquiry, EnquiryStatus } from "@/services/admin/enquiries.service";
 import toast from "react-hot-toast";
 
 interface Props {
-  enquiryId: string;
+  initialEnquiry: Enquiry;
 }
 
-export function EnquiryDetailManager({ enquiryId }: Props) {
+export function EnquiryDetailManager({ initialEnquiry }: Props) {
   const router = useRouter();
-  const [enquiry, setEnquiry] = useState<Enquiry | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [enquiry, setEnquiry] = useState<Enquiry>(initialEnquiry);
   const [isUpdating, setIsUpdating] = useState(false);
-
-  useEffect(() => {
-    const fetchEnquiry = async () => {
-      try {
-        const data = await enquiriesService.getEnquiryById(Number(enquiryId));
-        setEnquiry(data);
-      } catch (error) {
-        toast.error("Failed to load enquiry details");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchEnquiry();
-  }, [enquiryId]);
 
   const handleStatusChange = async (newStatus: EnquiryStatus) => {
     if (!enquiry) return;
@@ -44,19 +29,15 @@ export function EnquiryDetailManager({ enquiryId }: Props) {
     }
   };
 
-  if (isLoading) {
-    return <div className="p-8 text-center text-gray-500">Loading...</div>;
-  }
-
   if (!enquiry) {
     return <div className="p-8 text-center text-red-500">Enquiry not found</div>;
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-10">
+    <div className="w-full max-w-4xl mx-auto space-y-6 pb-safe pb-10 px-4 sm:px-6 md:px-8">
       <button 
         onClick={() => router.back()}
-        className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+        className="flex items-center gap-2 min-h-[44px] text-sm font-medium text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
       >
         <ArrowLeft size={16} /> Back to Enquiries
       </button>
@@ -120,7 +101,7 @@ export function EnquiryDetailManager({ enquiryId }: Props) {
                   value={enquiry.status}
                   onChange={(e) => handleStatusChange(e.target.value as EnquiryStatus)}
                   disabled={isUpdating}
-                  className="block w-full text-sm font-medium px-3 py-1.5 border border-gray-200 dark:border-white/10 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white disabled:opacity-50"
+                  className="block w-full text-sm font-medium px-3 py-1.5 min-h-[44px] border border-gray-200 dark:border-white/10 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white disabled:opacity-50"
                 >
                   <option value="NEW">NEW</option>
                   <option value="SEEN">SEEN</option>

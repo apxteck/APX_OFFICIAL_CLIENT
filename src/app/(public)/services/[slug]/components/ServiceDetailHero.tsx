@@ -10,8 +10,8 @@ interface Props {
 
 export function ServiceDetailHero({ service, scrollToForm }: Props) {
   return (
-    <section className="relative py-20 overflow-hidden bg-background">
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
+    <section className="relative py-16 sm:py-20 overflow-x-hidden bg-background w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 space-y-6">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/15 border border-accent/25 text-accent text-xs font-bold uppercase tracking-wider">
             Service Specs
@@ -44,7 +44,7 @@ export function ServiceDetailHero({ service, scrollToForm }: Props) {
 
           <button
             onClick={scrollToForm}
-            className="inline-flex h-12 items-center gap-2 rounded-xl bg-accent hover:bg-accent/90 text-white px-8 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-accent/25 cursor-pointer"
+            className="inline-flex h-12 min-h-[44px] sm:min-h-[48px] items-center gap-2 rounded-xl bg-accent hover:bg-accent/90 text-white px-8 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-accent/25 cursor-pointer"
           >
             Get Started Now <ArrowRight className="w-4 h-4" />
           </button>

@@ -16,7 +16,7 @@ export function FaqCard({ faq, onEdit, onDelete, onToggleActive }: FaqCardProps)
       {/* Status Toggle on Top Right */}
       <button 
         onClick={() => onToggleActive(faq.id, faq.isPublished)}
-        className="absolute top-4 right-4 z-10 p-1 rounded-full border border-gray-200 dark:border-white/10 shadow-sm bg-white dark:bg-[#151515] flex items-center justify-center"
+        className="absolute top-4 right-4 z-10 min-w-[44px] min-h-[44px] rounded-full border border-gray-200 dark:border-white/10 shadow-sm bg-white dark:bg-[#151515] flex items-center justify-center"
         title={`Toggle Status (Currently ${faq.isPublished ? 'Published' : 'Hidden'})`}
       >
         <div className={`w-8 h-4 rounded-full p-0.5 transition-colors ${faq.isPublished ? 'bg-emerald-500' : 'bg-gray-300 dark:bg-gray-700'}`}>
@@ -45,14 +45,14 @@ export function FaqCard({ faq, onEdit, onDelete, onToggleActive }: FaqCardProps)
         <div className="mt-auto flex items-center gap-2 pt-4 border-t border-gray-100 dark:border-white/5">
           <button 
             onClick={() => onEdit(faq)}
-            className="flex-1 bg-gray-50 hover:bg-indigo-50 dark:bg-white/5 dark:hover:bg-indigo-500/10 text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 px-4 py-2.5 rounded-xl font-bold text-xs transition-colors border border-gray-200 dark:border-white/10 flex items-center justify-center gap-2"
+            className="flex-1 min-h-[44px] bg-gray-50 hover:bg-indigo-50 dark:bg-white/5 dark:hover:bg-indigo-500/10 text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 px-4 py-2.5 rounded-xl font-bold text-xs transition-colors border border-gray-200 dark:border-white/10 flex items-center justify-center gap-2"
           >
             <Edit size={16} />
             Edit FAQ
           </button>
           <button 
             onClick={() => onDelete(faq.id)}
-            className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-500/10 rounded-xl transition-colors border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-500/10 rounded-xl transition-colors border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5"
             title="Delete FAQ"
           >
             <Trash2 size={18} />
