@@ -1,10 +1,10 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Loader2 } from "lucide-react";
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Loader2 } from 'lucide-react';
 
 interface Props {
   isModalOpen: boolean;
-  modalMode: "CREATE" | "EDIT";
+  modalMode: 'CREATE' | 'EDIT';
   handleCloseModal: () => void;
   formData: { name: string; description: string };
   setFormData: (data: { name: string; description: string }) => void;
@@ -40,16 +40,21 @@ export function RoleModal({
           >
             <div className="flex justify-between items-center p-6 lg:p-8 border-b border-gray-100/80 dark:border-white/10">
               <h3 className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">
-                {modalMode === "CREATE" ? "Create New Role" : "Edit Role"}
+                {modalMode === 'CREATE' ? 'Create New Role' : 'Edit Role'}
               </h3>
-              <button onClick={handleCloseModal} className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors bg-gray-50 hover:bg-gray-100 dark:bg-white/5 dark:hover:bg-white/10 p-2 rounded-full">
+              <button
+                onClick={handleCloseModal}
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors bg-gray-50 hover:bg-gray-100 dark:bg-white/5 dark:hover:bg-white/10 p-2 rounded-full"
+              >
                 <X size={20} strokeWidth={2.5} />
               </button>
             </div>
-            
+
             <form onSubmit={handleSubmit} className="p-6 lg:p-8 space-y-5">
               <div>
-                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Role Name *</label>
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                  Role Name *
+                </label>
                 <input
                   type="text"
                   required
@@ -58,10 +63,14 @@ export function RoleModal({
                   placeholder="e.g. MARKETING MANAGER"
                   className="w-full bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-gray-200/80 dark:border-white/10 rounded-2xl px-5 py-4 min-h-[44px] text-[15px] focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/50 outline-none uppercase dark:text-white font-medium transition-all duration-300 shadow-sm hover:shadow-md"
                 />
-                <p className="text-[13px] font-medium text-gray-500 mt-2 ml-1">Spaces will be automatically converted to underscores.</p>
+                <p className="text-[13px] font-medium text-gray-500 mt-2 ml-1">
+                  Spaces will be automatically converted to underscores.
+                </p>
               </div>
               <div>
-                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Description</label>
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                  Description
+                </label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -85,7 +94,7 @@ export function RoleModal({
                   className="flex-1 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white px-5 py-3.5 min-h-[44px] rounded-2xl font-bold transition-all shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 active:scale-95"
                 >
                   {isSubmitting && <Loader2 className="w-5 h-5 animate-spin" />}
-                  {modalMode === "CREATE" ? "Create Role" : "Save Changes"}
+                  {modalMode === 'CREATE' ? 'Create Role' : 'Save Changes'}
                 </button>
               </div>
             </form>

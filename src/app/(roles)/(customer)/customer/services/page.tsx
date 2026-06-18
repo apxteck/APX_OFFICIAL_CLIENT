@@ -15,7 +15,7 @@ export default async function CustomerServicesPage() {
       initialServices = res.filter((r: any) => r.status !== 'CANCELLED');
     }
   } catch (error) {
-    console.error("Failed to fetch initial services:", error);
+    console.error('Failed to fetch initial services:', error);
   }
 
   return <ServicesManager initialServices={initialServices} />;

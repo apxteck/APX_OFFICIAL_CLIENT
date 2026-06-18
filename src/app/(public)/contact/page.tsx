@@ -21,7 +21,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: 'Contact Us for Web Development & SEO | APXTeck',
     description:
       'Contact APXTeck for custom software, web design, mobile apps, and search engine optimization. Get a free consultation and a detailed project roadmap.',
-    keywords: 'contact APXTeck, software development consultation, hire developers Pune, web design agency contact',
+    keywords:
+      'contact APXTeck, software development consultation, hire developers Pune, web design agency contact',
     alternates: {
       canonical: 'https://apxteck.com/contact',
       languages: {
@@ -49,7 +50,8 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: 'Contact Us for Web Development & SEO | APXTeck',
-      description: 'Get in touch with APXTeck for premium software development and SEO consultancies.',
+      description:
+        'Get in touch with APXTeck for premium software development and SEO consultancies.',
       creator: '@apxteck',
       site: '@apxteck',
       images: ['https://apxteck.com/twitter-contact.jpg'],
@@ -58,7 +60,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function ContactPage() {
-
   return (
     <div className="flex flex-col min-h-dvh selection:bg-accent/30 bg-background text-foreground transition-colors duration-300 w-full overflow-x-hidden">
       <script
@@ -76,9 +77,23 @@ export default function ContactPage() {
 
       <Navbar />
 
-      <main className="flex-1 pt-20 md:pt-24 pb-safe w-full overflow-x-hidden" id="main-content" role="main">
-        <article itemScope itemType="https://schema.org/ContactPage" className="w-full flex flex-col">
-          <Suspense fallback={<div className="min-h-dvh pt-12 flex items-center justify-center animate-pulse"><div className="w-16 h-16 rounded-full border-4 border-accent border-t-transparent animate-spin"></div></div>}>
+      <main
+        className="flex-1 pt-20 md:pt-24 pb-safe w-full overflow-x-hidden"
+        id="main-content"
+        role="main"
+      >
+        <article
+          itemScope
+          itemType="https://schema.org/ContactPage"
+          className="w-full flex flex-col"
+        >
+          <Suspense
+            fallback={
+              <div className="min-h-dvh pt-12 flex items-center justify-center animate-pulse">
+                <div className="w-16 h-16 rounded-full border-4 border-accent border-t-transparent animate-spin"></div>
+              </div>
+            }
+          >
             <ContactSectionLoader />
           </Suspense>
         </article>

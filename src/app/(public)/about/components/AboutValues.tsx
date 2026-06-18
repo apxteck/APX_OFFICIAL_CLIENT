@@ -6,8 +6,14 @@ import { GlassCard } from '@/components/ui/GlassCard';
 
 export function AboutValues() {
   return (
-    <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 relative w-full overflow-hidden" aria-labelledby="about-values-heading">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] aspect-square bg-accent/5 rounded-full blur-[100px] md:blur-[150px] pointer-events-none -z-10" aria-hidden="true" />
+    <section
+      className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 relative w-full overflow-hidden"
+      aria-labelledby="about-values-heading"
+    >
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] aspect-square bg-accent/5 rounded-full blur-[100px] md:blur-[150px] pointer-events-none -z-10"
+        aria-hidden="true"
+      />
 
       <div className="text-center mb-12 md:mb-16 flex flex-col gap-4 w-full">
         <motion.h2
@@ -26,7 +32,8 @@ export function AboutValues() {
           viewport={{ once: true }}
           className="text-foreground/60 max-w-xl mx-auto text-base md:text-lg px-2 w-full"
         >
-          These fundamental operating guidelines direct how we write code, design interfaces, and support our partners.
+          These fundamental operating guidelines direct how we write code, design interfaces, and
+          support our partners.
         </motion.p>
       </div>
 
@@ -45,8 +52,16 @@ export function AboutValues() {
                 className="h-full hover:-translate-y-2 transition-transform duration-300 relative group overflow-hidden w-full flex flex-col p-6 md:p-8"
                 glowColor={val.color}
               >
-                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity" aria-hidden="true">
-                  <Icon className="w-20 h-20 md:w-24 md:h-24" style={{ color: val.color }} aria-hidden="true" role="presentation" />
+                <div
+                  className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity"
+                  aria-hidden="true"
+                >
+                  <Icon
+                    className="w-20 h-20 md:w-24 md:h-24"
+                    style={{ color: val.color }}
+                    aria-hidden="true"
+                    role="presentation"
+                  />
                 </div>
 
                 <div
@@ -61,8 +76,12 @@ export function AboutValues() {
                 >
                   <Icon className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" role="presentation" />
                 </div>
-                <h3 className="text-lg md:text-xl font-bold tracking-tight mb-2 md:mb-3 relative z-10">{val.title}</h3>
-                <p className="text-foreground/70 text-sm leading-relaxed relative z-10 flex-1">{val.description}</p>
+                <h3 className="text-lg md:text-xl font-bold tracking-tight mb-2 md:mb-3 relative z-10">
+                  {val.title}
+                </h3>
+                <p className="text-foreground/70 text-sm leading-relaxed relative z-10 flex-1">
+                  {val.description}
+                </p>
               </GlassCard>
             </motion.div>
           );

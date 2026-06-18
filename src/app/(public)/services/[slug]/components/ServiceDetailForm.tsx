@@ -13,15 +13,16 @@ interface Props {
 }
 
 export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: Props) {
-  const {
-    isSubmitSuccess,
-    isSubmitting,
-    errorMessage,
-    form,
-    onSubmit,
-  } = useServiceRequestLogic(serviceId, serviceSlug);
+  const { isSubmitSuccess, isSubmitting, errorMessage, form, onSubmit } = useServiceRequestLogic(
+    serviceId,
+    serviceSlug
+  );
 
-  const { register, handleSubmit, formState: { errors } } = form;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = form;
 
   return (
     <section ref={formRef} className="max-w-3xl mx-auto px-4 sm:px-6 w-full">
@@ -51,8 +52,7 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
 
         {fields.length === 0 ? (
           <div className="text-center text-foreground/50 py-6 text-sm">
-            No additional configuration fields requested. Ready to build custom modules? Contact
-            us!
+            No additional configuration fields requested. Ready to build custom modules? Contact us!
           </div>
         ) : (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10">
@@ -88,7 +88,9 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
                       {...register(field.fieldKey, { required: field.isRequired })}
                       className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] outline-none text-sm sm:text-base focus:ring-2 focus:ring-accent/50 focus:border-accent"
                     >
-                      <option value="" className="bg-background text-foreground">{field.placeholder || 'Select option'}</option>
+                      <option value="" className="bg-background text-foreground">
+                        {field.placeholder || 'Select option'}
+                      </option>
                       {Array.isArray(field.options) &&
                         field.options.map((opt: string, oIdx: number) => (
                           <option key={oIdx} value={opt} className="bg-background text-foreground">
@@ -124,9 +126,7 @@ export function ServiceDetailForm({ serviceId, serviceSlug, fields, formRef }: P
                   )}
 
                   {errors[field.fieldKey] && (
-                    <p className="text-xs text-rose-500 font-medium pl-1">
-                      This field is required
-                    </p>
+                    <p className="text-xs text-rose-500 font-medium pl-1">This field is required</p>
                   )}
                 </div>
               );

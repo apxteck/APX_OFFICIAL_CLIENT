@@ -1,7 +1,7 @@
-import apiClient from "@/lib/api/axios";
+import apiClient from '@/lib/api/axios';
 
-export type RequestStatus = "NEW" | "IN_REVIEW" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
-export type RequestPriority = "LOW" | "MEDIUM" | "HIGH";
+export type RequestStatus = 'NEW' | 'IN_REVIEW' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+export type RequestPriority = 'LOW' | 'MEDIUM' | 'HIGH';
 
 export interface ServiceRequest {
   id: string | number;
@@ -30,7 +30,7 @@ export interface RequestAttachment {
 export interface PaymentRecord {
   id: string | number;
   amount: number;
-  status: "PENDING" | "SENT" | "PAID" | "FAILED";
+  status: 'PENDING' | 'SENT' | 'PAID' | 'FAILED';
   date: string;
 }
 
@@ -46,21 +46,21 @@ export interface ServiceRequestDetail extends ServiceRequest {
 export const requestsService = {
   getRequests: async (): Promise<ServiceRequest[]> => {
     try {
-      const response = await apiClient.get("/service/request/all");
+      const response = await apiClient.get('/service/request/all');
       const requests = response.data?.data?.data || [];
       return requests.map((req: any) => ({
         id: req.id,
         customerId: req.customerId || req.customer?.id,
-        customerName: req.customer?.fullName || "Unknown",
-        customerEmail: req.customer?.email || "",
-        serviceType: req.service?.name || "Unknown",
+        customerName: req.customer?.fullName || 'Unknown',
+        customerEmail: req.customer?.email || '',
+        serviceType: req.service?.name || 'Unknown',
         status: req.status,
         priority: req.priority,
         assignedTo: req.assignedTo?.fullName || undefined,
         createdAt: req.createdAt,
       }));
     } catch (error) {
-      console.error("Failed to fetch requests", error);
+      console.error('Failed to fetch requests', error);
       return [];
     }
   },
@@ -80,7 +80,7 @@ export const requestsService = {
         id: fu.id,
         fileName: fu.fileName,
         url: fu.fileUrl,
-        fileSize: fu.fileSize ? `${(fu.fileSize / 1024 / 1024).toFixed(2)} MB` : "Unknown",
+        fileSize: fu.fileSize ? `${(fu.fileSize / 1024 / 1024).toFixed(2)} MB` : 'Unknown',
       }));
 
       const paymentHistory = (req.payments || []).map((p: any) => ({
@@ -93,10 +93,10 @@ export const requestsService = {
       return {
         id: req.id,
         customerId: req.customerId || req.customer?.id,
-        customerName: req.customer?.fullName || "Unknown",
-        customerEmail: req.customer?.email || "",
-        customerPhone: req.customer?.phone || "—",
-        serviceType: req.service?.name || "Unknown",
+        customerName: req.customer?.fullName || 'Unknown',
+        customerEmail: req.customer?.email || '',
+        customerPhone: req.customer?.phone || '—',
+        serviceType: req.service?.name || 'Unknown',
         status: req.status,
         priority: req.priority,
         assignedTo: req.assignedTo?.fullName || undefined,
@@ -104,11 +104,11 @@ export const requestsService = {
         createdAt: req.createdAt,
         formData,
         attachments,
-        internalNotes: req.internalNotes || "",
+        internalNotes: req.internalNotes || '',
         paymentHistory,
       };
     } catch (error) {
-      console.error("Failed to fetch request detail", error);
+      console.error('Failed to fetch request detail', error);
       return null;
     }
   },
@@ -118,17 +118,24 @@ export const requestsService = {
       const response = await apiClient.patch(`/service/request/status/${id}`, { status });
       return response.data;
     } catch (error) {
-      console.error("Failed to update request status", error);
+      console.error('Failed to update request status', error);
       throw error;
     }
   },
 
-  assignRequest: async (id: string | number, assignedToId: number, priority?: RequestPriority): Promise<any> => {
+  assignRequest: async (
+    id: string | number,
+    assignedToId: number,
+    priority?: RequestPriority
+  ): Promise<any> => {
     try {
-      const response = await apiClient.patch(`/service/request/assign/${id}`, { assignedToId, priority });
+      const response = await apiClient.patch(`/service/request/assign/${id}`, {
+        assignedToId,
+        priority,
+      });
       return response.data;
     } catch (error) {
-      console.error("Failed to assign request", error);
+      console.error('Failed to assign request', error);
       throw error;
     }
   },
@@ -138,8 +145,8 @@ export const requestsService = {
       const response = await apiClient.patch(`/service/request/notes/${id}`, { internalNotes });
       return response.data;
     } catch (error) {
-      console.error("Failed to update internal notes", error);
+      console.error('Failed to update internal notes', error);
       throw error;
     }
-  }
+  },
 };

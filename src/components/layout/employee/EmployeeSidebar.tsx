@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   BarChart2,
   Users,
@@ -21,61 +21,73 @@ import {
   Menu,
   PanelLeftClose,
   X,
-  Layers
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/providers/AuthProvider";
-import { useUiStore } from "@/store/uiStore";
+  Layers,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/providers/AuthProvider';
+import { useUiStore } from '@/store/uiStore';
 
 const NAV_GROUPS = [
   {
-    title: "OVERVIEW",
-    items: [
-      { name: "Dashboard", href: "/employee", icon: BarChart2, alwaysShow: true },
-    ]
+    title: 'OVERVIEW',
+    items: [{ name: 'Dashboard', href: '/employee', icon: BarChart2, alwaysShow: true }],
   },
   {
-    title: "MY WORKSPACE",
+    title: 'MY WORKSPACE',
     items: [
-      { name: "My Tasks", href: "/employee/tasks", icon: CheckSquare, alwaysShow: true },
-      { name: "Reimbursements", href: "/employee/reimbursements", icon: Receipt, alwaysShow: true },
-    ]
+      { name: 'My Tasks', href: '/employee/tasks', icon: CheckSquare, alwaysShow: true },
+      { name: 'Reimbursements', href: '/employee/reimbursements', icon: Receipt, alwaysShow: true },
+    ],
   },
   {
-    title: "GRANTED MODULES",
+    title: 'GRANTED MODULES',
     items: [
-      { name: "Users & Roles", href: "/admin/users", icon: Users, module: "USER_ROLE_MANAGEMENT" },
-      { name: "Service Requests", href: "/admin/requests", icon: ClipboardList, module: "ORDER_PAYMENT_MANAGEMENT" },
-      { name: "Payments", href: "/admin/payments", icon: CreditCard, module: "ORDER_PAYMENT_MANAGEMENT" },
-      { name: "Leads & CRM", href: "/admin/leads", icon: TrendingUp, module: "LEADS_ACCESS_MANAGEMENT" },
-      { name: "Services", href: "/admin/services", icon: Layers, module: "CONTENT_MANAGEMENT" },
-      { name: "Blog", href: "/admin/blog", icon: FileText, module: "BLOG_MANAGEMENT" },
-      { name: "Advertisements", href: "/admin/ads", icon: Monitor, module: "ADVERTISEMENT_MANAGEMENT" },
-      { name: "FAQ", href: "/admin/faq/faqs", icon: Layout, module: "CONTENT_MANAGEMENT" },
-    ]
+      { name: 'Users & Roles', href: '/admin/users', icon: Users, module: 'USER_ROLE_MANAGEMENT' },
+      {
+        name: 'Service Requests',
+        href: '/admin/requests',
+        icon: ClipboardList,
+        module: 'ORDER_PAYMENT_MANAGEMENT',
+      },
+      {
+        name: 'Payments',
+        href: '/admin/payments',
+        icon: CreditCard,
+        module: 'ORDER_PAYMENT_MANAGEMENT',
+      },
+      {
+        name: 'Leads & CRM',
+        href: '/admin/leads',
+        icon: TrendingUp,
+        module: 'LEADS_ACCESS_MANAGEMENT',
+      },
+      { name: 'Services', href: '/admin/services', icon: Layers, module: 'CONTENT_MANAGEMENT' },
+      { name: 'Blog', href: '/admin/blog', icon: FileText, module: 'BLOG_MANAGEMENT' },
+      {
+        name: 'Advertisements',
+        href: '/admin/ads',
+        icon: Monitor,
+        module: 'ADVERTISEMENT_MANAGEMENT',
+      },
+      { name: 'FAQ', href: '/admin/faq/faqs', icon: Layout, module: 'CONTENT_MANAGEMENT' },
+    ],
   },
   {
-    title: "SYSTEM",
-    items: [
-      { name: "Settings", href: "/employee/settings", icon: Settings, alwaysShow: true },
-    ]
-  }
+    title: 'SYSTEM',
+    items: [{ name: 'Settings', href: '/employee/settings', icon: Settings, alwaysShow: true }],
+  },
 ];
 
 export default function EmployeeSidebar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
   const [mounted, setMounted] = useState(false);
-  const { 
-    isSidebarCollapsed, 
-    setSidebarCollapsed, 
-    isMobileSidebarOpen, 
-    setMobileSidebarOpen 
-  } = useUiStore();
+  const { isSidebarCollapsed, setSidebarCollapsed, isMobileSidebarOpen, setMobileSidebarOpen } =
+    useUiStore();
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Automatically collapse sidebar to icon-only on medium screens, and handle resizing
     const handleResize = () => {
       if (window.innerWidth < 1024 && window.innerWidth >= 768) {
@@ -83,7 +95,7 @@ export default function EmployeeSidebar() {
       } else if (window.innerWidth >= 1024) {
         setSidebarCollapsed(false);
       }
-      
+
       if (window.innerWidth >= 768) {
         setMobileSidebarOpen(false);
       }
@@ -95,17 +107,22 @@ export default function EmployeeSidebar() {
   }, [setSidebarCollapsed, setMobileSidebarOpen]);
 
   // Filter NAV_GROUPS based on user permissions
-  const filteredGroups = NAV_GROUPS.map(group => ({
+  const filteredGroups = NAV_GROUPS.map((group) => ({
     ...group,
     items: group.items.filter((item: any) => {
       if (item.alwaysShow) return true;
       // If the user has read access or any access to the module
       if (item.module && user?.permissions && user.permissions[item.module]) {
-        return user.permissions[item.module].canRead || user.permissions[item.module].canUpdate || user.permissions[item.module].canCreate || user.permissions[item.module].canDelete;
+        return (
+          user.permissions[item.module].canRead ||
+          user.permissions[item.module].canUpdate ||
+          user.permissions[item.module].canCreate ||
+          user.permissions[item.module].canDelete
+        );
       }
       return false;
-    })
-  })).filter(group => group.items.length > 0);
+    }),
+  })).filter((group) => group.items.length > 0);
 
   if (!mounted) return null; // Prevent hydration mismatch
 
@@ -188,26 +205,35 @@ export default function EmployeeSidebar() {
             )}
             <div className="space-y-1">
               {group.items.map((link) => {
-                const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/employee' && link.href !== '/admin');
+                const isActive =
+                  pathname === link.href ||
+                  (pathname.startsWith(link.href) &&
+                    link.href !== '/employee' &&
+                    link.href !== '/admin');
                 const Icon = link.icon;
 
                 return (
-                  <Link key={link.href} href={link.href} title={isSidebarCollapsed ? link.name : undefined} onClick={() => setMobileSidebarOpen(false)}>
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    title={isSidebarCollapsed ? link.name : undefined}
+                    onClick={() => setMobileSidebarOpen(false)}
+                  >
                     <div
                       className={cn(
-                        "flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group relative",
-                        isSidebarCollapsed ? "justify-center" : "justify-start",
+                        'flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group relative',
+                        isSidebarCollapsed ? 'justify-center' : 'justify-start',
                         isActive
-                          ? "bg-white/5 text-white font-bold"
-                          : "text-gray-400 hover:bg-white/5 hover:text-gray-200 font-medium"
+                          ? 'bg-white/5 text-white font-bold'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-gray-200 font-medium'
                       )}
                     >
                       <Icon
                         size={20}
                         strokeWidth={isActive ? 2.5 : 2}
                         className={cn(
-                          "shrink-0 transition-colors",
-                          isActive ? "text-[#39FF14]" : "text-gray-500 group-hover:text-gray-300"
+                          'shrink-0 transition-colors',
+                          isActive ? 'text-[#39FF14]' : 'text-gray-500 group-hover:text-gray-300'
                         )}
                       />
 
@@ -216,7 +242,7 @@ export default function EmployeeSidebar() {
                           <motion.span
                             key="label"
                             initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: "auto" }}
+                            animate={{ opacity: 1, width: 'auto' }}
                             exit={{ opacity: 0, width: 0 }}
                             transition={{ duration: 0.2 }}
                             className="ml-3.5 text-[14px] whitespace-nowrap overflow-hidden text-ellipsis"
@@ -254,19 +280,23 @@ export default function EmployeeSidebar() {
             setMobileSidebarOpen(false);
             logout();
           }}
-          title={isSidebarCollapsed ? "Log out" : undefined}
+          title={isSidebarCollapsed ? 'Log out' : undefined}
           className={cn(
-            "flex items-center w-full py-2.5 rounded-xl text-gray-400 hover:bg-red-500/10 hover:text-red-400 transition-colors group",
-            isSidebarCollapsed ? "justify-center px-0" : "justify-start px-3"
+            'flex items-center w-full py-2.5 rounded-xl text-gray-400 hover:bg-red-500/10 hover:text-red-400 transition-colors group',
+            isSidebarCollapsed ? 'justify-center px-0' : 'justify-start px-3'
           )}
         >
-          <LogOut size={20} strokeWidth={2} className="shrink-0 text-gray-500 group-hover:text-red-400 transition-colors" />
+          <LogOut
+            size={20}
+            strokeWidth={2}
+            className="shrink-0 text-gray-500 group-hover:text-red-400 transition-colors"
+          />
           <AnimatePresence mode="wait">
             {!isSidebarCollapsed && (
               <motion.span
                 key="logout-text"
                 initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: "auto" }}
+                animate={{ opacity: 1, width: 'auto' }}
                 exit={{ opacity: 0, width: 0 }}
                 transition={{ duration: 0.2 }}
                 className="ml-3.5 font-bold text-[14px] whitespace-nowrap overflow-hidden"
@@ -300,10 +330,10 @@ export default function EmployeeSidebar() {
       <AnimatePresence>
         {isMobileSidebarOpen && (
           <motion.aside
-            initial={{ x: "-100%" }}
+            initial={{ x: '-100%' }}
             animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            exit={{ x: '-100%' }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="fixed inset-y-0 left-0 w-[260px] bg-[#0A0A0A] border-r border-white/10 flex flex-col z-50 shadow-2xl md:hidden overflow-hidden"
           >
             {sidebarContent}
@@ -315,7 +345,7 @@ export default function EmployeeSidebar() {
       <motion.aside
         initial={false}
         animate={{ width: isSidebarCollapsed ? 80 : 260 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="hidden md:flex h-screen bg-[#0A0A0A] border-r border-white/10 flex-col sticky top-0 z-40 shadow-sm transition-colors duration-300 overflow-hidden shrink-0"
       >
         {sidebarContent}

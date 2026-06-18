@@ -3,7 +3,8 @@ import { CompanyVaultDocument, companyVaultService } from '@/services/admin/comp
 
 export function useCompanyVaultLogic(initialDocuments: CompanyVaultDocument[] = []) {
   const [documents, setDocuments] = useState<CompanyVaultDocument[]>(initialDocuments);
-  const [filteredDocuments, setFilteredDocuments] = useState<CompanyVaultDocument[]>(initialDocuments);
+  const [filteredDocuments, setFilteredDocuments] =
+    useState<CompanyVaultDocument[]>(initialDocuments);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -25,7 +26,6 @@ export function useCompanyVaultLogic(initialDocuments: CompanyVaultDocument[] = 
     }
   }, []);
 
-
   useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredDocuments(documents);
@@ -43,7 +43,12 @@ export function useCompanyVaultLogic(initialDocuments: CompanyVaultDocument[] = 
   }, [searchTerm, documents]);
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("Are you sure you want to delete this document? This action cannot be undone.")) return false;
+    if (
+      !window.confirm(
+        'Are you sure you want to delete this document? This action cannot be undone.'
+      )
+    )
+      return false;
     try {
       await companyVaultService.deleteCompanyVault(id);
       await fetchDocuments();

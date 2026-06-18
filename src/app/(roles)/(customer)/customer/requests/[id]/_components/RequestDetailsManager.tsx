@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/providers/AuthProvider';
@@ -37,17 +37,17 @@ export default function RequestDetailsManager({ id, initialRequest }: RequestDet
     handleEditToggle,
     handleInputChange,
     handleSaveChanges,
-    handleCancelRequest
+    handleCancelRequest,
   } = useRequestDetailsLogic(id, initialRequest);
 
   const container = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
-  
+
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    show: { opacity: 1, y: 0 },
   };
 
   if (loading) return null; // Let the Suspense loading.tsx handle the skeleton
@@ -57,8 +57,13 @@ export default function RequestDetailsManager({ id, initialRequest }: RequestDet
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
         <AlertCircle className="w-10 h-10 text-red-500 mb-4" />
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Request Not Found</h2>
-        <p className="text-gray-500 dark:text-gray-400 mb-6">We couldn't find the service request you're looking for.</p>
-        <Link href="/customer/requests" className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 py-3 rounded-xl transition-all">
+        <p className="text-gray-500 dark:text-gray-400 mb-6">
+          We couldn't find the service request you're looking for.
+        </p>
+        <Link
+          href="/customer/requests"
+          className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 py-3 rounded-xl transition-all"
+        >
           Back to Requests
         </Link>
       </div>
@@ -68,8 +73,13 @@ export default function RequestDetailsManager({ id, initialRequest }: RequestDet
   const canEdit = !['COMPLETED', 'CANCELLED'].includes(request.status);
 
   return (
-    <motion.div variants={container} initial="hidden" animate="show" className="max-w-5xl mx-auto space-y-8 pb-12">
-      <RequestDetailsHeader 
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="max-w-5xl mx-auto space-y-8 pb-12"
+    >
+      <RequestDetailsHeader
         request={request}
         isEditing={isEditing}
         isCancelling={isCancelling}
@@ -81,8 +91,15 @@ export default function RequestDetailsManager({ id, initialRequest }: RequestDet
       />
 
       {message && (
-        <motion.div variants={item} className={`p-4 rounded-2xl flex items-center gap-3 ${message.type === 'success' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'}`}>
-          {message.type === 'success' ? <CheckCircle2 className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+        <motion.div
+          variants={item}
+          className={`p-4 rounded-2xl flex items-center gap-3 ${message.type === 'success' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'}`}
+        >
+          {message.type === 'success' ? (
+            <CheckCircle2 className="w-5 h-5" />
+          ) : (
+            <AlertCircle className="w-5 h-5" />
+          )}
           <p className="font-medium">{message.text}</p>
         </motion.div>
       )}
@@ -90,13 +107,13 @@ export default function RequestDetailsManager({ id, initialRequest }: RequestDet
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column - Main Details */}
         <div className="lg:col-span-2 space-y-8">
-          <RequestProjectDetails 
+          <RequestProjectDetails
             request={request}
             isEditing={isEditing}
             formData={formData}
             handleInputChange={handleInputChange}
           />
-          <RequestAttachments 
+          <RequestAttachments
             request={request}
             isEditing={isEditing}
             newFiles={newFiles}
@@ -107,7 +124,7 @@ export default function RequestDetailsManager({ id, initialRequest }: RequestDet
         {/* Right Column - Meta & Status */}
         <div className="space-y-8">
           <RequestOverview request={request} />
-          <RequestBilling 
+          <RequestBilling
             request={request}
             setInvoicePayment={setInvoicePayment}
             setIsInvoiceOpen={setIsInvoiceOpen}
@@ -115,7 +132,7 @@ export default function RequestDetailsManager({ id, initialRequest }: RequestDet
         </div>
       </div>
 
-      <InvoiceModal 
+      <InvoiceModal
         request={request}
         invoicePayment={invoicePayment}
         user={user}

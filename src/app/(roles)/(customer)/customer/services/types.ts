@@ -1,4 +1,4 @@
-export type RequestStatus = "NEW" | "IN_REVIEW" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
+export type RequestStatus = 'NEW' | 'IN_REVIEW' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
 
 export interface ServiceRequest {
   id: number;

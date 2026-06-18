@@ -42,9 +42,9 @@ export function useGoogleAuthLogic() {
           role === 'ADMIN' || role === 'SUPER_ADMIN' || role === 'STAFF'
             ? '/admin'
             : role === 'EMPLOYEE'
-            ? '/employee'
-            : '/customer';
-        
+              ? '/employee'
+              : '/customer';
+
         // Use replace instead of push to prevent back-button looping to this success page
         router.replace(redirectPath);
       } else {

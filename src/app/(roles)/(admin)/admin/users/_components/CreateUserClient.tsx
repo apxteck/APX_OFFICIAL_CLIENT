@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import { ArrowLeft, Save, User as UserIcon, X, Loader2, Plus } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useCreateUserLogic } from "../_hooks/useCreateUserLogic";
-import { Role } from "@/services/admin/users.service";
+import React from 'react';
+import Link from 'next/link';
+import { ArrowLeft, Save, User as UserIcon, X, Loader2, Plus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useCreateUserLogic } from '../_hooks/useCreateUserLogic';
+import { Role } from '@/services/admin/users.service';
 
 interface Props {
   initialRoles: Role[];
@@ -13,9 +13,19 @@ interface Props {
 
 export function CreateUserClient({ initialRoles }: Props) {
   const {
-    router, formData, roles, isSubmitting, isRoleModalOpen, setIsRoleModalOpen,
-    newRoleData, setNewRoleData, isCreatingRole, handleCreateRole, handleInputChange,
-    handleSubmit, isEmployee
+    router,
+    formData,
+    roles,
+    isSubmitting,
+    isRoleModalOpen,
+    setIsRoleModalOpen,
+    newRoleData,
+    setNewRoleData,
+    isCreatingRole,
+    handleCreateRole,
+    handleInputChange,
+    handleSubmit,
+    isEmployee,
   } = useCreateUserLogic(initialRoles);
 
   return (
@@ -24,7 +34,10 @@ export function CreateUserClient({ initialRoles }: Props) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
-            <Link href="/admin/users" className="hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 text-sm font-medium min-h-[44px]">
+            <Link
+              href="/admin/users"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 text-sm font-medium min-h-[44px]"
+            >
               <ArrowLeft size={16} />
               Back to Users
             </Link>
@@ -38,25 +51,25 @@ export function CreateUserClient({ initialRoles }: Props) {
         </div>
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
         className="w-full bg-white dark:bg-[#111111] border border-gray-200 dark:border-white/10 rounded-3xl p-6 md:p-8 shadow-sm"
       >
         <form onSubmit={handleSubmit} className="space-y-6">
-          
           <div className="flex flex-col md:flex-row gap-8">
             {/* Form Fields */}
             <div className="w-full space-y-6">
-              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-900 dark:text-white">Full Name <span className="text-red-500">*</span></label>
+                  <label className="text-sm font-bold text-gray-900 dark:text-white">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
                   <div className="relative">
                     <UserIcon className="absolute left-4 top-3.5 text-gray-400" size={18} />
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleInputChange}
@@ -67,9 +80,11 @@ export function CreateUserClient({ initialRoles }: Props) {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-900 dark:text-white">Email Address <span className="text-red-500">*</span></label>
-                  <input 
-                    type="email" 
+                  <label className="text-sm font-bold text-gray-900 dark:text-white">
+                    Email Address <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
@@ -82,9 +97,11 @@ export function CreateUserClient({ initialRoles }: Props) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-900 dark:text-white">Phone Number <span className="text-red-500">*</span></label>
-                  <input 
-                    type="text" 
+                  <label className="text-sm font-bold text-gray-900 dark:text-white">
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
@@ -94,9 +111,11 @@ export function CreateUserClient({ initialRoles }: Props) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-900 dark:text-white">Temporary Password <span className="text-red-500">*</span></label>
-                  <input 
-                    type="password" 
+                  <label className="text-sm font-bold text-gray-900 dark:text-white">
+                    Temporary Password <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="password"
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
@@ -110,7 +129,9 @@ export function CreateUserClient({ initialRoles }: Props) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-bold text-gray-900 dark:text-white">Assign Role <span className="text-red-500">*</span></label>
+                    <label className="text-sm font-bold text-gray-900 dark:text-white">
+                      Assign Role <span className="text-red-500">*</span>
+                    </label>
                     <button
                       type="button"
                       onClick={() => setIsRoleModalOpen(true)}
@@ -126,55 +147,97 @@ export function CreateUserClient({ initialRoles }: Props) {
                     className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] appearance-none rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                     required
                   >
-                    <option value="" disabled>Select a Role</option>
-                    {Array.isArray(roles) && roles.map((role) => (
-                      <option key={role.id} value={role.id}>
-                        {role.name.replace(/_/g, ' ')}
-                      </option>
-                    ))}
+                    <option value="" disabled>
+                      Select a Role
+                    </option>
+                    {Array.isArray(roles) &&
+                      roles.map((role) => (
+                        <option key={role.id} value={role.id}>
+                          {role.name.replace(/_/g, ' ')}
+                        </option>
+                      ))}
                   </select>
                 </div>
                 <div className="flex items-center gap-3 pt-8">
                   <label className="relative inline-flex items-center cursor-pointer">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       name="isActive"
                       checked={formData.isActive}
                       onChange={handleInputChange}
-                      className="sr-only peer" 
+                      className="sr-only peer"
                     />
                     <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
-                    <span className="ml-3 text-sm font-bold text-gray-900 dark:text-white">Account is Active</span>
+                    <span className="ml-3 text-sm font-bold text-gray-900 dark:text-white">
+                      Account is Active
+                    </span>
                   </label>
                 </div>
               </div>
-              
             </div>
           </div>
 
           {/* Profile Details */}
           <div className="pt-6 border-t border-gray-100 dark:border-white/5">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Profile Details</h3>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+              Profile Details
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-bold text-gray-900 dark:text-white">Date of Birth</label>
-                <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                <label className="text-sm font-bold text-gray-900 dark:text-white">
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  name="dateOfBirth"
+                  value={formData.dateOfBirth}
+                  onChange={handleInputChange}
+                  className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-900 dark:text-white">Address</label>
-                <input type="text" name="address" value={formData.address} onChange={handleInputChange} placeholder="e.g. 123 Main St" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  placeholder="e.g. 123 Main St"
+                  className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-900 dark:text-white">City</label>
-                <input type="text" name="city" value={formData.city} onChange={handleInputChange} placeholder="e.g. New York" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  placeholder="e.g. New York"
+                  className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-900 dark:text-white">State</label>
-                <input type="text" name="state" value={formData.state} onChange={handleInputChange} placeholder="e.g. NY" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                <input
+                  type="text"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleInputChange}
+                  placeholder="e.g. NY"
+                  className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-900 dark:text-white">Pincode</label>
-                <input type="text" name="pincode" value={formData.pincode} onChange={handleInputChange} placeholder="e.g. 10001" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                <input
+                  type="text"
+                  name="pincode"
+                  value={formData.pincode}
+                  onChange={handleInputChange}
+                  placeholder="e.g. 10001"
+                  className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                />
               </div>
             </div>
           </div>
@@ -183,46 +246,121 @@ export function CreateUserClient({ initialRoles }: Props) {
             <>
               {/* Employee Details */}
               <div className="pt-6 border-t border-gray-100 dark:border-white/5">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Employee Details</h3>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                  Employee Details
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-900 dark:text-white">Department</label>
-                    <input type="text" name="department" value={formData.department} onChange={handleInputChange} placeholder="e.g. IT" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    <label className="text-sm font-bold text-gray-900 dark:text-white">
+                      Department
+                    </label>
+                    <input
+                      type="text"
+                      name="department"
+                      value={formData.department}
+                      onChange={handleInputChange}
+                      placeholder="e.g. IT"
+                      className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-900 dark:text-white">Designation</label>
-                    <input type="text" name="designation" value={formData.designation} onChange={handleInputChange} placeholder="e.g. Software Engineer" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    <label className="text-sm font-bold text-gray-900 dark:text-white">
+                      Designation
+                    </label>
+                    <input
+                      type="text"
+                      name="designation"
+                      value={formData.designation}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Software Engineer"
+                      className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-900 dark:text-white">Joining Date</label>
-                    <input type="date" name="joiningDate" value={formData.joiningDate} onChange={handleInputChange} className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    <label className="text-sm font-bold text-gray-900 dark:text-white">
+                      Joining Date
+                    </label>
+                    <input
+                      type="date"
+                      name="joiningDate"
+                      value={formData.joiningDate}
+                      onChange={handleInputChange}
+                      className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    />
                   </div>
                 </div>
               </div>
 
               {/* Bank Details */}
               <div className="pt-6 border-t border-gray-100 dark:border-white/5">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Bank Details</h3>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                  Bank Details
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-900 dark:text-white">Bank Name</label>
-                    <input type="text" name="bankName" value={formData.bankName} onChange={handleInputChange} placeholder="e.g. HDFC Bank" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    <label className="text-sm font-bold text-gray-900 dark:text-white">
+                      Bank Name
+                    </label>
+                    <input
+                      type="text"
+                      name="bankName"
+                      value={formData.bankName}
+                      onChange={handleInputChange}
+                      placeholder="e.g. HDFC Bank"
+                      className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-900 dark:text-white">Account Name</label>
-                    <input type="text" name="bankAccountName" value={formData.bankAccountName} onChange={handleInputChange} placeholder="e.g. John Doe" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    <label className="text-sm font-bold text-gray-900 dark:text-white">
+                      Account Name
+                    </label>
+                    <input
+                      type="text"
+                      name="bankAccountName"
+                      value={formData.bankAccountName}
+                      onChange={handleInputChange}
+                      placeholder="e.g. John Doe"
+                      className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-900 dark:text-white">Account Number</label>
-                    <input type="text" name="bankAccountNumber" value={formData.bankAccountNumber} onChange={handleInputChange} placeholder="e.g. 1234567890" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    <label className="text-sm font-bold text-gray-900 dark:text-white">
+                      Account Number
+                    </label>
+                    <input
+                      type="text"
+                      name="bankAccountNumber"
+                      value={formData.bankAccountNumber}
+                      onChange={handleInputChange}
+                      placeholder="e.g. 1234567890"
+                      className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-900 dark:text-white">IFSC Code</label>
-                    <input type="text" name="bankIfscCode" value={formData.bankIfscCode} onChange={handleInputChange} placeholder="e.g. HDFC0001234" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    <label className="text-sm font-bold text-gray-900 dark:text-white">
+                      IFSC Code
+                    </label>
+                    <input
+                      type="text"
+                      name="bankIfscCode"
+                      value={formData.bankIfscCode}
+                      onChange={handleInputChange}
+                      placeholder="e.g. HDFC0001234"
+                      className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-gray-900 dark:text-white">UPI ID</label>
-                    <input type="text" name="upiId" value={formData.upiId} onChange={handleInputChange} placeholder="e.g. john@upi" className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
+                    <label className="text-sm font-bold text-gray-900 dark:text-white">
+                      UPI ID
+                    </label>
+                    <input
+                      type="text"
+                      name="upiId"
+                      value={formData.upiId}
+                      onChange={handleInputChange}
+                      placeholder="e.g. john@upi"
+                      className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                    />
                   </div>
                 </div>
               </div>
@@ -230,14 +368,14 @@ export function CreateUserClient({ initialRoles }: Props) {
           )}
 
           <div className="pt-8 flex items-center justify-end gap-3 border-t border-gray-100 dark:border-white/5">
-            <button 
+            <button
               type="button"
               onClick={() => router.back()}
               className="px-6 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
             >
               Cancel
             </button>
-            <button 
+            <button
               type="submit"
               disabled={isSubmitting}
               className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm transition-colors shadow-[0px_4px_14px_rgba(79,70,229,0.3)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
@@ -279,14 +417,19 @@ export function CreateUserClient({ initialRoles }: Props) {
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                   Quick Create Role
                 </h3>
-                <button onClick={() => setIsRoleModalOpen(false)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 min-w-[44px] min-h-[44px] flex items-center justify-center">
+                <button
+                  onClick={() => setIsRoleModalOpen(false)}
+                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                >
                   <X size={20} />
                 </button>
               </div>
-              
+
               <form onSubmit={handleCreateRole} className="p-6 space-y-4">
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">Role Name *</label>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+                    Role Name *
+                  </label>
                   <input
                     type="text"
                     required
@@ -295,13 +438,19 @@ export function CreateUserClient({ initialRoles }: Props) {
                     placeholder="e.g. DATA ANALYST"
                     className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/50 outline-none uppercase dark:text-white"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Spaces will be automatically converted to underscores.</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Spaces will be automatically converted to underscores.
+                  </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">Description</label>
+                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+                    Description
+                  </label>
                   <textarea
                     value={newRoleData.description}
-                    onChange={(e) => setNewRoleData({ ...newRoleData, description: e.target.value })}
+                    onChange={(e) =>
+                      setNewRoleData({ ...newRoleData, description: e.target.value })
+                    }
                     placeholder="Brief description..."
                     rows={2}
                     className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 min-h-[44px] rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/50 outline-none dark:text-white resize-none"

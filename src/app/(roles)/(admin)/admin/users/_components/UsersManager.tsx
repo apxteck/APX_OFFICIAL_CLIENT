@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import { UsersHeader } from "./UsersHeader";
-import { UsersTable } from "./UsersTable";
-import { useUsersLogic } from "../_hooks/useUsersLogic";
-import { User, Role } from "@/services/admin/users.service";
+'use client';
+import React from 'react';
+import { UsersHeader } from './UsersHeader';
+import { UsersTable } from './UsersTable';
+import { useUsersLogic } from '../_hooks/useUsersLogic';
+import { User, Role } from '@/services/admin/users.service';
 
 interface Props {
   initialUsers: User[];
@@ -16,7 +16,7 @@ export default function UsersManager({ initialUsers, initialRoles }: Props) {
   return (
     <>
       <UsersHeader />
-      <UsersTable 
+      <UsersTable
         filteredUsers={logic.filteredUsers}
         setSearchTerm={logic.setSearchTerm}
         currentSort={logic.currentSort}

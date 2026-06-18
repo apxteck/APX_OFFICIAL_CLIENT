@@ -5,7 +5,15 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/axios';
 import { Service } from '@/app/types/service.types';
-import { FaFacebookF, FaInstagram, FaXTwitter, FaThreads, FaLinkedinIn, FaYoutube, FaPinterestP } from 'react-icons/fa6';
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaXTwitter,
+  FaThreads,
+  FaLinkedinIn,
+  FaYoutube,
+  FaPinterestP,
+} from 'react-icons/fa6';
 
 export function Footer() {
   const [services, setServices] = useState<Service[]>([]);
@@ -126,69 +134,92 @@ export function Footer() {
               >
                 <FaPinterestP className="w-5 h-5" />
               </a>
-
             </div>
           </div>
 
           <div className="grid grid-cols-2 col-span-1 md:col-span-2 gap-8 w-full text-left">
             <div>
-            <h3 className="font-semibold mb-4 md:mb-6">Services</h3>
-            <ul className="space-y-2 md:space-y-4 text-foreground/70 text-sm">
-              {services.length > 0 ? (
-                services.map((service) => (
-                  <li key={service.id}>
-                    <Link href={`/services/${service.slug}`} className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
-                      {service.name}
-                    </Link>
-                  </li>
-                ))
-              ) : (
-                <>
-                  <li>
-                    <Link href="/services" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
-                      Web Development
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/services" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
-                      UI/UX Design
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/services" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
-                      SEO Optimization
-                    </Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
+              <h3 className="font-semibold mb-4 md:mb-6">Services</h3>
+              <ul className="space-y-2 md:space-y-4 text-foreground/70 text-sm">
+                {services.length > 0 ? (
+                  services.map((service) => (
+                    <li key={service.id}>
+                      <Link
+                        href={`/services/${service.slug}`}
+                        className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full"
+                      >
+                        {service.name}
+                      </Link>
+                    </li>
+                  ))
+                ) : (
+                  <>
+                    <li>
+                      <Link
+                        href="/services"
+                        className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full"
+                      >
+                        Web Development
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/services"
+                        className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full"
+                      >
+                        UI/UX Design
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/services"
+                        className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full"
+                      >
+                        SEO Optimization
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
 
-          <div>
-            <h3 className="font-semibold mb-4 md:mb-6">Company</h3>
-            <ul className="space-y-2 md:space-y-4 text-foreground/70 text-sm">
-              <li>
-                <Link href="/about" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full">
-                  Terms of Service
-                </Link>
-              </li>
-            </ul>
-          </div>
+            <div>
+              <h3 className="font-semibold mb-4 md:mb-6">Company</h3>
+              <ul className="space-y-2 md:space-y-4 text-foreground/70 text-sm">
+                <li>
+                  <Link
+                    href="/about"
+                    className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full"
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full"
+                  >
+                    Careers
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-accent transition-colors inline-block py-2 md:py-0 w-full"
+                  >
+                    Terms of Service
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 

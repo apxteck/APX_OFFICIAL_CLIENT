@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 // Removed dynamic import
-import { usersService, User, Role } from "@/services/admin/users.service";
+import { usersService, User, Role } from '@/services/admin/users.service';
 
 import UsersManager from './_components/UsersManager';
 
@@ -11,12 +11,12 @@ export default async function UsersManagementPage() {
   try {
     const [usersData, rolesData] = await Promise.all([
       usersService.getUsers(),
-      usersService.getRoles()
+      usersService.getRoles(),
     ]);
     if (usersData) initialUsers = usersData;
     if (rolesData) initialRoles = rolesData;
   } catch (error) {
-    console.error("Failed to fetch initial users or roles:", error);
+    console.error('Failed to fetch initial users or roles:', error);
   }
 
   return (

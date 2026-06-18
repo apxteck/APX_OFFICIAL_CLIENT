@@ -1,18 +1,18 @@
-import React, { Suspense } from "react";
-import { ReimbursementsHeader } from "./_components/ReimbursementsHeader";
-import { reimbursementsService } from "@/services/admin/reimbursements.service";
-import ReimbursementsLoading from "./loading";
+import React, { Suspense } from 'react';
+import { ReimbursementsHeader } from './_components/ReimbursementsHeader';
+import { reimbursementsService } from '@/services/admin/reimbursements.service';
+import ReimbursementsLoading from './loading';
 // Removed dynamic import
 
 import ReimbursementsManager from './_components/ReimbursementsManager';
 
 async function ReimbursementsFetcher() {
-  let initialReimbursements: import("@/services/admin/reimbursements.service").Reimbursement[] = [];
+  let initialReimbursements: import('@/services/admin/reimbursements.service').Reimbursement[] = [];
   try {
     const data = await reimbursementsService.getReimbursements();
     initialReimbursements = data || [];
   } catch (error) {
-    console.error("Failed to pre-fetch reimbursements:", error);
+    console.error('Failed to pre-fetch reimbursements:', error);
   }
 
   return <ReimbursementsManager initialReimbursements={initialReimbursements} />;

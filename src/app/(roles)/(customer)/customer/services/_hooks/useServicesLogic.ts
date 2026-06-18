@@ -21,7 +21,7 @@ export const useServicesLogic = (initialServices: ServiceRequest[]) => {
           setServices(activeRequests);
         }
       } catch (error) {
-        console.error("Failed to load services:", error);
+        console.error('Failed to load services:', error);
       } finally {
         if (mounted) setIsLoading(false);
       }

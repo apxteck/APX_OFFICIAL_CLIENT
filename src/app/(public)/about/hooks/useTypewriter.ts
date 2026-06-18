@@ -12,7 +12,7 @@ export function useTypewriter(
 
   useEffect(() => {
     if (words.length === 0) return;
-    
+
     const currentWord = words[loopNum % words.length];
     let timeout: NodeJS.Timeout;
 

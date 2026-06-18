@@ -1,7 +1,7 @@
-import React from "react";
-import AdminSidebar from "@/components/layout/admin/AdminSidebar";
-import AdminTopbar from "@/components/layout/admin/AdminTopbar";
-import { AdminProviders } from "./_components/AdminProviders";
+import React from 'react';
+import AdminSidebar from '@/components/layout/admin/AdminSidebar';
+import AdminTopbar from '@/components/layout/admin/AdminTopbar';
+import { AdminProviders } from './_components/AdminProviders';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,9 +10,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="flex-1 flex flex-col min-w-0">
         <AdminTopbar />
         <main className="flex-1 p-4 sm:p-6 md:p-8 pb-safe pt-safe overflow-x-hidden overflow-y-auto relative z-0">
-          <div className="mx-auto max-w-7xl w-full">
-            {children}
-          </div>
+          <div className="mx-auto max-w-7xl w-full">{children}</div>
         </main>
       </div>
       <AdminProviders />

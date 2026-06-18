@@ -1,6 +1,6 @@
-import React from "react";
-import { MonitorPlay, PlusCircle, DollarSign } from "lucide-react";
-import Link from "next/link";
+import React from 'react';
+import { MonitorPlay, PlusCircle, DollarSign } from 'lucide-react';
+import Link from 'next/link';
 
 interface AdsHeaderProps {
   onCreateClick: () => void;
@@ -21,14 +21,14 @@ export function AdsHeader({ onCreateClick }: AdsHeaderProps) {
         </p>
       </div>
       <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
-        <Link 
+        <Link
           href="/admin/ads/pricing"
           className="bg-white hover:bg-gray-50 dark:bg-[#222] dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors border border-gray-200 dark:border-white/10 flex items-center justify-center gap-2 flex-1 sm:flex-none"
         >
           <DollarSign size={18} className="text-indigo-500" />
           Pricing Slots
         </Link>
-        <button 
+        <button
           onClick={onCreateClick}
           className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors shadow-md flex items-center justify-center gap-2 flex-1 sm:flex-none"
         >

@@ -141,7 +141,8 @@ export function ContactCTASection() {
                     <div>
                       <p className="font-bold text-sm text-foreground">Visit Us</p>
                       <p className="text-foreground/60 text-sm">
-                        Flat No. 24, 3rd Floor, Balaji Residency Dighe, Manaji Nagar, Narhe, Pune. 411041
+                        Flat No. 24, 3rd Floor, Balaji Residency Dighe, Manaji Nagar, Narhe, Pune.
+                        411041
                       </p>
                     </div>
                   </div>
@@ -263,7 +264,11 @@ export function ContactCTASection() {
                       Select a service of interest
                     </option>
                     {services.map((service) => (
-                      <option key={service.id} value={service.name} className="text-foreground bg-background">
+                      <option
+                        key={service.id}
+                        value={service.name}
+                        className="text-foreground bg-background"
+                      >
                         {service.name}
                       </option>
                     ))}

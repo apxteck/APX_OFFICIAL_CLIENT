@@ -9,20 +9,20 @@ export const generateArticleSchema = (project: Portfolio, slug: string) => ({
   author: {
     '@type': 'Organization',
     name: 'APXTeck',
-    url: 'https://apxteck.com'
+    url: 'https://apxteck.com',
   },
   publisher: {
     '@type': 'Organization',
     name: 'APXTeck',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://apxteck.com/logo.png'
-    }
+      url: 'https://apxteck.com/logo.png',
+    },
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': `https://apxteck.com/portfolio/${slug}`
-  }
+    '@id': `https://apxteck.com/portfolio/${slug}`,
+  },
 });
 
 export const generateDetailBreadcrumbSchema = (project: Portfolio, slug: string) => ({

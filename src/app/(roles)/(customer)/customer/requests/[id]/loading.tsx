@@ -29,8 +29,8 @@ export default function RequestDetailsLoading() {
           <div className="bg-white dark:bg-[#111] p-6 md:p-8 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm h-[200px]">
             <div className="h-6 w-48 bg-gray-200 dark:bg-white/10 rounded mb-8"></div>
             <div className="grid grid-cols-2 gap-4">
-               <div className="h-20 bg-gray-200 dark:bg-white/10 rounded-2xl"></div>
-               <div className="h-20 bg-gray-200 dark:bg-white/10 rounded-2xl"></div>
+              <div className="h-20 bg-gray-200 dark:bg-white/10 rounded-2xl"></div>
+              <div className="h-20 bg-gray-200 dark:bg-white/10 rounded-2xl"></div>
             </div>
           </div>
         </div>
@@ -45,8 +45,8 @@ export default function RequestDetailsLoading() {
             </div>
           </div>
           <div className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm h-[150px]">
-             <div className="h-6 w-32 bg-gray-200 dark:bg-white/10 rounded mb-6"></div>
-             <div className="h-16 w-full bg-gray-200 dark:bg-white/10 rounded-xl"></div>
+            <div className="h-6 w-32 bg-gray-200 dark:bg-white/10 rounded mb-6"></div>
+            <div className="h-16 w-full bg-gray-200 dark:bg-white/10 rounded-xl"></div>
           </div>
         </div>
       </div>

@@ -49,7 +49,10 @@ export default function VerifyEmailClient() {
               onResendSubmit={onResendSubmit}
             />
 
-            <nav className="text-center pt-2 md:pt-4 w-full flex items-center justify-center" aria-label="Back to Login Navigation">
+            <nav
+              className="text-center pt-2 md:pt-4 w-full flex items-center justify-center"
+              aria-label="Back to Login Navigation"
+            >
               <Link
                 href="/login"
                 className="text-xs sm:text-sm text-foreground/50 hover:text-foreground font-semibold inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-4 rounded-full transition-colors"

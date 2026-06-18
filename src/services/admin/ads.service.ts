@@ -1,5 +1,5 @@
-import apiClient from "@/lib/api/axios";
-import { Ad, AdPricingSlot } from "@/app/types/ad.types";
+import apiClient from '@/lib/api/axios';
+import { Ad, AdPricingSlot } from '@/app/types/ad.types';
 
 export interface PaginationParams {
   page?: number;
@@ -7,7 +7,7 @@ export interface PaginationParams {
   adType?: string;
   placement?: string;
   isActive?: boolean;
-  dateStatus?: "active" | "expired" | "scheduled";
+  dateStatus?: 'active' | 'expired' | 'scheduled';
 }
 
 export interface PaginatedAds {
@@ -25,10 +25,10 @@ export interface PaginatedAds {
 export const adsService = {
   getAds: async (params?: PaginationParams): Promise<PaginatedAds> => {
     try {
-      const response = await apiClient.get("/advertisement", { params });
+      const response = await apiClient.get('/advertisement', { params });
       return response.data?.data || { data: [], pagination: {} };
     } catch (error) {
-      console.error("Failed to fetch ads:", error);
+      console.error('Failed to fetch ads:', error);
       throw error;
     }
   },
@@ -45,10 +45,10 @@ export const adsService = {
 
   createAd: async (formData: FormData): Promise<Ad> => {
     try {
-      const response = await apiClient.post("/advertisement", formData);
+      const response = await apiClient.post('/advertisement', formData);
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to create ad:", error);
+      console.error('Failed to create ad:', error);
       throw error;
     }
   },
@@ -84,20 +84,20 @@ export const adsService = {
 
   getPricingSlots: async (): Promise<AdPricingSlot[]> => {
     try {
-      const response = await apiClient.get("/advertisement/pricing-slots");
+      const response = await apiClient.get('/advertisement/pricing-slots');
       return response.data?.data || [];
     } catch (error) {
-      console.error("Failed to fetch pricing slots:", error);
+      console.error('Failed to fetch pricing slots:', error);
       throw error;
     }
   },
 
   createPricingSlot: async (data: Partial<AdPricingSlot>): Promise<AdPricingSlot> => {
     try {
-      const response = await apiClient.post("/advertisement/createPricingSlot", data);
+      const response = await apiClient.post('/advertisement/createPricingSlot', data);
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to create pricing slot:", error);
+      console.error('Failed to create pricing slot:', error);
       throw error;
     }
   },

@@ -5,17 +5,35 @@ interface DashboardReimbursementsTableProps {
   reimbursements: ReimbursementItem[];
 }
 
-export function DashboardReimbursementsTable({ reimbursements }: DashboardReimbursementsTableProps) {
+export function DashboardReimbursementsTable({
+  reimbursements,
+}: DashboardReimbursementsTableProps) {
   const getStatusBadge = (status: ReimbursementItem['status']) => {
     switch (status) {
       case 'PENDING':
-        return <span className="px-2 py-0.5 text-xs font-bold rounded bg-amber-500/10 text-amber-400">Pending</span>;
+        return (
+          <span className="px-2 py-0.5 text-xs font-bold rounded bg-amber-500/10 text-amber-400">
+            Pending
+          </span>
+        );
       case 'APPROVED':
-        return <span className="px-2 py-0.5 text-xs font-bold rounded bg-blue-500/10 text-blue-400">Approved</span>;
+        return (
+          <span className="px-2 py-0.5 text-xs font-bold rounded bg-blue-500/10 text-blue-400">
+            Approved
+          </span>
+        );
       case 'REJECTED':
-        return <span className="px-2 py-0.5 text-xs font-bold rounded bg-red-500/10 text-red-400">Rejected</span>;
+        return (
+          <span className="px-2 py-0.5 text-xs font-bold rounded bg-red-500/10 text-red-400">
+            Rejected
+          </span>
+        );
       case 'PAID':
-        return <span className="px-2 py-0.5 text-xs font-bold rounded bg-emerald-500/10 text-emerald-400">Paid</span>;
+        return (
+          <span className="px-2 py-0.5 text-xs font-bold rounded bg-emerald-500/10 text-emerald-400">
+            Paid
+          </span>
+        );
     }
   };
 
@@ -36,18 +54,29 @@ export function DashboardReimbursementsTable({ reimbursements }: DashboardReimbu
           </thead>
           <tbody className="divide-y divide-gray-100 dark:divide-white/5 text-sm font-medium">
             {reimbursements.map((rmb) => (
-              <tr key={rmb.id} className="hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition-colors group">
-                <td className="py-4 px-4 font-mono text-indigo-500 dark:text-indigo-400 font-bold">RMB-{rmb.id}</td>
+              <tr
+                key={rmb.id}
+                className="hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition-colors group"
+              >
+                <td className="py-4 px-4 font-mono text-indigo-500 dark:text-indigo-400 font-bold">
+                  RMB-{rmb.id}
+                </td>
                 <td className="py-4 px-4 text-gray-900 dark:text-gray-200">{rmb.title}</td>
-                <td className="py-4 px-4 font-bold text-gray-900 dark:text-white">₹{rmb.amount.toLocaleString()}</td>
+                <td className="py-4 px-4 font-bold text-gray-900 dark:text-white">
+                  ₹{rmb.amount.toLocaleString()}
+                </td>
                 <td className="py-4 px-4 text-gray-500 dark:text-gray-400">{rmb.category}</td>
                 <td className="py-4 px-4">{getStatusBadge(rmb.status)}</td>
-                <td className="py-4 px-4 text-right text-gray-500 dark:text-gray-400 font-mono text-xs">{new Date(rmb.createdAt).toLocaleDateString()}</td>
+                <td className="py-4 px-4 text-right text-gray-500 dark:text-gray-400 font-mono text-xs">
+                  {new Date(rmb.createdAt).toLocaleDateString()}
+                </td>
               </tr>
             ))}
             {reimbursements.length === 0 && (
               <tr>
-                <td colSpan={6} className="text-center py-6 text-gray-500">No reimbursement history available.</td>
+                <td colSpan={6} className="text-center py-6 text-gray-500">
+                  No reimbursement history available.
+                </td>
               </tr>
             )}
           </tbody>

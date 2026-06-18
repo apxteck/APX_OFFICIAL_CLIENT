@@ -39,7 +39,11 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
     set({ isLoading: true });
     try {
       const limit = 20;
-      const { notifications: newNotifs, total, unreadCount } = await fetchNotifications(page, limit);
+      const {
+        notifications: newNotifs,
+        total,
+        unreadCount,
+      } = await fetchNotifications(page, limit);
 
       set((state) => {
         const mergedNotifications =

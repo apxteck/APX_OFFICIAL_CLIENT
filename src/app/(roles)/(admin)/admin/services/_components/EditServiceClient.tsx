@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import { ArrowLeft, Save, Image as ImageIcon } from "lucide-react";
-import { motion } from "framer-motion";
-import { useEditServiceLogic } from "../_hooks/useEditServiceLogic";
-import { Service } from "@/app/types/service.types";
+import React from 'react';
+import Link from 'next/link';
+import { ArrowLeft, Save, Image as ImageIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useEditServiceLogic } from '../_hooks/useEditServiceLogic';
+import { Service } from '@/app/types/service.types';
 
 interface Props {
   initialService: Service;
@@ -20,7 +20,7 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
     handleInputChange,
     handleFileChange,
     handleSubmit,
-    router
+    router,
   } = useEditServiceLogic(initialService, serviceId);
 
   return (
@@ -29,7 +29,10 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
-            <Link href="/admin/services" className="hover:text-gray-900 dark:hover:text-white transition-colors flex items-center justify-center gap-1 text-sm font-medium min-h-[44px]">
+            <Link
+              href="/admin/services"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors flex items-center justify-center gap-1 text-sm font-medium min-h-[44px]"
+            >
               <ArrowLeft size={16} />
               Back to Services
             </Link>
@@ -43,25 +46,30 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
         </div>
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
         className="w-full bg-white dark:bg-[#111111] border border-gray-200 dark:border-white/10 rounded-3xl p-6 md:p-8 shadow-sm"
       >
         <form onSubmit={handleSubmit} className="space-y-6">
-          
           <div className="flex flex-col md:flex-row gap-8">
             {/* Thumbnail Upload */}
             <div className="w-full md:w-1/3 shrink-0 space-y-2">
-              <label className="text-sm font-bold text-gray-900 dark:text-white">Service Thumbnail</label>
-              <div 
+              <label className="text-sm font-bold text-gray-900 dark:text-white">
+                Service Thumbnail
+              </label>
+              <div
                 className="w-full aspect-square bg-gray-50 dark:bg-[#1a1a1a] border-2 border-dashed border-gray-200 dark:border-white/10 rounded-2xl flex flex-col items-center justify-center p-4 relative overflow-hidden group hover:border-indigo-500 transition-colors cursor-pointer"
                 onClick={() => document.getElementById('thumbnail-upload')?.click()}
               >
                 {previewImage ? (
                   <>
-                    <img src={previewImage} alt="Thumbnail preview" className="absolute inset-0 w-full h-full object-cover" />
+                    <img
+                      src={previewImage}
+                      alt="Thumbnail preview"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <span className="text-white font-bold text-sm">Change Image</span>
                     </div>
@@ -69,15 +77,17 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
                 ) : (
                   <div className="text-center">
                     <ImageIcon className="mx-auto h-8 w-8 text-gray-400 mb-2" />
-                    <span className="text-sm font-bold text-gray-500 dark:text-gray-400">Upload Image</span>
+                    <span className="text-sm font-bold text-gray-500 dark:text-gray-400">
+                      Upload Image
+                    </span>
                     <p className="text-[10px] text-gray-400 mt-1">JPEG, PNG, WebP</p>
                   </div>
                 )}
-                <input 
-                  id="thumbnail-upload" 
-                  type="file" 
-                  accept="image/*" 
-                  className="hidden" 
+                <input
+                  id="thumbnail-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
                   onChange={handleFileChange}
                 />
               </div>
@@ -87,9 +97,11 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
             <div className="w-full space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-900 dark:text-white">Service Name <span className="text-red-500">*</span></label>
-                  <input 
-                    type="text" 
+                  <label className="text-sm font-bold text-gray-900 dark:text-white">
+                    Service Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -100,8 +112,8 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-gray-900 dark:text-white">Slug</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     name="slug"
                     value={formData.slug}
                     onChange={handleInputChange}
@@ -113,9 +125,11 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-900 dark:text-white">Price Indicator</label>
-                  <input 
-                    type="text" 
+                  <label className="text-sm font-bold text-gray-900 dark:text-white">
+                    Price Indicator
+                  </label>
+                  <input
+                    type="text"
                     name="price"
                     value={formData.price}
                     onChange={handleInputChange}
@@ -124,9 +138,11 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-900 dark:text-white">Timeline</label>
-                  <input 
-                    type="text" 
+                  <label className="text-sm font-bold text-gray-900 dark:text-white">
+                    Timeline
+                  </label>
+                  <input
+                    type="text"
                     name="timeline"
                     value={formData.timeline}
                     onChange={handleInputChange}
@@ -137,8 +153,10 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-gray-900 dark:text-white">Description</label>
-                <textarea 
+                <label className="text-sm font-bold text-gray-900 dark:text-white">
+                  Description
+                </label>
+                <textarea
                   name="description"
                   value={formData.description}
                   onChange={handleInputChange}
@@ -150,9 +168,11 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-900 dark:text-white">Sort Order</label>
-                  <input 
-                    type="number" 
+                  <label className="text-sm font-bold text-gray-900 dark:text-white">
+                    Sort Order
+                  </label>
+                  <input
+                    type="number"
                     name="sortOrder"
                     value={formData.sortOrder}
                     onChange={handleInputChange}
@@ -162,15 +182,17 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
                 </div>
                 <div className="flex items-center gap-3 pt-8">
                   <label className="relative inline-flex items-center cursor-pointer">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       name="isActive"
                       checked={formData.isActive}
                       onChange={handleInputChange}
-                      className="sr-only peer" 
+                      className="sr-only peer"
                     />
                     <div className="w-11 h-6 min-h-[24px] bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600 flex items-center"></div>
-                    <span className="ml-3 text-sm font-bold text-gray-900 dark:text-white">Service is Active</span>
+                    <span className="ml-3 text-sm font-bold text-gray-900 dark:text-white">
+                      Service is Active
+                    </span>
                   </label>
                 </div>
               </div>
@@ -178,14 +200,14 @@ export function EditServiceClient({ initialService, serviceId }: Props) {
           </div>
 
           <div className="pt-4 flex items-center justify-end gap-3 border-t border-gray-100 dark:border-white/5">
-            <button 
+            <button
               type="button"
               onClick={() => router.back()}
               className="px-6 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
             >
               Cancel
             </button>
-            <button 
+            <button
               type="submit"
               disabled={isSubmitting}
               className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"

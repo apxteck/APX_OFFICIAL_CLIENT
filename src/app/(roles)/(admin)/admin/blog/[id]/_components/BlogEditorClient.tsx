@@ -1,31 +1,58 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { blogService, BlogPostDetail, BlogCategory } from "@/services/admin/blog.service";
-import { User } from "@/services/admin/users.service";
-import { 
-  ArrowLeft, Save, Image as ImageIcon, Sparkles, AlertCircle, 
-  Settings, Type, Link as LinkIcon, List, Heading, Bold, Italic,
-  AlignLeft, AlignCenter, Code, Eye
-} from "lucide-react";
-import RichTextEditor from "@/components/ui/RichTextEditor";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { blogService, BlogPostDetail, BlogCategory } from '@/services/admin/blog.service';
+import { User } from '@/services/admin/users.service';
+import {
+  ArrowLeft,
+  Save,
+  Image as ImageIcon,
+  Sparkles,
+  AlertCircle,
+  Settings,
+  Type,
+  Link as LinkIcon,
+  List,
+  Heading,
+  Bold,
+  Italic,
+  AlignLeft,
+  AlignCenter,
+  Code,
+  Eye,
+} from 'lucide-react';
+import RichTextEditor from '@/components/ui/RichTextEditor';
 
-function Toast({ message, type, onClose }: { message: string; type: "success" | "error" | "loading"; onClose: () => void }) {
+function Toast({
+  message,
+  type,
+  onClose,
+}: {
+  message: string;
+  type: 'success' | 'error' | 'loading';
+  onClose: () => void;
+}) {
   useEffect(() => {
-    if (type !== "loading") {
+    if (type !== 'loading') {
       const timer = setTimeout(onClose, 3000);
       return () => clearTimeout(timer);
     }
   }, [type, onClose]);
 
   return (
-    <div className={`fixed bottom-4 right-4 z-50 px-4 py-3 rounded-xl shadow-lg border text-sm font-bold flex items-center gap-2 ${
-      type === "success" ? "bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800" :
-      type === "error" ? "bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800" :
-      "bg-white text-gray-700 border-gray-200 dark:bg-[#151515] dark:text-gray-300 dark:border-white/10"
-    }`}>
-      {type === "loading" && <div className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin" />}
+    <div
+      className={`fixed bottom-4 right-4 z-50 px-4 py-3 rounded-xl shadow-lg border text-sm font-bold flex items-center gap-2 ${
+        type === 'success'
+          ? 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800'
+          : type === 'error'
+            ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800'
+            : 'bg-white text-gray-700 border-gray-200 dark:bg-[#151515] dark:text-gray-300 dark:border-white/10'
+      }`}
+    >
+      {type === 'loading' && (
+        <div className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin" />
+      )}
       {message}
     </div>
   );
@@ -36,7 +63,7 @@ export function BlogEditorClient({
   initialCategories,
   initialUsers,
   isNew,
-  postId
+  postId,
 }: {
   initialPost: BlogPostDetail | null;
   initialCategories: BlogCategory[];
@@ -47,20 +74,27 @@ export function BlogEditorClient({
   const router = useRouter();
 
   // Form State
-  const [title, setTitle] = useState(initialPost?.title || "");
-  const [excerpt, setExcerpt] = useState(initialPost?.excerpt || "");
-  const [content, setContent] = useState(initialPost?.content || "");
-  const [status, setStatus] = useState(initialPost?.status || "DRAFT");
-  const [tags, setTags] = useState(initialPost?.tags?.join(", ") || "");
-  const [metaDescription, setMetaDescription] = useState(initialPost?.metaDescription || "");
-  const [categoryId, setCategoryId] = useState<string>(initialPost?.categoryId?.toString() || "");
-  const [authorId, setAuthorId] = useState<string>(initialPost?.author?.id?.toString() || (initialPost as any)?.authorId?.toString() || "");
-  const [authorDesignation, setAuthorDesignation] = useState<string>(initialPost?.authorDesignation || "");
-  const [authorBio, setAuthorBio] = useState<string>(initialPost?.authorBio || "");
-  
+  const [title, setTitle] = useState(initialPost?.title || '');
+  const [excerpt, setExcerpt] = useState(initialPost?.excerpt || '');
+  const [content, setContent] = useState(initialPost?.content || '');
+  const [status, setStatus] = useState(initialPost?.status || 'DRAFT');
+  const [tags, setTags] = useState(initialPost?.tags?.join(', ') || '');
+  const [metaDescription, setMetaDescription] = useState(initialPost?.metaDescription || '');
+  const [categoryId, setCategoryId] = useState<string>(initialPost?.categoryId?.toString() || '');
+  const [authorId, setAuthorId] = useState<string>(
+    initialPost?.author?.id?.toString() || (initialPost as any)?.authorId?.toString() || ''
+  );
+  const [authorDesignation, setAuthorDesignation] = useState<string>(
+    initialPost?.authorDesignation || ''
+  );
+  const [authorBio, setAuthorBio] = useState<string>(initialPost?.authorBio || '');
+
   const [showPreview, setShowPreview] = useState(false);
   const [coverFile, setCoverFile] = useState<File | null>(null);
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "loading" } | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: 'success' | 'error' | 'loading';
+  } | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   const isAiGenerated = initialPost?.isAiGenerated || false;
@@ -68,39 +102,46 @@ export function BlogEditorClient({
   const handleSave = async () => {
     try {
       setIsSaving(true);
-      setToast({ message: "Saving post...", type: "loading" });
+      setToast({ message: 'Saving post...', type: 'loading' });
       const formData = new FormData();
-      formData.append("title", title);
-      formData.append("content", content);
-      if (excerpt) formData.append("excerpt", excerpt);
-      if (categoryId) formData.append("categoryId", categoryId);
-      formData.append("authorId", authorId);
-      if (authorDesignation) formData.append("authorDesignation", authorDesignation);
-      if (authorBio) formData.append("authorBio", authorBio);
-      if (metaDescription) formData.append("metaDescription", metaDescription);
-      
-      const tagArray = tags.split(",").map(t => t.trim()).filter(Boolean);
-      tagArray.forEach(t => formData.append("tags", t));
-      
+      formData.append('title', title);
+      formData.append('content', content);
+      if (excerpt) formData.append('excerpt', excerpt);
+      if (categoryId) formData.append('categoryId', categoryId);
+      formData.append('authorId', authorId);
+      if (authorDesignation) formData.append('authorDesignation', authorDesignation);
+      if (authorBio) formData.append('authorBio', authorBio);
+      if (metaDescription) formData.append('metaDescription', metaDescription);
+
+      const tagArray = tags
+        .split(',')
+        .map((t) => t.trim())
+        .filter(Boolean);
+      tagArray.forEach((t) => formData.append('tags', t));
+
       if (coverFile) {
-        formData.append("coverImage", coverFile);
+        formData.append('coverImage', coverFile);
       }
 
       if (isNew) {
         await blogService.createPost(formData);
-        setToast({ message: "Post created successfully", type: "success" });
+        setToast({ message: 'Post created successfully', type: 'success' });
         setTimeout(() => router.push('/admin/blog'), 1000);
       } else {
         await blogService.updatePost(postId, formData);
-        
+
         // Also update status if changed
-        if (status && status !== initialPost?.status && (status === "PUBLISHED" || status === "DRAFT")) {
+        if (
+          status &&
+          status !== initialPost?.status &&
+          (status === 'PUBLISHED' || status === 'DRAFT')
+        ) {
           await blogService.updatePostStatus(postId, status as any);
         }
-        setToast({ message: "Post saved successfully", type: "success" });
+        setToast({ message: 'Post saved successfully', type: 'success' });
       }
     } catch (error: any) {
-      setToast({ message: error.response?.data?.message || "Failed to save post", type: "error" });
+      setToast({ message: error.response?.data?.message || 'Failed to save post', type: 'error' });
     } finally {
       setIsSaving(false);
     }
@@ -111,7 +152,7 @@ export function BlogEditorClient({
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full bg-white dark:bg-[#111111] p-4 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm sticky top-0 z-20">
         <div className="flex items-center gap-4">
-          <button 
+          <button
             onClick={() => router.push('/admin/blog')}
             className="min-w-[44px] min-h-[44px] flex items-center justify-center bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-xl transition-colors"
           >
@@ -120,7 +161,7 @@ export function BlogEditorClient({
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-black text-gray-900 dark:text-white truncate max-w-sm lg:max-w-xl">
-                {title || "Untitled Post"}
+                {title || 'Untitled Post'}
               </h1>
               {isAiGenerated && (
                 <span className="flex items-center gap-1 bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 px-2 py-0.5 rounded-md text-[10px] font-black tracking-widest uppercase border border-purple-100 dark:border-purple-500/20">
@@ -135,31 +176,33 @@ export function BlogEditorClient({
         </div>
 
         <div className="flex items-center gap-3">
-          <button 
+          <button
             onClick={() => setShowPreview(true)}
-            className="bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-2">
+            className="bg-white dark:bg-[#151515] border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-2"
+          >
             <Eye size={16} /> Preview
           </button>
-          <button 
+          <button
             onClick={handleSave}
             disabled={isSaving}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-50">
-            <Save size={16} /> {isSaving ? "Saving..." : "Save Post"}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
+          >
+            <Save size={16} /> {isSaving ? 'Saving...' : 'Save Post'}
           </button>
         </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
-        
         {/* Main Editor Column */}
         <div className="flex-1 space-y-6">
           <div className="bg-white dark:bg-[#111111] rounded-3xl p-6 md:p-8 border border-gray-100 dark:border-white/5 shadow-sm space-y-6">
-            
             {/* Title */}
             <div>
-              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Post Title</label>
-              <input 
-                type="text" 
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                Post Title
+              </label>
+              <input
+                type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Enter an engaging title..."
@@ -173,7 +216,7 @@ export function BlogEditorClient({
                 <span>Excerpt</span>
                 <span className="text-xs text-gray-400 font-normal">{excerpt.length} / 255</span>
               </label>
-              <textarea 
+              <textarea
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
                 placeholder="A short summary of the post..."
@@ -189,18 +232,13 @@ export function BlogEditorClient({
                   <Sparkles size={12} /> Advanced Editor Active
                 </span>
               </label>
-              <RichTextEditor 
-                initialContent={content} 
-                onChange={setContent} 
-              />
+              <RichTextEditor initialContent={content} onChange={setContent} />
             </div>
-
           </div>
         </div>
 
         {/* Right Sidebar */}
         <div className="w-full lg:w-80 shrink-0 space-y-6">
-          
           {/* AI Panel (Only visible if AI generated) */}
           {isAiGenerated && initialPost?.aiMetadata && (
             <div className="bg-purple-50 dark:bg-purple-500/5 rounded-3xl p-6 border border-purple-100 dark:border-purple-500/20 shadow-sm">
@@ -209,17 +247,26 @@ export function BlogEditorClient({
               </h2>
               <div className="space-y-4">
                 <div>
-                  <p className="text-xs text-purple-400 dark:text-purple-500/70 mb-1 font-bold">Source Topic</p>
-                  <p className="text-sm font-medium text-purple-900 dark:text-purple-200">{initialPost.aiMetadata.source.replace("|", " + ")}</p>
+                  <p className="text-xs text-purple-400 dark:text-purple-500/70 mb-1 font-bold">
+                    Source Topic
+                  </p>
+                  <p className="text-sm font-medium text-purple-900 dark:text-purple-200">
+                    {initialPost.aiMetadata.source.replace('|', ' + ')}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-purple-400 dark:text-purple-500/70 mb-1 font-bold">Model Origin</p>
-                  <p className="text-sm font-medium text-purple-900 dark:text-purple-200 font-mono bg-purple-100 dark:bg-purple-500/20 inline-block px-2 py-0.5 rounded">{initialPost.aiMetadata.origin}</p>
+                  <p className="text-xs text-purple-400 dark:text-purple-500/70 mb-1 font-bold">
+                    Model Origin
+                  </p>
+                  <p className="text-sm font-medium text-purple-900 dark:text-purple-200 font-mono bg-purple-100 dark:bg-purple-500/20 inline-block px-2 py-0.5 rounded">
+                    {initialPost.aiMetadata.origin}
+                  </p>
                 </div>
                 <div className="flex items-start gap-2 bg-white/50 dark:bg-[#111111]/50 p-3 rounded-xl border border-purple-200 dark:border-purple-500/20">
                   <AlertCircle size={16} className="text-purple-500 mt-0.5 shrink-0" />
                   <p className="text-xs text-purple-800 dark:text-purple-300 font-medium">
-                    This draft was autonomously generated by the cron pipeline. Review carefully before publishing.
+                    This draft was autonomously generated by the cron pipeline. Review carefully
+                    before publishing.
                   </p>
                 </div>
               </div>
@@ -233,8 +280,10 @@ export function BlogEditorClient({
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Status</label>
-                <select 
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">
+                  Status
+                </label>
+                <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value as any)}
                   className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-bold rounded-xl px-4 py-2.5 min-h-[44px] focus:ring-2 focus:ring-indigo-500"
@@ -246,49 +295,65 @@ export function BlogEditorClient({
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Category</label>
-                <select 
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">
+                  Category
+                </label>
+                <select
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-medium rounded-xl px-4 py-2.5 min-h-[44px] focus:ring-2 focus:ring-indigo-500">
+                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-medium rounded-xl px-4 py-2.5 min-h-[44px] focus:ring-2 focus:ring-indigo-500"
+                >
                   <option value="">Select Category</option>
-                  {initialCategories.map(c => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
+                  {initialCategories.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
                   ))}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Author</label>
-                <select 
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">
+                  Author
+                </label>
+                <select
                   value={authorId}
                   onChange={async (e) => {
                     const newAuthorId = e.target.value;
                     setAuthorId(newAuthorId);
                     if (newAuthorId) {
                       try {
-                        const posts = await blogService.getPosts({ authorId: newAuthorId, limit: 1 });
+                        const posts = await blogService.getPosts({
+                          authorId: newAuthorId,
+                          limit: 1,
+                        });
                         if (posts && posts.length > 0) {
                           const latestPost = posts[0] as any;
-                          if (latestPost.authorDesignation) setAuthorDesignation(latestPost.authorDesignation);
+                          if (latestPost.authorDesignation)
+                            setAuthorDesignation(latestPost.authorDesignation);
                           if (latestPost.authorBio) setAuthorBio(latestPost.authorBio);
                         }
                       } catch (err) {
-                        console.error("Failed to fetch author history", err);
+                        console.error('Failed to fetch author history', err);
                       }
                     }
                   }}
-                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-medium rounded-xl px-4 py-2.5 min-h-[44px] focus:ring-2 focus:ring-indigo-500">
+                  className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-medium rounded-xl px-4 py-2.5 min-h-[44px] focus:ring-2 focus:ring-indigo-500"
+                >
                   <option value="">Current User (Default)</option>
-                  {initialUsers.filter(u => ['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN'].includes(u.role?.name)).map(u => (
-                    <option key={u.id} value={u.id}>
-                      {u.fullName === "APX Blog Bot" ? "APX Teck" : u.fullName}
-                    </option>
-                  ))}
+                  {initialUsers
+                    .filter((u) => ['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN'].includes(u.role?.name))
+                    .map((u) => (
+                      <option key={u.id} value={u.id}>
+                        {u.fullName === 'APX Blog Bot' ? 'APX Teck' : u.fullName}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Author Designation</label>
-                <input 
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">
+                  Author Designation
+                </label>
+                <input
                   type="text"
                   value={authorDesignation}
                   onChange={(e) => setAuthorDesignation(e.target.value)}
@@ -297,8 +362,10 @@ export function BlogEditorClient({
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Author Bio</label>
-                <textarea 
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">
+                  Author Bio
+                </label>
+                <textarea
                   value={authorBio}
                   onChange={(e) => setAuthorBio(e.target.value)}
                   placeholder="e.g. Professional engineers crafting clean code..."
@@ -315,11 +382,20 @@ export function BlogEditorClient({
             </h2>
             {initialPost?.coverImageUrl && !coverFile ? (
               <div className="relative group rounded-xl overflow-hidden border border-gray-200 dark:border-white/10">
-                <img src={initialPost.coverImageUrl} alt="Cover" className="w-full h-32 object-cover" />
+                <img
+                  src={initialPost.coverImageUrl}
+                  alt="Cover"
+                  className="w-full h-32 object-cover"
+                />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <label className="bg-white text-black px-4 py-2 rounded-lg font-bold text-xs shadow-lg cursor-pointer">
                     Replace Image
-                    <input type="file" className="hidden" accept="image/*" onChange={(e) => setCoverFile(e.target.files?.[0] || null)} />
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept="image/*"
+                      onChange={(e) => setCoverFile(e.target.files?.[0] || null)}
+                    />
                   </label>
                 </div>
               </div>
@@ -329,10 +405,15 @@ export function BlogEditorClient({
                   <ImageIcon size={20} />
                 </div>
                 <p className="text-sm font-bold text-gray-900 dark:text-white">
-                  {coverFile ? coverFile.name : "Upload Cover Image"}
+                  {coverFile ? coverFile.name : 'Upload Cover Image'}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">Recommended: 1200x630px</p>
-                <input type="file" className="hidden" accept="image/*" onChange={(e) => setCoverFile(e.target.files?.[0] || null)} />
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={(e) => setCoverFile(e.target.files?.[0] || null)}
+                />
               </label>
             )}
           </div>
@@ -344,9 +425,11 @@ export function BlogEditorClient({
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Tags (Comma separated)</label>
-                <input 
-                  type="text" 
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">
+                  Tags (Comma separated)
+                </label>
+                <input
+                  type="text"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
                   className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-medium rounded-xl px-4 py-2.5 min-h-[44px] focus:ring-2 focus:ring-indigo-500"
@@ -354,8 +437,10 @@ export function BlogEditorClient({
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">Meta Description</label>
-                <textarea 
+                <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5">
+                  Meta Description
+                </label>
+                <textarea
                   value={metaDescription}
                   onChange={(e) => setMetaDescription(e.target.value)}
                   className="w-full bg-gray-50 dark:bg-[#151515] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm font-medium rounded-xl p-3 min-h-[80px] focus:ring-2 focus:ring-indigo-500 resize-none"
@@ -364,7 +449,6 @@ export function BlogEditorClient({
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -377,39 +461,46 @@ export function BlogEditorClient({
               <h3 className="text-lg font-black text-gray-900 dark:text-white flex items-center gap-2">
                 <Eye size={20} className="text-indigo-500" /> Live Article Preview
               </h3>
-              <button 
+              <button
                 onClick={() => setShowPreview(false)}
                 className="px-4 py-2 min-h-[44px] text-sm font-bold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white bg-white hover:bg-gray-100 dark:bg-[#151515] dark:hover:bg-white/10 border border-gray-200 dark:border-white/10 rounded-xl transition-all shadow-sm flex items-center justify-center"
               >
                 Close Preview
               </button>
             </div>
-            
+
             {/* Modal Content */}
             <div className="overflow-y-auto p-6 sm:p-10 space-y-12 flex-grow bg-white dark:bg-[#0a0a0a]">
-              
               {/* Cover Image Preview */}
               {(coverFile || initialPost?.coverImageUrl) && (
                 <div className="w-full max-w-4xl mx-auto aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-white/5">
-                  <img 
-                    src={coverFile ? URL.createObjectURL(coverFile) : initialPost?.coverImageUrl || ''} 
-                    alt="Cover Preview" 
+                  <img
+                    src={
+                      coverFile ? URL.createObjectURL(coverFile) : initialPost?.coverImageUrl || ''
+                    }
+                    alt="Cover Preview"
                     className="w-full h-full object-cover"
                   />
                 </div>
               )}
-              
+
               {/* Article Header */}
               <div className="space-y-6 text-center max-w-3xl mx-auto">
                 <div className="flex flex-wrap items-center justify-center gap-2">
-                  {tags.split(",").filter(t => t.trim()).map((tag, i) => (
-                    <span key={i} className="px-4 py-1.5 bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 text-xs font-bold rounded-full border border-indigo-100 dark:border-indigo-500/20">
-                      #{tag.trim()}
-                    </span>
-                  ))}
+                  {tags
+                    .split(',')
+                    .filter((t) => t.trim())
+                    .map((tag, i) => (
+                      <span
+                        key={i}
+                        className="px-4 py-1.5 bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 text-xs font-bold rounded-full border border-indigo-100 dark:border-indigo-500/20"
+                      >
+                        #{tag.trim()}
+                      </span>
+                    ))}
                 </div>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 dark:text-white leading-tight tracking-tight">
-                  {title || "Untitled Post"}
+                  {title || 'Untitled Post'}
                 </h1>
                 {excerpt && (
                   <p className="text-xl text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
@@ -417,11 +508,11 @@ export function BlogEditorClient({
                   </p>
                 )}
               </div>
-              
+
               <hr className="border-gray-100 dark:border-white/5 w-24 mx-auto border-t-4 rounded-full my-8" />
-              
+
               {/* Article Content */}
-              <div 
+              <div
                 className="max-w-3xl mx-auto text-lg md:text-xl text-gray-800 dark:text-gray-200
                            [&_h1]:text-4xl [&_h1]:sm:text-5xl [&_h1]:font-black [&_h1]:tracking-tight [&_h1]:text-gray-900 dark:[&_h1]:text-white [&_h1]:mb-6
                            [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-gray-900 dark:[&_h2]:text-white [&_h2]:mb-4 [&_h2]:mt-8
@@ -434,7 +525,11 @@ export function BlogEditorClient({
                            [&_pre]:bg-gray-900 [&_pre]:text-gray-100 [&_pre]:rounded-2xl [&_pre]:p-6 [&_pre]:shadow-inner [&_pre]:my-6 [&_code]:font-mono
                            [&_blockquote]:border-l-4 [&_blockquote]:border-indigo-500 [&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:bg-gray-50 dark:[&_blockquote]:bg-white/5 [&_blockquote]:py-4 [&_blockquote]:pr-6 [&_blockquote]:rounded-r-2xl [&_blockquote]:my-6
                            [&_table]:w-full [&_table]:border-collapse [&_table]:my-6 [&_th]:border [&_th]:border-gray-200 dark:[&_th]:border-white/10 [&_th]:p-4 [&_th]:bg-gray-50 dark:[&_th]:bg-white/5 [&_td]:border [&_td]:border-gray-200 dark:[&_td]:border-white/10 [&_td]:p-4"
-                dangerouslySetInnerHTML={{ __html: content || "<p class='text-gray-400 italic text-center'>Start writing to see the preview here...</p>" }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    content ||
+                    "<p class='text-gray-400 italic text-center'>Start writing to see the preview here...</p>",
+                }}
               />
             </div>
           </div>

@@ -51,10 +51,10 @@ export function LanguageSwitcher() {
 
   const changeLanguage = (langCode: string) => {
     setCurrentLang(langCode);
-    
+
     // Find the hidden Google Translate select box
     const selectField = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-    
+
     if (selectField) {
       selectField.value = langCode;
       selectField.dispatchEvent(new Event('change'));
@@ -70,7 +70,9 @@ export function LanguageSwitcher() {
   const portalContent = (
     <>
       {/* Absolute CSS override to nuke the Google Translate bar */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         .goog-te-banner-frame { display: none !important; }
         .goog-te-banner-frame.skiptranslate { display: none !important; }
         iframe.goog-te-banner-frame { display: none !important; }
@@ -80,7 +82,9 @@ export function LanguageSwitcher() {
         #goog-gt-tt { display: none !important; }
         .VIpgJd-ZVi9od-l4eHX-hSRGPd { display: none !important; }
         body > .skiptranslate { display: none !important; }
-      `}} />
+      `,
+        }}
+      />
 
       {/* Floating Button container using fixed positioning directly on body to avoid transform issues */}
       <div className="fixed top-[40%] right-6 z-[99999] flex items-center justify-end pointer-events-none language-switcher-container drop-shadow-2xl">
@@ -108,14 +112,12 @@ export function LanguageSwitcher() {
                     exit={{ opacity: 0, width: 0 }}
                     className="overflow-hidden whitespace-nowrap"
                   >
-                    <span className="font-bold text-sm tracking-wide pl-3 pr-2">
-                      Translate
-                    </span>
+                    <span className="font-bold text-sm tracking-wide pl-3 pr-2">Translate</span>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-            
+
             <AnimatePresence>
               {isOpen && (
                 <motion.div
@@ -146,14 +148,17 @@ export function LanguageSwitcher() {
                       key={lang.code}
                       onClick={() => changeLanguage(lang.code)}
                       className={`text-left px-3 py-2.5 rounded-xl text-sm transition-all duration-200 flex items-center justify-between group ${
-                        currentLang === lang.code 
-                          ? 'bg-accent/15 text-accent font-bold border border-accent/30' 
+                        currentLang === lang.code
+                          ? 'bg-accent/15 text-accent font-bold border border-accent/30'
                           : 'hover:bg-white/10 text-foreground/80 hover:text-foreground border border-transparent font-medium'
                       }`}
                     >
                       <span>{lang.label}</span>
                       {currentLang === lang.code && (
-                        <motion.div layoutId="activeDot" className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
+                        <motion.div
+                          layoutId="activeDot"
+                          className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(139,92,246,0.8)]"
+                        />
                       )}
                     </button>
                   ))}

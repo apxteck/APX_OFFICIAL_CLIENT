@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Payment } from "@/services/admin/payments.service";
-import { Toaster } from "react-hot-toast";
-import { usePaymentsLogic } from "../_hooks/usePaymentsLogic";
+import React from 'react';
+import { Payment } from '@/services/admin/payments.service';
+import { Toaster } from 'react-hot-toast';
+import { usePaymentsLogic } from '../_hooks/usePaymentsLogic';
 
-import { PaymentsSummary } from "./PaymentsSummary";
-import { PaymentsToolbar } from "./PaymentsToolbar";
-import { PaymentsTable } from "./PaymentsTable";
-import { PaymentsGrid } from "./PaymentsGrid";
+import { PaymentsSummary } from './PaymentsSummary';
+import { PaymentsToolbar } from './PaymentsToolbar';
+import { PaymentsTable } from './PaymentsTable';
+import { PaymentsGrid } from './PaymentsGrid';
 
-import { MarkPaidDialog } from "./modals/MarkPaidDialog";
-import { CreatePaymentLinkDialog } from "./modals/CreatePaymentLinkDialog";
-import { InvoicePrintModal } from "./modals/InvoicePrintModal";
+import { MarkPaidDialog } from './modals/MarkPaidDialog';
+import { CreatePaymentLinkDialog } from './modals/CreatePaymentLinkDialog';
+import { InvoicePrintModal } from './modals/InvoicePrintModal';
 
 interface Props {
   initialPaymentsData: {
@@ -50,7 +50,7 @@ export function PaymentsClientWrapper({ initialPaymentsData, initialRequestsData
           <div className="p-8 text-center text-red-500">Failed to load payments.</div>
         ) : logic.filteredPayments.length === 0 ? (
           <div className="p-8 text-center text-gray-400">No payments found.</div>
-        ) : logic.viewMode === "table" ? (
+        ) : logic.viewMode === 'table' ? (
           <PaymentsTable
             payments={logic.filteredPayments}
             resendPending={logic.resendMutation.isPending}

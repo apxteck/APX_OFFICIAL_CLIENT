@@ -1,7 +1,7 @@
 import apiClient from '@/lib/axios';
 
-export type TaskStatus = "OPEN" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
-export type Priority = "LOW" | "MEDIUM" | "HIGH";
+export type TaskStatus = 'OPEN' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+export type Priority = 'LOW' | 'MEDIUM' | 'HIGH';
 
 export interface Task {
   id: number;
@@ -26,7 +26,7 @@ export const tasksService = {
       const response = await apiClient.get('/task');
       return response.data?.data?.data || [];
     } catch (error) {
-      console.error("Failed to fetch tasks", error);
+      console.error('Failed to fetch tasks', error);
       return [];
     }
   },
@@ -36,20 +36,20 @@ export const tasksService = {
       const response = await apiClient.get(`/task/${id}`);
       return response.data?.data || null;
     } catch (error) {
-      console.error("Failed to fetch task", error);
+      console.error('Failed to fetch task', error);
       return null;
     }
   },
 
   createTask: async (data: any): Promise<Task> => {
     const formData = new FormData();
-    Object.keys(data).forEach(key => {
+    Object.keys(data).forEach((key) => {
       if (data[key] !== undefined && data[key] !== null) {
         formData.append(key, data[key]);
       }
     });
     const response = await apiClient.post('/task', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data?.data;
   },
@@ -67,5 +67,5 @@ export const tasksService = {
   deleteTask: async (id: number): Promise<{ success: boolean }> => {
     const response = await apiClient.delete(`/task/${id}`);
     return { success: response.data?.success ?? true };
-  }
+  },
 };

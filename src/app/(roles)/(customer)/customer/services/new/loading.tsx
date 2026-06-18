@@ -22,11 +22,14 @@ export default function NewServiceLoading() {
             <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-white/10"></div>
             <div className="h-6 w-48 bg-gray-200 dark:bg-white/10 rounded"></div>
           </div>
-          
+
           <div className="pl-10">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="p-6 rounded-3xl border border-gray-100 dark:border-white/5 bg-white dark:bg-[#111] flex flex-col items-start gap-4">
+                <div
+                  key={i}
+                  className="p-6 rounded-3xl border border-gray-100 dark:border-white/5 bg-white dark:bg-[#111] flex flex-col items-start gap-4"
+                >
                   <div className="w-12 h-12 rounded-2xl bg-gray-200 dark:bg-white/10"></div>
                   <div className="space-y-2 w-full">
                     <div className="h-4 w-3/4 bg-gray-200 dark:bg-white/10 rounded"></div>

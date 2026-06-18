@@ -1,10 +1,10 @@
 import apiClient from '@/lib/api/axios';
 
-import { 
-  BlogPostStatus, 
-  BlogCategory, 
-  AdminBlogPost as BlogPost, 
-  AdminBlogPostDetail as BlogPostDetail 
+import {
+  BlogPostStatus,
+  BlogCategory,
+  AdminBlogPost as BlogPost,
+  AdminBlogPostDetail as BlogPostDetail,
 } from '@/app/types/admin-blog.types';
 
 export type { BlogPostStatus, BlogCategory, BlogPost, BlogPostDetail };
@@ -65,7 +65,7 @@ export const blogService = {
   updatePostStatus: async (id: string | number, status: BlogPostStatus): Promise<BlogPost> => {
     if (status === 'PUBLISHED' || status === 'DRAFT') {
       const response = await apiClient.patch(`/blog/posts/${id}/publish`, {
-        publish: status === 'PUBLISHED'
+        publish: status === 'PUBLISHED',
       });
       return response.data?.data;
     }
@@ -88,5 +88,5 @@ export const blogService = {
       console.error('Failed to fetch categories', error);
       return [];
     }
-  }
+  },
 };

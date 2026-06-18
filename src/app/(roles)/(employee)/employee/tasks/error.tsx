@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { AlertCircle, RefreshCcw } from "lucide-react";
+import React, { useEffect } from 'react';
+import { AlertCircle, RefreshCcw } from 'lucide-react';
 
 export default function EmployeeTasksError({
   error,
@@ -11,7 +11,7 @@ export default function EmployeeTasksError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Tasks Module Error:", error);
+    console.error('Tasks Module Error:', error);
   }, [error]);
 
   return (
@@ -19,11 +19,9 @@ export default function EmployeeTasksError({
       <div className="w-16 h-16 bg-red-50 dark:bg-red-500/10 rounded-full flex items-center justify-center">
         <AlertCircle className="w-8 h-8 text-red-500" />
       </div>
-      
+
       <div className="space-y-2 max-w-md">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Something went wrong
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Something went wrong</h2>
         <p className="text-sm text-gray-500 dark:text-gray-400">
           We encountered an error while loading your tasks. Our team has been notified.
         </p>

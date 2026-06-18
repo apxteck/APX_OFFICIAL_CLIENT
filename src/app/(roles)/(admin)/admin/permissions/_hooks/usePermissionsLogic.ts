@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { rolesService, Role, PermRow } from "@/services/admin/roles.service";
-import toast from "react-hot-toast";
+import { useState, useEffect } from 'react';
+import { rolesService, Role, PermRow } from '@/services/admin/roles.service';
+import toast from 'react-hot-toast';
 
 export const usePermissionsLogic = (initialRoles: Role[]) => {
   const [roles] = useState<Role[]>(initialRoles);
-  const [selectedRoleId, setSelectedRoleId] = useState<number | "">("");
+  const [selectedRoleId, setSelectedRoleId] = useState<number | ''>('');
   const [permissions, setPermissions] = useState<PermRow[]>([]);
-  
+
   const [isLoadingPerms, setIsLoadingPerms] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
@@ -26,24 +26,26 @@ export const usePermissionsLogic = (initialRoles: Role[]) => {
           setPermissions([]);
         }
       } catch (error) {
-        console.error("Failed to fetch permissions:", error);
-        toast.error("Failed to load permissions for this role.");
+        console.error('Failed to fetch permissions:', error);
+        toast.error('Failed to load permissions for this role.');
         setPermissions([]);
       } finally {
         setIsLoadingPerms(false);
       }
     };
-    
+
     fetchPermissions();
   }, [selectedRoleId]);
 
   const handleToggle = (moduleName: string, field: keyof PermRow) => {
-    setPermissions(prev => prev.map(p => {
-      if (p.module === moduleName) {
-        return { ...p, [field]: !p[field] };
-      }
-      return p;
-    }));
+    setPermissions((prev) =>
+      prev.map((p) => {
+        if (p.module === moduleName) {
+          return { ...p, [field]: !p[field] };
+        }
+        return p;
+      })
+    );
   };
 
   const handleSave = async () => {
@@ -51,9 +53,9 @@ export const usePermissionsLogic = (initialRoles: Role[]) => {
     setIsSaving(true);
     try {
       await rolesService.updateRolePermissions(Number(selectedRoleId), permissions);
-      toast.success("Permissions saved successfully!");
+      toast.success('Permissions saved successfully!');
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || error.message || "Failed to save permissions");
+      toast.error(error?.response?.data?.message || error.message || 'Failed to save permissions');
     } finally {
       setIsSaving(false);
     }
@@ -61,7 +63,11 @@ export const usePermissionsLogic = (initialRoles: Role[]) => {
 
   const handleReset = async () => {
     if (!selectedRoleId) return;
-    if (window.confirm("Are you sure you want to reset all permissions for this role? They will be wiped completely.")) {
+    if (
+      window.confirm(
+        'Are you sure you want to reset all permissions for this role? They will be wiped completely.'
+      )
+    ) {
       setIsResetting(true);
       try {
         await rolesService.resetRolePermissions(Number(selectedRoleId));
@@ -69,9 +75,11 @@ export const usePermissionsLogic = (initialRoles: Role[]) => {
         if (response && response.permissions) {
           setPermissions(response.permissions);
         }
-        toast.success("Permissions have been reset to defaults.");
+        toast.success('Permissions have been reset to defaults.');
       } catch (error: any) {
-        toast.error(error?.response?.data?.message || error.message || "Failed to reset permissions");
+        toast.error(
+          error?.response?.data?.message || error.message || 'Failed to reset permissions'
+        );
       } finally {
         setIsResetting(false);
       }

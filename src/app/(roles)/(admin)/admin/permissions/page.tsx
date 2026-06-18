@@ -1,18 +1,18 @@
-import React, { Suspense } from "react";
-import { PermissionsHeader } from "./_components/PermissionsHeader";
-import { rolesService } from "@/services/admin/roles.service";
-import PermissionsLoading from "./loading";
+import React, { Suspense } from 'react';
+import { PermissionsHeader } from './_components/PermissionsHeader';
+import { rolesService } from '@/services/admin/roles.service';
+import PermissionsLoading from './loading';
 // Removed dynamic import
 
 import PermissionsManager from './_components/PermissionsManager';
 
 async function PermissionsFetcher() {
-  let initialRoles: import("@/services/admin/roles.service").Role[] = [];
+  let initialRoles: import('@/services/admin/roles.service').Role[] = [];
   try {
     const roles = await rolesService.getRoles();
     initialRoles = roles || [];
   } catch (error) {
-    console.error("Failed to pre-fetch roles:", error);
+    console.error('Failed to pre-fetch roles:', error);
   }
 
   return <PermissionsManager initialRoles={initialRoles} />;

@@ -18,7 +18,10 @@ export function LoginInputFields({ register, errors, isLoading }: LoginInputFiel
     <>
       {/* Email */}
       <div className="space-y-1.5">
-        <label htmlFor="email" className="text-xs font-bold text-foreground/70 uppercase tracking-wider">
+        <label
+          htmlFor="email"
+          className="text-xs font-bold text-foreground/70 uppercase tracking-wider"
+        >
           Email
         </label>
         <input
@@ -32,14 +35,19 @@ export function LoginInputFields({ register, errors, isLoading }: LoginInputFiel
           aria-describedby={errors.email ? 'email-error' : undefined}
         />
         {errors.email && (
-          <p id="email-error" className="text-xs text-red-500 font-medium pl-1" role="alert">{errors.email.message as string}</p>
+          <p id="email-error" className="text-xs text-red-500 font-medium pl-1" role="alert">
+            {errors.email.message as string}
+          </p>
         )}
       </div>
 
       {/* Password */}
       <div className="space-y-1.5">
         <div className="flex justify-between items-center">
-          <label htmlFor="password" className="text-xs font-bold text-foreground/70 uppercase tracking-wider">
+          <label
+            htmlFor="password"
+            className="text-xs font-bold text-foreground/70 uppercase tracking-wider"
+          >
             Password
           </label>
           <Link
@@ -68,11 +76,7 @@ export function LoginInputFields({ register, errors, isLoading }: LoginInputFiel
             className="absolute right-1 top-1/2 -translate-y-1/2 min-w-[44px] min-h-[44px] flex items-center justify-center text-foreground/40 hover:text-foreground/70 focus:outline-none transition-colors rounded-full"
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
-            {showPassword ? (
-              <EyeOff className="w-4 h-4" />
-            ) : (
-              <Eye className="w-4 h-4" />
-            )}
+            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
         </div>
         {errors.password && (
@@ -109,7 +113,11 @@ export function LoginInputFields({ register, errors, isLoading }: LoginInputFiel
       >
         {isLoading ? 'Signing in...' : 'Sign In'}
         {!isLoading && (
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" role="presentation" />
+          <ArrowRight
+            className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+            aria-hidden="true"
+            role="presentation"
+          />
         )}
       </button>
     </>

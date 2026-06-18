@@ -1,51 +1,47 @@
-"use client";
+'use client';
 
-import React from "react";
-import dynamic from "next/dynamic";
-import { Plus, Search, Box } from "lucide-react";
-import toast, { Toaster } from "react-hot-toast";
-import { useCompanyAssetsLogic } from "../_hooks/useCompanyAssetsLogic";
-import { useCompanyAssetFormLogic } from "../_hooks/useCompanyAssetFormLogic";
-import { CompanyAsset } from "@/services/admin/companyAssets.service";
-import { CompanyAssetCard } from "./CompanyAssetCard";
+import React from 'react';
+import dynamic from 'next/dynamic';
+import { Plus, Search, Box } from 'lucide-react';
+import toast, { Toaster } from 'react-hot-toast';
+import { useCompanyAssetsLogic } from '../_hooks/useCompanyAssetsLogic';
+import { useCompanyAssetFormLogic } from '../_hooks/useCompanyAssetFormLogic';
+import { CompanyAsset } from '@/services/admin/companyAssets.service';
+import { CompanyAssetCard } from './CompanyAssetCard';
 
-const CompanyAssetFormModal = dynamic(() => import("./CompanyAssetFormModal"), { ssr: false });
+const CompanyAssetFormModal = dynamic(() => import('./CompanyAssetFormModal'), { ssr: false });
 
 export function CompanyAssetsManager({ initialAssets = [] }: { initialAssets?: CompanyAsset[] }) {
-  const {
-    filteredAssets,
-    isLoading,
-    searchTerm,
-    setSearchTerm,
-    fetchAssets,
-    handleDelete,
-  } = useCompanyAssetsLogic(initialAssets);
+  const { filteredAssets, isLoading, searchTerm, setSearchTerm, fetchAssets, handleDelete } =
+    useCompanyAssetsLogic(initialAssets);
 
   const formLogic = useCompanyAssetFormLogic({
     onSuccess: () => {
-      toast.success("Asset saved successfully");
+      toast.success('Asset saved successfully');
       fetchAssets();
-    }
+    },
   });
 
   const onDelete = async (id: number) => {
     try {
       await handleDelete(id);
-      toast.success("Asset deleted successfully");
+      toast.success('Asset deleted successfully');
     } catch {
-      toast.error("Failed to delete asset");
+      toast.error('Failed to delete asset');
     }
   };
 
   return (
     <div className="space-y-6 w-full max-w-7xl mx-auto pb-safe pb-10 px-4 sm:px-6 md:px-8">
       <Toaster position="bottom-right" />
-      
+
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Company Assets</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage physical and digital company resources</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Manage physical and digital company resources
+          </p>
         </div>
         <button
           onClick={formLogic.openCreateModal}
@@ -99,10 +95,7 @@ export function CompanyAssetsManager({ initialAssets = [] }: { initialAssets?: C
       </div>
 
       {formLogic.isModalOpen && (
-        <CompanyAssetFormModal 
-          onClose={formLogic.closeModal} 
-          formLogic={formLogic} 
-        />
+        <CompanyAssetFormModal onClose={formLogic.closeModal} formLogic={formLogic} />
       )}
     </div>
   );

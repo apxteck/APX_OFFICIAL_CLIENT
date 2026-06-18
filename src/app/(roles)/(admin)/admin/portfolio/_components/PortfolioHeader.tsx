@@ -1,8 +1,7 @@
-"use client";
-import React from "react";
-import { Briefcase, PlusCircle } from "lucide-react";
+'use client';
+import React from 'react';
+import { Briefcase, PlusCircle } from 'lucide-react';
 export function PortfolioHeader({ onCreateClick }: { onCreateClick: () => void }) {
-
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div>
@@ -16,7 +15,7 @@ export function PortfolioHeader({ onCreateClick }: { onCreateClick: () => void }
           Showcase your best projects, manage client cases, and update portfolio visibility.
         </p>
       </div>
-      <button 
+      <button
         onClick={onCreateClick}
         className="bg-[#39FF14] hover:bg-[#32e012] text-black px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center justify-center min-h-[44px] gap-2 shrink-0"
       >

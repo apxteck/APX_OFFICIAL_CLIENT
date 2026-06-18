@@ -13,12 +13,18 @@ interface Props {
 }
 
 export function ResetPasswordForm({ form, onSubmit, isLoading, errorMsg, token }: Props) {
-  const { register, formState: { errors } } = form;
+  const {
+    register,
+    formState: { errors },
+  } = form;
 
   return (
     <>
       {!token && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/35 text-rose-500 text-sm flex gap-2.5 items-center font-semibold mb-6" role="alert">
+        <div
+          className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/35 text-rose-500 text-sm flex gap-2.5 items-center font-semibold mb-6"
+          role="alert"
+        >
           <AlertCircle className="w-5 h-5 shrink-0" aria-hidden="true" role="presentation" />
           <span>Invalid link. Reset token is missing from the browser URL address bar.</span>
         </div>
@@ -26,14 +32,20 @@ export function ResetPasswordForm({ form, onSubmit, isLoading, errorMsg, token }
 
       <form onSubmit={onSubmit} className="space-y-5" noValidate aria-label="Reset Password Form">
         {errorMsg && (
-          <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/35 text-rose-500 text-sm flex gap-2.5 items-center font-semibold" role="alert">
+          <div
+            className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/35 text-rose-500 text-sm flex gap-2.5 items-center font-semibold"
+            role="alert"
+          >
             <AlertCircle className="w-5 h-5 shrink-0" aria-hidden="true" role="presentation" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         <div className="space-y-1.5">
-          <label htmlFor="password" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+          <label
+            htmlFor="password"
+            className="text-xs font-bold uppercase tracking-wider text-foreground/75"
+          >
             New Password *
           </label>
           <input
@@ -54,7 +66,10 @@ export function ResetPasswordForm({ form, onSubmit, isLoading, errorMsg, token }
         </div>
 
         <div className="space-y-1.5">
-          <label htmlFor="confirmPassword" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+          <label
+            htmlFor="confirmPassword"
+            className="text-xs font-bold uppercase tracking-wider text-foreground/75"
+          >
             Confirm New Password *
           </label>
           <input
@@ -68,7 +83,11 @@ export function ResetPasswordForm({ form, onSubmit, isLoading, errorMsg, token }
             aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
           />
           {errors.confirmPassword && (
-            <p id="confirm-password-error" className="text-xs text-rose-500 font-medium pl-1" role="alert">
+            <p
+              id="confirm-password-error"
+              className="text-xs text-rose-500 font-medium pl-1"
+              role="alert"
+            >
               {errors.confirmPassword.message}
             </p>
           )}
@@ -88,7 +107,11 @@ export function ResetPasswordForm({ form, onSubmit, isLoading, errorMsg, token }
           ) : (
             <>
               Reset Password
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" role="presentation" />
+              <ArrowRight
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                aria-hidden="true"
+                role="presentation"
+              />
             </>
           )}
         </button>

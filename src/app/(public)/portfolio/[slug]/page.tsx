@@ -35,7 +35,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!project) return { title: 'Case Study Not Found | APXTECK' };
 
     const title = `${project.clientName} Case Study | APXTECK`;
-    const description = project.problem || `Read the detailed case study of our project with ${project.clientName}.`;
+    const description =
+      project.problem || `Read the detailed case study of our project with ${project.clientName}.`;
     const url = `https://apxteck.com/portfolio/${slug}`;
     const imageUrl = project.coverImageUrl || 'https://apxteck.com/images/og/portfolio-detail.jpg';
 
@@ -49,7 +50,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         siteName: 'APXTeck',
         type: 'article',
         locale: 'en_IN',
-        images: [{ url: imageUrl, width: 1200, height: 630, alt: `${project.clientName} Case Study` }],
+        images: [
+          { url: imageUrl, width: 1200, height: 630, alt: `${project.clientName} Case Study` },
+        ],
       },
       twitter: {
         card: 'summary_large_image',

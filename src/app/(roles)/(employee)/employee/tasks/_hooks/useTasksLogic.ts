@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
-import { tasksService } from "@/services/employee/tasks.service";
-import { Task } from "@/services/admin/tasks.service";
+import { useState, useCallback } from 'react';
+import { tasksService } from '@/services/employee/tasks.service';
+import { Task } from '@/services/admin/tasks.service';
 
 export const useTasksLogic = (
   initialTasks: Task[],
@@ -11,33 +11,40 @@ export const useTasksLogic = (
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(initialPage);
   const [totalPages, setTotalPages] = useState(initialTotalPages);
-  const [statusFilter, setStatusFilter] = useState<string>("");
+  const [statusFilter, setStatusFilter] = useState<string>('');
 
-  const fetchTasks = useCallback(async (pageNum = 1, status = statusFilter) => {
-    setIsLoading(true);
-    try {
-      const res = await tasksService.getMyTasks({ page: pageNum, limit: 10, status: status || undefined });
-      if (res.success) {
-        setTasks(res.data.data);
-        setTotalPages(res.data.pagination.totalPages);
-        setPage(res.data.pagination.page);
+  const fetchTasks = useCallback(
+    async (pageNum = 1, status = statusFilter) => {
+      setIsLoading(true);
+      try {
+        const res = await tasksService.getMyTasks({
+          page: pageNum,
+          limit: 10,
+          status: status || undefined,
+        });
+        if (res.success) {
+          setTasks(res.data.data);
+          setTotalPages(res.data.pagination.totalPages);
+          setPage(res.data.pagination.page);
+        }
+      } catch (err) {
+        console.error('Failed to fetch tasks', err);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      console.error("Failed to fetch tasks", err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [statusFilter]);
+    },
+    [statusFilter]
+  );
 
   const handleUpdateStatus = async (id: number, currentStatus: string) => {
-    let nextStatus: Task["status"] = "IN_PROGRESS";
-    if (currentStatus === "IN_PROGRESS") nextStatus = "COMPLETED";
-    
+    let nextStatus: Task['status'] = 'IN_PROGRESS';
+    if (currentStatus === 'IN_PROGRESS') nextStatus = 'COMPLETED';
+
     try {
       await tasksService.updateTaskStatus(id, nextStatus);
       fetchTasks(page, statusFilter);
     } catch (err: any) {
-      alert(err?.response?.data?.message || "Failed to update task status.");
+      alert(err?.response?.data?.message || 'Failed to update task status.');
     }
   };
 
@@ -55,6 +62,6 @@ export const useTasksLogic = (
     statusFilter,
     handleFilterChange,
     handleUpdateStatus,
-    fetchTasks
+    fetchTasks,
   };
 };

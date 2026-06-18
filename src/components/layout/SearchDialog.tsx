@@ -3,7 +3,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, FileText, Briefcase, HelpCircle, Newspaper, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { dashboardService, SearchResults, SearchResultItem } from '@/services/admin/dashboard.service';
+import {
+  dashboardService,
+  SearchResults,
+  SearchResultItem,
+} from '@/services/admin/dashboard.service';
 
 interface SearchDialogProps {
   open: boolean;
@@ -59,7 +63,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         const data = await dashboardService.globalSearch(query);
         setResults(data || { services: [], blogs: [], portfolios: [], faqs: [] });
       } catch (error) {
-        console.error("Search failed", error);
+        console.error('Search failed', error);
       } finally {
         setIsLoading(false);
       }
@@ -83,30 +87,34 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]">
-      <div 
+      <div
         className="fixed inset-0 bg-background/80 backdrop-blur-sm"
         onClick={() => onOpenChange(false)}
       />
-      <div 
-        className="relative z-50 w-full max-w-2xl flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-background/95 shadow-2xl backdrop-blur-xl sm:w-[600px]"
-      >
+      <div className="relative z-50 w-full max-w-2xl flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-background/95 shadow-2xl backdrop-blur-xl sm:w-[600px]">
         <div className="flex items-center border-b border-white/10 px-4">
           <Search className="mr-2 h-5 w-5 shrink-0 text-muted-foreground" />
-          <input 
+          <input
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="flex h-14 w-full rounded-md bg-transparent py-3 text-lg outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-            placeholder="Search services, insights, portfolio, FAQs..." 
+            placeholder="Search services, insights, portfolio, FAQs..."
           />
           {isLoading && <Loader2 className="ml-2 h-5 w-5 animate-spin text-accent" />}
-          <div className="ml-2 text-xs text-muted-foreground border border-white/20 px-2 py-1 rounded-md">ESC</div>
+          <div className="ml-2 text-xs text-muted-foreground border border-white/20 px-2 py-1 rounded-md">
+            ESC
+          </div>
         </div>
 
         <div className="max-h-[60vh] overflow-y-auto p-2 scrollbar-thin scrollbar-thumb-white/10">
           {!hasResults && (
             <div className="py-10 text-center text-sm text-muted-foreground">
-              {isLoading ? "Searching deeply..." : query ? "No results found." : "Start typing to search..."}
+              {isLoading
+                ? 'Searching deeply...'
+                : query
+                  ? 'No results found.'
+                  : 'Start typing to search...'}
             </div>
           )}
 
@@ -114,7 +122,9 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
             <>
               {results.services.length > 0 && (
                 <div className="mb-2">
-                  <div className="px-2 py-1 text-xs font-semibold text-accent uppercase tracking-wider">Services</div>
+                  <div className="px-2 py-1 text-xs font-semibold text-accent uppercase tracking-wider">
+                    Services
+                  </div>
                   {results.services.map((item) => (
                     <div
                       key={`service-${item.id}`}
@@ -124,7 +134,11 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       <Briefcase className="h-5 w-5 text-blue-400" />
                       <div className="flex flex-col">
                         <span className="font-medium text-foreground">{item.name}</span>
-                        {item.description && <span className="text-xs text-muted-foreground line-clamp-1">{item.description}</span>}
+                        {item.description && (
+                          <span className="text-xs text-muted-foreground line-clamp-1">
+                            {item.description}
+                          </span>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -133,7 +147,9 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
               {results.portfolios.length > 0 && (
                 <div className="mb-2">
-                  <div className="px-2 py-1 text-xs font-semibold text-accent uppercase tracking-wider mt-2">Portfolio</div>
+                  <div className="px-2 py-1 text-xs font-semibold text-accent uppercase tracking-wider mt-2">
+                    Portfolio
+                  </div>
                   {results.portfolios.map((item) => (
                     <div
                       key={`portfolio-${item.id}`}
@@ -143,7 +159,9 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       <Briefcase className="h-5 w-5 text-purple-400" />
                       <div className="flex flex-col">
                         <span className="font-medium text-foreground">{item.title}</span>
-                        <span className="text-xs text-muted-foreground">{item.clientName} • {item.serviceType}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {item.clientName} • {item.serviceType}
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -152,7 +170,9 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
               {results.blogs.length > 0 && (
                 <div className="mb-2">
-                  <div className="px-2 py-1 text-xs font-semibold text-accent uppercase tracking-wider mt-2">Insights & News</div>
+                  <div className="px-2 py-1 text-xs font-semibold text-accent uppercase tracking-wider mt-2">
+                    Insights & News
+                  </div>
                   {results.blogs.map((item) => (
                     <div
                       key={`blog-${item.id}`}
@@ -162,7 +182,11 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       <Newspaper className="h-5 w-5 text-green-400" />
                       <div className="flex flex-col">
                         <span className="font-medium text-foreground">{item.title}</span>
-                        {item.excerpt && <span className="text-xs text-muted-foreground line-clamp-1">{item.excerpt}</span>}
+                        {item.excerpt && (
+                          <span className="text-xs text-muted-foreground line-clamp-1">
+                            {item.excerpt}
+                          </span>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -171,7 +195,9 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
               {results.faqs.length > 0 && (
                 <div className="mb-2">
-                  <div className="px-2 py-1 text-xs font-semibold text-accent uppercase tracking-wider mt-2">FAQs</div>
+                  <div className="px-2 py-1 text-xs font-semibold text-accent uppercase tracking-wider mt-2">
+                    FAQs
+                  </div>
                   {results.faqs.map((item) => (
                     <div
                       key={`faq-${item.id}`}
@@ -181,7 +207,9 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       <HelpCircle className="h-5 w-5 text-yellow-400" />
                       <div className="flex flex-col">
                         <span className="font-medium text-foreground">{item.question}</span>
-                        <span className="text-xs text-muted-foreground line-clamp-1">{item.answer}</span>
+                        <span className="text-xs text-muted-foreground line-clamp-1">
+                          {item.answer}
+                        </span>
                       </div>
                     </div>
                   ))}

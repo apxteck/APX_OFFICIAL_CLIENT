@@ -1,23 +1,23 @@
-import React from "react";
-import { rolesService } from "@/services/admin/roles.service";
-import { AlertCircle } from "lucide-react";
-import Link from "next/link";
-import { RoleDetailClient } from "../_components/RoleDetailClient";
+import React from 'react';
+import { rolesService } from '@/services/admin/roles.service';
+import { AlertCircle } from 'lucide-react';
+import Link from 'next/link';
+import { RoleDetailClient } from '../_components/RoleDetailClient';
 
 export default async function RoleDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   const roleId = Number(resolvedParams.id);
-  
+
   if (!roleId) {
     return null;
   }
 
   let role = null;
-  let permissions: import("@/services/admin/roles.service").PermRow[] = [];
+  let permissions: import('@/services/admin/roles.service').PermRow[] = [];
 
   try {
     const allRoles = await rolesService.getRoles();
-    role = allRoles.find(r => r.id === roleId);
+    role = allRoles.find((r) => r.id === roleId);
 
     if (role) {
       const permsData = await rolesService.getRolePermissions(roleId);
@@ -26,7 +26,7 @@ export default async function RoleDetailPage({ params }: { params: Promise<{ id:
       }
     }
   } catch (error) {
-    console.error("Error pre-fetching role details:", error);
+    console.error('Error pre-fetching role details:', error);
   }
 
   if (!role) {

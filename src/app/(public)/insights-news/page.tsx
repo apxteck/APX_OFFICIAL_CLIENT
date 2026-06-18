@@ -10,8 +10,14 @@ import { jsonLdBlog, jsonLdBreadcrumb } from './constants';
 import { BlogSectionLoader } from './components/BlogSectionLoader';
 import { BlogSectionSkeleton } from './components/BlogSectionSkeleton';
 
-const ExploreNewsClient = dynamic(() => import('./ExploreNewsClient').then(mod => mod.ExploreNewsClient), { ssr: true });
-const TechStackMarquee = dynamic(() => import('@/components/sections/TechStackMarquee').then(mod => mod.TechStackMarquee), { ssr: true });
+const ExploreNewsClient = dynamic(
+  () => import('./ExploreNewsClient').then((mod) => mod.ExploreNewsClient),
+  { ssr: true }
+);
+const TechStackMarquee = dynamic(
+  () => import('@/components/sections/TechStackMarquee').then((mod) => mod.TechStackMarquee),
+  { ssr: true }
+);
 
 export const revalidate = 60;
 
@@ -98,19 +104,32 @@ export default function BlogListingPage() {
         <LanguageSwitcher />
       </div>
 
-      <main className="flex-1 pt-24 pb-20 overflow-x-hidden w-full pt-safe pb-safe" id="main-content" role="main" itemScope itemType="https://schema.org/Blog">
-        
+      <main
+        className="flex-1 pt-24 pb-20 overflow-x-hidden w-full pt-safe pb-safe"
+        id="main-content"
+        role="main"
+        itemScope
+        itemType="https://schema.org/Blog"
+      >
         {/* Animated Hero and Knowledge Hub Focus (Client component) */}
         <article className="notranslate w-full" translate="no">
           <ExploreNewsClient />
         </article>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 text-center notranslate w-full" translate="no" aria-hidden="true">
+        <div
+          className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 text-center notranslate w-full"
+          translate="no"
+          aria-hidden="true"
+        >
           <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
         </div>
 
         {/* Ad Slot Top and Pricing (Stacked Horizontally) */}
-        <aside className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 md:mb-12 flex flex-col items-center gap-6 md:gap-8 notranslate w-full" translate="no" aria-label="Top Advertisement">
+        <aside
+          className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 md:mb-12 flex flex-col items-center gap-6 md:gap-8 notranslate w-full"
+          translate="no"
+          aria-label="Top Advertisement"
+        >
           <div className="w-full max-w-full overflow-hidden flex justify-center bg-foreground/[0.02] border border-glass-border rounded-2xl md:rounded-3xl p-4">
             <AdBanner placement="BLOG_LIST_TOP" />
           </div>
@@ -129,12 +148,20 @@ export default function BlogListingPage() {
         </section>
 
         {/* Ad Slot Bottom (After Blog list, before Marquee) */}
-        <aside className="max-w-7xl mx-auto px-4 sm:px-6 mt-12 md:mt-16 mb-8 flex justify-center notranslate w-full" translate="no" aria-label="Bottom Advertisement">
+        <aside
+          className="max-w-7xl mx-auto px-4 sm:px-6 mt-12 md:mt-16 mb-8 flex justify-center notranslate w-full"
+          translate="no"
+          aria-label="Bottom Advertisement"
+        >
           <AdBanner placement="BLOG_LIST_MID" />
         </aside>
 
         {/* Tech Stack Marquee at the bottom */}
-        <section className="mt-8 md:mt-12 notranslate w-full" translate="no" aria-label="Our Technology Stack">
+        <section
+          className="mt-8 md:mt-12 notranslate w-full"
+          translate="no"
+          aria-label="Our Technology Stack"
+        >
           <TechStackMarquee />
         </section>
       </main>

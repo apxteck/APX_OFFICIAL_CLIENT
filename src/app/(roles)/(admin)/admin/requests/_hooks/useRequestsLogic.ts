@@ -1,18 +1,19 @@
-import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
-import { ServiceRequest } from "@/services/admin/requests.service";
+import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
+import { ServiceRequest } from '@/services/admin/requests.service';
 
 export const useRequestsLogic = (initialRequests: ServiceRequest[]) => {
   const router = useRouter();
   const [requests, setRequests] = useState<ServiceRequest[]>(initialRequests);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const filteredRequests = useMemo(() => {
     const term = searchTerm.toLowerCase();
-    return requests.filter(req => 
-      req.customerName.toLowerCase().includes(term) ||
-      String(req.id).toLowerCase().includes(term) ||
-      req.serviceType.toLowerCase().includes(term)
+    return requests.filter(
+      (req) =>
+        req.customerName.toLowerCase().includes(term) ||
+        String(req.id).toLowerCase().includes(term) ||
+        req.serviceType.toLowerCase().includes(term)
     );
   }, [requests, searchTerm]);
 

@@ -8,14 +8,7 @@ import { RegisterSuccess } from './components/RegisterSuccess';
 import { RegisterForm } from './components/RegisterForm';
 
 export function RegisterClient() {
-  const {
-    isMounted,
-    isLoading,
-    errorMsg,
-    successMsg,
-    form,
-    onSubmit,
-  } = useRegisterLogic();
+  const { isMounted, isLoading, errorMsg, successMsg, form, onSubmit } = useRegisterLogic();
 
   if (!isMounted) return null;
 
@@ -32,11 +25,11 @@ export function RegisterClient() {
         {successMsg ? (
           <RegisterSuccess successMsg={successMsg} />
         ) : (
-          <RegisterForm 
-            form={form} 
-            onSubmit={form.handleSubmit(onSubmit)} 
-            isLoading={isLoading} 
-            errorMsg={errorMsg} 
+          <RegisterForm
+            form={form}
+            onSubmit={form.handleSubmit(onSubmit)}
+            isLoading={isLoading}
+            errorMsg={errorMsg}
           />
         )}
       </GlassCard>

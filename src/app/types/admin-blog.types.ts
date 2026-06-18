@@ -1,4 +1,10 @@
-export type BlogPostStatus = "DRAFT" | "REVIEWED" | "PUBLISHED" | "REJECTED" | "UPDATED" | "REVIWED";
+export type BlogPostStatus =
+  | 'DRAFT'
+  | 'REVIEWED'
+  | 'PUBLISHED'
+  | 'REJECTED'
+  | 'UPDATED'
+  | 'REVIWED';
 
 export interface BlogCategory {
   id: string | number;

@@ -1,5 +1,5 @@
-import React from "react";
-import { Payment } from "@/services/admin/payments.service";
+import React from 'react';
+import { Payment } from '@/services/admin/payments.service';
 
 interface Props {
   payments: Payment[];
@@ -7,19 +7,24 @@ interface Props {
 
 export function PaymentsSummary({ payments }: Props) {
   const formatCurrency = (amount: string | number | null) => {
-    if (!amount) return "—";
-    return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(Number(amount));
+    if (!amount) return '—';
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(
+      Number(amount)
+    );
   };
 
   const totalRevenue = payments
-    .filter((p) => p.status === "PAID")
-    .reduce((acc, curr) => acc + (Number(curr.amountPaid) || Number(curr.negotiatedAmount) || 0), 0);
+    .filter((p) => p.status === 'PAID')
+    .reduce(
+      (acc, curr) => acc + (Number(curr.amountPaid) || Number(curr.negotiatedAmount) || 0),
+      0
+    );
 
   const pendingAmount = payments
-    .filter((p) => ["PENDING", "SENT"].includes(p.status))
+    .filter((p) => ['PENDING', 'SENT'].includes(p.status))
     .reduce((acc, curr) => acc + (Number(curr.negotiatedAmount) || 0), 0);
 
-  const paidCount = payments.filter((p) => p.status === "PAID").length;
+  const paidCount = payments.filter((p) => p.status === 'PAID').length;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">

@@ -1,13 +1,13 @@
-import React from "react";
-import DashboardManager from "./_components/DashboardManager";
-import { dashboardService, DashboardStats } from "@/services/admin/dashboard.service";
+import React from 'react';
+import DashboardManager from './_components/DashboardManager';
+import { dashboardService, DashboardStats } from '@/services/admin/dashboard.service';
 
 export default async function AdminDashboardPage() {
   let initialStats: DashboardStats | null = null;
   try {
     initialStats = await dashboardService.getAdminStats();
   } catch (error) {
-    console.error("Failed to load dashboard stats", error);
+    console.error('Failed to load dashboard stats', error);
   }
 
   return (

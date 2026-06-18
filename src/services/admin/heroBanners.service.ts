@@ -30,5 +30,5 @@ export const heroBannersService = {
   toggleBannerActive: async (id: number) => {
     const response = await apiClient.patch(`/hero-banner/${id}/toggle-active`);
     return response.data;
-  }
+  },
 };

@@ -1,18 +1,18 @@
-import React, { Suspense } from "react";
-import { Metadata } from "next";
-import { BlogEditorClient } from "./_components/BlogEditorClient";
-import BlogLoading from "../loading";
-import { blogService } from "@/services/admin/blog.service";
-import { usersService } from "@/services/admin/users.service";
+import React, { Suspense } from 'react';
+import { Metadata } from 'next';
+import { BlogEditorClient } from './_components/BlogEditorClient';
+import BlogLoading from '../loading';
+import { blogService } from '@/services/admin/blog.service';
+import { usersService } from '@/services/admin/users.service';
 
 export const metadata: Metadata = {
-  title: "Edit Blog Post | APXTeck Admin",
-  description: "Create or edit a blog post.",
+  title: 'Edit Blog Post | APXTeck Admin',
+  description: 'Create or edit a blog post.',
 };
 
 async function BlogEditorDataFetcher({ id }: { id: string }) {
-  const isNew = id === "new";
-  
+  const isNew = id === 'new';
+
   // Fetch required data in parallel
   const [categories, users, post] = await Promise.all([
     blogService.getCategories(),
@@ -21,12 +21,12 @@ async function BlogEditorDataFetcher({ id }: { id: string }) {
   ]);
 
   return (
-    <BlogEditorClient 
-      initialPost={post} 
-      initialCategories={categories || []} 
-      initialUsers={users || []} 
-      isNew={isNew} 
-      postId={id} 
+    <BlogEditorClient
+      initialPost={post}
+      initialCategories={categories || []}
+      initialUsers={users || []}
+      isNew={isNew}
+      postId={id}
     />
   );
 }

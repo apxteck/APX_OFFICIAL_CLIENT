@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-// Using inline types to mirror what was in the original component, 
+// Using inline types to mirror what was in the original component,
 // ideally these should be imported from shared type definition files.
 export interface TaskItem {
   id: string;
@@ -68,11 +68,14 @@ export const useDashboardLogic = (
     tasks,
     reimbursements,
     assignedRequests,
-    claimTitle, setClaimTitle,
-    claimAmount, setClaimAmount,
-    claimCategory, setClaimCategory,
+    claimTitle,
+    setClaimTitle,
+    claimAmount,
+    setClaimAmount,
+    claimCategory,
+    setClaimCategory,
     isSubmittingClaim,
     claimSuccess,
-    handleApplyReimbursement
+    handleApplyReimbursement,
   };
 };

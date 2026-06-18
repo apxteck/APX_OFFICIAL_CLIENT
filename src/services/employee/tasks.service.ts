@@ -18,12 +18,17 @@ export interface TasksResponse {
 }
 
 export const tasksService = {
-  getMyTasks: async (params?: { page?: number; limit?: number; status?: string; priority?: string }): Promise<TasksResponse> => {
+  getMyTasks: async (params?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+    priority?: string;
+  }): Promise<TasksResponse> => {
     try {
       const response = await apiClient.get('/task/mine', { params });
       return response.data;
     } catch (error) {
-      console.error("Failed to fetch my tasks", error);
+      console.error('Failed to fetch my tasks', error);
       throw error;
     }
   },
@@ -33,18 +38,21 @@ export const tasksService = {
       const response = await apiClient.get(`/task/mine/${id}`);
       return response.data?.data || null;
     } catch (error) {
-      console.error("Failed to fetch task details", error);
+      console.error('Failed to fetch task details', error);
       return null;
     }
   },
 
-  updateTaskStatus: async (id: number, status: Task["status"]): Promise<{ success: boolean; message: string }> => {
+  updateTaskStatus: async (
+    id: number,
+    status: Task['status']
+  ): Promise<{ success: boolean; message: string }> => {
     try {
       const response = await apiClient.patch(`/task/mine/${id}/status`, { status });
       return { success: response.data.success, message: response.data.message };
     } catch (error: any) {
-      console.error("Failed to update task status", error);
+      console.error('Failed to update task status', error);
       throw error;
     }
-  }
+  },
 };

@@ -18,9 +18,7 @@ export function ServiceDetailFaq({ serviceName, faqs }: Props) {
     <section className="py-16 max-w-3xl mx-auto px-6">
       <div className="text-center mb-16 space-y-4">
         <h2 className="text-3xl font-extrabold tracking-tight">Service Specific FAQs</h2>
-        <p className="text-foreground/60">
-          Find clear, rapid answers relating to {serviceName}.
-        </p>
+        <p className="text-foreground/60">Find clear, rapid answers relating to {serviceName}.</p>
       </div>
       <div className="space-y-4">
         {faqs.map((faq, idx) => {
@@ -29,9 +27,7 @@ export function ServiceDetailFaq({ serviceName, faqs }: Props) {
             <div
               key={faq.id}
               className={`border rounded-2xl overflow-hidden transition-all duration-300 ${
-                isActive
-                  ? 'bg-accent/5 border-accent/25'
-                  : 'border-glass-border hover:bg-white/5'
+                isActive ? 'bg-accent/5 border-accent/25' : 'border-glass-border hover:bg-white/5'
               }`}
             >
               <button

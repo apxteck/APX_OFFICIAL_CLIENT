@@ -1,51 +1,51 @@
-"use client";
+'use client';
 
-import React from "react";
-import dynamic from "next/dynamic";
-import { Plus, Search, Archive } from "lucide-react";
-import toast, { Toaster } from "react-hot-toast";
-import { useCompanyVaultLogic } from "../_hooks/useCompanyVaultLogic";
-import { useCompanyVaultFormLogic } from "../_hooks/useCompanyVaultFormLogic";
-import { CompanyVaultDocument } from "@/services/admin/companyVault.service";
-import { CompanyVaultCard } from "./CompanyVaultCard";
+import React from 'react';
+import dynamic from 'next/dynamic';
+import { Plus, Search, Archive } from 'lucide-react';
+import toast, { Toaster } from 'react-hot-toast';
+import { useCompanyVaultLogic } from '../_hooks/useCompanyVaultLogic';
+import { useCompanyVaultFormLogic } from '../_hooks/useCompanyVaultFormLogic';
+import { CompanyVaultDocument } from '@/services/admin/companyVault.service';
+import { CompanyVaultCard } from './CompanyVaultCard';
 
-const CompanyVaultFormModal = dynamic(() => import("./CompanyVaultFormModal"), { ssr: false });
+const CompanyVaultFormModal = dynamic(() => import('./CompanyVaultFormModal'), { ssr: false });
 
-export function CompanyVaultManager({ initialDocuments = [] }: { initialDocuments?: CompanyVaultDocument[] }) {
-  const {
-    filteredDocuments,
-    isLoading,
-    searchTerm,
-    setSearchTerm,
-    fetchDocuments,
-    handleDelete,
-  } = useCompanyVaultLogic(initialDocuments);
+export function CompanyVaultManager({
+  initialDocuments = [],
+}: {
+  initialDocuments?: CompanyVaultDocument[];
+}) {
+  const { filteredDocuments, isLoading, searchTerm, setSearchTerm, fetchDocuments, handleDelete } =
+    useCompanyVaultLogic(initialDocuments);
 
   const formLogic = useCompanyVaultFormLogic({
     onSuccess: () => {
-      toast.success("Document saved successfully");
+      toast.success('Document saved successfully');
       fetchDocuments();
-    }
+    },
   });
 
   const onDelete = async (id: number) => {
     try {
       await handleDelete(id);
-      toast.success("Document deleted successfully");
+      toast.success('Document deleted successfully');
     } catch {
-      toast.error("Failed to delete document");
+      toast.error('Failed to delete document');
     }
   };
 
   return (
     <div className="space-y-6 w-full max-w-7xl mx-auto pb-safe pb-10 px-4 sm:px-6 md:px-8">
       <Toaster position="bottom-right" />
-      
+
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Company Vault</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Secure repository for critical company documents</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Secure repository for critical company documents
+          </p>
         </div>
         <button
           onClick={formLogic.openCreateModal}
@@ -99,10 +99,7 @@ export function CompanyVaultManager({ initialDocuments = [] }: { initialDocument
       </div>
 
       {formLogic.isModalOpen && (
-        <CompanyVaultFormModal 
-          onClose={formLogic.closeModal} 
-          formLogic={formLogic} 
-        />
+        <CompanyVaultFormModal onClose={formLogic.closeModal} formLogic={formLogic} />
       )}
     </div>
   );

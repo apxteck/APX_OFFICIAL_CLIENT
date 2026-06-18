@@ -1,4 +1,4 @@
-import apiClient from "@/lib/api/axios";
+import apiClient from '@/lib/api/axios';
 
 export interface DashboardStats {
   customers: {

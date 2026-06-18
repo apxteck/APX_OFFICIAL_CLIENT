@@ -61,7 +61,7 @@ export const api = {
     return {
       success: response.data.success,
       user: response.data.data?.user,
-      message: response.data.message
+      message: response.data.message,
     };
   },
   register: async (data: any) => {
@@ -69,7 +69,7 @@ export const api = {
     return {
       success: response.data.success,
       user: response.data.data, // assuming createUser returns user in data
-      message: response.data.message
+      message: response.data.message,
     };
   },
   logout: async () => {
@@ -81,13 +81,15 @@ export const api = {
     return {
       success: response.data.success,
       user: response.data.data?.user,
-      message: response.data.message
+      message: response.data.message,
     };
   },
   // Keep the other mocked methods as empty arrays/objects to prevent crashes
   fetchAds: async (placement?: string) => {
     try {
-      const url = placement ? `/advertisement/public?placement=${placement}` : '/advertisement/public';
+      const url = placement
+        ? `/advertisement/public?placement=${placement}`
+        : '/advertisement/public';
       const response = await apiClient.get(url);
       return response.data?.data || [];
     } catch (error: any) {
@@ -97,7 +99,7 @@ export const api = {
       return [];
     }
   },
-  fetchStats: async () => ({} as unknown as StatsOverview),
+  fetchStats: async () => ({}) as unknown as StatsOverview,
   fetchBlogComments: async (slug: string) => {
     try {
       const response = await apiClient.get(`/blog/public/posts/${slug}`);
@@ -251,7 +253,8 @@ export const api = {
     } catch (err: any) {
       return {
         success: false,
-        message: err.response?.data?.message || err.message || 'Failed to resend verification email.',
+        message:
+          err.response?.data?.message || err.message || 'Failed to resend verification email.',
       };
     }
   },
@@ -275,7 +278,11 @@ export const api = {
   submitEnquiry: async (data: any) => {
     try {
       const response = await apiClient.post('/enquiry', data);
-      return { success: response.data?.success, message: response.data?.message, data: response.data?.data };
+      return {
+        success: response.data?.success,
+        message: response.data?.message,
+        data: response.data?.data,
+      };
     } catch (error: any) {
       console.error('Failed to submit enquiry:', error);
       return { success: false, message: error.response?.data?.message || error.message };
@@ -284,7 +291,11 @@ export const api = {
   submitServiceRequest: async (serviceId: number, formData: FormData) => {
     try {
       const response = await apiClient.post(`/service/request/create/${serviceId}`, formData);
-      return { success: response.data?.success, message: response.data?.message, data: response.data?.data };
+      return {
+        success: response.data?.success,
+        message: response.data?.message,
+        data: response.data?.data,
+      };
     } catch (error: any) {
       console.error('Failed to submit service request:', error);
       return { success: false, message: error.response?.data?.message || error.message };

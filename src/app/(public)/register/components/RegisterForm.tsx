@@ -14,7 +14,10 @@ interface Props {
 }
 
 export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
-  const { register, formState: { errors } } = form;
+  const {
+    register,
+    formState: { errors },
+  } = form;
 
   return (
     <form onSubmit={onSubmit} className="space-y-5">
@@ -28,13 +31,7 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
       {/* Honeypot field (hidden visually, but present in DOM) */}
       <div className="hidden" aria-hidden="true">
         <label htmlFor="botName">Bot Name</label>
-        <input
-          id="botName"
-          type="text"
-          {...register('botName')}
-          tabIndex={-1}
-          autoComplete="off"
-        />
+        <input id="botName" type="text" {...register('botName')} tabIndex={-1} autoComplete="off" />
       </div>
 
       {/* Full Name */}
@@ -67,7 +64,9 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
           placeholder="you@company.com"
         />
         {errors.email && (
-          <p className="text-xs text-rose-500 font-medium pl-1" role="alert">{errors.email.message}</p>
+          <p className="text-xs text-rose-500 font-medium pl-1" role="alert">
+            {errors.email.message}
+          </p>
         )}
       </div>
 
@@ -83,7 +82,9 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
           placeholder="9876543210"
         />
         {errors.phone && (
-          <p className="text-xs text-rose-500 font-medium pl-1" role="alert">{errors.phone.message}</p>
+          <p className="text-xs text-rose-500 font-medium pl-1" role="alert">
+            {errors.phone.message}
+          </p>
         )}
       </div>
 
@@ -133,17 +134,27 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
           />
           <span className="text-xs text-foreground/70 leading-relaxed font-medium">
             I agree to the{' '}
-            <Link href="/terms" aria-label="Read our Terms of Service" className="text-accent hover:underline font-bold">
+            <Link
+              href="/terms"
+              aria-label="Read our Terms of Service"
+              className="text-accent hover:underline font-bold"
+            >
               Terms of Service
             </Link>{' '}
             and{' '}
-            <Link href="/privacy" aria-label="Read our Privacy Policy" className="text-accent hover:underline font-bold">
+            <Link
+              href="/privacy"
+              aria-label="Read our Privacy Policy"
+              className="text-accent hover:underline font-bold"
+            >
               Privacy Policy
             </Link>
           </span>
         </label>
         {errors.terms && (
-          <p className="text-xs text-rose-500 font-medium pl-1" role="alert">{errors.terms.message}</p>
+          <p className="text-xs text-rose-500 font-medium pl-1" role="alert">
+            {errors.terms.message}
+          </p>
         )}
       </div>
 
@@ -155,7 +166,11 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
       >
         {isLoading ? 'Creating Account...' : 'Sign Up'}
         {!isLoading && (
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" role="presentation" />
+          <ArrowRight
+            className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+            aria-hidden="true"
+            role="presentation"
+          />
         )}
       </button>
 
@@ -163,7 +178,11 @@ export function RegisterForm({ form, onSubmit, isLoading, errorMsg }: Props) {
 
       <p className="text-center text-xs text-foreground/60 mt-6 font-medium">
         Already have an account?{' '}
-        <Link href="/login" aria-label="Sign in to your existing account" className="text-accent hover:underline font-bold min-h-[44px] inline-flex items-center">
+        <Link
+          href="/login"
+          aria-label="Sign in to your existing account"
+          className="text-accent hover:underline font-bold min-h-[44px] inline-flex items-center"
+        >
           Sign In
         </Link>
       </p>

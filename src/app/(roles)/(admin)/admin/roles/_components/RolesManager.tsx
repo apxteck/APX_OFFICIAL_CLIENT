@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { RolesHeader } from "./RolesHeader";
-import { RolesTable } from "./RolesTable";
-import { RoleModal } from "./RoleModal";
-import { useRolesLogic } from "../_hooks/useRolesLogic";
-import { Role } from "@/services/admin/roles.service";
+import React from 'react';
+import { RolesHeader } from './RolesHeader';
+import { RolesTable } from './RolesTable';
+import { RoleModal } from './RoleModal';
+import { useRolesLogic } from '../_hooks/useRolesLogic';
+import { Role } from '@/services/admin/roles.service';
 
 export default function RolesManager({ initialRoles }: { initialRoles: Role[] }) {
   const logic = useRolesLogic(initialRoles);
@@ -13,12 +13,12 @@ export default function RolesManager({ initialRoles }: { initialRoles: Role[] })
   return (
     <>
       <RolesHeader handleOpenModal={logic.handleOpenModal} />
-      <RolesTable 
-        roles={logic.roles} 
-        handleOpenModal={logic.handleOpenModal} 
-        handleDelete={logic.handleDelete} 
+      <RolesTable
+        roles={logic.roles}
+        handleOpenModal={logic.handleOpenModal}
+        handleDelete={logic.handleDelete}
       />
-      <RoleModal 
+      <RoleModal
         isModalOpen={logic.isModalOpen}
         modalMode={logic.modalMode}
         handleCloseModal={logic.handleCloseModal}

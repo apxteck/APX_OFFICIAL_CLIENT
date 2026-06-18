@@ -26,12 +26,17 @@ export interface ReimbursementResponse {
       totalPages: number;
       hasNextPage: boolean;
       hasPrevPage: boolean;
-    }
-  }
+    };
+  };
 }
 
 export const reimbursementService = {
-  getMyReimbursements: async (params?: { page?: number; limit?: number; status?: string; category?: string }): Promise<ReimbursementResponse> => {
+  getMyReimbursements: async (params?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+    category?: string;
+  }): Promise<ReimbursementResponse> => {
     const response = await apiClient.get('/reimbursement/my', { params });
     return response.data;
   },
@@ -49,5 +54,5 @@ export const reimbursementService = {
   deleteReimbursement: async (id: string | number) => {
     const response = await apiClient.delete(`/reimbursement/delete/${id}`);
     return response.data;
-  }
+  },
 };

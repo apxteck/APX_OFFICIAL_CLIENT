@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { paymentsService, Payment } from "@/services/admin/payments.service";
-import { requestsService } from "@/services/admin/requests.service";
-import toast from "react-hot-toast";
+import { useState, useMemo } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { paymentsService, Payment } from '@/services/admin/payments.service';
+import { requestsService } from '@/services/admin/requests.service';
+import toast from 'react-hot-toast';
 
 interface InitialData {
   payments: Payment[];
@@ -12,33 +12,37 @@ interface InitialData {
 
 export function usePaymentsLogic(initialPaymentsData: InitialData, initialRequestsData: any[]) {
   const queryClient = useQueryClient();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [viewMode, setViewMode] = useState<"table" | "grid">("table");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
 
   // Modals state
   const [isMarkPaidOpen, setIsMarkPaidOpen] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState<Payment | null>(null);
-  const [amountPaidInput, setAmountPaidInput] = useState("");
-  const [transactionIdInput, setTransactionIdInput] = useState("");
+  const [amountPaidInput, setAmountPaidInput] = useState('');
+  const [transactionIdInput, setTransactionIdInput] = useState('');
 
   const [isCreateLinkOpen, setIsCreateLinkOpen] = useState(false);
-  const [selectedRequestId, setSelectedRequestId] = useState<string>("");
-  const [createNegotiatedAmount, setCreateNegotiatedAmount] = useState("");
-  const [createSuggestedAmount, setCreateSuggestedAmount] = useState("");
-  const [createInvoiceNote, setCreateInvoiceNote] = useState("");
+  const [selectedRequestId, setSelectedRequestId] = useState<string>('');
+  const [createNegotiatedAmount, setCreateNegotiatedAmount] = useState('');
+  const [createSuggestedAmount, setCreateSuggestedAmount] = useState('');
+  const [createInvoiceNote, setCreateInvoiceNote] = useState('');
 
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
   const [invoicePayment, setInvoicePayment] = useState<Payment | null>(null);
 
   // Queries
-  const { data: paymentsData, isLoading, isError } = useQuery({
-    queryKey: ["payments"],
+  const {
+    data: paymentsData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['payments'],
     queryFn: () => paymentsService.getPayments(),
     initialData: initialPaymentsData,
   });
 
   const { data: requestsData, isLoading: isLoadingRequests } = useQuery({
-    queryKey: ["serviceRequests"],
+    queryKey: ['serviceRequests'],
     queryFn: () => requestsService.getRequests(),
     initialData: initialRequestsData,
   });
@@ -59,60 +63,83 @@ export function usePaymentsLogic(initialPaymentsData: InitialData, initialReques
   // Mutations
   const sendInvoiceMutation = useMutation({
     mutationFn: (id: number) => paymentsService.sendInvoiceEmail(id),
-    onSuccess: () => toast.success("Invoice sent to customer successfully"),
-    onError: () => toast.error("Failed to send invoice email"),
+    onSuccess: () => toast.success('Invoice sent to customer successfully'),
+    onError: () => toast.error('Failed to send invoice email'),
   });
 
   const resendMutation = useMutation({
     mutationFn: (id: number) => paymentsService.resendInvoiceLink(id),
-    onSuccess: () => toast.success("Payment link resent"),
-    onError: () => toast.error("Failed to resend payment link"),
+    onSuccess: () => toast.success('Payment link resent'),
+    onError: () => toast.error('Failed to resend payment link'),
   });
 
   const markPaidMutation = useMutation({
-    mutationFn: ({ id, amountPaid, transactionId }: { id: number; amountPaid: number; transactionId?: string }) =>
-      paymentsService.markAsPaid(id, { amountPaid, transactionId }),
+    mutationFn: ({
+      id,
+      amountPaid,
+      transactionId,
+    }: {
+      id: number;
+      amountPaid: number;
+      transactionId?: string;
+    }) => paymentsService.markAsPaid(id, { amountPaid, transactionId }),
     onMutate: async ({ id, amountPaid, transactionId }) => {
-      await queryClient.cancelQueries({ queryKey: ["payments"] });
-      const previousPayments = queryClient.getQueryData<{ payments: Payment[]; total: number; page: number }>(["payments"]);
+      await queryClient.cancelQueries({ queryKey: ['payments'] });
+      const previousPayments = queryClient.getQueryData<{
+        payments: Payment[];
+        total: number;
+        page: number;
+      }>(['payments']);
 
       if (previousPayments) {
-        queryClient.setQueryData(["payments"], {
+        queryClient.setQueryData(['payments'], {
           ...previousPayments,
           payments: previousPayments.payments.map((p) =>
-            p.id === id ? { ...p, status: "PAID", amountPaid: amountPaid.toString(), transactionId: transactionId || null } : p
+            p.id === id
+              ? {
+                  ...p,
+                  status: 'PAID',
+                  amountPaid: amountPaid.toString(),
+                  transactionId: transactionId || null,
+                }
+              : p
           ),
         });
       }
       return { previousPayments };
     },
     onSuccess: () => {
-      toast.success("Payment marked as paid");
-      queryClient.invalidateQueries({ queryKey: ["payments"] });
+      toast.success('Payment marked as paid');
+      queryClient.invalidateQueries({ queryKey: ['payments'] });
       closeMarkPaidDialog();
     },
     onError: (err, newTodo, context) => {
       if (context?.previousPayments) {
-        queryClient.setQueryData(["payments"], context.previousPayments);
+        queryClient.setQueryData(['payments'], context.previousPayments);
       }
-      toast.error("Failed to mark as paid");
+      toast.error('Failed to mark as paid');
     },
   });
 
   const createPaymentMutation = useMutation({
-    mutationFn: (payload: { customerId: number; serviceRequestId: number; suggestedAmount?: number; negotiatedAmount: number; invoiceNote?: string }) =>
-      paymentsService.createPaymentLink(payload),
+    mutationFn: (payload: {
+      customerId: number;
+      serviceRequestId: number;
+      suggestedAmount?: number;
+      negotiatedAmount: number;
+      invoiceNote?: string;
+    }) => paymentsService.createPaymentLink(payload),
     onSuccess: () => {
-      toast.success("Payment link created successfully");
-      queryClient.invalidateQueries({ queryKey: ["payments"] });
+      toast.success('Payment link created successfully');
+      queryClient.invalidateQueries({ queryKey: ['payments'] });
       setIsCreateLinkOpen(false);
-      setSelectedRequestId("");
-      setCreateNegotiatedAmount("");
-      setCreateSuggestedAmount("");
-      setCreateInvoiceNote("");
+      setSelectedRequestId('');
+      setCreateNegotiatedAmount('');
+      setCreateSuggestedAmount('');
+      setCreateInvoiceNote('');
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || "Failed to create payment link");
+      toast.error(error.response?.data?.message || 'Failed to create payment link');
     },
   });
 
@@ -125,7 +152,7 @@ export function usePaymentsLogic(initialPaymentsData: InitialData, initialReques
   const openMarkPaidDialog = (payment: Payment) => {
     setSelectedPayment(payment);
     setAmountPaidInput(payment.negotiatedAmount);
-    setTransactionIdInput("");
+    setTransactionIdInput('');
     setIsMarkPaidOpen(true);
   };
 
@@ -145,13 +172,13 @@ export function usePaymentsLogic(initialPaymentsData: InitialData, initialReques
 
   const handleCreatePaymentLink = () => {
     if (!selectedRequestId || !createNegotiatedAmount) {
-      toast.error("Service Request and Negotiated Amount are required");
+      toast.error('Service Request and Negotiated Amount are required');
       return;
     }
 
     const request = requestsData?.find((r: any) => r.id.toString() === selectedRequestId);
     if (!request || !request.customerId) {
-      toast.error("Could not determine customer for this request");
+      toast.error('Could not determine customer for this request');
       return;
     }
 
@@ -166,20 +193,33 @@ export function usePaymentsLogic(initialPaymentsData: InitialData, initialReques
 
   return {
     // State
-    searchTerm, setSearchTerm,
-    viewMode, setViewMode,
-    isMarkPaidOpen, setIsMarkPaidOpen,
-    selectedPayment, setSelectedPayment,
-    amountPaidInput, setAmountPaidInput,
-    transactionIdInput, setTransactionIdInput,
-    isCreateLinkOpen, setIsCreateLinkOpen,
-    selectedRequestId, setSelectedRequestId,
-    createNegotiatedAmount, setCreateNegotiatedAmount,
-    createSuggestedAmount, setCreateSuggestedAmount,
-    createInvoiceNote, setCreateInvoiceNote,
-    isInvoiceOpen, setIsInvoiceOpen,
-    invoicePayment, setInvoicePayment,
-    
+    searchTerm,
+    setSearchTerm,
+    viewMode,
+    setViewMode,
+    isMarkPaidOpen,
+    setIsMarkPaidOpen,
+    selectedPayment,
+    setSelectedPayment,
+    amountPaidInput,
+    setAmountPaidInput,
+    transactionIdInput,
+    setTransactionIdInput,
+    isCreateLinkOpen,
+    setIsCreateLinkOpen,
+    selectedRequestId,
+    setSelectedRequestId,
+    createNegotiatedAmount,
+    setCreateNegotiatedAmount,
+    createSuggestedAmount,
+    setCreateSuggestedAmount,
+    createInvoiceNote,
+    setCreateInvoiceNote,
+    isInvoiceOpen,
+    setIsInvoiceOpen,
+    invoicePayment,
+    setInvoicePayment,
+
     // Data
     payments,
     filteredPayments,
@@ -187,13 +227,13 @@ export function usePaymentsLogic(initialPaymentsData: InitialData, initialReques
     isLoading,
     isError,
     isLoadingRequests,
-    
+
     // Mutations
     sendInvoiceMutation,
     resendMutation,
     markPaidMutation,
     createPaymentMutation,
-    
+
     // Handlers
     openInvoiceDialog,
     openMarkPaidDialog,

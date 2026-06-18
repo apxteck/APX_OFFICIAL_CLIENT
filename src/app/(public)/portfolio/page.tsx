@@ -2,26 +2,43 @@ import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-const TechStackMarquee = dynamic(() => import('@/components/sections/TechStackMarquee').then(mod => mod.TechStackMarquee), { ssr: true });
+const TechStackMarquee = dynamic(
+  () => import('@/components/sections/TechStackMarquee').then((mod) => mod.TechStackMarquee),
+  { ssr: true }
+);
 import { api } from '@/lib/axios';
 import { Portfolio } from '@/app/types/portfolio.types';
-import { generatePortfolioItemListSchema, portfolioBreadcrumbSchema, portfolioCollectionPageSchema } from './constants';
+import {
+  generatePortfolioItemListSchema,
+  portfolioBreadcrumbSchema,
+  portfolioCollectionPageSchema,
+} from './constants';
 
 // Dynamically import client components to reduce initial server payload and improve Core Web Vitals
-const PortfolioClient = dynamic(() => import('./PortfolioClient').then(mod => mod.PortfolioClient), {
-  ssr: true, // Keep SSR enabled for SEO
-});
+const PortfolioClient = dynamic(
+  () => import('./PortfolioClient').then((mod) => mod.PortfolioClient),
+  {
+    ssr: true, // Keep SSR enabled for SEO
+  }
+);
 
-const PortfolioListingSection = dynamic(() => import('@/components/sections/PortfolioListingSection').then(mod => mod.PortfolioListingSection), {
-  ssr: true,
-});
+const PortfolioListingSection = dynamic(
+  () =>
+    import('@/components/sections/PortfolioListingSection').then(
+      (mod) => mod.PortfolioListingSection
+    ),
+  {
+    ssr: true,
+  }
+);
 
 export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Case Studies & Work Portfolio | APXTeck',
-    description: "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+    description:
+      "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
     alternates: {
       canonical: 'https://apxteck.com/portfolio',
       languages: {
@@ -31,7 +48,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       title: 'Case Studies & Work Portfolio | APXTeck',
-      description: "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+      description:
+        "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
       url: 'https://apxteck.com/portfolio',
       siteName: 'APXTeck',
       type: 'website',
@@ -50,7 +68,8 @@ export async function generateMetadata(): Promise<Metadata> {
       site: '@apxteck',
       creator: '@apxteck',
       title: 'Case Studies & Work Portfolio | APXTeck',
-      description: "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
+      description:
+        "Browse APXTeck's portfolio. Discover our case studies on web application engineering, user experience design, and digital marketing results.",
       images: ['https://apxteck.com/images/og/portfolio.jpg'],
     },
   };
@@ -88,12 +107,20 @@ export default async function PortfolioListingPage() {
 
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20 overflow-x-hidden w-full pt-safe pb-safe" role="main" itemScope itemType="https://schema.org/CollectionPage">
+      <main
+        className="flex-1 pt-24 pb-20 overflow-x-hidden w-full pt-safe pb-safe"
+        role="main"
+        itemScope
+        itemType="https://schema.org/CollectionPage"
+      >
         <article className="w-full">
           {/* Animated Hero and Philosophy section (Client component) */}
           <PortfolioClient />
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-12 text-center w-full" aria-hidden="true">
+          <div
+            className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-12 text-center w-full"
+            aria-hidden="true"
+          >
             <div className="h-px w-full bg-gradient-to-r from-transparent via-glass-border to-transparent" />
           </div>
 

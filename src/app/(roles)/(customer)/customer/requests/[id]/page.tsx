@@ -7,7 +7,7 @@ import RequestDetailsManager from './_components/RequestDetailsManager';
 export default async function RequestDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   let initialRequest = null;
-  
+
   try {
     const data = await api.getMyRequestById(Number(resolvedParams.id));
     if (data) {

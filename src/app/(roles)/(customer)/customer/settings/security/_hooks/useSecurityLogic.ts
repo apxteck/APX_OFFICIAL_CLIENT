@@ -4,14 +4,14 @@ export const useSecurityLogic = () => {
   const [formData, setFormData] = useState({
     currentPassword: '',
     newPassword: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSave = async (e: React.FormEvent) => {
@@ -20,12 +20,12 @@ export const useSecurityLogic = () => {
       setMessage({ type: 'error', text: 'New passwords do not match.' });
       return;
     }
-    
+
     setIsSubmitting(true);
     setMessage(null);
     try {
       // Mock API call
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise((resolve) => setTimeout(resolve, 800));
       setMessage({ type: 'success', text: 'Password updated successfully.' });
       setFormData({ currentPassword: '', newPassword: '', confirmPassword: '' });
     } catch (error) {
@@ -40,6 +40,6 @@ export const useSecurityLogic = () => {
     handleInputChange,
     handleSave,
     isSubmitting,
-    message
+    message,
   };
 };

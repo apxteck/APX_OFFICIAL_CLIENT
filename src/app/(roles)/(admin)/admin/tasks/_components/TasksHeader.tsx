@@ -1,6 +1,6 @@
-"use client";
-import React from "react";
-import { ListTodo } from "lucide-react";
+'use client';
+import React from 'react';
+import { ListTodo } from 'lucide-react';
 
 interface Props {
   navigateToCreate: () => void;
@@ -20,7 +20,7 @@ export function TasksHeader({ navigateToCreate }: Props) {
           Assign tasks to your team, track progress, and hit deadlines.
         </p>
       </div>
-      <button 
+      <button
         onClick={navigateToCreate}
         className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm transition-colors shadow-sm self-start sm:self-auto"
       >

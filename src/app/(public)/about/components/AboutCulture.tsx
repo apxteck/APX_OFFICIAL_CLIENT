@@ -6,7 +6,10 @@ import Image from 'next/image';
 
 export function AboutCulture() {
   return (
-    <section className="py-16 md:py-24 lg:py-32 relative max-w-7xl mx-auto px-4 sm:px-6 w-full overflow-hidden" aria-labelledby="about-culture-heading">
+    <section
+      className="py-16 md:py-24 lg:py-32 relative max-w-7xl mx-auto px-4 sm:px-6 w-full overflow-hidden"
+      aria-labelledby="about-culture-heading"
+    >
       <div className="text-center mb-12 md:mb-20 flex flex-col gap-4 md:gap-6 w-full">
         <motion.h2
           id="about-culture-heading"
@@ -24,7 +27,8 @@ export function AboutCulture() {
           viewport={{ once: true }}
           className="text-foreground/60 max-w-2xl mx-auto text-base md:text-lg w-full px-2"
         >
-          Operating out of the IT hub of Pune, Maharashtra. We foster a culture of deep work, continuous learning, and architectural perfection.
+          Operating out of the IT hub of Pune, Maharashtra. We foster a culture of deep work,
+          continuous learning, and architectural perfection.
         </motion.p>
       </div>
 
@@ -49,7 +53,10 @@ export function AboutCulture() {
               <span className="font-bold tracking-widest uppercase text-xs">Headquarters</span>
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-white">Pune, Maharashtra</h3>
-            <p className="text-white/80 mt-2 text-xs sm:text-sm max-w-md">Our central hub where design and engineering converge. Designed for collaborative sprints and deep focus work.</p>
+            <p className="text-white/80 mt-2 text-xs sm:text-sm max-w-md">
+              Our central hub where design and engineering converge. Designed for collaborative
+              sprints and deep focus work.
+            </p>
           </div>
         </motion.div>
 
@@ -61,9 +68,16 @@ export function AboutCulture() {
             viewport={{ once: true }}
             className="flex-1 rounded-3xl md:rounded-[2rem] bg-foreground/[0.02] border border-glass-border p-6 md:p-8 flex flex-col justify-center relative overflow-hidden group w-full"
           >
-            <Users className="w-8 h-8 text-purple-400 mb-4" aria-hidden="true" role="presentation" />
+            <Users
+              className="w-8 h-8 text-purple-400 mb-4"
+              aria-hidden="true"
+              role="presentation"
+            />
             <h3 className="text-lg md:text-xl font-bold mb-2">Agile Web Development Teams</h3>
-            <p className="text-foreground/60 text-xs md:text-sm">Small, highly cross-functional pods that deliver fast iterations without enterprise bloat.</p>
+            <p className="text-foreground/60 text-xs md:text-sm">
+              Small, highly cross-functional pods that deliver fast iterations without enterprise
+              bloat.
+            </p>
           </motion.div>
 
           <motion.div
@@ -73,9 +87,16 @@ export function AboutCulture() {
             viewport={{ once: true }}
             className="flex-1 rounded-3xl md:rounded-[2rem] bg-foreground/[0.02] border border-glass-border p-6 md:p-8 flex flex-col justify-center relative overflow-hidden group w-full"
           >
-            <Coffee className="w-8 h-8 text-emerald-400 mb-4" aria-hidden="true" role="presentation" />
+            <Coffee
+              className="w-8 h-8 text-emerald-400 mb-4"
+              aria-hidden="true"
+              role="presentation"
+            />
             <h3 className="text-lg md:text-xl font-bold mb-2">Developer-First Engineering</h3>
-            <p className="text-foreground/60 text-xs md:text-sm">We invest heavily in the best hardware, mechanical keyboards, and top-tier tech stacks.</p>
+            <p className="text-foreground/60 text-xs md:text-sm">
+              We invest heavily in the best hardware, mechanical keyboards, and top-tier tech
+              stacks.
+            </p>
           </motion.div>
         </div>
       </div>

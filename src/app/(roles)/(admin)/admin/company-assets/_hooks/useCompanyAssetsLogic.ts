@@ -25,7 +25,6 @@ export function useCompanyAssetsLogic(initialAssets: CompanyAsset[] = []) {
     }
   }, []);
 
-
   useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredAssets(assets);
@@ -43,7 +42,7 @@ export function useCompanyAssetsLogic(initialAssets: CompanyAsset[] = []) {
   }, [searchTerm, assets]);
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("Are you sure you want to delete this asset?")) return false;
+    if (!window.confirm('Are you sure you want to delete this asset?')) return false;
     try {
       await companyAssetsService.deleteCompanyAsset(id);
       await fetchAssets();

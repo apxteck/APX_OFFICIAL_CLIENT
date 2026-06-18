@@ -1,5 +1,5 @@
-import React from "react";
-import { CreditCard } from "lucide-react";
+import React from 'react';
+import { CreditCard } from 'lucide-react';
 
 export function PaymentsHeader() {
   return (
@@ -8,7 +8,9 @@ export function PaymentsHeader() {
         <CreditCard className="text-blue-500 w-8 h-8" />
         <h1 className="text-2xl font-bold">Payments & Invoices</h1>
       </div>
-      <p className="text-gray-400">Manage customer invoices, manually mark as paid, and track statuses.</p>
+      <p className="text-gray-400">
+        Manage customer invoices, manually mark as paid, and track statuses.
+      </p>
     </div>
   );
 }

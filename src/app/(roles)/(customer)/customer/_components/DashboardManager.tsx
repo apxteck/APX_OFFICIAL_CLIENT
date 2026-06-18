@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { WelcomeBanner } from './WelcomeBanner';
@@ -21,22 +21,26 @@ interface DashboardManagerProps {
   unpaidInvoices: number;
 }
 
-export default function DashboardManager({ activeRequests, completedCount, unpaidInvoices }: DashboardManagerProps) {
+export default function DashboardManager({
+  activeRequests,
+  completedCount,
+  unpaidInvoices,
+}: DashboardManagerProps) {
   const container = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
+      transition: { staggerChildren: 0.1 },
+    },
   };
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-8">
       <WelcomeBanner />
-      <StatsGrid 
-        activeCount={activeRequests.length} 
-        unpaidInvoices={unpaidInvoices} 
-        completedCount={completedCount} 
+      <StatsGrid
+        activeCount={activeRequests.length}
+        unpaidInvoices={unpaidInvoices}
+        completedCount={completedCount}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -156,7 +156,9 @@ export const NotificationBell: React.FC = () => {
                   <div className="w-12 h-12 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center mb-3 text-gray-400 dark:text-gray-600">
                     <Inbox size={20} />
                   </div>
-                  <h4 className="text-xs font-bold text-gray-700 dark:text-gray-300">All caught up!</h4>
+                  <h4 className="text-xs font-bold text-gray-700 dark:text-gray-300">
+                    All caught up!
+                  </h4>
                   <p className="text-[11px] text-gray-400 dark:text-gray-500 mt-1 max-w-[200px]">
                     No notifications right now. We'll let you know when something arrives.
                   </p>

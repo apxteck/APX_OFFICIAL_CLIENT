@@ -1,7 +1,7 @@
-import React from "react";
-import { FileText } from "lucide-react";
-import { BlogCard } from "./BlogCard";
-import { BlogPostStatus, AdminBlogPost as BlogPost } from "@/app/types/admin-blog.types";
+import React from 'react';
+import { FileText } from 'lucide-react';
+import { BlogCard } from './BlogCard';
+import { BlogPostStatus, AdminBlogPost as BlogPost } from '@/app/types/admin-blog.types';
 
 interface BlogListProps {
   isLoading: boolean;
@@ -11,7 +11,13 @@ interface BlogListProps {
   onUpdateStatus: (id: string, newStatus: BlogPostStatus) => void;
 }
 
-export function BlogList({ isLoading, posts, searchTerm, onDeleteClick, onUpdateStatus }: BlogListProps) {
+export function BlogList({
+  isLoading,
+  posts,
+  searchTerm,
+  onDeleteClick,
+  onUpdateStatus,
+}: BlogListProps) {
   if (isLoading) {
     return (
       <div className="h-full flex items-center justify-center min-h-[400px]">

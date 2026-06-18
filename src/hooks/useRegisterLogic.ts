@@ -70,7 +70,10 @@ export function useRegisterLogic() {
         setErrorMsg(result.message || 'Registration failed');
       }
     } catch (err: any) {
-      const msg = err.response?.data?.message || err.message || 'Registration failed. Try a different email address.';
+      const msg =
+        err.response?.data?.message ||
+        err.message ||
+        'Registration failed. Try a different email address.';
       setErrorMsg(msg);
     } finally {
       setIsLoading(false);

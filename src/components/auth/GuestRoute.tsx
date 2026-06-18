@@ -19,8 +19,8 @@ export const GuestRoute = ({ children }: GuestRouteProps) => {
         role === 'ADMIN' || role === 'SUPER_ADMIN' || role === 'STAFF'
           ? '/admin'
           : role === 'EMPLOYEE'
-          ? '/employee'
-          : '/customer';
+            ? '/employee'
+            : '/customer';
       router.replace(redirectPath);
     }
   }, [isLoading, isAuthenticated, user, router]);

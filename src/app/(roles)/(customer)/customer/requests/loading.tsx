@@ -15,8 +15,8 @@ export default function RequestsLoading() {
       {/* Filter Skeleton */}
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-[#111] p-4 rounded-2xl border border-gray-100 dark:border-white/5">
         <div className="flex gap-2">
-          {[1, 2, 3, 4].map(i => (
-             <div key={i} className="h-10 w-24 bg-gray-200 dark:bg-white/10 rounded-xl"></div>
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-10 w-24 bg-gray-200 dark:bg-white/10 rounded-xl"></div>
           ))}
         </div>
         <div className="h-10 w-full md:w-64 bg-gray-200 dark:bg-white/10 rounded-xl"></div>
@@ -25,7 +25,10 @@ export default function RequestsLoading() {
       {/* Grid Skeleton */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[1, 2, 3, 4, 5, 6].map((i) => (
-          <div key={i} className="bg-white dark:bg-[#111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm animate-pulse flex flex-col h-[280px]">
+          <div
+            key={i}
+            className="bg-white dark:bg-[#111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm animate-pulse flex flex-col h-[280px]"
+          >
             <div className="p-6 flex-1">
               <div className="flex justify-between items-start mb-4">
                 <div className="h-6 w-24 bg-gray-200 dark:bg-white/10 rounded-lg"></div>
@@ -33,7 +36,7 @@ export default function RequestsLoading() {
               </div>
               <div className="h-6 w-3/4 bg-gray-200 dark:bg-white/10 rounded mb-2"></div>
               <div className="h-6 w-1/2 bg-gray-200 dark:bg-white/10 rounded"></div>
-              
+
               <div className="space-y-3 mt-6">
                 <div className="h-4 w-2/3 bg-gray-200 dark:bg-white/10 rounded"></div>
                 <div className="h-4 w-1/2 bg-gray-200 dark:bg-white/10 rounded"></div>

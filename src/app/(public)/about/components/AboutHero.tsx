@@ -8,12 +8,7 @@ import { useTypewriter } from '../hooks/useTypewriter';
 import { typewriterWords, heroPhrases } from '../constants';
 
 export function AboutHero() {
-  const { text: typewrittenText, currentFullWord } = useTypewriter(
-    typewriterWords,
-    100,
-    50,
-    2500
-  );
+  const { text: typewrittenText, currentFullWord } = useTypewriter(typewriterWords, 100, 50, 2500);
   const [phraseIndex, setPhraseIndex] = useState(0);
 
   useEffect(() => {
@@ -43,7 +38,10 @@ export function AboutHero() {
           className="object-cover object-center w-full h-full"
         />
       </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10 pointer-events-none" aria-hidden="true" />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10 pointer-events-none"
+        aria-hidden="true"
+      />
 
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 relative z-20 text-center flex flex-col gap-6 md:gap-8 items-center">
         <motion.div
@@ -56,7 +54,7 @@ export function AboutHero() {
         >
           Engineering Excellence
         </motion.div>
-        
+
         <motion.h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight flex flex-col items-center gap-2 md:gap-4 w-full">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -94,7 +92,7 @@ export function AboutHero() {
             </span>
           </motion.span>
         </motion.h1>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

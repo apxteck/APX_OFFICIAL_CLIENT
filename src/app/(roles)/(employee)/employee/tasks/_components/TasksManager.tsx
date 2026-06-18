@@ -1,9 +1,9 @@
-"use client";
+'use client';
 import React from 'react';
 import { TasksHeader } from './TasksHeader';
 import { TaskList } from './TaskList';
 import { useTasksLogic } from '../_hooks/useTasksLogic';
-import { Task } from "@/services/admin/tasks.service";
+import { Task } from '@/services/admin/tasks.service';
 
 interface Props {
   initialTasks: Task[];
@@ -20,13 +20,13 @@ export default function TasksManager({ initialTasks, initialTotalPages, initialP
     statusFilter,
     handleFilterChange,
     handleUpdateStatus,
-    fetchTasks
+    fetchTasks,
   } = useTasksLogic(initialTasks, initialTotalPages, initialPage);
 
   return (
     <div className="w-full space-y-8 pb-10">
       <TasksHeader />
-      <TaskList 
+      <TaskList
         tasks={tasks}
         isLoading={isLoading}
         page={page}

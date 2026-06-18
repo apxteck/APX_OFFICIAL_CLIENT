@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export const useCreateRequestLogic = () => {
   const router = useRouter();
@@ -11,7 +11,7 @@ export const useCreateRequestLogic = () => {
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
-      router.push("/admin/requests");
+      router.push('/admin/requests');
     }, 1000);
   };
 
@@ -20,6 +20,6 @@ export const useCreateRequestLogic = () => {
   return {
     isSubmitting,
     handleSubmit,
-    navigateBack
+    navigateBack,
   };
 };

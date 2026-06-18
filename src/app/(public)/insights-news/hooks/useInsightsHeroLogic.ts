@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react';
 import { useTypewriter } from '@/app/(public)/about/hooks/useTypewriter';
 
 const typewriterWords = [
-  "Industry Insights",
-  "Tech Trends & Updates",
-  "Deep Dive Articles",
-  "Digital Strategies"
+  'Industry Insights',
+  'Tech Trends & Updates',
+  'Deep Dive Articles',
+  'Digital Strategies',
 ];
 
 const heroPhrases = [
-  "Articles and guidelines to help you build modern designs and scale system architectures.",
-  "Learn how to rank high on global search engines and dominate your niche.",
-  "Deep dives into Next.js, backend scaling, and clean code principles.",
-  "Stay updated with industry tech trends and what they mean for your business."
+  'Articles and guidelines to help you build modern designs and scale system architectures.',
+  'Learn how to rank high on global search engines and dominate your niche.',
+  'Deep dives into Next.js, backend scaling, and clean code principles.',
+  'Stay updated with industry tech trends and what they mean for your business.',
 ];
 
 export function useInsightsHeroLogic() {
@@ -30,6 +30,6 @@ export function useInsightsHeroLogic() {
     typewrittenText,
     currentFullWord,
     phraseIndex,
-    heroPhrases
+    heroPhrases,
   };
 }

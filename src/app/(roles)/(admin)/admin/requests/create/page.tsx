@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React from "react";
-import { PlusCircle, ArrowLeft } from "lucide-react";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { useCreateRequestLogic } from "../_hooks/useCreateRequestLogic";
+import React from 'react';
+import { PlusCircle, ArrowLeft } from 'lucide-react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useCreateRequestLogic } from '../_hooks/useCreateRequestLogic';
 
 export default function CreateServiceRequestPage() {
   const { isSubmitting, handleSubmit, navigateBack } = useCreateRequestLogic();
@@ -15,7 +15,10 @@ export default function CreateServiceRequestPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
-            <Link href="/admin/requests" className="hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 text-sm font-medium">
+            <Link
+              href="/admin/requests"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 text-sm font-medium"
+            >
               <ArrowLeft size={16} />
               Back to Requests
             </Link>
@@ -32,7 +35,7 @@ export default function CreateServiceRequestPage() {
         </div>
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
@@ -41,18 +44,22 @@ export default function CreateServiceRequestPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-900 dark:text-white">Customer Name</label>
-              <input 
-                type="text" 
+              <label className="text-sm font-bold text-gray-900 dark:text-white">
+                Customer Name
+              </label>
+              <input
+                type="text"
                 placeholder="Enter customer name"
                 className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                 required
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-900 dark:text-white">Customer Email</label>
-              <input 
-                type="email" 
+              <label className="text-sm font-bold text-gray-900 dark:text-white">
+                Customer Email
+              </label>
+              <input
+                type="email"
                 placeholder="Enter email address"
                 className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                 required
@@ -62,12 +69,14 @@ export default function CreateServiceRequestPage() {
 
           <div className="space-y-2">
             <label className="text-sm font-bold text-gray-900 dark:text-white">Service Type</label>
-            <select 
+            <select
               className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none"
               required
               defaultValue=""
             >
-              <option value="" disabled>Select a service type</option>
+              <option value="" disabled>
+                Select a service type
+              </option>
               <option value="WEB_DEVELOPMENT">Web Development</option>
               <option value="APP_DEVELOPMENT">App Development</option>
               <option value="SEO_MARKETING">SEO & Marketing</option>
@@ -77,8 +86,10 @@ export default function CreateServiceRequestPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-900 dark:text-white">Request Description</label>
-            <textarea 
+            <label className="text-sm font-bold text-gray-900 dark:text-white">
+              Request Description
+            </label>
+            <textarea
               placeholder="Describe the service request in detail..."
               rows={5}
               className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 resize-none custom-scrollbar"
@@ -88,16 +99,26 @@ export default function CreateServiceRequestPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-900 dark:text-white">Priority Level</label>
-              <select className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none" defaultValue="MEDIUM">
+              <label className="text-sm font-bold text-gray-900 dark:text-white">
+                Priority Level
+              </label>
+              <select
+                className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none"
+                defaultValue="MEDIUM"
+              >
                 <option value="LOW">Low</option>
                 <option value="MEDIUM">Medium</option>
                 <option value="HIGH">High</option>
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-900 dark:text-white">Assigned Team Member</label>
-              <select className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none" defaultValue="">
+              <label className="text-sm font-bold text-gray-900 dark:text-white">
+                Assigned Team Member
+              </label>
+              <select
+                className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none"
+                defaultValue=""
+              >
                 <option value="">-- Unassigned --</option>
                 <option value="user_1">Praveen Maurya</option>
                 <option value="user_2">Jane Doe</option>
@@ -107,14 +128,14 @@ export default function CreateServiceRequestPage() {
           </div>
 
           <div className="pt-4 flex items-center justify-end gap-3 border-t border-gray-100 dark:border-white/5">
-            <button 
+            <button
               type="button"
               onClick={navigateBack}
               className="px-6 py-2.5 rounded-xl font-bold text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
             >
               Cancel
             </button>
-            <button 
+            <button
               type="submit"
               disabled={isSubmitting}
               className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
@@ -125,7 +146,7 @@ export default function CreateServiceRequestPage() {
                   Creating...
                 </>
               ) : (
-                "Create Request"
+                'Create Request'
               )}
             </button>
           </div>

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, UploadCloud, AlertCircle, CheckCircle2, Send, Loader2 } from 'lucide-react';
@@ -22,13 +22,21 @@ interface ReimbursementFormProps {
 }
 
 export function ReimbursementForm({
-  title, setTitle,
-  amount, setAmount,
-  category, setCategory,
-  description, setDescription,
-  receiptFile, fileInputRef,
-  handleFileChange, handleSubmit,
-  isSubmitting, error, successMessage
+  title,
+  setTitle,
+  amount,
+  setAmount,
+  category,
+  setCategory,
+  description,
+  setDescription,
+  receiptFile,
+  fileInputRef,
+  handleFileChange,
+  handleSubmit,
+  isSubmitting,
+  error,
+  successMessage,
 }: ReimbursementFormProps) {
   return (
     <div className="lg:col-span-1">
@@ -37,12 +45,16 @@ export function ReimbursementForm({
           <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
             New Claim Request
           </h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Fill out the details to request a reimbursement.</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            Fill out the details to request a reimbursement.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Title / Purpose *</label>
+            <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Title / Purpose *
+            </label>
             <input
               type="text"
               value={title}
@@ -55,7 +67,9 @@ export function ReimbursementForm({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount (₹) *</label>
+              <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Amount (₹) *
+              </label>
               <input
                 type="number"
                 value={amount}
@@ -69,7 +83,9 @@ export function ReimbursementForm({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Category *</label>
+              <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                Category *
+              </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -86,7 +102,9 @@ export function ReimbursementForm({
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description (Optional)</label>
+            <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Description (Optional)
+            </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -97,8 +115,10 @@ export function ReimbursementForm({
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Receipt/Proof (Optional)</label>
-            <div 
+            <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Receipt/Proof (Optional)
+            </label>
+            <div
               className="w-full relative border-2 border-dashed border-gray-200 dark:border-white/10 rounded-xl p-4 flex flex-col items-center justify-center text-center hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer overflow-hidden"
               onClick={() => fileInputRef.current?.click()}
             >
@@ -112,14 +132,20 @@ export function ReimbursementForm({
               {receiptFile ? (
                 <div className="flex flex-col items-center gap-2">
                   <FileText className="w-6 h-6 text-indigo-500" />
-                  <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 truncate max-w-[200px]">{receiptFile.name}</span>
+                  <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 truncate max-w-[200px]">
+                    {receiptFile.name}
+                  </span>
                   <span className="text-[10px] text-gray-500 font-medium">Click to change</span>
                 </div>
               ) : (
                 <div className="flex flex-col items-center gap-2">
                   <UploadCloud className="w-6 h-6 text-gray-400" />
-                  <span className="text-xs font-semibold text-gray-600 dark:text-gray-400">Upload Receipt</span>
-                  <span className="text-[10px] text-gray-400 font-medium">JPG, PNG, PDF up to 5MB</span>
+                  <span className="text-xs font-semibold text-gray-600 dark:text-gray-400">
+                    Upload Receipt
+                  </span>
+                  <span className="text-[10px] text-gray-400 font-medium">
+                    JPG, PNG, PDF up to 5MB
+                  </span>
                 </div>
               )}
             </div>
@@ -152,9 +178,13 @@ export function ReimbursementForm({
             className="w-full h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-[0_4px_14px_0_rgba(245,158,11,0.39)] active:scale-[0.98] transition-all disabled:opacity-75 disabled:active:scale-100 cursor-pointer mt-4"
           >
             {isSubmitting ? (
-              <><Loader2 className="w-4 h-4 animate-spin" /> Submitting...</>
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" /> Submitting...
+              </>
             ) : (
-              <><Send className="w-4 h-4" /> Submit Claim</>
+              <>
+                <Send className="w-4 h-4" /> Submit Claim
+              </>
             )}
           </button>
         </form>

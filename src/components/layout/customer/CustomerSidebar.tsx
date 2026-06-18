@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   BarChart2,
   Layers,
@@ -14,54 +14,44 @@ import {
   LogOut,
   Menu,
   PanelLeftClose,
-  X
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/providers/AuthProvider";
-import { useUiStore } from "@/store/uiStore";
+  X,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/providers/AuthProvider';
+import { useUiStore } from '@/store/uiStore';
 
 const NAV_GROUPS = [
   {
-    title: "OVERVIEW",
-    items: [
-      { name: "Dashboard", href: "/customer", icon: BarChart2 },
-    ]
+    title: 'OVERVIEW',
+    items: [{ name: 'Dashboard', href: '/customer', icon: BarChart2 }],
   },
   {
-    title: "MY WORKSPACE",
+    title: 'MY WORKSPACE',
     items: [
-      { name: "My Services", href: "/customer/services", icon: Layers },
-      { name: "Service Requests", href: "/customer/requests", icon: ClipboardList },
-    ]
+      { name: 'My Services', href: '/customer/services', icon: Layers },
+      { name: 'Service Requests', href: '/customer/requests', icon: ClipboardList },
+    ],
   },
   {
-    title: "BILLING",
-    items: [
-      { name: "Invoices & Payments", href: "/customer/payments", icon: CreditCard },
-    ]
+    title: 'BILLING',
+    items: [{ name: 'Invoices & Payments', href: '/customer/payments', icon: CreditCard }],
   },
   {
-    title: "SYSTEM",
-    items: [
-      { name: "Settings", href: "/customer/settings", icon: Settings },
-    ]
-  }
+    title: 'SYSTEM',
+    items: [{ name: 'Settings', href: '/customer/settings', icon: Settings }],
+  },
 ];
 
 export default function CustomerSidebar() {
   const pathname = usePathname();
   const { logout } = useAuth();
   const [mounted, setMounted] = useState(false);
-  const { 
-    isSidebarCollapsed, 
-    setSidebarCollapsed, 
-    isMobileSidebarOpen, 
-    setMobileSidebarOpen 
-  } = useUiStore();
+  const { isSidebarCollapsed, setSidebarCollapsed, isMobileSidebarOpen, setMobileSidebarOpen } =
+    useUiStore();
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Automatically collapse sidebar to icon-only on medium screens, and handle resizing
     const handleResize = () => {
       if (window.innerWidth < 1024 && window.innerWidth >= 768) {
@@ -69,7 +59,7 @@ export default function CustomerSidebar() {
       } else if (window.innerWidth >= 1024) {
         setSidebarCollapsed(false);
       }
-      
+
       if (window.innerWidth >= 768) {
         setMobileSidebarOpen(false);
       }
@@ -161,18 +151,25 @@ export default function CustomerSidebar() {
             )}
             <div className="space-y-1">
               {group.items.map((link) => {
-                const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/customer');
+                const isActive =
+                  pathname === link.href ||
+                  (pathname.startsWith(link.href) && link.href !== '/customer');
                 const Icon = link.icon;
 
                 return (
-                  <Link key={link.href} href={link.href} title={isSidebarCollapsed ? link.name : undefined} onClick={() => setMobileSidebarOpen(false)}>
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    title={isSidebarCollapsed ? link.name : undefined}
+                    onClick={() => setMobileSidebarOpen(false)}
+                  >
                     <div
                       className={cn(
-                        "flex items-center px-3 py-2.5 rounded-xl transition-all duration-300 group relative overflow-hidden",
-                        isSidebarCollapsed ? "justify-center" : "justify-start",
+                        'flex items-center px-3 py-2.5 rounded-xl transition-all duration-300 group relative overflow-hidden',
+                        isSidebarCollapsed ? 'justify-center' : 'justify-start',
                         isActive
-                          ? "bg-cyan-500/10 text-cyan-50 font-bold border border-cyan-500/20 shadow-[inset_0px_0px_10px_rgba(6,182,212,0.1)]"
-                          : "text-gray-400 hover:bg-white/5 hover:text-gray-200 font-medium border border-transparent"
+                          ? 'bg-cyan-500/10 text-cyan-50 font-bold border border-cyan-500/20 shadow-[inset_0px_0px_10px_rgba(6,182,212,0.1)]'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-gray-200 font-medium border border-transparent'
                       )}
                     >
                       {/* Active State Background Gradient */}
@@ -184,8 +181,10 @@ export default function CustomerSidebar() {
                         size={20}
                         strokeWidth={isActive ? 2.5 : 2}
                         className={cn(
-                          "shrink-0 transition-colors relative z-10",
-                          isActive ? "text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" : "text-gray-500 group-hover:text-gray-300"
+                          'shrink-0 transition-colors relative z-10',
+                          isActive
+                            ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]'
+                            : 'text-gray-500 group-hover:text-gray-300'
                         )}
                       />
 
@@ -194,7 +193,7 @@ export default function CustomerSidebar() {
                           <motion.span
                             key="label"
                             initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: "auto" }}
+                            animate={{ opacity: 1, width: 'auto' }}
                             exit={{ opacity: 0, width: 0 }}
                             transition={{ duration: 0.2 }}
                             className="ml-3.5 text-[14px] whitespace-nowrap overflow-hidden relative z-10"
@@ -232,19 +231,23 @@ export default function CustomerSidebar() {
             setMobileSidebarOpen(false);
             logout();
           }}
-          title={isSidebarCollapsed ? "Log out" : undefined}
+          title={isSidebarCollapsed ? 'Log out' : undefined}
           className={cn(
-            "flex items-center w-full py-2.5 rounded-xl text-gray-400 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20 border border-transparent transition-all group",
-            isSidebarCollapsed ? "justify-center px-0" : "justify-start px-3"
+            'flex items-center w-full py-2.5 rounded-xl text-gray-400 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20 border border-transparent transition-all group',
+            isSidebarCollapsed ? 'justify-center px-0' : 'justify-start px-3'
           )}
         >
-          <LogOut size={20} strokeWidth={2} className="shrink-0 text-gray-500 group-hover:text-red-400 transition-colors" />
+          <LogOut
+            size={20}
+            strokeWidth={2}
+            className="shrink-0 text-gray-500 group-hover:text-red-400 transition-colors"
+          />
           <AnimatePresence mode="wait">
             {!isSidebarCollapsed && (
               <motion.span
                 key="logout-text"
                 initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: "auto" }}
+                animate={{ opacity: 1, width: 'auto' }}
                 exit={{ opacity: 0, width: 0 }}
                 transition={{ duration: 0.2 }}
                 className="ml-3.5 font-bold text-[14px] whitespace-nowrap overflow-hidden"
@@ -278,10 +281,10 @@ export default function CustomerSidebar() {
       <AnimatePresence>
         {isMobileSidebarOpen && (
           <motion.aside
-            initial={{ x: "-100%" }}
+            initial={{ x: '-100%' }}
             animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            exit={{ x: '-100%' }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="fixed inset-y-0 left-0 w-[260px] bg-[#0A0A0A] border-r border-white/10 flex flex-col z-50 shadow-2xl md:hidden overflow-hidden"
           >
             {sidebarContent}
@@ -293,7 +296,7 @@ export default function CustomerSidebar() {
       <motion.aside
         initial={false}
         animate={{ width: isSidebarCollapsed ? 80 : 260 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="hidden md:flex h-screen bg-[#0A0A0A] border-r border-white/10 flex-col sticky top-0 z-40 shadow-[4px_0_24px_rgba(0,0,0,0.5)] transition-colors duration-300 overflow-hidden shrink-0"
       >
         {sidebarContent}

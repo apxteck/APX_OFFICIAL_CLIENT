@@ -8,14 +8,7 @@ import { ForgotPasswordInputForm } from './components/ForgotPasswordInputForm';
 import { useForgotPasswordLogic } from '@/hooks/useForgotPasswordLogic';
 
 export default function ForgotPasswordForm() {
-  const {
-    isMounted,
-    isLoading,
-    errorMsg,
-    successMsg,
-    form,
-    onSubmit,
-  } = useForgotPasswordLogic();
+  const { isMounted, isLoading, errorMsg, successMsg, form, onSubmit } = useForgotPasswordLogic();
 
   if (!isMounted) return null;
 
@@ -35,7 +28,9 @@ export default function ForgotPasswordForm() {
           >
             <KeyRound className="w-6 h-6 sm:w-7 sm:h-7" aria-hidden="true" role="presentation" />
           </motion.div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-center">Reset Your APXTeck Password</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-center">
+            Reset Your APXTeck Password
+          </h1>
           <p className="text-foreground/60 text-xs sm:text-sm mt-2 text-center max-w-[280px] sm:max-w-none">
             Enter your email address and we will send you a secure link to reset your password.
           </p>

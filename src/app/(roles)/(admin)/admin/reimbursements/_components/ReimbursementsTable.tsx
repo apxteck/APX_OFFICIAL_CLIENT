@@ -1,7 +1,7 @@
-import React from "react";
-import { IndianRupee, Clock, CheckCircle2, XCircle, SearchX } from "lucide-react";
-import { format } from "date-fns";
-import { Reimbursement } from "@/services/admin/reimbursements.service";
+import React from 'react';
+import { IndianRupee, Clock, CheckCircle2, XCircle, SearchX } from 'lucide-react';
+import { format } from 'date-fns';
+import { Reimbursement } from '@/services/admin/reimbursements.service';
 
 interface Props {
   filteredData: Reimbursement[];
@@ -10,7 +10,12 @@ interface Props {
   onSelectRequest: (req: Reimbursement) => void;
 }
 
-export function ReimbursementsTable({ filteredData, isLoading, searchTerm, onSelectRequest }: Props) {
+export function ReimbursementsTable({
+  filteredData,
+  isLoading,
+  searchTerm,
+  onSelectRequest,
+}: Props) {
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
@@ -30,7 +35,9 @@ export function ReimbursementsTable({ filteredData, isLoading, searchTerm, onSel
         </div>
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">No Requests Found</h3>
         <p className="text-sm text-gray-500 dark:text-gray-400 max-w-sm">
-          {searchTerm ? `We couldn't find any reimbursement claims matching "${searchTerm}".` : "There are currently no reimbursement claims submitted."}
+          {searchTerm
+            ? `We couldn't find any reimbursement claims matching "${searchTerm}".`
+            : 'There are currently no reimbursement claims submitted.'}
         </p>
       </div>
     );
@@ -39,15 +46,35 @@ export function ReimbursementsTable({ filteredData, isLoading, searchTerm, onSel
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'PENDING':
-        return <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-500/10 text-amber-500 dark:text-amber-400 border border-amber-500/20 flex items-center gap-1.5"><Clock size={12} /> Pending</span>;
+        return (
+          <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-500/10 text-amber-500 dark:text-amber-400 border border-amber-500/20 flex items-center gap-1.5">
+            <Clock size={12} /> Pending
+          </span>
+        );
       case 'APPROVED':
-        return <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-blue-500/10 text-blue-500 dark:text-blue-400 border border-blue-500/20 flex items-center gap-1.5"><CheckCircle2 size={12} /> Approved</span>;
+        return (
+          <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-blue-500/10 text-blue-500 dark:text-blue-400 border border-blue-500/20 flex items-center gap-1.5">
+            <CheckCircle2 size={12} /> Approved
+          </span>
+        );
       case 'REJECTED':
-        return <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-red-500/10 text-red-500 dark:text-red-400 border border-red-500/20 flex items-center gap-1.5"><XCircle size={12} /> Rejected</span>;
+        return (
+          <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-red-500/10 text-red-500 dark:text-red-400 border border-red-500/20 flex items-center gap-1.5">
+            <XCircle size={12} /> Rejected
+          </span>
+        );
       case 'PAID':
-        return <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5"><CheckCircle2 size={12} /> Paid</span>;
+        return (
+          <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
+            <CheckCircle2 size={12} /> Paid
+          </span>
+        );
       default:
-        return <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-gray-500/10 text-gray-500 border border-gray-500/20">{status}</span>;
+        return (
+          <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-gray-500/10 text-gray-500 border border-gray-500/20">
+            {status}
+          </span>
+        );
     }
   };
 
@@ -56,17 +83,27 @@ export function ReimbursementsTable({ filteredData, isLoading, searchTerm, onSel
       <table className="min-w-full divide-y divide-gray-200 dark:divide-white/5">
         <thead className="bg-gray-50 dark:bg-[#151515]">
           <tr>
-            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Employee</th>
-            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Details</th>
-            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
-            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Employee
+            </th>
+            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Details
+            </th>
+            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Amount
+            </th>
+            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Status
+            </th>
+            <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Date
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 dark:divide-white/5 bg-white dark:bg-[#111111]">
           {filteredData.map((req) => (
-            <tr 
-              key={req.id} 
+            <tr
+              key={req.id}
               onClick={() => onSelectRequest(req)}
               className="hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition-colors cursor-pointer group"
             >
@@ -84,7 +121,9 @@ export function ReimbursementsTable({ filteredData, isLoading, searchTerm, onSel
                 </div>
               </td>
               <td className="px-6 py-4">
-                <p className="font-bold text-sm text-gray-900 dark:text-white line-clamp-1 max-w-[200px]">{req.title}</p>
+                <p className="font-bold text-sm text-gray-900 dark:text-white line-clamp-1 max-w-[200px]">
+                  {req.title}
+                </p>
                 <p className="text-xs text-gray-500 font-medium mt-0.5">{req.category}</p>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -93,9 +132,7 @@ export function ReimbursementsTable({ filteredData, isLoading, searchTerm, onSel
                   {Number(req.amount).toFixed(2)}
                 </p>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {getStatusBadge(req.status)}
-              </td>
+              <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(req.status)}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
                 {format(new Date(req.createdAt), 'MMM dd, yyyy')}
               </td>

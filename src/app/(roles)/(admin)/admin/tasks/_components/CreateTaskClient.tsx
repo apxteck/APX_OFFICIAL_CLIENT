@@ -1,21 +1,22 @@
-"use client";
+'use client';
 
-import React from "react";
-import { ArrowLeft, Save, Loader2, AlertCircle } from "lucide-react";
-import { useCreateTaskLogic } from "../_hooks/useCreateTaskLogic";
+import React from 'react';
+import { ArrowLeft, Save, Loader2, AlertCircle } from 'lucide-react';
+import { useCreateTaskLogic } from '../_hooks/useCreateTaskLogic';
 
 interface Props {
   users: any[];
 }
 
 export function CreateTaskClient({ users }: Props) {
-  const { formData, isSubmitting, error, handleChange, handleSubmit, handleCancel } = useCreateTaskLogic();
+  const { formData, isSubmitting, error, handleChange, handleSubmit, handleCancel } =
+    useCreateTaskLogic();
 
   return (
     <div className="w-full max-w-3xl mx-auto space-y-6 px-4 sm:px-6 md:px-8 pb-safe pt-4">
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
-        <button 
+        <button
           onClick={handleCancel}
           className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 rounded-xl transition-colors"
         >
@@ -23,7 +24,9 @@ export function CreateTaskClient({ users }: Props) {
         </button>
         <div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">Create New Task</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Assign a new task to team members</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Assign a new task to team members
+          </p>
         </div>
       </div>
 
@@ -34,13 +37,16 @@ export function CreateTaskClient({ users }: Props) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white dark:bg-[#111111] p-5 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm space-y-6">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white dark:bg-[#111111] p-5 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm space-y-6"
+      >
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
               Task Title <span className="text-red-500">*</span>
             </label>
-            <input 
+            <input
               type="text"
               name="title"
               value={formData.title}
@@ -55,7 +61,7 @@ export function CreateTaskClient({ users }: Props) {
             <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
               Description
             </label>
-            <textarea 
+            <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
@@ -70,7 +76,7 @@ export function CreateTaskClient({ users }: Props) {
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
                 Assign To <span className="text-red-500">*</span>
               </label>
-              <select 
+              <select
                 name="assignedToId"
                 value={formData.assignedToId}
                 onChange={handleChange}
@@ -78,8 +84,10 @@ export function CreateTaskClient({ users }: Props) {
                 required
               >
                 <option value="">Select User</option>
-                {users.map(user => (
-                  <option key={user.id} value={user.id}>{user.fullName} ({user.role?.name})</option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.fullName} ({user.role?.name})
+                  </option>
                 ))}
               </select>
             </div>
@@ -88,7 +96,7 @@ export function CreateTaskClient({ users }: Props) {
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
                 Priority Level
               </label>
-              <select 
+              <select
                 name="priority"
                 value={formData.priority}
                 onChange={handleChange}
@@ -105,7 +113,7 @@ export function CreateTaskClient({ users }: Props) {
             <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
               Due Date
             </label>
-            <input 
+            <input
               type="date"
               name="dueDate"
               value={formData.dueDate}
@@ -116,22 +124,26 @@ export function CreateTaskClient({ users }: Props) {
         </div>
 
         <div className="pt-6 border-t border-gray-100 dark:border-white/10 flex justify-end gap-3">
-          <button 
+          <button
             type="button"
             onClick={handleCancel}
             className="px-5 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
           >
             Cancel
           </button>
-          <button 
+          <button
             type="submit"
             disabled={isSubmitting}
             className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center gap-2 disabled:opacity-50"
           >
             {isSubmitting ? (
-              <><Loader2 size={16} className="animate-spin" /> Creating...</>
+              <>
+                <Loader2 size={16} className="animate-spin" /> Creating...
+              </>
             ) : (
-              <><Save size={16} /> Create Task</>
+              <>
+                <Save size={16} /> Create Task
+              </>
             )}
           </button>
         </div>

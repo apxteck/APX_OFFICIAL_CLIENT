@@ -141,9 +141,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
     <div
       onClick={handleClick}
       className={`flex gap-4 p-4 border-b border-gray-100/50 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 cursor-pointer group relative ${
-        !notification.isRead
-          ? 'bg-blue-50/20 dark:bg-blue-500/5'
-          : ''
+        !notification.isRead ? 'bg-blue-50/20 dark:bg-blue-500/5' : ''
       }`}
     >
       {/* Unread indicator dot */}
@@ -151,7 +149,9 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
         <span className="absolute left-1.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-blue-500 rounded-full" />
       )}
 
-      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-105 ${bg} ${color}`}>
+      <div
+        className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-105 ${bg} ${color}`}
+      >
         <Icon size={18} />
       </div>
 

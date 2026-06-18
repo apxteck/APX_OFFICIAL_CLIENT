@@ -7,7 +7,8 @@ import toast from 'react-hot-toast';
 
 export const useSocket = () => {
   const { user, isAuthenticated } = useAuth();
-  const { addNotification, markReadLocal, markAllReadLocal, clearNotificationsLocal } = useNotificationStore();
+  const { addNotification, markReadLocal, markAllReadLocal, clearNotificationsLocal } =
+    useNotificationStore();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -53,6 +54,13 @@ export const useSocket = () => {
       socketManager.off('notification:read-all', handleReadAllNotifications);
       socketManager.off('notification:clear-all', handleClearAllNotifications);
     };
-  }, [user, isAuthenticated, addNotification, markReadLocal, markAllReadLocal, clearNotificationsLocal]);
+  }, [
+    user,
+    isAuthenticated,
+    addNotification,
+    markReadLocal,
+    markAllReadLocal,
+    clearNotificationsLocal,
+  ]);
 };
 export default useSocket;

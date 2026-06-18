@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import { AlertTriangle, RefreshCcw } from "lucide-react";
+import React from 'react';
+import { AlertTriangle, RefreshCcw } from 'lucide-react';
 
 export default function Error({
   error,
@@ -15,9 +15,11 @@ export default function Error({
       <div className="w-20 h-20 bg-red-50 dark:bg-red-500/10 rounded-3xl flex items-center justify-center mb-6 border border-red-100 dark:border-red-500/20 shadow-sm">
         <AlertTriangle className="w-10 h-10 text-red-500" />
       </div>
-      <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">Dashboard Unavailable</h2>
+      <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">
+        Dashboard Unavailable
+      </h2>
       <p className="text-gray-500 dark:text-gray-400 max-w-md mb-8">
-        {error.message || "An unexpected error occurred while loading the dashboard statistics."}
+        {error.message || 'An unexpected error occurred while loading the dashboard statistics.'}
       </p>
       <button
         onClick={reset}

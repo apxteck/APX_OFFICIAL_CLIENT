@@ -28,7 +28,9 @@ export function LoginFormHeader() {
           priority
         />
       </motion.div>
-      <h1 id="login-heading" className="text-2xl font-bold tracking-tight text-foreground">Welcome Back to APXTeck</h1>
+      <h1 id="login-heading" className="text-2xl font-bold tracking-tight text-foreground">
+        Welcome Back to APXTeck
+      </h1>
       <p className="text-foreground/60 text-sm mt-1 text-center font-medium">
         Sign in to your IT dashboard
       </p>

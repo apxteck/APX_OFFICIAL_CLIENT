@@ -14,7 +14,8 @@ export function ReimbursementsHeader() {
           Manage & Apply Claims
         </h1>
         <p className="text-gray-500 dark:text-gray-400 text-sm max-w-xl leading-relaxed">
-          Submit your business-related expenses for approval and track the status of your past reimbursement claims.
+          Submit your business-related expenses for approval and track the status of your past
+          reimbursement claims.
         </p>
       </div>
     </div>

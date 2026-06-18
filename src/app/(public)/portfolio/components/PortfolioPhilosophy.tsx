@@ -25,7 +25,8 @@ export function PortfolioPhilosophy() {
           viewport={{ once: true }}
           className="text-foreground/60 w-full max-w-2xl mx-auto mt-3 sm:mt-4 text-base sm:text-lg px-2 sm:px-0"
         >
-          Behind every successful case study is our rigorous 3-step execution methodology. We ensure absolute predictability and premium quality.
+          Behind every successful case study is our rigorous 3-step execution methodology. We ensure
+          absolute predictability and premium quality.
         </motion.p>
       </div>
 

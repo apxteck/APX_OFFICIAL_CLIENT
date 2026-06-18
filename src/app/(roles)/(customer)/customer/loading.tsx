@@ -9,7 +9,10 @@ export default function CustomerDashboardLoading() {
       {/* Stats Grid Skeleton */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm h-[104px] flex items-center justify-between">
+          <div
+            key={i}
+            className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm h-[104px] flex items-center justify-between"
+          >
             <div className="space-y-3 w-1/2">
               <div className="h-3 bg-gray-200 dark:bg-white/10 rounded w-full"></div>
               <div className="h-8 bg-gray-200 dark:bg-white/10 rounded w-1/2"></div>
@@ -24,7 +27,10 @@ export default function CustomerDashboardLoading() {
         <div className="lg:col-span-2 bg-white dark:bg-[#111] p-6 md:p-8 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm space-y-6 min-h-[400px]">
           <div className="h-6 bg-gray-200 dark:bg-white/10 rounded w-64 mb-8"></div>
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="flex justify-between items-center py-4 border-b border-gray-100 dark:border-white/5">
+            <div
+              key={i}
+              className="flex justify-between items-center py-4 border-b border-gray-100 dark:border-white/5"
+            >
               <div className="h-4 bg-gray-200 dark:bg-white/10 rounded w-20"></div>
               <div className="h-4 bg-gray-200 dark:bg-white/10 rounded w-32"></div>
               <div className="h-6 bg-gray-200 dark:bg-white/10 rounded w-20"></div>

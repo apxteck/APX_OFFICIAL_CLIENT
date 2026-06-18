@@ -17,11 +17,11 @@ export default async function EmployeeDashboardPage() {
       initialAssignedRequests = stats.assignedRequestsCount || 0;
     }
   } catch (error) {
-    console.error("Failed to load initial dashboard stats on server", error);
+    console.error('Failed to load initial dashboard stats on server', error);
   }
 
   return (
-    <DashboardManager 
+    <DashboardManager
       initialTasks={initialTasks}
       initialReimbursements={initialReimbursements}
       initialAssignedRequests={initialAssignedRequests}

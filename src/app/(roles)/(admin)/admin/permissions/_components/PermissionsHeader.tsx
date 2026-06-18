@@ -1,5 +1,5 @@
-import React from "react";
-import { Key } from "lucide-react";
+import React from 'react';
+import { Key } from 'lucide-react';
 
 export function PermissionsHeader() {
   return (
@@ -10,7 +10,8 @@ export function PermissionsHeader() {
           Module Access Control
         </h1>
         <p className="text-gray-500 dark:text-gray-400 mt-2 font-medium">
-          Configure Read, Create, Update, and Delete permissions for each role across all system modules.
+          Configure Read, Create, Update, and Delete permissions for each role across all system
+          modules.
         </p>
       </div>
     </div>

@@ -17,7 +17,10 @@ export function InsightsHero({
   heroPhrases,
 }: InsightsHeroProps) {
   return (
-    <section className="relative py-16 md:py-24 flex flex-col items-center justify-center min-h-[50dvh] overflow-hidden w-full" aria-labelledby="insights-hero-title">
+    <section
+      className="relative py-16 md:py-24 flex flex-col items-center justify-center min-h-[50dvh] overflow-hidden w-full"
+      aria-labelledby="insights-hero-title"
+    >
       {/* Background Parallax Image */}
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
@@ -35,7 +38,10 @@ export function InsightsHero({
           className="object-cover object-center"
         />
       </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10" aria-hidden="true" />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background z-10"
+        aria-hidden="true"
+      />
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 relative z-20 text-center flex flex-col items-center gap-6 md:gap-8">
         <motion.div
@@ -54,21 +60,21 @@ export function InsightsHero({
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 0.3, duration: 0.8, ease: 'easeOut' }}
           >
             Insights & News
           </motion.span>
-          
+
           <motion.span
-            initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ delay: 0.5, duration: 0.8, type: "spring", bounce: 0.4 }}
+            initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            transition={{ delay: 0.5, duration: 0.8, type: 'spring', bounce: 0.4 }}
             className="flex items-center justify-center min-h-[1.2em] text-[8vw] sm:text-4xl md:text-5xl lg:text-7xl whitespace-nowrap"
           >
             <span className="relative flex items-center justify-center">
               {/* Invisible placeholder for exact width of the CURRENT word to keep it perfectly centered */}
               <span className="opacity-0 pointer-events-none select-none">{currentFullWord}</span>
-              
+
               {/* Typing text overlay */}
               <span className="absolute left-0 flex items-center whitespace-nowrap">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-purple-400 to-pink-500">
@@ -84,7 +90,7 @@ export function InsightsHero({
           </motion.span>
         </motion.h1>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -96,7 +102,7 @@ export function InsightsHero({
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
               className="absolute inset-x-0"
             >
               {heroPhrases[phraseIndex]}

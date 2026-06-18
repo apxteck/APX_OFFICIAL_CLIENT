@@ -15,7 +15,7 @@ export function MouseSpotlight() {
 
   useEffect(() => {
     setMounted(true);
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -37,7 +37,8 @@ export function MouseSpotlight() {
         translateY: '-50%',
         width: '400px',
         height: '400px',
-        background: 'radial-gradient(circle, rgba(14,165,233,0.06) 0%, rgba(139,92,246,0.03) 30%, transparent 70%)',
+        background:
+          'radial-gradient(circle, rgba(14,165,233,0.06) 0%, rgba(139,92,246,0.03) 30%, transparent 70%)',
       }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

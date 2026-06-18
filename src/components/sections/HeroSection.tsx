@@ -126,7 +126,10 @@ export function HeroSection() {
       </motion.div>
 
       {/* Foreground Content */}
-      <motion.div style={{ y: yContent, opacity: opacityContent }} className="relative z-20 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center">
+      <motion.div
+        style={{ y: yContent, opacity: opacityContent }}
+        className="relative z-20 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center"
+      >
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-8 flex flex-col items-start gap-6 pt-16">
             <AnimatePresence mode="wait">
@@ -174,7 +177,11 @@ export function HeroSection() {
                       className="group relative inline-flex h-14 items-center justify-center gap-2 rounded-full bg-accent hover:bg-accent/90 px-8 text-sm font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-lg shadow-accent/30 overflow-hidden"
                     >
                       <span>{currentBanner.ctaText}</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" role="presentation" />
+                      <ArrowRight
+                        className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                        aria-hidden="true"
+                        role="presentation"
+                      />
                     </Link>
                   )}
                   <Link

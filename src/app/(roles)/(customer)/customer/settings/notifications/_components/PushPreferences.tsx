@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import { Monitor } from 'lucide-react';
 import { ToggleSwitch } from './ToggleSwitch';
@@ -17,19 +17,29 @@ export function PushPreferences({ preferences, togglePref }: PushPreferencesProp
         </div>
         <h3 className="text-xl font-bold text-gray-900 dark:text-white">In-App Alerts</h3>
       </div>
-      
+
       <div className="space-y-4">
-        <div className="flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors cursor-pointer" onClick={() => togglePref('pushAlerts')}>
+        <div
+          className="flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors cursor-pointer"
+          onClick={() => togglePref('pushAlerts')}
+        >
           <div>
             <h4 className="font-bold text-gray-900 dark:text-white">Important Alerts</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Urgent notifications regarding your account.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Urgent notifications regarding your account.
+            </p>
           </div>
           <ToggleSwitch checked={preferences.pushAlerts} onChange={() => {}} />
         </div>
-        <div className="flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors cursor-pointer" onClick={() => togglePref('pushReminders')}>
+        <div
+          className="flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors cursor-pointer"
+          onClick={() => togglePref('pushReminders')}
+        >
           <div>
             <h4 className="font-bold text-gray-900 dark:text-white">Reminders</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Helpful reminders for pending actions or payments.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Helpful reminders for pending actions or payments.
+            </p>
           </div>
           <ToggleSwitch checked={preferences.pushReminders} onChange={() => {}} />
         </div>

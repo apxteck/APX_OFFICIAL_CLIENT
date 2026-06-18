@@ -1,7 +1,7 @@
-import React from "react";
-import { notFound } from "next/navigation";
-import { usersService, UserDetail, Role, ModuleAccess } from "@/services/admin/users.service";
-import { UserDetailClient } from "../_components/UserDetailClient";
+import React from 'react';
+import { notFound } from 'next/navigation';
+import { usersService, UserDetail, Role, ModuleAccess } from '@/services/admin/users.service';
+import { UserDetailClient } from '../_components/UserDetailClient';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -22,13 +22,13 @@ export default async function UserDetailPage({ params }: PageProps) {
     const [userData, permsData, rolesData] = await Promise.all([
       usersService.getUserDetail(id),
       usersService.getUserPermissions(id),
-      usersService.getRoles()
+      usersService.getRoles(),
     ]);
     initialUser = userData;
     initialPermissions = permsData || [];
     initialRoles = rolesData || [];
   } catch (error) {
-    console.error("Failed to load user data:", error);
+    console.error('Failed to load user data:', error);
     // Let the error boundary handle catastrophic fetch failures if desired,
     // or just pass null to let the client handle it gracefully.
   }
@@ -38,10 +38,10 @@ export default async function UserDetailPage({ params }: PageProps) {
   }
 
   return (
-    <UserDetailClient 
-      initialUser={initialUser} 
-      initialPermissions={initialPermissions} 
-      initialRoles={initialRoles} 
+    <UserDetailClient
+      initialUser={initialUser}
+      initialPermissions={initialPermissions}
+      initialRoles={initialRoles}
     />
   );
 }

@@ -25,14 +25,14 @@ export default function PaymentError({
           We encountered a critical error while preparing your secure checkout.
         </p>
         <div className="space-y-3">
-          <button 
+          <button
             onClick={() => reset()}
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-xl transition-colors duration-200"
           >
             Try Again
           </button>
-          <button 
-            onClick={() => window.location.href = '/'}
+          <button
+            onClick={() => (window.location.href = '/')}
             className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-medium py-3 px-4 rounded-xl transition-colors duration-200"
           >
             Return Home

@@ -14,12 +14,8 @@ export function ForgotPasswordSuccess({ successMsg }: ForgotPasswordSuccessProps
         <CheckCircle2 className="w-9 h-9" aria-hidden="true" role="presentation" />
       </div>
       <div className="space-y-2">
-        <h2 className="text-xl font-bold tracking-tight text-emerald-500">
-          Reset Link Sent
-        </h2>
-        <p className="text-foreground/70 text-sm leading-relaxed max-w-sm mx-auto">
-          {successMsg}
-        </p>
+        <h2 className="text-xl font-bold tracking-tight text-emerald-500">Reset Link Sent</h2>
+        <p className="text-foreground/70 text-sm leading-relaxed max-w-sm mx-auto">{successMsg}</p>
       </div>
       <div className="pt-4 flex items-center justify-center">
         <Link

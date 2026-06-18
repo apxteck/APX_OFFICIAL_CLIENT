@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
-import { adsService } from "@/services/admin/ads.service";
-import { AdPricingSlot } from "@/app/types/ad.types";
-import toast from "react-hot-toast";
+import { useState, useEffect, useCallback } from 'react';
+import { adsService } from '@/services/admin/ads.service';
+import { AdPricingSlot } from '@/app/types/ad.types';
+import toast from 'react-hot-toast';
 
 export function usePricingSlotsLogic(initialSlots: AdPricingSlot[] = []) {
   const [slots, setSlots] = useState<AdPricingSlot[]>(initialSlots);
@@ -17,23 +17,22 @@ export function usePricingSlotsLogic(initialSlots: AdPricingSlot[] = []) {
       const data = await adsService.getPricingSlots();
       setSlots(data || []);
     } catch (error) {
-      console.error("Failed to fetch pricing slots", error);
-      toast.error("Failed to fetch pricing slots");
+      console.error('Failed to fetch pricing slots', error);
+      toast.error('Failed to fetch pricing slots');
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-
   const createSlot = async (data: Partial<AdPricingSlot>) => {
     try {
       await adsService.createPricingSlot(data);
-      toast.success("Pricing slot created successfully");
+      toast.success('Pricing slot created successfully');
       fetchSlots();
       return true;
     } catch (error: any) {
-      console.error("Failed to create pricing slot", error);
-      toast.error(error?.response?.data?.message || "Failed to create pricing slot");
+      console.error('Failed to create pricing slot', error);
+      toast.error(error?.response?.data?.message || 'Failed to create pricing slot');
       return false;
     }
   };
@@ -41,12 +40,12 @@ export function usePricingSlotsLogic(initialSlots: AdPricingSlot[] = []) {
   const updateSlot = async (id: number, data: Partial<AdPricingSlot>) => {
     try {
       await adsService.updatePricingSlot(id, data);
-      toast.success("Pricing slot updated successfully");
+      toast.success('Pricing slot updated successfully');
       fetchSlots();
       return true;
     } catch (error: any) {
-      console.error("Failed to update pricing slot", error);
-      toast.error(error?.response?.data?.message || "Failed to update pricing slot");
+      console.error('Failed to update pricing slot', error);
+      toast.error(error?.response?.data?.message || 'Failed to update pricing slot');
       return false;
     }
   };
@@ -54,12 +53,12 @@ export function usePricingSlotsLogic(initialSlots: AdPricingSlot[] = []) {
   const deleteSlot = async (id: number) => {
     try {
       await adsService.deletePricingSlot(id);
-      toast.success("Pricing slot deleted successfully");
+      toast.success('Pricing slot deleted successfully');
       fetchSlots();
       return true;
     } catch (error: any) {
-      console.error("Failed to delete pricing slot", error);
-      toast.error(error?.response?.data?.message || "Failed to delete pricing slot");
+      console.error('Failed to delete pricing slot', error);
+      toast.error(error?.response?.data?.message || 'Failed to delete pricing slot');
       return false;
     }
   };
@@ -71,9 +70,9 @@ export function usePricingSlotsLogic(initialSlots: AdPricingSlot[] = []) {
       fetchSlots();
       return !currentStatus;
     } catch (error) {
-      console.error("Failed to update slot status", error);
-      toast.error("Failed to toggle slot status");
-      throw new Error("Failed to update slot status");
+      console.error('Failed to update slot status', error);
+      toast.error('Failed to toggle slot status');
+      throw new Error('Failed to update slot status');
     }
   };
 

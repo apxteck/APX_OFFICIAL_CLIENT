@@ -1,5 +1,5 @@
-import React from "react";
-import { Users } from "lucide-react";
+import React from 'react';
+import { Users } from 'lucide-react';
 
 export function LeadsHeader() {
   return (

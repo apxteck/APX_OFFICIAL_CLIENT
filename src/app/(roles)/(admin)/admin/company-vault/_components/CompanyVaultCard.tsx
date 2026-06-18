@@ -1,7 +1,7 @@
-import React from "react";
-import { FileText, Image as ImageIcon, Eye, Share2, Download, Edit2, Trash2 } from "lucide-react";
-import toast from "react-hot-toast";
-import { CompanyVaultDocument } from "@/services/admin/companyVault.service";
+import React from 'react';
+import { FileText, Image as ImageIcon, Eye, Share2, Download, Edit2, Trash2 } from 'lucide-react';
+import toast from 'react-hot-toast';
+import { CompanyVaultDocument } from '@/services/admin/companyVault.service';
 
 interface CompanyVaultCardProps {
   doc: CompanyVaultDocument;
@@ -11,8 +11,8 @@ interface CompanyVaultCardProps {
 
 export function CompanyVaultCard({ doc, onEdit, onDelete }: CompanyVaultCardProps) {
   const getFileIcon = (mimeType: string) => {
-    if (mimeType.includes("image")) return <ImageIcon size={20} className="text-blue-500" />;
-    if (mimeType.includes("pdf")) return <FileText size={20} className="text-red-500" />;
+    if (mimeType.includes('image')) return <ImageIcon size={20} className="text-blue-500" />;
+    if (mimeType.includes('pdf')) return <FileText size={20} className="text-red-500" />;
     return <FileText size={20} className="text-gray-500" />;
   };
 
@@ -41,11 +41,9 @@ export function CompanyVaultCard({ doc, onEdit, onDelete }: CompanyVaultCardProp
           </div>
         </div>
       </div>
-      
+
       <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400 flex-1 mb-4">
-        {doc.description && (
-          <p className="line-clamp-2 text-sm">{doc.description}</p>
-        )}
+        {doc.description && <p className="line-clamp-2 text-sm">{doc.description}</p>}
         <div className="flex justify-between pt-2 mt-2 border-t border-gray-50 dark:border-white/5">
           <span className="text-xs">{formatFileSize(doc.fileSize)}</span>
           <span className="text-xs">{new Date(doc.createdAt).toLocaleDateString()}</span>
@@ -66,7 +64,7 @@ export function CompanyVaultCard({ doc, onEdit, onDelete }: CompanyVaultCardProp
           <button
             onClick={() => {
               navigator.clipboard.writeText(doc.fileUrl);
-              toast.success("Link copied to clipboard");
+              toast.success('Link copied to clipboard');
             }}
             className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-white/5 rounded-lg transition-colors"
             title="Share / Copy Link"

@@ -1,28 +1,31 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { DollarSign, AlertCircle, Plus } from "lucide-react";
-import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
-import { usePricingSlotsLogic } from "../../_hooks/usePricingSlotsLogic";
-import { AdPricingSlot } from "@/app/types/ad.types";
-import { PricingSlotCard } from "./PricingSlotCard";
+import React, { useState } from 'react';
+import { DollarSign, AlertCircle, Plus } from 'lucide-react';
+import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import { usePricingSlotsLogic } from '../../_hooks/usePricingSlotsLogic';
+import { AdPricingSlot } from '@/app/types/ad.types';
+import { PricingSlotCard } from './PricingSlotCard';
 
-const PricingSlotModal = dynamic(() => import("../../_components/PricingSlotModal"), { ssr: false });
+const PricingSlotModal = dynamic(() => import('../../_components/PricingSlotModal'), {
+  ssr: false,
+});
 
 interface PricingManagerProps {
   initialSlots?: AdPricingSlot[];
 }
 
 export function PricingManager({ initialSlots = [] }: PricingManagerProps) {
-  const { slots, isLoading, createSlot, updateSlot, deleteSlot, handleToggleActive } = usePricingSlotsLogic(initialSlots);
+  const { slots, isLoading, createSlot, updateSlot, deleteSlot, handleToggleActive } =
+    usePricingSlotsLogic(initialSlots);
   const [editingSlot, setEditingSlot] = useState<Partial<AdPricingSlot> | null>(null);
   const [isCreating, setIsCreating] = useState(false);
 
   const handleCreateNew = () => {
     setEditingSlot({
-      placement: "BLOG_LIST_TOP",
-      label: "",
+      placement: 'BLOG_LIST_TOP',
+      label: '',
       pricePerDay: 0,
       pricePerWeek: 0,
       pricePerMonth: 0,
@@ -46,7 +49,7 @@ export function PricingManager({ initialSlots = [] }: PricingManagerProps) {
   };
 
   const handleDelete = async (id: number) => {
-    if (window.confirm("Are you sure you want to delete this pricing slot?")) {
+    if (window.confirm('Are you sure you want to delete this pricing slot?')) {
       await deleteSlot(id);
     }
   };
@@ -66,7 +69,7 @@ export function PricingManager({ initialSlots = [] }: PricingManagerProps) {
             Configure slot pricing and packages.
           </p>
         </div>
-        <button 
+        <button
           onClick={handleCreateNew}
           className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-2 shadow-sm flex-1 sm:flex-none"
         >
@@ -80,7 +83,7 @@ export function PricingManager({ initialSlots = [] }: PricingManagerProps) {
           <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
         </div>
       ) : slots.length === 0 ? (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="w-full min-h-[400px] bg-white dark:bg-[#111111] border border-dashed border-gray-200 dark:border-white/10 rounded-3xl flex flex-col items-center justify-center p-8 text-center"
@@ -88,7 +91,9 @@ export function PricingManager({ initialSlots = [] }: PricingManagerProps) {
           <div className="w-16 h-16 bg-gray-50 dark:bg-[#1a1a1a] rounded-full flex items-center justify-center mb-4 border border-gray-100 dark:border-white/5">
             <AlertCircle className="text-gray-400 dark:text-gray-500" size={32} />
           </div>
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">No Pricing Slots Found</h2>
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+            No Pricing Slots Found
+          </h2>
           <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md mx-auto">
             There are currently no advertisement pricing slots available in the database.
           </p>
@@ -109,11 +114,11 @@ export function PricingManager({ initialSlots = [] }: PricingManagerProps) {
       )}
 
       {editingSlot && (
-        <PricingSlotModal 
-          slot={editingSlot} 
+        <PricingSlotModal
+          slot={editingSlot}
           isCreating={isCreating}
-          onClose={handleCloseModal} 
-          onSave={handleSave} 
+          onClose={handleCloseModal}
+          onSave={handleSave}
         />
       )}
     </div>

@@ -33,7 +33,6 @@ function Counter({ value, suffix = '' }: { value: number; suffix?: string }) {
 import { StatsOverview } from '@/app/types/analytics.types';
 
 export function StatsSection({ stats }: { stats: StatsOverview }) {
-
   if (!stats) return null;
   const statItems = [
     {

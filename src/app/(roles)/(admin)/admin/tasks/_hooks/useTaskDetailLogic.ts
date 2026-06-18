@@ -1,50 +1,56 @@
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { tasksService, Task } from "@/services/admin/tasks.service";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { tasksService, Task } from '@/services/admin/tasks.service';
 
 export const useTaskDetailLogic = (initialTask: Task) => {
   const router = useRouter();
   const [task, setTask] = useState<Task>(initialTask);
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "loading" } | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: 'success' | 'error' | 'loading';
+  } | null>(null);
 
   const fetchTask = () => {
-    tasksService.getTaskById(task.id).then(data => {
-      if (data) setTask(data);
-    }).catch(err => {
-      setToast({ message: "Failed to fetch task details", type: "error" });
-    });
+    tasksService
+      .getTaskById(task.id)
+      .then((data) => {
+        if (data) setTask(data);
+      })
+      .catch((err) => {
+        setToast({ message: 'Failed to fetch task details', type: 'error' });
+      });
   };
 
-  const handleUpdateStatus = async (status: Task["status"]) => {
+  const handleUpdateStatus = async (status: Task['status']) => {
     try {
-      setToast({ message: "Updating status...", type: "loading" });
+      setToast({ message: 'Updating status...', type: 'loading' });
       await tasksService.updateTaskStatus(task.id, status);
-      setToast({ message: `Status updated to ${status.replace("_", " ")}`, type: "success" });
+      setToast({ message: `Status updated to ${status.replace('_', ' ')}`, type: 'success' });
       fetchTask();
     } catch (error) {
-      setToast({ message: "Failed to update status", type: "error" });
+      setToast({ message: 'Failed to update status', type: 'error' });
     }
   };
 
   const handleUpdatePriority = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     try {
-      setToast({ message: "Updating priority...", type: "loading" });
+      setToast({ message: 'Updating priority...', type: 'loading' });
       await tasksService.updateTaskPriority(task.id, e.target.value as any);
-      setToast({ message: "Priority updated successfully", type: "success" });
+      setToast({ message: 'Priority updated successfully', type: 'success' });
       fetchTask();
     } catch (error) {
-      setToast({ message: "Failed to update priority", type: "error" });
+      setToast({ message: 'Failed to update priority', type: 'error' });
     }
   };
 
   const handleDeleteTask = async () => {
-    if (!confirm("Are you sure you want to delete this task?")) return;
+    if (!confirm('Are you sure you want to delete this task?')) return;
     try {
-      setToast({ message: "Deleting task...", type: "loading" });
+      setToast({ message: 'Deleting task...', type: 'loading' });
       await tasksService.deleteTask(task.id);
       router.push('/admin/tasks');
     } catch (err: any) {
-      setToast({ message: "Failed to delete task", type: "error" });
+      setToast({ message: 'Failed to delete task', type: 'error' });
     }
   };
 

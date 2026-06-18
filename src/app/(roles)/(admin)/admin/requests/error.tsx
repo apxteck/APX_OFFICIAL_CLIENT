@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { AlertCircle, RefreshCw } from "lucide-react";
+import React, { useEffect } from 'react';
+import { AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function RequestsError({
   error,
@@ -11,7 +11,7 @@ export default function RequestsError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Requests Error:", error);
+    console.error('Requests Error:', error);
   }, [error]);
 
   return (
@@ -23,7 +23,8 @@ export default function RequestsError({
         Failed to load requests
       </h2>
       <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md mx-auto mb-6">
-        {error.message || "An unexpected error occurred while fetching your service requests. Please try again."}
+        {error.message ||
+          'An unexpected error occurred while fetching your service requests. Please try again.'}
       </p>
       <button
         onClick={reset}

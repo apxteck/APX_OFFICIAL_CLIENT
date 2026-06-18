@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 // Removed dynamic import
-import { heroBannersService } from "@/services/admin/heroBanners.service";
-import { HeroBanner } from "@/app/types/home.types";
+import { heroBannersService } from '@/services/admin/heroBanners.service';
+import { HeroBanner } from '@/app/types/home.types';
 
 import SettingsManager from './_components/SettingsManager';
 
@@ -11,7 +11,7 @@ export default async function SettingsPage() {
     const res = await heroBannersService.getBanners();
     initialBanners = res?.data || [];
   } catch (error) {
-    console.error("Failed to fetch banners for settings:", error);
+    console.error('Failed to fetch banners for settings:', error);
   }
 
   return (

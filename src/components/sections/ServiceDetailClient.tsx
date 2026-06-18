@@ -43,11 +43,11 @@ export function ServiceDetailClient({
       <ServiceDetailProcess slug={service.slug} />
 
       {/* 3. Dynamic Service Request Form */}
-      <ServiceDetailForm 
-        serviceId={service.id} 
-        serviceSlug={service.slug} 
-        fields={fields} 
-        formRef={formRef} 
+      <ServiceDetailForm
+        serviceId={service.id}
+        serviceSlug={service.slug}
+        fields={fields}
+        formRef={formRef}
       />
 
       {/* 4. Testimonials Filter */}

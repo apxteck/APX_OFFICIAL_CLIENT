@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { AlertCircle, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import React, { useEffect } from 'react';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 export default function NewServiceError({
   error,
@@ -12,7 +12,7 @@ export default function NewServiceError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("New Service wizard route error:", error);
+    console.error('New Service wizard route error:', error);
   }, [error]);
 
   return (
@@ -21,9 +21,12 @@ export default function NewServiceError({
         <div className="w-16 h-16 bg-red-50 dark:bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
           <AlertCircle className="w-8 h-8 text-red-500" />
         </div>
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Failed to load service wizard</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          Failed to load service wizard
+        </h2>
         <p className="text-gray-500 dark:text-gray-400 text-sm mb-8">
-          There was a problem loading the service categories. Please try again or return to your services.
+          There was a problem loading the service categories. Please try again or return to your
+          services.
         </p>
         <div className="flex gap-4">
           <Link

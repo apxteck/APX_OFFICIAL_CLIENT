@@ -4,30 +4,150 @@ const path = require('path');
 const rootDir = path.join(__dirname, '../src/app/(roles)/(admin)');
 
 const routes = [
-  { path: 'users/[id]', title: 'User Profile', desc: 'View and edit full user details and documents.', icon: 'Users' },
-  { path: 'roles', title: 'Role Management', desc: 'Manage system roles and set default module permissions.', icon: 'Shield' },
-  { path: 'permissions', title: 'Module Permissions', desc: 'Configure per-user module access overrides.', icon: 'Key' },
-  { path: 'requests', title: 'Service Requests', desc: 'Manage incoming service requests, assignments, and statuses.', icon: 'ClipboardList' },
-  { path: 'requests/[id]', title: 'Request Details', desc: 'View request form data, files, and status controls.', icon: 'ClipboardList' },
-  { path: 'payments', title: 'Payments & Invoices', desc: 'Manage invoices and track payment statuses.', icon: 'CreditCard' },
-  { path: 'blog', title: 'Blog Posts', desc: 'Manage published articles and drafts.', icon: 'FileText' },
-  { path: 'blog/new', title: 'Create Post', desc: 'Rich text editor to author a new blog post.', icon: 'PenTool' },
-  { path: 'blog/[id]/edit', title: 'Edit Post', desc: 'Update existing blog post content.', icon: 'Edit3' },
-  { path: 'blog/comments', title: 'Blog Comments', desc: 'Moderation queue for user comments.', icon: 'MessageSquare' },
-  { path: 'blog/categories', title: 'Categories', desc: 'Manage blog categorization.', icon: 'FolderTree' },
-  { path: 'leads', title: 'Leads & CRM', desc: 'Sales pipeline tracking and lead management.', icon: 'TrendingUp' },
-  { path: 'leads/[id]', title: 'Lead Details', desc: 'Detailed lead info and follow-up timeline.', icon: 'UserCircle' },
-  { path: 'enquiries', title: 'Enquiries', desc: 'Inbound enquiry manager from contact forms.', icon: 'HelpCircle' },
-  { path: 'tasks', title: 'Task Board', desc: 'Manage internal task assignments and progress.', icon: 'CheckSquare' },
-  { path: 'reimbursements', title: 'Reimbursements', desc: 'Review and approve employee reimbursement applications.', icon: 'Receipt' },
-  { path: 'ads', title: 'Advertisements', desc: 'Ad slots and active campaign management.', icon: 'Monitor' },
-  { path: 'ads/pricing', title: 'Ad Pricing', desc: 'Configure slot pricing and packages.', icon: 'DollarSign' },
-  { path: 'content/faqs', title: 'FAQs', desc: 'Manage Frequently Asked Questions.', icon: 'HelpCircle' },
-  { path: 'content/banners', title: 'Hero Banners', desc: 'Homepage hero banner management.', icon: 'Image' },
-  { path: 'content/portfolio', title: 'Portfolio', desc: 'Case study and portfolio item manager.', icon: 'Briefcase' },
-  { path: 'content/testimonials', title: 'Testimonials', desc: 'Client feedback and testimonial manager.', icon: 'MessageCircle' },
-  { path: 'settings', title: 'Site Settings', desc: 'Global platform configuration and parameters.', icon: 'Settings' },
-  { path: 'notifications', title: 'Notifications', desc: 'In-app notification center for admins.', icon: 'Bell' },
+  {
+    path: 'users/[id]',
+    title: 'User Profile',
+    desc: 'View and edit full user details and documents.',
+    icon: 'Users',
+  },
+  {
+    path: 'roles',
+    title: 'Role Management',
+    desc: 'Manage system roles and set default module permissions.',
+    icon: 'Shield',
+  },
+  {
+    path: 'permissions',
+    title: 'Module Permissions',
+    desc: 'Configure per-user module access overrides.',
+    icon: 'Key',
+  },
+  {
+    path: 'requests',
+    title: 'Service Requests',
+    desc: 'Manage incoming service requests, assignments, and statuses.',
+    icon: 'ClipboardList',
+  },
+  {
+    path: 'requests/[id]',
+    title: 'Request Details',
+    desc: 'View request form data, files, and status controls.',
+    icon: 'ClipboardList',
+  },
+  {
+    path: 'payments',
+    title: 'Payments & Invoices',
+    desc: 'Manage invoices and track payment statuses.',
+    icon: 'CreditCard',
+  },
+  {
+    path: 'blog',
+    title: 'Blog Posts',
+    desc: 'Manage published articles and drafts.',
+    icon: 'FileText',
+  },
+  {
+    path: 'blog/new',
+    title: 'Create Post',
+    desc: 'Rich text editor to author a new blog post.',
+    icon: 'PenTool',
+  },
+  {
+    path: 'blog/[id]/edit',
+    title: 'Edit Post',
+    desc: 'Update existing blog post content.',
+    icon: 'Edit3',
+  },
+  {
+    path: 'blog/comments',
+    title: 'Blog Comments',
+    desc: 'Moderation queue for user comments.',
+    icon: 'MessageSquare',
+  },
+  {
+    path: 'blog/categories',
+    title: 'Categories',
+    desc: 'Manage blog categorization.',
+    icon: 'FolderTree',
+  },
+  {
+    path: 'leads',
+    title: 'Leads & CRM',
+    desc: 'Sales pipeline tracking and lead management.',
+    icon: 'TrendingUp',
+  },
+  {
+    path: 'leads/[id]',
+    title: 'Lead Details',
+    desc: 'Detailed lead info and follow-up timeline.',
+    icon: 'UserCircle',
+  },
+  {
+    path: 'enquiries',
+    title: 'Enquiries',
+    desc: 'Inbound enquiry manager from contact forms.',
+    icon: 'HelpCircle',
+  },
+  {
+    path: 'tasks',
+    title: 'Task Board',
+    desc: 'Manage internal task assignments and progress.',
+    icon: 'CheckSquare',
+  },
+  {
+    path: 'reimbursements',
+    title: 'Reimbursements',
+    desc: 'Review and approve employee reimbursement applications.',
+    icon: 'Receipt',
+  },
+  {
+    path: 'ads',
+    title: 'Advertisements',
+    desc: 'Ad slots and active campaign management.',
+    icon: 'Monitor',
+  },
+  {
+    path: 'ads/pricing',
+    title: 'Ad Pricing',
+    desc: 'Configure slot pricing and packages.',
+    icon: 'DollarSign',
+  },
+  {
+    path: 'content/faqs',
+    title: 'FAQs',
+    desc: 'Manage Frequently Asked Questions.',
+    icon: 'HelpCircle',
+  },
+  {
+    path: 'content/banners',
+    title: 'Hero Banners',
+    desc: 'Homepage hero banner management.',
+    icon: 'Image',
+  },
+  {
+    path: 'content/portfolio',
+    title: 'Portfolio',
+    desc: 'Case study and portfolio item manager.',
+    icon: 'Briefcase',
+  },
+  {
+    path: 'content/testimonials',
+    title: 'Testimonials',
+    desc: 'Client feedback and testimonial manager.',
+    icon: 'MessageCircle',
+  },
+  {
+    path: 'settings',
+    title: 'Site Settings',
+    desc: 'Global platform configuration and parameters.',
+    icon: 'Settings',
+  },
+  {
+    path: 'notifications',
+    title: 'Notifications',
+    desc: 'In-app notification center for admins.',
+    icon: 'Bell',
+  },
 ];
 
 const generateTemplate = (title, desc, icon) => `"use client";
@@ -77,12 +197,12 @@ export default function Page() {
 }
 `;
 
-routes.forEach(route => {
+routes.forEach((route) => {
   const fullPath = path.join(rootDir, route.path);
   if (!fs.existsSync(fullPath)) {
     fs.mkdirSync(fullPath, { recursive: true });
   }
-  
+
   const filePath = path.join(fullPath, 'page.tsx');
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, generateTemplate(route.title, route.desc, route.icon));

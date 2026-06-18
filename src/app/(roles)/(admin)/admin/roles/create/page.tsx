@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import { ArrowLeft, Save, Shield } from "lucide-react";
-import { motion } from "framer-motion";
-import { useCreateRoleLogic } from "../_hooks/useCreateRoleLogic";
+import React from 'react';
+import Link from 'next/link';
+import { ArrowLeft, Save, Shield } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useCreateRoleLogic } from '../_hooks/useCreateRoleLogic';
 
 export default function CreateRolePage() {
   const { isSubmitting, formData, error, handleChange, handleSubmit } = useCreateRoleLogic();
@@ -14,7 +14,7 @@ export default function CreateRolePage() {
       {/* Header section */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
-          <Link 
+          <Link
             href="/admin/roles"
             className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 bg-white dark:bg-[#111111] hover:bg-gray-50 dark:hover:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl transition-colors"
           >
@@ -32,7 +32,7 @@ export default function CreateRolePage() {
         </div>
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden"
@@ -58,7 +58,9 @@ export default function CreateRolePage() {
                 className="w-full px-4 py-3 min-h-[44px] bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-gray-900 dark:text-white font-mono uppercase"
                 required
               />
-              <p className="text-xs text-gray-500 mt-2">Use uppercase letters and underscores only.</p>
+              <p className="text-xs text-gray-500 mt-2">
+                Use uppercase letters and underscores only.
+              </p>
             </div>
 
             <div>
@@ -77,7 +79,7 @@ export default function CreateRolePage() {
           </div>
 
           <div className="pt-6 border-t border-gray-100 dark:border-white/5 flex justify-end gap-4">
-            <Link 
+            <Link
               href="/admin/roles"
               className="px-6 py-3 min-h-[44px] flex items-center justify-center rounded-xl font-bold text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
             >
@@ -93,7 +95,7 @@ export default function CreateRolePage() {
               ) : (
                 <Save size={18} />
               )}
-              {isSubmitting ? "Creating..." : "Create Role"}
+              {isSubmitting ? 'Creating...' : 'Create Role'}
             </button>
           </div>
         </form>

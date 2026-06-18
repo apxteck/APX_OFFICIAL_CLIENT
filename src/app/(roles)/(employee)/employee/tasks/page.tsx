@@ -1,7 +1,7 @@
 import React from 'react';
 // Removed dynamic import
-import { tasksService } from "@/services/employee/tasks.service";
-import { Task } from "@/services/admin/tasks.service";
+import { tasksService } from '@/services/employee/tasks.service';
+import { Task } from '@/services/admin/tasks.service';
 
 import TasksManager from './_components/TasksManager';
 
@@ -18,11 +18,11 @@ export default async function EmployeeTasksPage() {
       initialPage = res.data.pagination.page;
     }
   } catch (error) {
-    console.error("Failed to load initial tasks on server", error);
+    console.error('Failed to load initial tasks on server', error);
   }
 
   return (
-    <TasksManager 
+    <TasksManager
       initialTasks={initialTasks}
       initialTotalPages={initialTotalPages}
       initialPage={initialPage}

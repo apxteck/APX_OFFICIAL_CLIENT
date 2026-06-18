@@ -1,4 +1,4 @@
-import apiClient from "@/lib/api/axios";
+import apiClient from '@/lib/api/axios';
 
 export interface CompanyAsset {
   id: number;
@@ -10,7 +10,7 @@ export interface CompanyAsset {
   expiryDate?: string;
   renewalCost?: number;
   autoRenew: boolean;
-  status: "ACTIVE" | "INACTIVE" | "EXPIRED" | "MAINTENANCE";
+  status: 'ACTIVE' | 'INACTIVE' | 'EXPIRED' | 'MAINTENANCE';
   notes?: string;
   createdAt: string;
   updatedAt: string;
@@ -25,16 +25,18 @@ export interface FetchAssetsParams {
 }
 
 export const companyAssetsService = {
-  getAllCompanyAssets: async (params?: FetchAssetsParams): Promise<{ data: CompanyAsset[], total: number, totalPages: number }> => {
+  getAllCompanyAssets: async (
+    params?: FetchAssetsParams
+  ): Promise<{ data: CompanyAsset[]; total: number; totalPages: number }> => {
     try {
-      const response = await apiClient.get("/company-asset/getAll", { params });
+      const response = await apiClient.get('/company-asset/getAll', { params });
       return {
         data: response.data?.data?.data || [],
         total: response.data?.data?.pagination?.total || 0,
         totalPages: response.data?.data?.pagination?.totalPages || 1,
       };
     } catch (error) {
-      console.error("Failed to fetch company assets", error);
+      console.error('Failed to fetch company assets', error);
       return { data: [], total: 0, totalPages: 1 };
     }
   },
@@ -44,13 +46,13 @@ export const companyAssetsService = {
       const response = await apiClient.get(`/company-asset/${id}`);
       return response.data?.data || null;
     } catch (error) {
-      console.error("Failed to fetch company asset details", error);
+      console.error('Failed to fetch company asset details', error);
       return null;
     }
   },
 
   createCompanyAsset: async (data: Partial<CompanyAsset>): Promise<CompanyAsset> => {
-    const response = await apiClient.post("/company-asset/create", data);
+    const response = await apiClient.post('/company-asset/create', data);
     return response.data?.data;
   },
 
@@ -61,5 +63,5 @@ export const companyAssetsService = {
 
   deleteCompanyAsset: async (id: number): Promise<void> => {
     await apiClient.delete(`/company-asset/${id}`);
-  }
+  },
 };

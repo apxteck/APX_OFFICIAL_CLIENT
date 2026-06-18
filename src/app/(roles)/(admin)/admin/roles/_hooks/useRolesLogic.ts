@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { rolesService, Role } from "@/services/admin/roles.service";
+import { useState } from 'react';
+import { rolesService, Role } from '@/services/admin/roles.service';
 
 export const useRolesLogic = (initialRoles: Role[]) => {
   const [roles, setRoles] = useState<Role[]>(initialRoles);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState<"CREATE" | "EDIT">("CREATE");
+  const [modalMode, setModalMode] = useState<'CREATE' | 'EDIT'>('CREATE');
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
-  const [formData, setFormData] = useState({ name: "", description: "" });
+  const [formData, setFormData] = useState({ name: '', description: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchRoles = async () => {
@@ -14,18 +14,18 @@ export const useRolesLogic = (initialRoles: Role[]) => {
       const result = await rolesService.getRoles();
       setRoles(result);
     } catch (error) {
-      console.error("Failed to load roles", error);
+      console.error('Failed to load roles', error);
     }
   };
 
-  const handleOpenModal = (mode: "CREATE" | "EDIT", role?: Role) => {
+  const handleOpenModal = (mode: 'CREATE' | 'EDIT', role?: Role) => {
     setModalMode(mode);
-    if (mode === "EDIT" && role) {
+    if (mode === 'EDIT' && role) {
       setSelectedRole(role);
-      setFormData({ name: role.name, description: role.description || "" });
+      setFormData({ name: role.name, description: role.description || '' });
     } else {
       setSelectedRole(null);
-      setFormData({ name: "", description: "" });
+      setFormData({ name: '', description: '' });
     }
     setIsModalOpen(true);
   };
@@ -33,7 +33,7 @@ export const useRolesLogic = (initialRoles: Role[]) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedRole(null);
-    setFormData({ name: "", description: "" });
+    setFormData({ name: '', description: '' });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,27 +41,32 @@ export const useRolesLogic = (initialRoles: Role[]) => {
     setIsSubmitting(true);
     try {
       const formattedName = formData.name.toUpperCase().replace(/\s+/g, '_');
-      if (modalMode === "CREATE") {
+      if (modalMode === 'CREATE') {
         await rolesService.createRole({ name: formattedName, description: formData.description });
-      } else if (modalMode === "EDIT" && selectedRole) {
-        await rolesService.updateRole(selectedRole.id, { name: formattedName, description: formData.description });
+      } else if (modalMode === 'EDIT' && selectedRole) {
+        await rolesService.updateRole(selectedRole.id, {
+          name: formattedName,
+          description: formData.description,
+        });
       }
       handleCloseModal();
       fetchRoles();
     } catch (error: any) {
-      alert(error?.response?.data?.message || error.message || "Failed to save role");
+      alert(error?.response?.data?.message || error.message || 'Failed to save role');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleDelete = async (id: number, name: string) => {
-    if (window.confirm(`Are you sure you want to delete the role "${name}"? This cannot be undone.`)) {
+    if (
+      window.confirm(`Are you sure you want to delete the role "${name}"? This cannot be undone.`)
+    ) {
       try {
         await rolesService.deleteRole(id);
         fetchRoles();
       } catch (error: any) {
-        alert(error?.response?.data?.message || error.message || "Failed to delete role");
+        alert(error?.response?.data?.message || error.message || 'Failed to delete role');
       }
     }
   };

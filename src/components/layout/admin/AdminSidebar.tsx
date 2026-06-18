@@ -1,18 +1,22 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { LogOut, Menu, PanelLeftClose, X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useSidebarLogic } from "./hooks/useSidebarLogic";
+'use client';
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { LogOut, Menu, PanelLeftClose, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useSidebarLogic } from './hooks/useSidebarLogic';
 
 export default function AdminSidebar() {
   const {
-    pathname, logout, mounted,
-    isSidebarCollapsed, setSidebarCollapsed,
-    isMobileSidebarOpen, setMobileSidebarOpen,
-    filteredGroups
+    pathname,
+    logout,
+    mounted,
+    isSidebarCollapsed,
+    setSidebarCollapsed,
+    isMobileSidebarOpen,
+    setMobileSidebarOpen,
+    filteredGroups,
   } = useSidebarLogic();
 
   if (!mounted) return null;
@@ -91,26 +95,35 @@ export default function AdminSidebar() {
             )}
             <div className="space-y-1">
               {group.items.map((link) => {
-                const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/admin');
+                const isActive =
+                  pathname === link.href ||
+                  (pathname.startsWith(link.href) && link.href !== '/admin');
                 const Icon = link.icon;
 
                 return (
-                  <Link key={link.href} href={link.href} title={isSidebarCollapsed ? link.name : undefined} onClick={() => setMobileSidebarOpen(false)}>
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    title={isSidebarCollapsed ? link.name : undefined}
+                    onClick={() => setMobileSidebarOpen(false)}
+                  >
                     <div
                       className={cn(
-                        "flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group relative",
-                        isSidebarCollapsed ? "justify-center" : "justify-start",
+                        'flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group relative',
+                        isSidebarCollapsed ? 'justify-center' : 'justify-start',
                         isActive
-                          ? "bg-indigo-50 dark:bg-white/5 text-indigo-700 dark:text-white font-bold"
-                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-200 font-medium"
+                          ? 'bg-indigo-50 dark:bg-white/5 text-indigo-700 dark:text-white font-bold'
+                          : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-200 font-medium'
                       )}
                     >
                       <Icon
                         size={20}
                         strokeWidth={isActive ? 2.5 : 2}
                         className={cn(
-                          "shrink-0 transition-colors",
-                          isActive ? "text-indigo-600 dark:text-[#39FF14]" : "text-gray-400 group-hover:text-gray-700 dark:text-gray-500 dark:group-hover:text-gray-300"
+                          'shrink-0 transition-colors',
+                          isActive
+                            ? 'text-indigo-600 dark:text-[#39FF14]'
+                            : 'text-gray-400 group-hover:text-gray-700 dark:text-gray-500 dark:group-hover:text-gray-300'
                         )}
                       />
 
@@ -119,7 +132,7 @@ export default function AdminSidebar() {
                           <motion.span
                             key="label"
                             initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: "auto" }}
+                            animate={{ opacity: 1, width: 'auto' }}
                             exit={{ opacity: 0, width: 0 }}
                             transition={{ duration: 0.2 }}
                             className="ml-3.5 text-[14px] whitespace-nowrap overflow-hidden text-ellipsis"
@@ -156,19 +169,23 @@ export default function AdminSidebar() {
             setMobileSidebarOpen(false);
             logout();
           }}
-          title={isSidebarCollapsed ? "Log out" : undefined}
+          title={isSidebarCollapsed ? 'Log out' : undefined}
           className={cn(
-            "flex items-center w-full py-2.5 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 transition-colors group",
-            isSidebarCollapsed ? "justify-center px-0" : "justify-start px-3"
+            'flex items-center w-full py-2.5 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 transition-colors group',
+            isSidebarCollapsed ? 'justify-center px-0' : 'justify-start px-3'
           )}
         >
-          <LogOut size={20} strokeWidth={2} className="shrink-0 text-gray-400 group-hover:text-red-600 dark:text-gray-500 dark:group-hover:text-red-400 transition-colors" />
+          <LogOut
+            size={20}
+            strokeWidth={2}
+            className="shrink-0 text-gray-400 group-hover:text-red-600 dark:text-gray-500 dark:group-hover:text-red-400 transition-colors"
+          />
           <AnimatePresence mode="wait">
             {!isSidebarCollapsed && (
               <motion.span
                 key="logout-text"
                 initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: "auto" }}
+                animate={{ opacity: 1, width: 'auto' }}
                 exit={{ opacity: 0, width: 0 }}
                 transition={{ duration: 0.2 }}
                 className="ml-3.5 font-bold text-[14px] whitespace-nowrap overflow-hidden"
@@ -200,10 +217,10 @@ export default function AdminSidebar() {
       <AnimatePresence>
         {isMobileSidebarOpen && (
           <motion.aside
-            initial={{ x: "-100%" }}
+            initial={{ x: '-100%' }}
             animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            exit={{ x: '-100%' }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="fixed inset-y-0 left-0 w-[260px] bg-white dark:bg-[#0A0A0A] border-r border-gray-200 dark:border-white/10 flex flex-col z-50 shadow-2xl md:hidden overflow-hidden"
           >
             {sidebarContent}
@@ -214,7 +231,7 @@ export default function AdminSidebar() {
       <motion.aside
         initial={false}
         animate={{ width: isSidebarCollapsed ? 80 : 260 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="hidden md:flex h-screen bg-white dark:bg-[#0A0A0A] border-r border-gray-200 dark:border-white/10 flex-col sticky top-0 z-40 shadow-sm transition-colors duration-300 overflow-hidden shrink-0"
       >
         {sidebarContent}

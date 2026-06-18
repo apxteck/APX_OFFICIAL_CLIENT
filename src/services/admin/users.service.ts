@@ -1,4 +1,4 @@
-import apiClient from "@/lib/api/axios";
+import apiClient from '@/lib/api/axios';
 
 export interface Role {
   id: number;
@@ -24,7 +24,7 @@ export interface UserDocument {
   documentType: string;
   documentLabel?: string;
   documentNumber?: string;
-  status: "PENDING" | "VERIFIED" | "REJECTED";
+  status: 'PENDING' | 'VERIFIED' | 'REJECTED';
   frontFileUrl: string;
   backFileUrl?: string;
   reviewNote?: string;
@@ -38,7 +38,7 @@ export interface ModuleAccess {
   canRead: boolean;
   canUpdate: boolean;
   canDelete: boolean;
-  source: "override" | "role_default" | "denied";
+  source: 'override' | 'role_default' | 'denied';
 }
 
 export interface UserDetail extends User {
@@ -66,41 +66,42 @@ export interface UserDetail extends User {
 export const usersService = {
   getUsers: async (): Promise<User[]> => {
     try {
-      const response = await apiClient.get("/auth/getAllUsers");
+      const response = await apiClient.get('/auth/getAllUsers');
       return response.data?.data?.data || [];
     } catch (error) {
-      console.error("Failed to fetch users", error);
+      console.error('Failed to fetch users', error);
       return [];
     }
   },
 
   getRoles: async (): Promise<Role[]> => {
     try {
-      const response = await apiClient.get("/role/getAllRoles?limit=100");
+      const response = await apiClient.get('/role/getAllRoles?limit=100');
       const rData = response.data;
-      
+
       // Attempt aggressive parsing based on common backend wrapper formats
       if (Array.isArray(rData)) return rData;
       if (rData?.data && Array.isArray(rData.data)) return rData.data;
       if (rData?.data?.data && Array.isArray(rData.data.data)) return rData.data.data;
       if (rData?.roles && Array.isArray(rData.roles)) return rData.roles;
       if (rData?.data?.roles && Array.isArray(rData.data.roles)) return rData.data.roles;
-      if (rData?.data?.data?.roles && Array.isArray(rData.data.data.roles)) return rData.data.data.roles;
-      
-      console.warn("Could not find roles array in response:", rData);
+      if (rData?.data?.data?.roles && Array.isArray(rData.data.data.roles))
+        return rData.data.data.roles;
+
+      console.warn('Could not find roles array in response:', rData);
       return [];
     } catch (error) {
-      console.error("Failed to fetch roles", error);
+      console.error('Failed to fetch roles', error);
       return [];
     }
   },
 
   createUser: async (userData: any): Promise<any> => {
     try {
-      const response = await apiClient.post("/auth/createUser", userData);
+      const response = await apiClient.post('/auth/createUser', userData);
       return response.data;
     } catch (error) {
-      console.error("Failed to create user", error);
+      console.error('Failed to create user', error);
       throw error;
     }
   },
@@ -113,18 +114,24 @@ export const usersService = {
 
       // Fetch roles to map roleId to role name
       const roles = await usersService.getRoles();
-      const role = roles.find(r => r.id === userData.roleId) || { id: userData.roleId, name: 'Unknown', description: '' };
+      const role = roles.find((r) => r.id === userData.roleId) || {
+        id: userData.roleId,
+        name: 'Unknown',
+        description: '',
+      };
 
       // Map backend profile structure to frontend UserDetail
       const profile = userData.profile || {};
-      
-      const bankDetails = profile.bankAccountNumber ? {
-        accountName: profile.bankAccountName || "",
-        accountNumber: profile.bankAccountNumber || "",
-        ifsc: profile.bankIfscCode || "",
-        bankName: profile.bankName || "",
-        upiId: profile.upiId || ""
-      } : undefined;
+
+      const bankDetails = profile.bankAccountNumber
+        ? {
+            accountName: profile.bankAccountName || '',
+            accountNumber: profile.bankAccountNumber || '',
+            ifsc: profile.bankIfscCode || '',
+            bankName: profile.bankName || '',
+            upiId: profile.upiId || '',
+          }
+        : undefined;
 
       // Map documents from backend UserDocument model
       const documents: UserDocument[] = (userData.documents || []).map((doc: any) => ({
@@ -153,17 +160,19 @@ export const usersService = {
         state: profile.state,
         pincode: profile.pincode,
         dob: profile.dateOfBirth,
-        profilePhotoUrl: profile.profilePhotoUrl || `https://ui-avatars.com/api/?name=${userData.fullName}&background=4f46e5&color=fff`,
+        profilePhotoUrl:
+          profile.profilePhotoUrl ||
+          `https://ui-avatars.com/api/?name=${userData.fullName}&background=4f46e5&color=fff`,
         employeeId: profile.employeeId,
         department: profile.department,
         designation: profile.designation,
         joiningDate: profile.joiningDate,
         bankDetails: bankDetails,
         documents: documents,
-        permissions: [] // Will be loaded separately via getUserPermissions
+        permissions: [], // Will be loaded separately via getUserPermissions
       };
     } catch (error) {
-      console.error("Failed to fetch user details", error);
+      console.error('Failed to fetch user details', error);
       return null;
     }
   },
@@ -182,41 +191,62 @@ export const usersService = {
         source: p.source, // "override" | "role_default" | "denied"
       }));
     } catch (error) {
-      console.error("Failed to fetch user permissions", error);
+      console.error('Failed to fetch user permissions', error);
       return [];
     }
   },
 
-  grantModuleAccess: async (userId: string | number, permission: {
-    module: string; canCreate: boolean; canRead: boolean; canUpdate: boolean; canDelete: boolean;
-  }): Promise<any> => {
+  grantModuleAccess: async (
+    userId: string | number,
+    permission: {
+      module: string;
+      canCreate: boolean;
+      canRead: boolean;
+      canUpdate: boolean;
+      canDelete: boolean;
+    }
+  ): Promise<any> => {
     try {
-      const response = await apiClient.post(`/module-access/users/${userId}/permissions`, permission);
+      const response = await apiClient.post(
+        `/module-access/users/${userId}/permissions`,
+        permission
+      );
       return response.data;
     } catch (error) {
-      console.error("Failed to grant module access", error);
+      console.error('Failed to grant module access', error);
       throw error;
     }
   },
 
-  bulkGrantModuleAccess: async (userId: string | number, permissions: {
-    module: string; canCreate: boolean; canRead: boolean; canUpdate: boolean; canDelete: boolean;
-  }[]): Promise<ModuleAccess[]> => {
+  bulkGrantModuleAccess: async (
+    userId: string | number,
+    permissions: {
+      module: string;
+      canCreate: boolean;
+      canRead: boolean;
+      canUpdate: boolean;
+      canDelete: boolean;
+    }[]
+  ): Promise<ModuleAccess[]> => {
     try {
-      const response = await apiClient.post(`/module-access/users/${userId}/permissions/bulk`, { permissions });
+      const response = await apiClient.post(`/module-access/users/${userId}/permissions/bulk`, {
+        permissions,
+      });
       return response.data?.data?.permissions || [];
     } catch (error) {
-      console.error("Failed to bulk grant module access", error);
+      console.error('Failed to bulk grant module access', error);
       throw error;
     }
   },
 
   revokeModuleAccess: async (userId: string | number, module: string): Promise<any> => {
     try {
-      const response = await apiClient.delete(`/module-access/users/${userId}/permissions/${module}`);
+      const response = await apiClient.delete(
+        `/module-access/users/${userId}/permissions/${module}`
+      );
       return response.data;
     } catch (error) {
-      console.error("Failed to revoke module access", error);
+      console.error('Failed to revoke module access', error);
       throw error;
     }
   },
@@ -226,34 +256,37 @@ export const usersService = {
       const response = await apiClient.delete(`/module-access/users/${userId}/permissions`);
       return response.data;
     } catch (error) {
-      console.error("Failed to revoke all module access", error);
+      console.error('Failed to revoke all module access', error);
       throw error;
     }
   },
 
   // ─── User Update ───
-  updateUser: async (id: string | number, userData: Partial<{
-    fullName: string;
-    email: string;
-    phone: string;
-    roleId: number;
-    isActive: boolean;
-    address: string;
-    city: string;
-    state: string;
-    pincode: string;
-    dateOfBirth: string;
-    employeeId: string;
-    department: string;
-    designation: string;
-    joiningDate: string;
-    bankAccountName: string;
-    bankAccountNumber: string;
-    bankIfscCode: string;
-    bankName: string;
-    upiId: string;
-    profilePicture?: File | null;
-  }>): Promise<any> => {
+  updateUser: async (
+    id: string | number,
+    userData: Partial<{
+      fullName: string;
+      email: string;
+      phone: string;
+      roleId: number;
+      isActive: boolean;
+      address: string;
+      city: string;
+      state: string;
+      pincode: string;
+      dateOfBirth: string;
+      employeeId: string;
+      department: string;
+      designation: string;
+      joiningDate: string;
+      bankAccountName: string;
+      bankAccountNumber: string;
+      bankIfscCode: string;
+      bankName: string;
+      upiId: string;
+      profilePicture?: File | null;
+    }>
+  ): Promise<any> => {
     try {
       if (userData.profilePicture) {
         const formData = new FormData();
@@ -269,7 +302,7 @@ export const usersService = {
         return response.data;
       }
     } catch (error) {
-      console.error("Failed to update user", error);
+      console.error('Failed to update user', error);
       throw error;
     }
   },
@@ -279,19 +312,25 @@ export const usersService = {
       const response = await apiClient.put(`/auth/updateUserByAdmin/${id}`, { isActive });
       return response.data;
     } catch (error) {
-      console.error("Failed to toggle user status", error);
+      console.error('Failed to toggle user status', error);
       throw error;
     }
   },
 
-  updateDocumentStatus: async (documentId: number, status: "VERIFIED" | "REJECTED" | "PENDING", reviewNote?: string): Promise<any> => {
+  updateDocumentStatus: async (
+    documentId: number,
+    status: 'VERIFIED' | 'REJECTED' | 'PENDING',
+    reviewNote?: string
+  ): Promise<any> => {
     try {
-      const response = await apiClient.patch(`/document/${documentId}/status`, { status, reviewNote });
+      const response = await apiClient.patch(`/document/${documentId}/status`, {
+        status,
+        reviewNote,
+      });
       return response.data;
     } catch (error) {
-      console.error("Failed to update document status", error);
+      console.error('Failed to update document status', error);
       throw error;
     }
-  }
+  },
 };
-

@@ -11,7 +11,8 @@ const LoginClient = dynamic(() => import('./LoginClient'), { ssr: true });
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Sign In to Your Dashboard | APXTeck',
-    description: 'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
+    description:
+      'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
     alternates: {
       canonical: 'https://apxteck.com/login',
       languages: {
@@ -21,7 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       title: 'Sign In to Your Dashboard | APXTeck',
-      description: 'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
+      description:
+        'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
       url: 'https://apxteck.com/login',
       siteName: 'APXTeck',
       locale: 'en_IN',
@@ -38,7 +40,8 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: 'Sign In to Your Dashboard | APXTeck',
-      description: 'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
+      description:
+        'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
       creator: '@apxteck',
       site: '@apxteck',
       images: ['https://apxteck.com/twitter-login.jpg'],
@@ -50,21 +53,32 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col min-h-dvh bg-background text-foreground font-sans selection:bg-accent/20 selection:text-accent transition-colors duration-300 w-full overflow-x-hidden">
       <Navbar />
-      
+
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 relative overflow-x-hidden w-full pt-24 sm:pt-28 pb-safe" aria-labelledby="login-heading" role="main">
+      <main
+        className="flex-1 flex items-center justify-center p-4 sm:p-6 relative overflow-x-hidden w-full pt-24 sm:pt-28 pb-safe"
+        aria-labelledby="login-heading"
+        role="main"
+      >
         {/* Background Decorative Elements */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+          aria-hidden="true"
+        >
           <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-accent/10 blur-[120px] dark:bg-accent/5"></div>
           <div className="absolute top-[60%] -right-[10%] w-[50%] h-[50%] rounded-full bg-purple-500/10 blur-[120px] dark:bg-purple-500/5"></div>
         </div>
-        
-        <div itemScope itemType="https://schema.org/WebPage" className="w-full max-w-md relative z-10 flex flex-col items-center">
+
+        <div
+          itemScope
+          itemType="https://schema.org/WebPage"
+          className="w-full max-w-md relative z-10 flex flex-col items-center"
+        >
           <Suspense fallback={<LoginSkeleton />}>
             <LoginClient />
           </Suspense>

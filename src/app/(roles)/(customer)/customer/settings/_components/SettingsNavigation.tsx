@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import { Lock, Bell } from 'lucide-react';
 import Link from 'next/link';
@@ -6,7 +6,10 @@ import Link from 'next/link';
 export function SettingsNavigation() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <Link href="/customer/settings/security" className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:border-indigo-500/30 transition-all cursor-pointer group flex items-center justify-between">
+      <Link
+        href="/customer/settings/security"
+        className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:border-indigo-500/30 transition-all cursor-pointer group flex items-center justify-between"
+      >
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center group-hover:scale-110 transition-transform">
             <Lock className="w-5 h-5" />
@@ -18,7 +21,10 @@ export function SettingsNavigation() {
         </div>
       </Link>
 
-      <Link href="/customer/settings/notifications" className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:border-amber-500/30 transition-all cursor-pointer group flex items-center justify-between">
+      <Link
+        href="/customer/settings/notifications"
+        className="bg-white dark:bg-[#111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:border-amber-500/30 transition-all cursor-pointer group flex items-center justify-between"
+      >
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center group-hover:scale-110 transition-transform">
             <Bell className="w-5 h-5" />

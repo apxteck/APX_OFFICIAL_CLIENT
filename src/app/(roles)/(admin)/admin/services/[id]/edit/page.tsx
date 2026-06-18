@@ -1,9 +1,9 @@
-import React from "react";
-import { servicesAdminService } from "@/services/admin/services.service";
-import { EditServiceClient } from "../../_components/EditServiceClient";
-import { AlertCircle } from "lucide-react";
-import Link from "next/link";
-import { Service } from "@/app/types/service.types";
+import React from 'react';
+import { servicesAdminService } from '@/services/admin/services.service';
+import { EditServiceClient } from '../../_components/EditServiceClient';
+import { AlertCircle } from 'lucide-react';
+import Link from 'next/link';
+import { Service } from '@/app/types/service.types';
 
 export default async function EditServicePage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -14,7 +14,7 @@ export default async function EditServicePage({ params }: { params: Promise<{ id
     const data = await servicesAdminService.getServiceById(serviceId);
     service = data as unknown as Service;
   } catch (error) {
-    console.error("Failed to fetch service:", error);
+    console.error('Failed to fetch service:', error);
   }
 
   if (!service) {

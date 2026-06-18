@@ -7,10 +7,14 @@ export type { Lead, LeadStatus, LeadFollowUp };
 export const leadsService = {
   getLeads: async (): Promise<Lead[]> => {
     try {
-      const response = await apiClient.post('/enquiry/leads/all', { search: "", page: 1, limit: 100 });
+      const response = await apiClient.post('/enquiry/leads/all', {
+        search: '',
+        page: 1,
+        limit: 100,
+      });
       return response.data?.data?.data || [];
     } catch (error) {
-      console.error("Failed to fetch leads", error);
+      console.error('Failed to fetch leads', error);
       return [];
     }
   },
@@ -20,7 +24,7 @@ export const leadsService = {
       const response = await apiClient.get(`/enquiry/leads/${id}`);
       return response.data?.data || null;
     } catch (error) {
-      console.error("Failed to fetch lead", error);
+      console.error('Failed to fetch lead', error);
       return null;
     }
   },
@@ -45,12 +49,18 @@ export const leadsService = {
       const allFollowUps = response.data?.data?.data || [];
       return allFollowUps.filter((f: LeadFollowUp) => f.leadId === leadId);
     } catch (error) {
-      console.error("Failed to fetch follow ups", error);
+      console.error('Failed to fetch follow ups', error);
       return [];
     }
   },
 
-  addLeadFollowUp: async (data: { leadId: number, doneById?: number, note: string, followedAt: string, nextFollowUpAt: string }): Promise<LeadFollowUp> => {
+  addLeadFollowUp: async (data: {
+    leadId: number;
+    doneById?: number;
+    note: string;
+    followedAt: string;
+    nextFollowUpAt: string;
+  }): Promise<LeadFollowUp> => {
     // If doneById is not provided, backend should ideally take from req.user, but we might need it. We will just pass what we have.
     // The backend uses req.user.id implicitly? No, req.body.doneById.
     const response = await apiClient.post('/enquiry/follow-ups', data);
@@ -62,8 +72,8 @@ export const leadsService = {
       const response = await apiClient.get('/enquiry/assignable-users');
       return response.data?.data || [];
     } catch (error) {
-      console.error("Failed to fetch assignable employees", error);
+      console.error('Failed to fetch assignable employees', error);
       return [];
     }
-  }
+  },
 };

@@ -47,7 +47,9 @@ export default function CompanyVaultFormModal({ onClose, formLogic }: Props) {
                 {isEditing ? 'Edit Document' : 'Upload Document'}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                {isEditing ? 'Update vault document details' : 'Securely upload a new document to the vault'}
+                {isEditing
+                  ? 'Update vault document details'
+                  : 'Securely upload a new document to the vault'}
               </p>
             </div>
           </div>
@@ -59,10 +61,15 @@ export default function CompanyVaultFormModal({ onClose, formLogic }: Props) {
           </button>
         </div>
 
-        <form onSubmit={onSubmit} className="p-6 sm:p-8 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+        <form
+          onSubmit={onSubmit}
+          className="p-6 sm:p-8 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar"
+        >
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Document Key / Identifier *</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Document Key / Identifier *
+              </label>
               <input
                 required
                 type="text"
@@ -73,9 +80,11 @@ export default function CompanyVaultFormModal({ onClose, formLogic }: Props) {
               />
               <p className="text-xs text-gray-500">Must be a unique identifier.</p>
             </div>
-            
+
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Description</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Description
+              </label>
               <textarea
                 name="description"
                 defaultValue={editingDocument?.description || ''}
@@ -86,15 +95,19 @@ export default function CompanyVaultFormModal({ onClose, formLogic }: Props) {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">File Upload {isEditing ? '(Optional to replace)' : '*'}</label>
-              <div 
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                File Upload {isEditing ? '(Optional to replace)' : '*'}
+              </label>
+              <div
                 className="border-2 border-dashed border-gray-300 dark:border-white/20 rounded-2xl p-6 flex flex-col items-center justify-center bg-gray-50 dark:bg-[#1A1A1A] hover:bg-gray-100 dark:hover:bg-[#222222] transition-colors cursor-pointer group"
                 onClick={() => fileInputRef.current?.click()}
               >
                 <div className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-3 group-hover:scale-110 transition-transform">
                   <Upload size={24} />
                 </div>
-                <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">Click to browse or drag and drop</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white mb-1">
+                  Click to browse or drag and drop
+                </p>
                 <p className="text-xs text-gray-500 text-center">
                   {isEditing ? 'Leave blank to keep existing file' : 'PDF, DOCX, Images up to 10MB'}
                 </p>
@@ -118,7 +131,7 @@ export default function CompanyVaultFormModal({ onClose, formLogic }: Props) {
               )}
             </div>
           </div>
-          
+
           <div className="pt-4 flex justify-end gap-3 border-t border-gray-100 dark:border-white/10">
             <button
               type="button"

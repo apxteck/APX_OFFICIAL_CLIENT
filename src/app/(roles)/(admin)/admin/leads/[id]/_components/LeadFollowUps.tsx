@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { format } from "date-fns";
-import { Calendar, Plus, MessageSquare, Clock } from "lucide-react";
-import { LeadFollowUp } from "@/app/types/lead.types";
+import React, { useState } from 'react';
+import { format } from 'date-fns';
+import { Calendar, Plus, MessageSquare, Clock } from 'lucide-react';
+import { LeadFollowUp } from '@/app/types/lead.types';
 
 interface LeadFollowUpsProps {
   followUps: LeadFollowUp[];
@@ -10,15 +10,15 @@ interface LeadFollowUpsProps {
 
 export function LeadFollowUps({ followUps, onAddFollowUp }: LeadFollowUpsProps) {
   const [isAdding, setIsAdding] = useState(false);
-  const [note, setNote] = useState("");
-  const [nextFollowUpAt, setNextFollowUpAt] = useState("");
+  const [note, setNote] = useState('');
+  const [nextFollowUpAt, setNextFollowUpAt] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!note || !nextFollowUpAt) return;
     onAddFollowUp(note, new Date(nextFollowUpAt).toISOString());
-    setNote("");
-    setNextFollowUpAt("");
+    setNote('');
+    setNextFollowUpAt('');
     setIsAdding(false);
   };
 
@@ -37,9 +37,14 @@ export function LeadFollowUps({ followUps, onAddFollowUp }: LeadFollowUpsProps) 
       </div>
 
       {isAdding && (
-        <form onSubmit={handleSubmit} className="bg-gray-50 dark:bg-[#151515] p-5 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-gray-50 dark:bg-[#151515] p-5 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4"
+        >
           <div>
-            <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">Note / Conversation Details</label>
+            <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+              Note / Conversation Details
+            </label>
             <textarea
               required
               value={note}
@@ -49,7 +54,9 @@ export function LeadFollowUps({ followUps, onAddFollowUp }: LeadFollowUpsProps) 
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">Next Follow-Up Date</label>
+            <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
+              Next Follow-Up Date
+            </label>
             <input
               type="datetime-local"
               required
@@ -79,16 +86,21 @@ export function LeadFollowUps({ followUps, onAddFollowUp }: LeadFollowUpsProps) 
       {followUps.length > 0 ? (
         <div className="space-y-4">
           {followUps.map((fup) => (
-            <div key={fup.id} className="p-4 rounded-2xl bg-gray-50 dark:bg-[#151515] border border-gray-100 dark:border-white/5 space-y-3">
+            <div
+              key={fup.id}
+              className="p-4 rounded-2xl bg-gray-50 dark:bg-[#151515] border border-gray-100 dark:border-white/5 space-y-3"
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                     <MessageSquare size={14} />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-gray-900 dark:text-white">{fup.doneBy?.fullName || "Agent"}</p>
+                    <p className="text-sm font-bold text-gray-900 dark:text-white">
+                      {fup.doneBy?.fullName || 'Agent'}
+                    </p>
                     <p className="text-xs font-medium text-gray-500 flex items-center gap-1">
-                      <Clock size={10} /> {format(new Date(fup.followedAt), "MMM dd, yyyy h:mm a")}
+                      <Clock size={10} /> {format(new Date(fup.followedAt), 'MMM dd, yyyy h:mm a')}
                     </p>
                   </div>
                 </div>
@@ -97,7 +109,7 @@ export function LeadFollowUps({ followUps, onAddFollowUp }: LeadFollowUpsProps) 
                 <p className="whitespace-pre-wrap">{fup.note}</p>
                 <div className="mt-3 bg-white dark:bg-[#111111] border border-gray-100 dark:border-white/5 rounded-lg p-2.5 inline-block">
                   <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400">
-                    Next Follow-Up: {format(new Date(fup.nextFollowUpAt), "MMM dd, yyyy h:mm a")}
+                    Next Follow-Up: {format(new Date(fup.nextFollowUpAt), 'MMM dd, yyyy h:mm a')}
                   </p>
                 </div>
               </div>

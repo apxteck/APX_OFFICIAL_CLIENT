@@ -1,7 +1,7 @@
-import React from "react";
-import { Payment } from "@/services/admin/payments.service";
-import { format } from "date-fns";
-import { Send, CheckCircle, Paperclip, Clock, XCircle, AlertCircle } from "lucide-react";
+import React from 'react';
+import { Payment } from '@/services/admin/payments.service';
+import { format } from 'date-fns';
+import { Send, CheckCircle, Paperclip, Clock, XCircle, AlertCircle } from 'lucide-react';
 
 interface Props {
   payments: Payment[];
@@ -21,32 +21,34 @@ export function PaymentsTable({
   onOpenInvoice,
 }: Props) {
   const formatCurrency = (amount: string | number | null) => {
-    if (!amount) return "—";
-    return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(Number(amount));
+    if (!amount) return '—';
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(
+      Number(amount)
+    );
   };
 
-  const getStatusBadge = (status: Payment["status"]) => {
+  const getStatusBadge = (status: Payment['status']) => {
     switch (status) {
-      case "PENDING":
-      case "SENT":
+      case 'PENDING':
+      case 'SENT':
         return (
           <span className="inline-flex items-center gap-1 bg-[#1d4ed8] text-white px-2.5 py-1 rounded-full text-xs font-semibold uppercase">
-            {status === "PENDING" ? <Clock size={12} /> : <Send size={12} />} {status}
+            {status === 'PENDING' ? <Clock size={12} /> : <Send size={12} />} {status}
           </span>
         );
-      case "FAILED":
+      case 'FAILED':
         return (
           <span className="inline-flex items-center gap-1 bg-[#dc2626] text-white px-2.5 py-1 rounded-full text-xs font-semibold uppercase">
             <XCircle size={12} /> {status}
           </span>
         );
-      case "PARTIAL":
+      case 'PARTIAL':
         return (
           <span className="inline-flex items-center gap-1 bg-[#d97706] text-white px-2.5 py-1 rounded-full text-xs font-semibold uppercase">
             <AlertCircle size={12} /> {status}
           </span>
         );
-      case "PAID":
+      case 'PAID':
         return (
           <span className="inline-flex items-center gap-1 bg-[#16a34a] text-white px-2.5 py-1 rounded-full text-xs font-semibold uppercase">
             <CheckCircle size={12} /> PAID
@@ -72,11 +74,14 @@ export function PaymentsTable({
         </thead>
         <tbody>
           {payments.map((pay) => (
-            <tr key={pay.id} className="border-b border-gray-800/50 hover:bg-[#161b22]/50 transition-colors">
+            <tr
+              key={pay.id}
+              className="border-b border-gray-800/50 hover:bg-[#161b22]/50 transition-colors"
+            >
               <td className="px-4 py-3">
                 <div className="font-medium text-white">INV-{pay.id}</div>
                 <div className="text-xs text-gray-400 mt-0.5">
-                  {format(new Date(pay.createdAt), "MMM dd, yyyy")}
+                  {format(new Date(pay.createdAt), 'MMM dd, yyyy')}
                 </div>
                 {pay.transactionId && (
                   <div className="text-[10px] text-gray-500 mt-1 tracking-wider">
@@ -98,16 +103,18 @@ export function PaymentsTable({
               </td>
               <td className="px-4 py-3">
                 <div className="text-white">{formatCurrency(pay.negotiatedAmount)}</div>
-                {(pay.status === "PARTIAL" || pay.status === "PAID") && (
+                {(pay.status === 'PARTIAL' || pay.status === 'PAID') && (
                   <div className="text-[10px] font-bold text-[#16a34a] mt-0.5">
-                    {pay.status === "PAID" ? "FULLY PAID" : `PAID: ${formatCurrency(pay.amountPaid)}`}
+                    {pay.status === 'PAID'
+                      ? 'FULLY PAID'
+                      : `PAID: ${formatCurrency(pay.amountPaid)}`}
                   </div>
                 )}
               </td>
               <td className="px-4 py-3">{getStatusBadge(pay.status)}</td>
               <td className="px-4 py-3">
                 <div className="flex items-center justify-end gap-2">
-                  {["PENDING", "SENT", "FAILED"].includes(pay.status) && (
+                  {['PENDING', 'SENT', 'FAILED'].includes(pay.status) && (
                     <button
                       onClick={() => onResend(pay.id)}
                       disabled={resendPending}
@@ -121,7 +128,7 @@ export function PaymentsTable({
                       )}
                     </button>
                   )}
-                  {["PENDING", "SENT", "PARTIAL", "FAILED"].includes(pay.status) && (
+                  {['PENDING', 'SENT', 'PARTIAL', 'FAILED'].includes(pay.status) && (
                     <button
                       onClick={() => onMarkPaid(pay)}
                       className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 hover:text-green-500 hover:bg-green-500/10 rounded-md transition-colors"
@@ -131,7 +138,7 @@ export function PaymentsTable({
                     </button>
                   )}
                   <button
-                    disabled={pay.status !== "PAID"}
+                    disabled={pay.status !== 'PAID'}
                     onClick={() => onOpenInvoice(pay)}
                     className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 hover:text-blue-500 hover:bg-blue-500/10 rounded-md transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-gray-400"
                     title="View Receipt / Invoice"

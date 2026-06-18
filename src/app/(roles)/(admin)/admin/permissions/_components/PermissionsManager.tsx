@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Toaster } from "react-hot-toast";
-import { PermissionsRoleSelector } from "./PermissionsRoleSelector";
-import { PermissionsMatrix } from "./PermissionsMatrix";
-import { usePermissionsLogic } from "../_hooks/usePermissionsLogic";
-import { Role } from "@/services/admin/roles.service";
+import React from 'react';
+import { Toaster } from 'react-hot-toast';
+import { PermissionsRoleSelector } from './PermissionsRoleSelector';
+import { PermissionsMatrix } from './PermissionsMatrix';
+import { usePermissionsLogic } from '../_hooks/usePermissionsLogic';
+import { Role } from '@/services/admin/roles.service';
 
 interface Props {
   initialRoles: Role[];

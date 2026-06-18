@@ -31,18 +31,18 @@ export function useCompanyAssetFormLogic({ onSuccess }: UseCompanyAssetFormLogic
 
     try {
       const formData = new FormData(e.currentTarget);
-      
+
       const payload: Partial<CompanyAsset> = {
         type: formData.get('type') as string,
         title: formData.get('title') as string,
-        referenceNumber: formData.get('referenceNumber') as string || undefined,
-        provider: formData.get('provider') as string || undefined,
+        referenceNumber: (formData.get('referenceNumber') as string) || undefined,
+        provider: (formData.get('provider') as string) || undefined,
         status: formData.get('status') as any,
         autoRenew: formData.get('autoRenew') === 'on',
         renewalCost: formData.get('renewalCost') ? Number(formData.get('renewalCost')) : undefined,
-        issuedDate: formData.get('issuedDate') as string || undefined,
-        expiryDate: formData.get('expiryDate') as string || undefined,
-        notes: formData.get('notes') as string || undefined,
+        issuedDate: (formData.get('issuedDate') as string) || undefined,
+        expiryDate: (formData.get('expiryDate') as string) || undefined,
+        notes: (formData.get('notes') as string) || undefined,
       };
 
       if (editingAsset) {

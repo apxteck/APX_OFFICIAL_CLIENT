@@ -15,7 +15,7 @@ export default async function CustomerRequestsPage() {
       initialRequests = res;
     }
   } catch (error) {
-    console.error("Failed to fetch initial requests:", error);
+    console.error('Failed to fetch initial requests:', error);
   }
 
   return (

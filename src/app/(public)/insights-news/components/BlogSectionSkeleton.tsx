@@ -8,7 +8,10 @@ export function BlogSectionSkeleton() {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[1, 2, 3, 4, 5, 6].map((i) => (
-          <div key={i} className="flex flex-col rounded-3xl overflow-hidden border border-glass-border bg-foreground/[0.02]">
+          <div
+            key={i}
+            className="flex flex-col rounded-3xl overflow-hidden border border-glass-border bg-foreground/[0.02]"
+          >
             <div className="w-full h-48 bg-foreground/10" />
             <div className="p-6 space-y-4">
               <div className="w-24 h-6 bg-foreground/5 rounded-full" />

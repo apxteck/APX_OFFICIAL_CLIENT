@@ -1,6 +1,6 @@
-import React from "react";
-import apiClient from "@/lib/axios";
-import { CreateTaskClient } from "../_components/CreateTaskClient";
+import React from 'react';
+import apiClient from '@/lib/axios';
+import { CreateTaskClient } from '../_components/CreateTaskClient';
 
 export default async function CreateTaskPage() {
   let users = [];
@@ -9,7 +9,7 @@ export default async function CreateTaskPage() {
     const allUsers = response.data?.data?.data || [];
     users = allUsers.filter((u: any) => u.role?.name && u.role.name !== 'CUSTOMER');
   } catch (err) {
-    console.error("Failed to load users for task assignment", err);
+    console.error('Failed to load users for task assignment', err);
   }
 
   return <CreateTaskClient users={users} />;

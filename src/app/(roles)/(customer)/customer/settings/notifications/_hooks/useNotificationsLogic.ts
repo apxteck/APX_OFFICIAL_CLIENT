@@ -10,17 +10,17 @@ export const useNotificationsLogic = () => {
   });
 
   const [isSaving, setIsSaving] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const togglePref = (key: keyof typeof preferences) => {
-    setPreferences(prev => ({ ...prev, [key]: !prev[key] }));
+    setPreferences((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const handleSave = async () => {
     setIsSaving(true);
     setMessage(null);
     try {
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise((resolve) => setTimeout(resolve, 800));
       setMessage({ type: 'success', text: 'Preferences saved successfully.' });
     } catch (error) {
       setMessage({ type: 'error', text: 'Failed to save preferences.' });
@@ -34,6 +34,6 @@ export const useNotificationsLogic = () => {
     togglePref,
     handleSave,
     isSaving,
-    message
+    message,
   };
 };

@@ -6,8 +6,14 @@ import { knowledgeCategories } from '../constants';
 
 export function KnowledgeHub() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 relative max-w-7xl mx-auto px-4 sm:px-6 w-full" aria-labelledby="knowledge-hub-title">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] pointer-events-none -z-10" aria-hidden="true" />
+    <section
+      className="py-12 sm:py-16 md:py-20 relative max-w-7xl mx-auto px-4 sm:px-6 w-full"
+      aria-labelledby="knowledge-hub-title"
+    >
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/5 rounded-full blur-[150px] pointer-events-none -z-10"
+        aria-hidden="true"
+      />
 
       <div className="text-center mb-10 sm:mb-12 md:mb-16 w-full">
         <motion.h2
@@ -26,7 +32,8 @@ export function KnowledgeHub() {
           viewport={{ once: true }}
           className="text-foreground/60 w-full max-w-2xl mx-auto mt-3 sm:mt-4 text-base sm:text-lg px-2 sm:px-0"
         >
-          Explore our curated categories designed to keep you at the cutting edge of the digital landscape.
+          Explore our curated categories designed to keep you at the cutting edge of the digital
+          landscape.
         </motion.p>
       </div>
 

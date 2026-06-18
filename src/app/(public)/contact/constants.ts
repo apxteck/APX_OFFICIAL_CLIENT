@@ -8,7 +8,8 @@ export const jsonLdLocalBusiness = {
   telephone: '+919405282582',
   email: 'info@apxteck.com',
   url: 'https://apxteck.com',
-  description: 'Premium web development, custom software engineering, and technical SEO agency based in Pune, India.',
+  description:
+    'Premium web development, custom software engineering, and technical SEO agency based in Pune, India.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Flat No. 24, 3rd Floor, Balaji Residency Dighe, Manaji Nagar, Narhe',
@@ -33,8 +34,8 @@ export const jsonLdLocalBusiness = {
   sameAs: [
     'https://www.linkedin.com/company/apxteck',
     'https://twitter.com/apxteck',
-    'https://www.facebook.com/apxteck'
-  ]
+    'https://www.facebook.com/apxteck',
+  ],
 };
 
 export const jsonLdContactPage = {

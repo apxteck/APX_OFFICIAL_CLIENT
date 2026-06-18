@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   isOpen: boolean;
@@ -64,7 +64,9 @@ export function CreatePaymentLinkDialog({
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Suggested Amount (₹) (Optional)</label>
+            <label className="block text-sm text-gray-400 mb-1">
+              Suggested Amount (₹) (Optional)
+            </label>
             <input
               type="number"
               value={createSuggestedAmount}

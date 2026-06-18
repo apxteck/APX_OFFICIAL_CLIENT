@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import { TasksHeader } from "./TasksHeader";
-import { TasksTable } from "./TasksTable";
-import { useTasksLogic } from "../_hooks/useTasksLogic";
-import { Task } from "@/services/admin/tasks.service";
+'use client';
+import React from 'react';
+import { TasksHeader } from './TasksHeader';
+import { TasksTable } from './TasksTable';
+import { useTasksLogic } from '../_hooks/useTasksLogic';
+import { Task } from '@/services/admin/tasks.service';
 
 interface Props {
   initialTasks: Task[];
@@ -15,7 +15,7 @@ export default function TasksManager({ initialTasks }: Props) {
   return (
     <>
       <TasksHeader navigateToCreate={logic.navigateToCreate} />
-      <TasksTable 
+      <TasksTable
         filteredTasks={logic.filteredTasks}
         isLoading={logic.isLoading}
         searchTerm={logic.searchTerm}

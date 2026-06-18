@@ -16,12 +16,16 @@ export function ResendVerificationForm({
   resendSuccess,
   resendError,
   isResending,
-  form: { register, handleSubmit, formState: { errors } },
+  form: {
+    register,
+    handleSubmit,
+    formState: { errors },
+  },
   onResendSubmit,
 }: ResendVerificationFormProps) {
   if (resendSuccess) {
     return (
-      <div 
+      <div
         className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/35 text-emerald-500 text-xs flex gap-2.5 items-center font-semibold"
         role="status"
       >
@@ -32,20 +36,30 @@ export function ResendVerificationForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(onResendSubmit)} className="space-y-4" aria-label="Resend Verification Form">
+    <form
+      onSubmit={handleSubmit(onResendSubmit)}
+      className="space-y-4"
+      aria-label="Resend Verification Form"
+    >
       <h2 className="font-bold text-sm tracking-tight text-foreground flex items-center gap-2">
-        <Mail className="w-4 h-4 text-accent" aria-hidden="true" role="presentation" /> Request New Code
+        <Mail className="w-4 h-4 text-accent" aria-hidden="true" role="presentation" /> Request New
+        Code
       </h2>
 
       {resendError && (
-        <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/35 text-rose-500 text-xs flex gap-2 items-center font-semibold" role="alert">
+        <div
+          className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/35 text-rose-500 text-xs flex gap-2 items-center font-semibold"
+          role="alert"
+        >
           <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" role="presentation" />
           <span>{resendError}</span>
         </div>
       )}
 
       <div className="space-y-1 w-full">
-        <label htmlFor="email" className="sr-only">Email Address</label>
+        <label htmlFor="email" className="sr-only">
+          Email Address
+        </label>
         <input
           id="email"
           type="email"
@@ -53,7 +67,7 @@ export function ResendVerificationForm({
           className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-2.5 min-h-[44px] outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-sm md:text-sm font-medium"
           placeholder="you@company.com"
           aria-invalid={!!errors.email}
-          aria-describedby={errors.email ? "email-error" : undefined}
+          aria-describedby={errors.email ? 'email-error' : undefined}
         />
         {errors.email && (
           <p id="email-error" className="text-xs text-rose-500 font-medium pl-1" role="alert">

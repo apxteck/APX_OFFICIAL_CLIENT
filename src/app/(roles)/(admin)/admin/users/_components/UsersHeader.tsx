@@ -1,7 +1,7 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-import { Plus } from "lucide-react";
+'use client';
+import React from 'react';
+import Link from 'next/link';
+import { Plus } from 'lucide-react';
 
 export function UsersHeader() {
   return (
@@ -14,8 +14,8 @@ export function UsersHeader() {
           Manage system users, role assignments, and module access permissions.
         </p>
       </div>
-      <Link 
-        href="/admin/users/create" 
+      <Link
+        href="/admin/users/create"
         className="flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]"
       >
         <Plus size={18} strokeWidth={3} />

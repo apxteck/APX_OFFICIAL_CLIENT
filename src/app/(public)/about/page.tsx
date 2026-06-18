@@ -9,12 +9,27 @@ import { api } from '@/lib/axios';
 import dynamic from 'next/dynamic';
 
 // Extracted granular Client Components lazily loaded to reduce initial bundle size
-const AboutHero = dynamic(() => import('./components/AboutHero').then(mod => mod.AboutHero), { ssr: true });
-const AboutStory = dynamic(() => import('./components/AboutStory').then(mod => mod.AboutStory), { ssr: true });
-const AboutMissionVision = dynamic(() => import('./components/AboutMissionVision').then(mod => mod.AboutMissionVision), { ssr: true });
-const AboutCulture = dynamic(() => import('./components/AboutCulture').then(mod => mod.AboutCulture), { ssr: true });
-const AboutValues = dynamic(() => import('./components/AboutValues').then(mod => mod.AboutValues), { ssr: true });
-const AboutCTA = dynamic(() => import('./components/AboutCTA').then(mod => mod.AboutCTA), { ssr: true });
+const AboutHero = dynamic(() => import('./components/AboutHero').then((mod) => mod.AboutHero), {
+  ssr: true,
+});
+const AboutStory = dynamic(() => import('./components/AboutStory').then((mod) => mod.AboutStory), {
+  ssr: true,
+});
+const AboutMissionVision = dynamic(
+  () => import('./components/AboutMissionVision').then((mod) => mod.AboutMissionVision),
+  { ssr: true }
+);
+const AboutCulture = dynamic(
+  () => import('./components/AboutCulture').then((mod) => mod.AboutCulture),
+  { ssr: true }
+);
+const AboutValues = dynamic(
+  () => import('./components/AboutValues').then((mod) => mod.AboutValues),
+  { ssr: true }
+);
+const AboutCTA = dynamic(() => import('./components/AboutCTA').then((mod) => mod.AboutCTA), {
+  ssr: true,
+});
 
 // UI Components
 import { MouseSpotlight } from '@/components/ui/MouseSpotlight';
@@ -107,8 +122,8 @@ export default function AboutPage() {
           "Discover APXTeck's founding story, mission, and core values. Meet our elite in-house team of Next.js software engineers, designers, and SEO experts in Pune.",
         isPartOf: { '@id': 'https://apxteck.com/#website' },
         about: {
-          '@id': 'https://apxteck.com/#organization'
-        }
+          '@id': 'https://apxteck.com/#organization',
+        },
       },
       {
         '@type': 'Organization',
@@ -117,7 +132,8 @@ export default function AboutPage() {
         url: 'https://apxteck.com',
         logo: 'https://apxteck.com/logo.png',
         image: 'https://apxteck.com/logo.png',
-        description: 'Elite web development, Next.js engineering, and technical SEO agency based in Pune, India.',
+        description:
+          'Elite web development, Next.js engineering, and technical SEO agency based in Pune, India.',
         address: {
           '@type': 'PostalAddress',
           streetAddress: 'Pune IT Park',
@@ -131,13 +147,13 @@ export default function AboutPage() {
           telephone: '+91-9405282582',
           contactType: 'customer service',
           areaServed: 'IN',
-          availableLanguage: ['English', 'Hindi']
+          availableLanguage: ['English', 'Hindi'],
         },
         sameAs: [
           'https://www.linkedin.com/company/apxteck',
           'https://twitter.com/apxteck',
-          'https://www.facebook.com/apxteck'
-        ]
+          'https://www.facebook.com/apxteck',
+        ],
       },
       {
         '@type': 'BreadcrumbList',
@@ -175,22 +191,22 @@ export default function AboutPage() {
           <FloatingWhatsApp phoneNumber="919405282582" />
 
           {/* Separated components for granular client-side rendering */}
-        <AboutHero />
-        <AboutStory />
-        <AboutMissionVision />
-        <AboutCulture />
-        <AboutValues />
-        
-        {/* Dynamic Sections (API Fetched with Streaming Suspense) */}
-        <Suspense fallback={<div className="h-[500px] w-full animate-pulse bg-foreground/5" />}>
-          <TeamSectionLoader />
-        </Suspense>
-        
-        <Suspense fallback={<div className="h-[400px] w-full animate-pulse bg-foreground/5" />}>
-          <StatsSectionLoader />
-        </Suspense>
+          <AboutHero />
+          <AboutStory />
+          <AboutMissionVision />
+          <AboutCulture />
+          <AboutValues />
 
-        <AboutCTA />
+          {/* Dynamic Sections (API Fetched with Streaming Suspense) */}
+          <Suspense fallback={<div className="h-[500px] w-full animate-pulse bg-foreground/5" />}>
+            <TeamSectionLoader />
+          </Suspense>
+
+          <Suspense fallback={<div className="h-[400px] w-full animate-pulse bg-foreground/5" />}>
+            <StatsSectionLoader />
+          </Suspense>
+
+          <AboutCTA />
         </article>
       </main>
 

@@ -31,13 +31,13 @@ export function useCompanyVaultFormLogic({ onSuccess }: UseCompanyVaultFormLogic
 
     try {
       const formData = new FormData(e.currentTarget);
-      
+
       // Validation for new files
       const file = formData.get('document') as File;
       if (!editingDocument && (!file || file.size === 0)) {
-        throw new Error("Document file is required.");
+        throw new Error('Document file is required.');
       }
-      
+
       if (editingDocument) {
         // If editing and no new file selected, remove empty file from formData to avoid backend issues
         if (!file || file.size === 0) {

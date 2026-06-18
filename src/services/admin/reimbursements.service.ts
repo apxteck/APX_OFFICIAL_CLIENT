@@ -1,6 +1,6 @@
 import apiClient from '@/lib/axios';
 
-export type ReimbursementStatus = "PENDING" | "APPROVED" | "REJECTED" | "PAID";
+export type ReimbursementStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'PAID';
 
 export interface Reimbursement {
   id: number;
@@ -27,7 +27,7 @@ export const reimbursementsService = {
       const response = await apiClient.get('/reimbursement/all');
       return response.data?.data?.data || [];
     } catch (error) {
-      console.error("Failed to fetch reimbursements", error);
+      console.error('Failed to fetch reimbursements', error);
       return [];
     }
   },
@@ -37,22 +37,22 @@ export const reimbursementsService = {
       const response = await apiClient.get(`/reimbursement/admin/${id}`);
       return response.data?.data || null;
     } catch (error) {
-      console.error("Failed to fetch reimbursement", error);
+      console.error('Failed to fetch reimbursement', error);
       return null;
     }
   },
 
   updateReimbursementStatus: async (
-    id: number, 
-    status: ReimbursementStatus, 
+    id: number,
+    status: ReimbursementStatus,
     reviewNote?: string
   ): Promise<Reimbursement> => {
-    if (status === "PAID") {
+    if (status === 'PAID') {
       const response = await apiClient.patch(`/reimbursement/paid/${id}`);
       return response.data?.data;
     } else {
       const response = await apiClient.patch(`/reimbursement/review/${id}`, { status, reviewNote });
       return response.data?.data;
     }
-  }
+  },
 };

@@ -5,18 +5,18 @@ import { useRouter } from 'next/navigation';
 
 export const useNewServiceLogic = (initialServices: Service[]) => {
   const router = useRouter();
-  
+
   const [services] = useState<Service[]>(initialServices);
   const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null);
-  
+
   const [serviceFields, setServiceFields] = useState<ServiceField[]>([]);
   const [loadingFields, setLoadingFields] = useState(false);
-  
+
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [genericFiles, setGenericFiles] = useState<File[]>([]);
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
     if (!selectedServiceId) {
@@ -36,36 +36,40 @@ export const useNewServiceLogic = (initialServices: Service[]) => {
           setGenericFiles([]);
         }
       } catch (error) {
-        console.error("Failed to load service fields", error);
+        console.error('Failed to load service fields', error);
       } finally {
         if (mounted) setLoadingFields(false);
       }
     }
     loadFields();
 
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, [selectedServiceId]);
 
   const handleInputChange = (fieldKey: string, value: any, type: string) => {
-    setFormData(prev => ({ ...prev, [fieldKey]: value }));
+    setFormData((prev) => ({ ...prev, [fieldKey]: value }));
   };
 
   const handleGenericFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      const validFiles = newFiles.filter(f => f.size <= 50 * 1024 * 1024);
-      
+      const validFiles = newFiles.filter((f) => f.size <= 50 * 1024 * 1024);
+
       if (validFiles.length < newFiles.length) {
-         setMessage({ type: 'error', text: 'Some files exceed the 50MB limit and were not added.' });
+        setMessage({ type: 'error', text: 'Some files exceed the 50MB limit and were not added.' });
       } else {
-         setMessage(null);
+        setMessage(null);
       }
 
-      setGenericFiles(prev => {
-        const uniqueNewFiles = validFiles.filter(newFile => 
-          !prev.some(existingFile => 
-            existingFile.name === newFile.name && existingFile.size === newFile.size
-          )
+      setGenericFiles((prev) => {
+        const uniqueNewFiles = validFiles.filter(
+          (newFile) =>
+            !prev.some(
+              (existingFile) =>
+                existingFile.name === newFile.name && existingFile.size === newFile.size
+            )
         );
         return [...prev, ...uniqueNewFiles];
       });
@@ -73,7 +77,7 @@ export const useNewServiceLogic = (initialServices: Service[]) => {
   };
 
   const removeGenericFile = (index: number) => {
-    setGenericFiles(prev => prev.filter((_, idx) => idx !== index));
+    setGenericFiles((prev) => prev.filter((_, idx) => idx !== index));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -126,6 +130,6 @@ export const useNewServiceLogic = (initialServices: Service[]) => {
     handleInputChange,
     handleGenericFileUpload,
     removeGenericFile,
-    handleSubmit
+    handleSubmit,
   };
 };

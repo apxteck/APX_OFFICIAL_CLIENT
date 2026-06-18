@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useTypewriter } from '@/app/(public)/about/hooks/useTypewriter';
 
-const typewriterWords = ["Delivered", "Accelerated", "Engineered", "Mastered"];
+const typewriterWords = ['Delivered', 'Accelerated', 'Engineered', 'Mastered'];
 
 const heroPhrases = [
-  "Explore our comprehensive suite of high-performance design and system architecture.",
-  "Scaling growing businesses with cutting-edge technology and automation.",
-  "Delivering robust security, lightning speed, and data-driven insights.",
-  "Your dedicated engineering partner for enterprise-grade digital solutions."
+  'Explore our comprehensive suite of high-performance design and system architecture.',
+  'Scaling growing businesses with cutting-edge technology and automation.',
+  'Delivering robust security, lightning speed, and data-driven insights.',
+  'Your dedicated engineering partner for enterprise-grade digital solutions.',
 ];
 
 export function useServicesHeroLogic() {
@@ -25,6 +25,6 @@ export function useServicesHeroLogic() {
     typewrittenText,
     currentFullWord,
     phraseIndex,
-    heroPhrases
+    heroPhrases,
   };
 }

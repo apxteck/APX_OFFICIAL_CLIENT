@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
+  show: { opacity: 1, y: 0 },
 };
 
 export function SettingsCards() {
@@ -16,10 +16,17 @@ export function SettingsCards() {
           <div className="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-sm">
             <Shield className="w-6 h-6" />
           </div>
-          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Security Settings</h4>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Update your password and secure your account.</p>
+          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+            Security Settings
+          </h4>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Update your password and secure your account.
+          </p>
         </div>
-        <Link href="/employee/settings/security" className="w-full min-h-[44px] flex items-center justify-center rounded-xl border-2 border-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-bold group-hover:bg-indigo-500/10 transition-all text-center">
+        <Link
+          href="/employee/settings/security"
+          className="w-full min-h-[44px] flex items-center justify-center rounded-xl border-2 border-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-bold group-hover:bg-indigo-500/10 transition-all text-center"
+        >
           Update Security
         </Link>
       </div>
@@ -30,9 +37,14 @@ export function SettingsCards() {
             <Bell className="w-6 h-6" />
           </div>
           <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Notifications</h4>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Manage how you receive updates and alerts.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Manage how you receive updates and alerts.
+          </p>
         </div>
-        <Link href="/employee/settings/notifications" className="w-full min-h-[44px] flex items-center justify-center rounded-xl border-2 border-amber-500/20 text-amber-600 dark:text-amber-400 font-bold group-hover:bg-amber-500/10 transition-all text-center">
+        <Link
+          href="/employee/settings/notifications"
+          className="w-full min-h-[44px] flex items-center justify-center rounded-xl border-2 border-amber-500/20 text-amber-600 dark:text-amber-400 font-bold group-hover:bg-amber-500/10 transition-all text-center"
+        >
           Manage Preferences
         </Link>
       </div>

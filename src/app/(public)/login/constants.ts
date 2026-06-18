@@ -3,7 +3,8 @@ export const jsonLd = {
   '@type': 'WebPage',
   '@id': 'https://apxteck.com/login/#webpage',
   name: 'Sign In to Your Dashboard | APXTeck',
-  description: 'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
+  description:
+    'Securely sign in to your APXTeck account. Access your custom web development dashboard, IT services, and project management tools seamlessly.',
   url: 'https://apxteck.com/login',
   isPartOf: {
     '@id': 'https://apxteck.com/#website',
@@ -15,8 +16,8 @@ export const jsonLd = {
     url: 'https://apxteck.com',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://apxteck.com/logo.png'
-    }
+      url: 'https://apxteck.com/logo.png',
+    },
   },
   mainEntity: {
     '@type': 'Action',
@@ -26,8 +27,8 @@ export const jsonLd = {
       urlTemplate: 'https://apxteck.com/login',
       actionPlatform: [
         'http://schema.org/DesktopWebPlatform',
-        'http://schema.org/MobileWebPlatform'
-      ]
-    }
-  }
+        'http://schema.org/MobileWebPlatform',
+      ],
+    },
+  },
 };

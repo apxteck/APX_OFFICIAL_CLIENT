@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { AlertCircle, RefreshCw } from "lucide-react";
+import React, { useEffect } from 'react';
+import { AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function CompanyAssetsError({
   error,
@@ -11,7 +11,7 @@ export default function CompanyAssetsError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Company Assets Error:", error);
+    console.error('Company Assets Error:', error);
   }, [error]);
 
   return (
@@ -23,7 +23,7 @@ export default function CompanyAssetsError({
         Something went wrong!
       </h2>
       <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md mx-auto mb-6">
-        {error.message || "Failed to load company assets. Please try again."}
+        {error.message || 'Failed to load company assets. Please try again.'}
       </p>
       <button
         onClick={reset}

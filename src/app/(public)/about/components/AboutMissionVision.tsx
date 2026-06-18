@@ -17,9 +17,13 @@ export function AboutMissionVision() {
             <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-accent/10 flex items-center justify-center text-accent mb-4 md:mb-6 shrink-0 transition-transform duration-300 group-hover:scale-110">
               <Target className="w-6 h-6 md:w-7 md:h-7" aria-hidden="true" role="presentation" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3 md:mb-4">Our Web Development Mission</h2>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3 md:mb-4">
+              Our Web Development Mission
+            </h2>
             <p className="text-foreground/70 leading-relaxed text-base md:text-lg">
-              To democratize premium engineering and custom web development for growing businesses. We make high-speed, secure, and beautiful visual experiences accessible to every ambitious Indian entrepreneur.
+              To democratize premium engineering and custom web development for growing businesses.
+              We make high-speed, secure, and beautiful visual experiences accessible to every
+              ambitious Indian entrepreneur.
             </p>
           </GlassCard>
         </motion.div>
@@ -34,9 +38,13 @@ export function AboutMissionVision() {
             <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-4 md:mb-6 shrink-0 transition-transform duration-300 group-hover:scale-110">
               <Eye className="w-6 h-6 md:w-7 md:h-7" aria-hidden="true" role="presentation" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3 md:mb-4">Our Technical Vision</h2>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3 md:mb-4">
+              Our Technical Vision
+            </h2>
             <p className="text-foreground/70 leading-relaxed text-base md:text-lg">
-              To become the premier digital engineering partner for SMBs in India, recognized for modern designs, highly scalable modular codebases, and completely transparent client relationships.
+              To become the premier digital engineering partner for SMBs in India, recognized for
+              modern designs, highly scalable modular codebases, and completely transparent client
+              relationships.
             </p>
           </GlassCard>
         </motion.div>

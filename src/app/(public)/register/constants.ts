@@ -3,7 +3,8 @@ export const registerPageSchema = {
   '@type': 'WebPage',
   '@id': 'https://apxteck.com/register/#webpage',
   name: 'Create Account | APXTeck',
-  description: 'Join APXTeck as a client partner and launch your digital projects with our expert software solutions.',
+  description:
+    'Join APXTeck as a client partner and launch your digital projects with our expert software solutions.',
   url: 'https://apxteck.com/register',
   isPartOf: {
     '@id': 'https://apxteck.com/#website',

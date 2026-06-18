@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import { AlertCircle, RefreshCcw } from "lucide-react";
+import React from 'react';
+import { AlertCircle, RefreshCcw } from 'lucide-react';
 
 export default function Error({
   error,
@@ -17,9 +17,12 @@ export default function Error({
           <AlertCircle className="text-red-500 w-8 h-8" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Failed to load task details</h2>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            Failed to load task details
+          </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-            {error.message || "An unexpected error occurred while fetching the task details. Please try again."}
+            {error.message ||
+              'An unexpected error occurred while fetching the task details. Please try again.'}
           </p>
         </div>
         <button

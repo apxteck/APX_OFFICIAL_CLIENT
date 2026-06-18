@@ -29,7 +29,10 @@ export default function EmployeeReimbursementsLoading() {
           <div className="bg-white dark:bg-[#111] border border-gray-100 dark:border-white/5 p-6 sm:p-8 rounded-3xl shadow-sm h-[600px] space-y-6">
             <div className="h-6 bg-gray-200 dark:bg-white/10 rounded w-40"></div>
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="flex justify-between items-center p-5 rounded-2xl border border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-[#1a1a1a]">
+              <div
+                key={i}
+                className="flex justify-between items-center p-5 rounded-2xl border border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-[#1a1a1a]"
+              >
                 <div className="space-y-2 w-1/2">
                   <div className="h-4 bg-gray-200 dark:bg-white/10 rounded w-full"></div>
                   <div className="h-3 bg-gray-200 dark:bg-white/10 rounded w-1/2"></div>

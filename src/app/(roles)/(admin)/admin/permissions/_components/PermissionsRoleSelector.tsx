@@ -1,11 +1,11 @@
-import React from "react";
-import { Shield } from "lucide-react";
-import { Role } from "@/services/admin/roles.service";
+import React from 'react';
+import { Shield } from 'lucide-react';
+import { Role } from '@/services/admin/roles.service';
 
 interface Props {
   roles: Role[];
-  selectedRoleId: number | "";
-  onSelectRole: (roleId: number | "") => void;
+  selectedRoleId: number | '';
+  onSelectRole: (roleId: number | '') => void;
 }
 
 export function PermissionsRoleSelector({ roles, selectedRoleId, onSelectRole }: Props) {
@@ -18,13 +18,18 @@ export function PermissionsRoleSelector({ roles, selectedRoleId, onSelectRole }:
       <div className="max-w-sm">
         <select
           value={selectedRoleId}
-          onChange={(e) => onSelectRole(e.target.value ? Number(e.target.value) : "")}
+          onChange={(e) => onSelectRole(e.target.value ? Number(e.target.value) : '')}
           className="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 min-h-[44px] text-sm focus:ring-2 focus:ring-indigo-500/50 outline-none font-bold text-gray-900 dark:text-white transition-all shadow-sm"
         >
-          <option value="" disabled>-- Select a Role --</option>
-          {Array.isArray(roles) && roles.map(r => (
-            <option key={r.id} value={r.id}>{r.name.replace(/_/g, ' ')}</option>
-          ))}
+          <option value="" disabled>
+            -- Select a Role --
+          </option>
+          {Array.isArray(roles) &&
+            roles.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name.replace(/_/g, ' ')}
+              </option>
+            ))}
         </select>
       </div>
     </div>

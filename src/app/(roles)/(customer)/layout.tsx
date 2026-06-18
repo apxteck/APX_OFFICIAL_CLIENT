@@ -21,23 +21,21 @@ export default function CustomerLayout({ children }: { children: React.ReactNode
               <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-cyan-500/5 blur-[120px] dark:bg-cyan-500/5"></div>
               <div className="absolute bottom-[20%] -right-[10%] w-[40%] h-[40%] rounded-full bg-indigo-500/5 blur-[120px] dark:bg-indigo-500/5"></div>
             </div>
-            <div className="mx-auto max-w-7xl w-full relative z-10">
-              {children}
-            </div>
+            <div className="mx-auto max-w-7xl w-full relative z-10">{children}</div>
           </main>
         </div>
       </div>
-      <Toaster 
+      <Toaster
         position="bottom-right"
         toastOptions={{
-          className: "dark:bg-[#151515] dark:text-white dark:border-white/10 border",
+          className: 'dark:bg-[#151515] dark:text-white dark:border-white/10 border',
           style: {
             borderRadius: '12px',
             padding: '12px 16px',
             fontWeight: 600,
             fontSize: '14px',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
-          }
+            boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+          },
         }}
       />
     </ProtectedRoute>

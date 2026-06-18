@@ -29,7 +29,7 @@ export function PaymentActions({
             className="group relative w-full flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-medium min-h-[48px] sm:min-h-[56px] py-3 sm:py-4 px-4 sm:px-6 rounded-2xl transition-all duration-200 shadow-xl shadow-gray-900/10 dark:shadow-indigo-600/20 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-            
+
             {isProcessing ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
@@ -48,17 +48,29 @@ export function PaymentActions({
       ) : justPaid ? (
         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-900/50 rounded-2xl p-6 sm:p-8 text-center mt-6">
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-green-800 dark:text-green-300 mb-2">Payment Successful!</h3>
+          <h3 className="text-xl font-bold text-green-800 dark:text-green-300 mb-2">
+            Payment Successful!
+          </h3>
           <p className="text-green-700 dark:text-green-400 font-medium text-sm">
-            Thank you! We have successfully received your payment. Our team will start working on it shortly.
+            Thank you! We have successfully received your payment. Our team will start working on it
+            shortly.
           </p>
         </div>
       ) : isPaid ? (
         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-900/50 rounded-2xl p-6 sm:p-8 text-center mt-6">
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-green-800 dark:text-green-300 mb-2">Payment Already Completed!</h3>
+          <h3 className="text-xl font-bold text-green-800 dark:text-green-300 mb-2">
+            Payment Already Completed!
+          </h3>
           <p className="text-green-700 dark:text-green-400 font-medium text-sm">
-            This request was successfully paid on {new Date(payment.paidAt!).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute:'2-digit' })}
+            This request was successfully paid on{' '}
+            {new Date(payment.paidAt!).toLocaleDateString('en-IN', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
           </p>
         </div>
       ) : (

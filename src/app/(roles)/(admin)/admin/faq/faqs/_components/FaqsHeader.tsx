@@ -1,5 +1,5 @@
-import React from "react";
-import { HelpCircle, PlusCircle } from "lucide-react";
+import React from 'react';
+import { HelpCircle, PlusCircle } from 'lucide-react';
 
 interface FaqsHeaderProps {
   onOpenCreate: () => void;
@@ -19,7 +19,7 @@ export function FaqsHeader({ onOpenCreate }: FaqsHeaderProps) {
           Create, edit, and organize Frequently Asked Questions.
         </p>
       </div>
-      <button 
+      <button
         onClick={onOpenCreate}
         className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center gap-2 shrink-0"
       >

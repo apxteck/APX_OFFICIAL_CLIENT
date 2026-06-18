@@ -5,19 +5,19 @@ import BlogLoading from '../loading';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Blog Comments | APXTeck Admin",
-  description: "Manage and moderate blog comments.",
+  title: 'Blog Comments | APXTeck Admin',
+  description: 'Manage and moderate blog comments.',
 };
 
 async function CommentsDataFetcher() {
   let initialComments: any[] = [];
   try {
-    const res = await api.getAllCommentsAdmin(1, 1000); 
+    const res = await api.getAllCommentsAdmin(1, 1000);
     if (res.success) {
       initialComments = res.data?.data || [];
     }
   } catch (error) {
-    console.error("Failed to fetch comments", error);
+    console.error('Failed to fetch comments', error);
   }
 
   return <CommentsManager initialComments={initialComments} />;

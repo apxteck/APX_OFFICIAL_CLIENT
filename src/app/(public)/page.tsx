@@ -6,17 +6,49 @@ import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 
-const TechStackMarquee = dynamic(() => import('@/components/sections/TechStackMarquee').then(mod => mod.TechStackMarquee), { ssr: true });
-const ServicesSection = dynamic(() => import('@/components/sections/ServicesSection').then(mod => mod.ServicesSection), { ssr: true });
-const WhyChooseUsSection = dynamic(() => import('@/components/sections/WhyChooseUsSection').then(mod => mod.WhyChooseUsSection), { ssr: true });
-const ProcessSection = dynamic(() => import('@/components/sections/ProcessSection').then(mod => mod.ProcessSection), { ssr: true });
-const StatsSection = dynamic(() => import('@/components/sections/StatsSection').then(mod => mod.StatsSection), { ssr: true });
-const AdBanner = dynamic(() => import('@/components/ui/AdBanner').then(mod => mod.AdBanner), { ssr: true });
-const PortfolioSection = dynamic(() => import('@/components/sections/PortfolioSection').then(mod => mod.PortfolioSection), { ssr: true });
-const TestimonialsSection = dynamic(() => import('@/components/sections/TestimonialsSection').then(mod => mod.TestimonialsSection), { ssr: true });
-const BlogPreviewSection = dynamic(() => import('@/components/sections/BlogPreviewSection').then(mod => mod.BlogPreviewSection), { ssr: true });
-const FaqSection = dynamic(() => import('@/components/sections/FaqSection').then(mod => mod.FaqSection), { ssr: true });
-const ContactCTASection = dynamic(() => import('@/components/sections/ContactCTASection').then(mod => mod.ContactCTASection), { ssr: true });
+const TechStackMarquee = dynamic(
+  () => import('@/components/sections/TechStackMarquee').then((mod) => mod.TechStackMarquee),
+  { ssr: true }
+);
+const ServicesSection = dynamic(
+  () => import('@/components/sections/ServicesSection').then((mod) => mod.ServicesSection),
+  { ssr: true }
+);
+const WhyChooseUsSection = dynamic(
+  () => import('@/components/sections/WhyChooseUsSection').then((mod) => mod.WhyChooseUsSection),
+  { ssr: true }
+);
+const ProcessSection = dynamic(
+  () => import('@/components/sections/ProcessSection').then((mod) => mod.ProcessSection),
+  { ssr: true }
+);
+const StatsSection = dynamic(
+  () => import('@/components/sections/StatsSection').then((mod) => mod.StatsSection),
+  { ssr: true }
+);
+const AdBanner = dynamic(() => import('@/components/ui/AdBanner').then((mod) => mod.AdBanner), {
+  ssr: true,
+});
+const PortfolioSection = dynamic(
+  () => import('@/components/sections/PortfolioSection').then((mod) => mod.PortfolioSection),
+  { ssr: true }
+);
+const TestimonialsSection = dynamic(
+  () => import('@/components/sections/TestimonialsSection').then((mod) => mod.TestimonialsSection),
+  { ssr: true }
+);
+const BlogPreviewSection = dynamic(
+  () => import('@/components/sections/BlogPreviewSection').then((mod) => mod.BlogPreviewSection),
+  { ssr: true }
+);
+const FaqSection = dynamic(
+  () => import('@/components/sections/FaqSection').then((mod) => mod.FaqSection),
+  { ssr: true }
+);
+const ContactCTASection = dynamic(
+  () => import('@/components/sections/ContactCTASection').then((mod) => mod.ContactCTASection),
+  { ssr: true }
+);
 
 // Config page for Incremental Static Regeneration (ISR)
 export const revalidate = 60;
@@ -52,7 +84,9 @@ export async function generateMetadata(): Promise<Metadata> {
       site: '@apxteck',
       title,
       description,
-      images: ['https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=630&q=80'],
+      images: [
+        'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=630&q=80',
+      ],
     },
     alternates: {
       canonical: url,
@@ -111,7 +145,12 @@ export default function Home() {
 
       <Navbar />
 
-      <main className="flex-1 w-full overflow-x-hidden" role="main" itemScope itemType="https://schema.org/WebPage">
+      <main
+        className="flex-1 w-full overflow-x-hidden"
+        role="main"
+        itemScope
+        itemType="https://schema.org/WebPage"
+      >
         <HeroSection />
 
         <TechStackMarquee />
@@ -122,13 +161,13 @@ export default function Home() {
 
         <ProcessSection />
 
-        <StatsSection 
+        <StatsSection
           stats={{
             clientsServed: 250,
             projectsCompleted: 340,
             satisfactionRate: 98,
-            supportActive: '24/7'
-          }} 
+            supportActive: '24/7',
+          }}
         />
         {/* Ad Placement Top */}
         <AdBanner placement="BLOG_LIST_TOP" />

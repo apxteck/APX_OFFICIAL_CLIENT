@@ -55,20 +55,31 @@ export default function ResetPasswordPage() {
   return (
     <div className="flex flex-col min-h-dvh bg-background text-foreground font-sans selection:bg-accent/20 selection:text-accent transition-colors duration-300 w-full overflow-x-hidden">
       <Navbar />
-      
+
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main className="flex-1 flex items-center justify-center px-4 sm:px-6 relative overflow-x-hidden pt-safe pb-safe pt-24 sm:pt-28 pb-12 sm:pb-16 w-full" aria-labelledby="reset-password-heading" role="main">
+      <main
+        className="flex-1 flex items-center justify-center px-4 sm:px-6 relative overflow-x-hidden pt-safe pb-safe pt-24 sm:pt-28 pb-12 sm:pb-16 w-full"
+        aria-labelledby="reset-password-heading"
+        role="main"
+      >
         {/* Background Decorative Elements */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+          aria-hidden="true"
+        >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px] animate-pulse"></div>
         </div>
-        
-        <div itemScope itemType="https://schema.org/WebPage" className="w-full max-w-md relative z-10 flex flex-col items-center">
+
+        <div
+          itemScope
+          itemType="https://schema.org/WebPage"
+          className="w-full max-w-md relative z-10 flex flex-col items-center"
+        >
           <ResetPasswordClient />
         </div>
       </main>

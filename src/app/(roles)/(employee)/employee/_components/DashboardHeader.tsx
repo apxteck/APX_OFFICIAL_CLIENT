@@ -15,7 +15,8 @@ export function DashboardHeader({ user }: { user: any }) {
           Welcome back, {user?.fullName || 'Teammate'}
         </h1>
         <p className="text-gray-500 dark:text-gray-400 text-sm max-w-xl leading-relaxed">
-          Stay updated with your assigned development tasks, manage your project reimbursements, or request updates from administrative managers.
+          Stay updated with your assigned development tasks, manage your project reimbursements, or
+          request updates from administrative managers.
         </p>
       </div>
     </div>

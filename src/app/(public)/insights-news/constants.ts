@@ -44,19 +44,22 @@ export const jsonLdBreadcrumb = {
 export const knowledgeCategories = [
   {
     title: 'Technology & Code',
-    description: 'Deep dives into Next.js, advanced frontend architecture, backend scaling, and clean code principles.',
+    description:
+      'Deep dives into Next.js, advanced frontend architecture, backend scaling, and clean code principles.',
     icon: MonitorSmartphone,
     color: '#0ea5e9', // Cyan
   },
   {
     title: 'Business & Scaling',
-    description: 'Insights on how technology drives ROI, automates manual processes, and scales Indian SMBs into enterprise players.',
+    description:
+      'Insights on how technology drives ROI, automates manual processes, and scales Indian SMBs into enterprise players.',
     icon: TrendingUp,
     color: '#10b981', // Emerald
   },
   {
     title: 'Digital News',
-    description: 'The latest updates from APXTeck, industry tech trends, algorithm updates, and what they mean for your business.',
+    description:
+      'The latest updates from APXTeck, industry tech trends, algorithm updates, and what they mean for your business.',
     icon: Newspaper,
     color: '#8b5cf6', // Purple
   },

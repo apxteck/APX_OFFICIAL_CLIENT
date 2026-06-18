@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react';
 import { useTypewriter } from '@/app/(public)/about/hooks/useTypewriter';
 
 const typewriterWords = [
-  "Engineered for Growth",
-  "Designed for Scale",
-  "Built for Performance",
-  "Optimized for Impact"
+  'Engineered for Growth',
+  'Designed for Scale',
+  'Built for Performance',
+  'Optimized for Impact',
 ];
 
 const heroPhrases = [
-  "A detailed look at challenging problems we solved and technical architectures we deployed.",
-  "Showcasing direct business metrics achieved through premium engineering.",
-  "Real-world case studies of digital transformation for ambitious Indian SMBs.",
-  "Deep dives into our custom solutions, robust systems, and stunning designs."
+  'A detailed look at challenging problems we solved and technical architectures we deployed.',
+  'Showcasing direct business metrics achieved through premium engineering.',
+  'Real-world case studies of digital transformation for ambitious Indian SMBs.',
+  'Deep dives into our custom solutions, robust systems, and stunning designs.',
 ];
 
 export function usePortfolioHeroLogic() {
@@ -30,6 +30,6 @@ export function usePortfolioHeroLogic() {
     typewrittenText,
     currentFullWord,
     phraseIndex,
-    heroPhrases
+    heroPhrases,
   };
 }

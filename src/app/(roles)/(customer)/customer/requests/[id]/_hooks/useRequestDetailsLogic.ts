@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { api } from '@/lib/axios';
 import { ServiceRequestDetails } from '../../types';
 
-export const useRequestDetailsLogic = (id: string, initialRequest: ServiceRequestDetails | null) => {
+export const useRequestDetailsLogic = (
+  id: string,
+  initialRequest: ServiceRequestDetails | null
+) => {
   const [request, setRequest] = useState<ServiceRequestDetails | null>(initialRequest);
   const [loading, setLoading] = useState(initialRequest === null);
   const [isCancelling, setIsCancelling] = useState(false);
-  const [message, setMessage] = useState<{type: 'success' | 'error', text: string} | null>(null);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Edit Mode State
   const [isEditing, setIsEditing] = useState(false);
@@ -47,22 +50,22 @@ export const useRequestDetailsLogic = (id: string, initialRequest: ServiceReques
   };
 
   const handleInputChange = (fieldKey: string, value: any) => {
-    setFormData(prev => ({ ...prev, [fieldKey]: value }));
+    setFormData((prev) => ({ ...prev, [fieldKey]: value }));
   };
 
   const handleSaveChanges = async () => {
     setIsSaving(true);
     setMessage(null);
-    
+
     const submissionData = new FormData();
     submissionData.append('requestData', JSON.stringify(formData));
     for (const file of newFiles) {
       submissionData.append('attachments', file);
     }
-    
+
     const res = await api.updateMyRequest(Number(id), submissionData);
     setIsSaving(false);
-    
+
     if (res.success) {
       setMessage({ type: 'success', text: 'Request updated successfully.' });
       setIsEditing(false);
@@ -73,13 +76,14 @@ export const useRequestDetailsLogic = (id: string, initialRequest: ServiceReques
   };
 
   const handleCancelRequest = async () => {
-    if (!confirm('Are you sure you want to cancel this request? This action cannot be undone.')) return;
-    
+    if (!confirm('Are you sure you want to cancel this request? This action cannot be undone.'))
+      return;
+
     setIsCancelling(true);
     setMessage(null);
     const res = await api.cancelRequest(Number(id));
     setIsCancelling(false);
-    
+
     if (res.success) {
       setMessage({ type: 'success', text: 'Request cancelled successfully.' });
       fetchRequestDetails();
@@ -105,6 +109,6 @@ export const useRequestDetailsLogic = (id: string, initialRequest: ServiceReques
     handleEditToggle,
     handleInputChange,
     handleSaveChanges,
-    handleCancelRequest
+    handleCancelRequest,
   };
 };

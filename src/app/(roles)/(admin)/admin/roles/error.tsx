@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { AlertCircle, RefreshCw } from "lucide-react";
+import React, { useEffect } from 'react';
+import { AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function RolesError({
   error,
@@ -11,7 +11,7 @@ export default function RolesError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Roles Error:", error);
+    console.error('Roles Error:', error);
   }, [error]);
 
   return (
@@ -19,11 +19,9 @@ export default function RolesError({
       <div className="w-16 h-16 bg-red-50 dark:bg-red-500/10 rounded-full flex items-center justify-center mb-4 border border-red-100 dark:border-red-500/20">
         <AlertCircle className="text-red-500" size={32} />
       </div>
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-        Failed to load roles
-      </h2>
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Failed to load roles</h2>
       <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md mx-auto mb-6">
-        {error.message || "An unexpected error occurred while fetching roles. Please try again."}
+        {error.message || 'An unexpected error occurred while fetching roles. Please try again.'}
       </p>
       <button
         onClick={reset}

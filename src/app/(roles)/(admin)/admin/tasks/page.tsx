@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 // Removed dynamic import
-import { tasksService, Task } from "@/services/admin/tasks.service";
+import { tasksService, Task } from '@/services/admin/tasks.service';
 
 import TasksManager from './_components/TasksManager';
 
@@ -10,7 +10,7 @@ export default async function TasksPage() {
     const fetchedTasks = await tasksService.getTasks();
     if (fetchedTasks) initialTasks = fetchedTasks;
   } catch (error) {
-    console.error("Failed to fetch initial tasks:", error);
+    console.error('Failed to fetch initial tasks:', error);
   }
 
   return (

@@ -1,38 +1,39 @@
-import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { tasksService, Task } from "@/services/admin/tasks.service";
+import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { tasksService, Task } from '@/services/admin/tasks.service';
 
 export const useTasksLogic = (initialTasks: Task[] = []) => {
   const router = useRouter();
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<number | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchTasks = () => {
     setIsLoading(true);
-    tasksService.getTasks()
-      .then(data => {
+    tasksService
+      .getTasks()
+      .then((data) => {
         setTasks(data);
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("Failed to load tasks");
+        toast.error('Failed to load tasks');
         setIsLoading(false);
       });
   };
 
-  const handleUpdateStatus = async (id: number, status: Task["status"]) => {
-    const toastId = toast.loading("Updating status...");
+  const handleUpdateStatus = async (id: number, status: Task['status']) => {
+    const toastId = toast.loading('Updating status...');
     try {
       await tasksService.updateTaskStatus(id, status);
-      toast.success(`Task marked as ${status.replace("_", " ")}`, { id: toastId });
+      toast.success(`Task marked as ${status.replace('_', ' ')}`, { id: toastId });
       fetchTasks();
     } catch (err: any) {
-      toast.error(err.message || "Failed to update status", { id: toastId });
+      toast.error(err.message || 'Failed to update status', { id: toastId });
     }
   };
 
@@ -46,11 +47,11 @@ export const useTasksLogic = (initialTasks: Task[] = []) => {
     setIsDeleting(true);
     try {
       await tasksService.deleteTask(taskToDelete);
-      toast.success("Task deleted successfully");
+      toast.success('Task deleted successfully');
       setIsDeleteModalOpen(false);
       fetchTasks();
     } catch (err: any) {
-      toast.error(err.message || "Failed to delete task");
+      toast.error(err.message || 'Failed to delete task');
     } finally {
       setIsDeleting(false);
       setTaskToDelete(null);
@@ -58,9 +59,11 @@ export const useTasksLogic = (initialTasks: Task[] = []) => {
   };
 
   const filteredTasks = useMemo(() => {
-    return tasks.filter(task => 
-      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (task.assignedTo?.fullName && task.assignedTo.fullName.toLowerCase().includes(searchTerm.toLowerCase()))
+    return tasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (task.assignedTo?.fullName &&
+          task.assignedTo.fullName.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   }, [tasks, searchTerm]);
 

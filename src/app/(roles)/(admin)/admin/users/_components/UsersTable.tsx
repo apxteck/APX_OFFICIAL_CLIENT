@@ -1,11 +1,11 @@
-"use client";
-import React, { useMemo } from "react";
-import Link from "next/link";
-import { format } from "date-fns";
-import { Shield, User as UserIcon, Settings, MoreVertical } from "lucide-react";
-import DataTable, { ColumnDef } from "@/components/ui/admin/DataTable";
-import UserAvatar from "@/components/ui/admin/UserAvatar";
-import { User } from "@/services/admin/users.service";
+'use client';
+import React, { useMemo } from 'react';
+import Link from 'next/link';
+import { format } from 'date-fns';
+import { Shield, User as UserIcon, Settings, MoreVertical } from 'lucide-react';
+import DataTable, { ColumnDef } from '@/components/ui/admin/DataTable';
+import UserAvatar from '@/components/ui/admin/UserAvatar';
+import { User } from '@/services/admin/users.service';
 
 interface Props {
   filteredUsers: User[];
@@ -14,101 +14,112 @@ interface Props {
   setCurrentSort: (sort: string) => void;
 }
 
-export function UsersTable({
-  filteredUsers,
-  setSearchTerm,
-  currentSort,
-  setCurrentSort
-}: Props) {
-
+export function UsersTable({ filteredUsers, setSearchTerm, currentSort, setCurrentSort }: Props) {
   const sortOptions = [
-    { label: "Newest Joined", value: "newest" },
-    { label: "Oldest Joined", value: "oldest" },
-    { label: "Name (A-Z)", value: "name_asc" },
-    { label: "Name (Z-A)", value: "name_desc" },
+    { label: 'Newest Joined', value: 'newest' },
+    { label: 'Oldest Joined', value: 'oldest' },
+    { label: 'Name (A-Z)', value: 'name_asc' },
+    { label: 'Name (Z-A)', value: 'name_desc' },
   ];
 
-  const columns = useMemo<ColumnDef<User>[]>(() => [
-    {
-      header: "User",
-      cell: (user) => (
-        <div className="flex items-center gap-4">
-          <UserAvatar 
-            name={user.fullName} 
-            src={user.profile?.profilePhotoUrl} 
-            size="lg" 
-            className="shadow-sm border-2 border-white dark:border-[#111111]"
-          />
-          <div>
-            <p className="font-bold text-gray-900 dark:text-white text-sm">{user.fullName}</p>
-            <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium">{user.email}</p>
+  const columns = useMemo<ColumnDef<User>[]>(
+    () => [
+      {
+        header: 'User',
+        cell: (user) => (
+          <div className="flex items-center gap-4">
+            <UserAvatar
+              name={user.fullName}
+              src={user.profile?.profilePhotoUrl}
+              size="lg"
+              className="shadow-sm border-2 border-white dark:border-[#111111]"
+            />
+            <div>
+              <p className="font-bold text-gray-900 dark:text-white text-sm">{user.fullName}</p>
+              <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium">
+                {user.email}
+              </p>
+            </div>
           </div>
-        </div>
-      ),
-    },
-    {
-      header: "Phone",
-      accessorKey: "phone",
-      cell: (user) => <span className="font-medium text-gray-700 dark:text-gray-300">{user.phone || "-"}</span>
-    },
-    {
-      header: "Role",
-      cell: (user) => (
-        <div className="flex items-center gap-2.5">
-          {user.role?.name === "SUPER_ADMIN" ? (
-            <Shield size={16} className="text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-          ) : user.role?.name === "ADMIN" ? (
-            <Settings size={16} className="text-indigo-500 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
-          ) : (
-            <UserIcon size={16} className="text-gray-500" />
-          )}
-          <span className="font-extrabold text-[11px] uppercase tracking-wider bg-gray-100/80 dark:bg-white/5 px-3 py-1.5 rounded-lg text-gray-700 dark:text-gray-300 border border-gray-200/50 dark:border-white/10 shadow-sm backdrop-blur-sm">
-            {user.role?.name || "UNKNOWN"}
-          </span>
-        </div>
-      )
-    },
-    {
-      header: "Status",
-      cell: (user) => (
-        <span className={`px-3 py-1.5 text-[11px] font-extrabold tracking-wider rounded-lg border shadow-sm backdrop-blur-sm inline-flex items-center gap-1.5 ${
-          user.isActive 
-            ? "bg-emerald-100/80 border-emerald-200/50 dark:bg-emerald-500/10 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400" 
-            : "bg-red-100/80 border-red-200/50 dark:bg-red-500/10 dark:border-red-500/20 text-red-700 dark:text-red-400"
-        }`}>
-          <span className={`w-1.5 h-1.5 rounded-full ${user.isActive ? "bg-emerald-500 animate-pulse" : "bg-red-500"}`}></span>
-          {user.isActive ? "ACTIVE" : "INACTIVE"}
-        </span>
-      )
-    },
-    {
-      header: "Joined",
-      cell: (user) => (
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          {format(new Date(user.createdAt), "MMM dd, yyyy")}
-        </span>
-      )
-    },
-    {
-      header: "Actions",
-      cell: (user) => (
-        <div className="flex items-center gap-2">
-          <Link 
-            href={`/admin/users/${user.id}`}
-            className="px-4 py-2 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 border border-indigo-100 dark:border-indigo-500/20 transition-all shadow-sm hover:shadow-md hover:shadow-indigo-500/10 active:scale-95"
+        ),
+      },
+      {
+        header: 'Phone',
+        accessorKey: 'phone',
+        cell: (user) => (
+          <span className="font-medium text-gray-700 dark:text-gray-300">{user.phone || '-'}</span>
+        ),
+      },
+      {
+        header: 'Role',
+        cell: (user) => (
+          <div className="flex items-center gap-2.5">
+            {user.role?.name === 'SUPER_ADMIN' ? (
+              <Shield
+                size={16}
+                className="text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]"
+              />
+            ) : user.role?.name === 'ADMIN' ? (
+              <Settings
+                size={16}
+                className="text-indigo-500 drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]"
+              />
+            ) : (
+              <UserIcon size={16} className="text-gray-500" />
+            )}
+            <span className="font-extrabold text-[11px] uppercase tracking-wider bg-gray-100/80 dark:bg-white/5 px-3 py-1.5 rounded-lg text-gray-700 dark:text-gray-300 border border-gray-200/50 dark:border-white/10 shadow-sm backdrop-blur-sm">
+              {user.role?.name || 'UNKNOWN'}
+            </span>
+          </div>
+        ),
+      },
+      {
+        header: 'Status',
+        cell: (user) => (
+          <span
+            className={`px-3 py-1.5 text-[11px] font-extrabold tracking-wider rounded-lg border shadow-sm backdrop-blur-sm inline-flex items-center gap-1.5 ${
+              user.isActive
+                ? 'bg-emerald-100/80 border-emerald-200/50 dark:bg-emerald-500/10 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400'
+                : 'bg-red-100/80 border-red-200/50 dark:bg-red-500/10 dark:border-red-500/20 text-red-700 dark:text-red-400'
+            }`}
           >
-            View Profile
-          </Link>
-          <button className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors active:scale-95">
-            <MoreVertical size={16} />
-          </button>
-        </div>
-      )
-    }
-  ], []);
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${user.isActive ? 'bg-emerald-500 animate-pulse' : 'bg-red-500'}`}
+            ></span>
+            {user.isActive ? 'ACTIVE' : 'INACTIVE'}
+          </span>
+        ),
+      },
+      {
+        header: 'Joined',
+        cell: (user) => (
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            {format(new Date(user.createdAt), 'MMM dd, yyyy')}
+          </span>
+        ),
+      },
+      {
+        header: 'Actions',
+        cell: (user) => (
+          <div className="flex items-center gap-2">
+            <Link
+              href={`/admin/users/${user.id}`}
+              className="px-4 py-2 min-h-[44px] flex items-center justify-center rounded-xl text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 border border-indigo-100 dark:border-indigo-500/20 transition-all shadow-sm hover:shadow-md hover:shadow-indigo-500/10 active:scale-95"
+            >
+              View Profile
+            </Link>
+            <button className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors active:scale-95">
+              <MoreVertical size={16} />
+            </button>
+          </div>
+        ),
+      },
+    ],
+    []
+  );
 
   return (
-    <DataTable 
+    <DataTable
       data={filteredUsers}
       columns={columns}
       searchPlaceholder="Search by name, email, or phone..."

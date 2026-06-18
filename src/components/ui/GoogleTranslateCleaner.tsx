@@ -23,7 +23,9 @@ export function GoogleTranslateCleaner() {
 
   // Global CSS nuke for the Google Translate top bar across the entire application
   return (
-    <style dangerouslySetInnerHTML={{ __html: `
+    <style
+      dangerouslySetInnerHTML={{
+        __html: `
       .goog-te-banner-frame { display: none !important; visibility: hidden !important; }
       .goog-te-banner-frame.skiptranslate { display: none !important; }
       iframe.goog-te-banner-frame { display: none !important; }
@@ -35,6 +37,8 @@ export function GoogleTranslateCleaner() {
       .goog-tooltip { display: none !important; }
       .goog-tooltip:hover { display: none !important; }
       .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
-    `}} />
+    `,
+      }}
+    />
   );
 }

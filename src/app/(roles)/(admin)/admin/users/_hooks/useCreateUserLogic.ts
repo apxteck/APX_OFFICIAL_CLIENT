@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { usersService, Role } from "@/services/admin/users.service";
-import { rolesService } from "@/services/admin/roles.service";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { usersService, Role } from '@/services/admin/users.service';
+import { rolesService } from '@/services/admin/roles.service';
 
 export const useCreateUserLogic = (initialRoles: Role[]) => {
   const router = useRouter();
@@ -9,30 +9,30 @@ export const useCreateUserLogic = (initialRoles: Role[]) => {
   const [roles, setRoles] = useState<Role[]>(initialRoles);
 
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    password: "",
-    roleId: "",
+    fullName: '',
+    email: '',
+    phone: '',
+    password: '',
+    roleId: '',
     isActive: true,
-    address: "",
-    city: "",
-    state: "",
-    pincode: "",
-    dateOfBirth: "",
-    employeeId: "",
-    department: "",
-    designation: "",
-    joiningDate: "",
-    bankAccountName: "",
-    bankAccountNumber: "",
-    bankIfscCode: "",
-    bankName: "",
-    upiId: "",
+    address: '',
+    city: '',
+    state: '',
+    pincode: '',
+    dateOfBirth: '',
+    employeeId: '',
+    department: '',
+    designation: '',
+    joiningDate: '',
+    bankAccountName: '',
+    bankAccountNumber: '',
+    bankIfscCode: '',
+    bankName: '',
+    upiId: '',
   });
 
   const [isRoleModalOpen, setIsRoleModalOpen] = useState(false);
-  const [newRoleData, setNewRoleData] = useState({ name: "", description: "" });
+  const [newRoleData, setNewRoleData] = useState({ name: '', description: '' });
   const [isCreatingRole, setIsCreatingRole] = useState(false);
 
   useEffect(() => {
@@ -46,23 +46,23 @@ export const useCreateUserLogic = (initialRoles: Role[]) => {
     setIsCreatingRole(true);
     try {
       const formattedName = newRoleData.name.toUpperCase().replace(/\s+/g, '_');
-      await rolesService.createRole({ 
-        name: formattedName, 
-        description: newRoleData.description 
+      await rolesService.createRole({
+        name: formattedName,
+        description: newRoleData.description,
       });
-      
+
       const updatedRoles = await usersService.getRoles();
       setRoles(updatedRoles);
-      
-      const newlyAdded = updatedRoles.find(r => r.name === formattedName);
+
+      const newlyAdded = updatedRoles.find((r) => r.name === formattedName);
       if (newlyAdded) {
-        setFormData(prev => ({ ...prev, roleId: String(newlyAdded.id) }));
+        setFormData((prev) => ({ ...prev, roleId: String(newlyAdded.id) }));
       }
-      
+
       setIsRoleModalOpen(false);
-      setNewRoleData({ name: "", description: "" });
+      setNewRoleData({ name: '', description: '' });
     } catch (error: any) {
-      alert(error?.response?.data?.message || error.message || "Failed to create role");
+      alert(error?.response?.data?.message || error.message || 'Failed to create role');
     } finally {
       setIsCreatingRole(false);
     }
@@ -70,12 +70,12 @@ export const useCreateUserLogic = (initialRoles: Role[]) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    
-    if (type === "checkbox") {
+
+    if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
+      setFormData((prev) => ({ ...prev, [name]: checked }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -106,17 +106,20 @@ export const useCreateUserLogic = (initialRoles: Role[]) => {
         bankName: formData.bankName || undefined,
         upiId: formData.upiId || undefined,
       });
-      router.push("/admin/users");
+      router.push('/admin/users');
       router.refresh();
     } catch (error: any) {
-      console.error("Failed to create user", error);
-      alert(error?.response?.data?.message || "Failed to create user. Please check the inputs and try again.");
+      console.error('Failed to create user', error);
+      alert(
+        error?.response?.data?.message ||
+          'Failed to create user. Please check the inputs and try again.'
+      );
       setIsSubmitting(false);
     }
   };
 
   const selectedRole = roles.find((r) => r.id === Number(formData.roleId));
-  const isEmployee = selectedRole && selectedRole.name !== "CUSTOMER";
+  const isEmployee = selectedRole && selectedRole.name !== 'CUSTOMER';
 
   return {
     router,

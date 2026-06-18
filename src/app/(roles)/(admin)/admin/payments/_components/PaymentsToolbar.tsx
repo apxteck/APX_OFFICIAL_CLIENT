@@ -1,11 +1,11 @@
-import React from "react";
-import { Search, Plus, List, LayoutGrid } from "lucide-react";
+import React from 'react';
+import { Search, Plus, List, LayoutGrid } from 'lucide-react';
 
 interface Props {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  viewMode: "table" | "grid";
-  setViewMode: (mode: "table" | "grid") => void;
+  viewMode: 'table' | 'grid';
+  setViewMode: (mode: 'table' | 'grid') => void;
   onOpenCreateLink: () => void;
 }
 
@@ -38,18 +38,18 @@ export function PaymentsToolbar({
         </button>
         <div className="flex items-center bg-[#161b22] border border-gray-800 rounded-md p-1">
           <button
-            onClick={() => setViewMode("table")}
+            onClick={() => setViewMode('table')}
             className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-sm transition-colors ${
-              viewMode === "table" ? "bg-gray-800 text-white" : "text-gray-400 hover:text-white"
+              viewMode === 'table' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white'
             }`}
             title="Table View"
           >
             <List size={16} />
           </button>
           <button
-            onClick={() => setViewMode("grid")}
+            onClick={() => setViewMode('grid')}
             className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-sm transition-colors ${
-              viewMode === "grid" ? "bg-gray-800 text-white" : "text-gray-400 hover:text-white"
+              viewMode === 'grid' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white'
             }`}
             title="Card View"
           >

@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React from "react";
-import { FaqsHeader } from "./FaqsHeader";
-import { FaqSearch } from "./FaqSearch";
-import { FaqsList } from "./FaqsList";
-import { FaqFormModal } from "./FaqFormModal";
-import { useFaqsLogic } from "../_hooks/useFaqsLogic";
+import React from 'react';
+import { FaqsHeader } from './FaqsHeader';
+import { FaqSearch } from './FaqSearch';
+import { FaqsList } from './FaqsList';
+import { FaqFormModal } from './FaqFormModal';
+import { useFaqsLogic } from '../_hooks/useFaqsLogic';
 
-import { Faq } from "@/app/types/faq.types";
+import { Faq } from '@/app/types/faq.types';
 
 export function FaqsManager({ initialFaqs = [] }: { initialFaqs?: Faq[] }) {
   const {
@@ -23,7 +23,7 @@ export function FaqsManager({ initialFaqs = [] }: { initialFaqs?: Faq[] }) {
     setIsModalOpen,
     editingFaq,
     openCreateModal,
-    openEditModal
+    openEditModal,
   } = useFaqsLogic(initialFaqs);
 
   return (
@@ -32,9 +32,9 @@ export function FaqsManager({ initialFaqs = [] }: { initialFaqs?: Faq[] }) {
 
       <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
         <FaqSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        
+
         <div className="overflow-auto bg-gray-50 dark:bg-[#151515] min-h-[400px]">
-          <FaqsList 
+          <FaqsList
             isLoading={isLoading}
             faqs={filteredFaqs}
             searchTerm={searchTerm}
@@ -44,13 +44,13 @@ export function FaqsManager({ initialFaqs = [] }: { initialFaqs?: Faq[] }) {
           />
         </div>
       </div>
-      
+
       {isModalOpen && (
-        <FaqFormModal 
+        <FaqFormModal
           editingFaq={editingFaq}
           onClose={() => setIsModalOpen(false)}
           onSuccess={fetchFaqs}
-          nextSortOrder={faqs.length > 0 ? Math.max(...faqs.map(f => f.sortOrder)) + 1 : 0}
+          nextSortOrder={faqs.length > 0 ? Math.max(...faqs.map((f) => f.sortOrder)) + 1 : 0}
         />
       )}
     </div>

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/providers/AuthProvider';
@@ -18,7 +18,7 @@ interface DashboardManagerProps {
 export default function DashboardManager({
   initialTasks,
   initialReimbursements,
-  initialAssignedRequests
+  initialAssignedRequests,
 }: DashboardManagerProps) {
   const { user } = useAuth();
   const [mounted, setMounted] = useState(false);
@@ -27,12 +27,15 @@ export default function DashboardManager({
     tasks,
     reimbursements,
     assignedRequests,
-    claimTitle, setClaimTitle,
-    claimAmount, setClaimAmount,
-    claimCategory, setClaimCategory,
+    claimTitle,
+    setClaimTitle,
+    claimAmount,
+    setClaimAmount,
+    claimCategory,
+    setClaimCategory,
     isSubmittingClaim,
     claimSuccess,
-    handleApplyReimbursement
+    handleApplyReimbursement,
   } = useDashboardLogic(initialTasks, initialReimbursements, initialAssignedRequests);
 
   useEffect(() => {
@@ -50,8 +53,8 @@ export default function DashboardManager({
         className="space-y-8"
       >
         <DashboardHeader user={user} />
-        
-        <DashboardStats 
+
+        <DashboardStats
           tasks={tasks}
           reimbursements={reimbursements}
           assignedRequests={assignedRequests}
@@ -59,11 +62,14 @@ export default function DashboardManager({
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <DashboardTasks tasks={tasks} />
-          
-          <DashboardReimbursementForm 
-            claimTitle={claimTitle} setClaimTitle={setClaimTitle}
-            claimAmount={claimAmount} setClaimAmount={setClaimAmount}
-            claimCategory={claimCategory} setClaimCategory={setClaimCategory}
+
+          <DashboardReimbursementForm
+            claimTitle={claimTitle}
+            setClaimTitle={setClaimTitle}
+            claimAmount={claimAmount}
+            setClaimAmount={setClaimAmount}
+            claimCategory={claimCategory}
+            setClaimCategory={setClaimCategory}
             isSubmittingClaim={isSubmittingClaim}
             claimSuccess={claimSuccess}
             handleApplyReimbursement={handleApplyReimbursement}

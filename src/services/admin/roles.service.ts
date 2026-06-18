@@ -1,4 +1,4 @@
-import apiClient from "@/lib/api/axios";
+import apiClient from '@/lib/api/axios';
 
 export interface Role {
   id: number;
@@ -24,37 +24,42 @@ export interface RolePermissionsResponse {
 export const rolesService = {
   getRoles: async (): Promise<Role[]> => {
     try {
-      const response = await apiClient.get("/role/getAllRoles");
+      const response = await apiClient.get('/role/getAllRoles');
       const rData = response.data;
       if (Array.isArray(rData)) return rData;
       if (rData?.data && Array.isArray(rData.data)) return rData.data;
       if (rData?.data?.data && Array.isArray(rData.data.data)) return rData.data.data;
       if (rData?.roles && Array.isArray(rData.roles)) return rData.roles;
       if (rData?.data?.roles && Array.isArray(rData.data.roles)) return rData.data.roles;
-      if (rData?.data?.data?.roles && Array.isArray(rData.data.data.roles)) return rData.data.data.roles;
+      if (rData?.data?.data?.roles && Array.isArray(rData.data.data.roles))
+        return rData.data.data.roles;
       return [];
     } catch (error) {
-      console.error("Failed to fetch roles", error);
+      console.error('Failed to fetch roles', error);
       return [];
     }
   },
 
-  createRole: async (data: { name: string, description: string, permissions?: PermRow[] }): Promise<any> => {
+  createRole: async (data: {
+    name: string;
+    description: string;
+    permissions?: PermRow[];
+  }): Promise<any> => {
     try {
-      const response = await apiClient.post("/role/create", data);
+      const response = await apiClient.post('/role/create', data);
       return response.data;
     } catch (error) {
-      console.error("Failed to create role", error);
+      console.error('Failed to create role', error);
       throw error;
     }
   },
 
-  updateRole: async (id: number, data: { name?: string, description?: string }): Promise<any> => {
+  updateRole: async (id: number, data: { name?: string; description?: string }): Promise<any> => {
     try {
       const response = await apiClient.patch(`/role/updateRole/${id}`, data);
       return response.data;
     } catch (error) {
-      console.error("Failed to update role", error);
+      console.error('Failed to update role', error);
       throw error;
     }
   },
@@ -64,7 +69,7 @@ export const rolesService = {
       const response = await apiClient.delete(`/role/deleteRole/${id}`);
       return response.data;
     } catch (error) {
-      console.error("Failed to delete role", error);
+      console.error('Failed to delete role', error);
       throw error;
     }
   },
@@ -74,17 +79,20 @@ export const rolesService = {
       const response = await apiClient.get(`/role/roles/${roleId}/permissions`);
       return response.data?.data || null;
     } catch (error) {
-      console.error("Failed to fetch role permissions", error);
+      console.error('Failed to fetch role permissions', error);
       return null;
     }
   },
 
-  updateRolePermissions: async (roleId: number, permissions: PermRow[]): Promise<RolePermissionsResponse | null> => {
+  updateRolePermissions: async (
+    roleId: number,
+    permissions: PermRow[]
+  ): Promise<RolePermissionsResponse | null> => {
     try {
       const response = await apiClient.post(`/role/roles/${roleId}/permissions`, { permissions });
       return response.data?.data || null;
     } catch (error) {
-      console.error("Failed to update role permissions", error);
+      console.error('Failed to update role permissions', error);
       throw error;
     }
   },
@@ -94,8 +102,8 @@ export const rolesService = {
       const response = await apiClient.delete(`/role/roles/${roleId}/permissions`);
       return response.data;
     } catch (error) {
-      console.error("Failed to reset role permissions", error);
+      console.error('Failed to reset role permissions', error);
       throw error;
     }
-  }
+  },
 };

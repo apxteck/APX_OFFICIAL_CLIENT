@@ -46,7 +46,9 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                 {isEditing ? 'Edit Company Asset' : 'Add New Asset'}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                {isEditing ? 'Update the details of the selected asset' : 'Fill in the information to add a new asset'}
+                {isEditing
+                  ? 'Update the details of the selected asset'
+                  : 'Fill in the information to add a new asset'}
               </p>
             </div>
           </div>
@@ -58,17 +60,24 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
           </button>
         </div>
 
-        <form onSubmit={onSubmit} className="p-6 sm:p-8 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+        <form
+          onSubmit={onSubmit}
+          className="p-6 sm:p-8 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar"
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Asset Type *</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Asset Type *
+              </label>
               <select
                 required
                 name="type"
                 defaultValue={editingAsset?.type || ''}
                 className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
               >
-                <option value="" disabled>Select an asset type...</option>
+                <option value="" disabled>
+                  Select an asset type...
+                </option>
                 <option value="DOMAIN">Domain</option>
                 <option value="TRADEMARK">Trademark</option>
                 <option value="LICENSE">License</option>
@@ -79,7 +88,9 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Title *</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Title *
+              </label>
               <input
                 required
                 type="text"
@@ -89,9 +100,11 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                 className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
               />
             </div>
-            
+
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Reference Number</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Reference Number
+              </label>
               <input
                 type="text"
                 name="referenceNumber"
@@ -101,7 +114,9 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Provider / Vendor</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Provider / Vendor
+              </label>
               <input
                 type="text"
                 name="provider"
@@ -112,32 +127,52 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Issued Date</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Issued Date
+              </label>
               <div className="relative">
                 <input
                   type="date"
                   name="issuedDate"
-                  defaultValue={editingAsset?.issuedDate ? new Date(editingAsset.issuedDate).toISOString().split('T')[0] : ''}
+                  defaultValue={
+                    editingAsset?.issuedDate
+                      ? new Date(editingAsset.issuedDate).toISOString().split('T')[0]
+                      : ''
+                  }
                   className="w-full pl-10 pr-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
                 />
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <Calendar
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Expiry / Return Date</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Expiry / Return Date
+              </label>
               <div className="relative">
                 <input
                   type="date"
                   name="expiryDate"
-                  defaultValue={editingAsset?.expiryDate ? new Date(editingAsset.expiryDate).toISOString().split('T')[0] : ''}
+                  defaultValue={
+                    editingAsset?.expiryDate
+                      ? new Date(editingAsset.expiryDate).toISOString().split('T')[0]
+                      : ''
+                  }
                   className="w-full pl-10 pr-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
                 />
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <Calendar
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Renewal / Asset Cost</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Renewal / Asset Cost
+              </label>
               <div className="relative">
                 <input
                   type="number"
@@ -147,12 +182,17 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                   placeholder="0.00"
                   className="w-full pl-10 pr-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all"
                 />
-                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <DollarSign
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
               </div>
             </div>
-            
+
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Status *</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Status *
+              </label>
               <select
                 required
                 name="status"
@@ -177,8 +217,12 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
                 className="w-5 h-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500/50"
               />
               <div className="flex-1">
-                <div className="text-sm font-semibold text-gray-900 dark:text-white">Auto Renew</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">Automatically renew this asset or subscription</div>
+                <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                  Auto Renew
+                </div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  Automatically renew this asset or subscription
+                </div>
               </div>
             </label>
           </div>
@@ -193,7 +237,7 @@ export default function CompanyAssetFormModal({ onClose, formLogic }: Props) {
               className="w-full px-4 py-3 min-h-[44px] rounded-xl bg-gray-50 dark:bg-black/50 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all resize-none"
             />
           </div>
-          
+
           <div className="pt-4 flex justify-end gap-3 border-t border-gray-100 dark:border-white/10">
             <button
               type="button"

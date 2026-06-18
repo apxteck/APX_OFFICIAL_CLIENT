@@ -25,15 +25,11 @@ export function ServiceDetailProcess({ slug }: Props) {
       </div>
 
       <div className="lg:col-span-6 space-y-6">
-        <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-          Our Delivery Process
-        </h2>
+        <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">Our Delivery Process</h2>
         <div className="space-y-6">
           {processSteps.map((step, idx) => (
             <div key={idx} className="flex gap-4">
-              <span className="text-3xl font-black text-accent/30 tracking-tight">
-                {step.step}
-              </span>
+              <span className="text-3xl font-black text-accent/30 tracking-tight">{step.step}</span>
               <div>
                 <h3 className="font-extrabold text-foreground tracking-tight text-base mb-1">
                   {step.title}

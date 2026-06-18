@@ -28,7 +28,12 @@ export function AvailableAdSlots({ layout = 'vertical' }: AvailableAdSlotsProps)
       try {
         const data = await api.fetchPricingSlots();
         // Only show active slots that have valid prices
-        setSlots(data.filter((s: PricingSlot) => s.isActive && (s.pricePerDay > 0 || s.pricePerWeek > 0 || s.pricePerMonth > 0)));
+        setSlots(
+          data.filter(
+            (s: PricingSlot) =>
+              s.isActive && (s.pricePerDay > 0 || s.pricePerWeek > 0 || s.pricePerMonth > 0)
+          )
+        );
       } catch (error) {
         console.error('Failed to fetch pricing slots', error);
       } finally {
@@ -43,8 +48,12 @@ export function AvailableAdSlots({ layout = 'vertical' }: AvailableAdSlotsProps)
   }
 
   return (
-    <GlassCard className={`p-6 border border-glass-border ${layout === 'horizontal' ? 'w-full' : ''}`}>
-      <div className={`flex items-center gap-3 mb-4 ${layout === 'horizontal' ? 'justify-center mb-6' : ''}`}>
+    <GlassCard
+      className={`p-6 border border-glass-border ${layout === 'horizontal' ? 'w-full' : ''}`}
+    >
+      <div
+        className={`flex items-center gap-3 mb-4 ${layout === 'horizontal' ? 'justify-center mb-6' : ''}`}
+      >
         <div className="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center">
           <Tag size={18} className="text-indigo-500" />
         </div>
@@ -54,11 +63,16 @@ export function AvailableAdSlots({ layout = 'vertical' }: AvailableAdSlotsProps)
         </div>
       </div>
 
-      <div className={layout === 'horizontal' ? 'grid grid-cols-1 md:grid-cols-3 gap-6' : 'space-y-4'}>
+      <div
+        className={layout === 'horizontal' ? 'grid grid-cols-1 md:grid-cols-3 gap-6' : 'space-y-4'}
+      >
         {slots.slice(0, 3).map((slot) => (
-          <div key={slot.id} className="p-3 rounded-xl bg-foreground/[0.02] border border-glass-border">
+          <div
+            key={slot.id}
+            className="p-3 rounded-xl bg-foreground/[0.02] border border-glass-border"
+          >
             <h5 className="font-bold text-xs text-foreground mb-2">
-              {slot.label || slot.placement.replace(/_/g, " ")}
+              {slot.label || slot.placement.replace(/_/g, ' ')}
             </h5>
             <div className="flex items-center justify-between text-[11px]">
               <span className="text-foreground/60 flex items-center gap-1">
@@ -81,9 +95,11 @@ export function AvailableAdSlots({ layout = 'vertical' }: AvailableAdSlotsProps)
           </div>
         ))}
       </div>
-      
+
       <div className={`mt-4 ${layout === 'horizontal' ? 'flex justify-center mt-8' : ''}`}>
-        <button className={`${layout === 'horizontal' ? 'w-auto px-8' : 'w-full'} bg-accent/10 hover:bg-accent/20 text-accent py-2.5 rounded-xl text-xs font-bold transition-colors`}>
+        <button
+          className={`${layout === 'horizontal' ? 'w-auto px-8' : 'w-full'} bg-accent/10 hover:bg-accent/20 text-accent py-2.5 rounded-xl text-xs font-bold transition-colors`}
+        >
           Contact for Booking
         </button>
       </div>

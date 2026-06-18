@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function RequestsLoading() {
   return (
@@ -13,7 +13,7 @@ export default function RequestsLoading() {
           <div className="h-12 bg-gray-200 dark:bg-gray-800 rounded-2xl w-36"></div>
         </div>
       </div>
-      
+
       <div className="bg-white dark:bg-[#111111] rounded-[2rem] border border-gray-100 dark:border-white/5 overflow-hidden">
         <div className="p-4 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-[#1a1a1a]/50">
           <div className="h-10 bg-gray-200 dark:bg-gray-800 rounded-xl w-64"></div>
@@ -21,7 +21,10 @@ export default function RequestsLoading() {
         <div className="p-6">
           <div className="space-y-4">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="flex justify-between items-center py-4 border-b border-gray-100 dark:border-white/5">
+              <div
+                key={i}
+                className="flex justify-between items-center py-4 border-b border-gray-100 dark:border-white/5"
+              >
                 <div className="space-y-2">
                   <div className="h-5 bg-gray-200 dark:bg-gray-800 rounded w-24"></div>
                   <div className="h-3 bg-gray-100 dark:bg-gray-800/50 rounded w-16"></div>

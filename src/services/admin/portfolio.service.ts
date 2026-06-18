@@ -20,12 +20,18 @@ export interface Portfolio {
 }
 
 export const portfolioService = {
-  getAllPortfoliosAdmin: async (params?: { page?: number; limit?: number; search?: string; serviceType?: string; isPublished?: boolean }) => {
+  getAllPortfoliosAdmin: async (params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    serviceType?: string;
+    isPublished?: boolean;
+  }) => {
     try {
       const response = await apiClient.get('/portfolio', { params });
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to fetch portfolios", error);
+      console.error('Failed to fetch portfolios', error);
       throw error;
     }
   },
@@ -35,7 +41,7 @@ export const portfolioService = {
       const response = await apiClient.get(`/portfolio/${id}`);
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to fetch portfolio", error);
+      console.error('Failed to fetch portfolio', error);
       throw error;
     }
   },
@@ -45,17 +51,24 @@ export const portfolioService = {
       const response = await apiClient.post('/portfolio', formData);
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to create portfolio", error);
+      console.error('Failed to create portfolio', error);
       throw error;
     }
   },
 
-  updatePortfolio: async (id: number, formData: FormData, galleryMode: 'append' | 'replace' = 'replace') => {
+  updatePortfolio: async (
+    id: number,
+    formData: FormData,
+    galleryMode: 'append' | 'replace' = 'replace'
+  ) => {
     try {
-      const response = await apiClient.patch(`/portfolio/${id}?galleryMode=${galleryMode}`, formData);
+      const response = await apiClient.patch(
+        `/portfolio/${id}?galleryMode=${galleryMode}`,
+        formData
+      );
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to update portfolio", error);
+      console.error('Failed to update portfolio', error);
       throw error;
     }
   },
@@ -65,7 +78,7 @@ export const portfolioService = {
       const response = await apiClient.delete(`/portfolio/${id}`);
       return response.data;
     } catch (error) {
-      console.error("Failed to delete portfolio", error);
+      console.error('Failed to delete portfolio', error);
       throw error;
     }
   },
@@ -75,7 +88,7 @@ export const portfolioService = {
       const response = await apiClient.patch(`/portfolio/${id}/toggle-publish`);
       return response.data;
     } catch (error) {
-      console.error("Failed to toggle publish", error);
+      console.error('Failed to toggle publish', error);
       throw error;
     }
   },

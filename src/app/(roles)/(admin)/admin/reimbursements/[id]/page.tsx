@@ -1,10 +1,14 @@
-import React from "react";
-import { reimbursementsService } from "@/services/admin/reimbursements.service";
-import { Layers } from "lucide-react";
-import Link from "next/link";
-import { ReimbursementDetailClient } from "../_components/ReimbursementDetailClient";
+import React from 'react';
+import { reimbursementsService } from '@/services/admin/reimbursements.service';
+import { Layers } from 'lucide-react';
+import Link from 'next/link';
+import { ReimbursementDetailClient } from '../_components/ReimbursementDetailClient';
 
-export default async function ReimbursementDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ReimbursementDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const resolvedParams = await params;
   const id = Number(resolvedParams.id);
 
@@ -24,7 +28,7 @@ export default async function ReimbursementDetailPage({ params }: { params: Prom
   try {
     reimbursement = await reimbursementsService.getReimbursementById(id);
   } catch (error) {
-    console.error("Failed to load reimbursement:", error);
+    console.error('Failed to load reimbursement:', error);
   }
 
   if (!reimbursement) {

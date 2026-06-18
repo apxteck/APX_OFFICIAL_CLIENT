@@ -29,12 +29,17 @@ export interface ServiceField {
 }
 
 export const servicesAdminService = {
-  getServices: async (params?: { page?: number; limit?: number; search?: string; isActive?: boolean }): Promise<Service[]> => {
+  getServices: async (params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    isActive?: boolean;
+  }): Promise<Service[]> => {
     try {
       const response = await apiClient.get('/service/getAll', { params });
       return response.data?.data?.data || [];
     } catch (error) {
-      console.error("Failed to fetch services", error);
+      console.error('Failed to fetch services', error);
       throw error;
     }
   },
@@ -44,7 +49,7 @@ export const servicesAdminService = {
       const response = await apiClient.get(`/service/getById/${id}`);
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to fetch service details", error);
+      console.error('Failed to fetch service details', error);
       throw error;
     }
   },
@@ -54,17 +59,20 @@ export const servicesAdminService = {
       const response = await apiClient.post('/service/create', data);
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to create service", error);
+      console.error('Failed to create service', error);
       throw error;
     }
   },
 
-  updateService: async (id: number | string, data: FormData | Partial<Service>): Promise<Service> => {
+  updateService: async (
+    id: number | string,
+    data: FormData | Partial<Service>
+  ): Promise<Service> => {
     try {
       const response = await apiClient.put(`/service/update/${id}`, data);
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to update service", error);
+      console.error('Failed to update service', error);
       throw error;
     }
   },
@@ -74,7 +82,7 @@ export const servicesAdminService = {
       const response = await apiClient.put(`/service/update/${id}`, { isActive });
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to toggle service status", error);
+      console.error('Failed to toggle service status', error);
       throw error;
     }
   },
@@ -84,7 +92,7 @@ export const servicesAdminService = {
       const response = await apiClient.delete(`/service/delete/${id}`);
       return response.data;
     } catch (error) {
-      console.error("Failed to delete service", error);
+      console.error('Failed to delete service', error);
       throw error;
     }
   },
@@ -94,27 +102,33 @@ export const servicesAdminService = {
       const response = await apiClient.get(`/service/field/admin/getByServiceId/${serviceId}`);
       return response.data?.data || [];
     } catch (error) {
-      console.error("Failed to fetch service fields", error);
+      console.error('Failed to fetch service fields', error);
       throw error;
     }
   },
 
-  createServiceField: async (serviceId: number | string, data: Partial<ServiceField>): Promise<ServiceField> => {
+  createServiceField: async (
+    serviceId: number | string,
+    data: Partial<ServiceField>
+  ): Promise<ServiceField> => {
     try {
       const response = await apiClient.post(`/service/field/create/${serviceId}`, data);
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to create service field", error);
+      console.error('Failed to create service field', error);
       throw error;
     }
   },
 
-  updateServiceField: async (id: number | string, data: Partial<ServiceField>): Promise<ServiceField> => {
+  updateServiceField: async (
+    id: number | string,
+    data: Partial<ServiceField>
+  ): Promise<ServiceField> => {
     try {
       const response = await apiClient.patch(`/service/field/update/${id}`, data);
       return response.data?.data;
     } catch (error) {
-      console.error("Failed to update service field", error);
+      console.error('Failed to update service field', error);
       throw error;
     }
   },
@@ -124,20 +138,22 @@ export const servicesAdminService = {
       const response = await apiClient.delete(`/service/field/delete/${id}`);
       return response.data;
     } catch (error) {
-      console.error("Failed to delete service field", error);
+      console.error('Failed to delete service field', error);
       throw error;
     }
   },
 
-  reorderServiceFields: async (payload: { id: number; sortOrder: number }[]): Promise<{ success: boolean }> => {
+  reorderServiceFields: async (
+    payload: { id: number; sortOrder: number }[]
+  ): Promise<{ success: boolean }> => {
     try {
       const response = await apiClient.patch('/service/field/reorder', { fields: payload });
       return response.data;
     } catch (error) {
-      console.error("Failed to reorder service fields", error);
+      console.error('Failed to reorder service fields', error);
       throw error;
     }
-  }
+  },
 };
 
 // Aliased export for compatibility with the new UI we built which used 'servicesService'

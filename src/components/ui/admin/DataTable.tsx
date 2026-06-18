@@ -1,9 +1,18 @@
-"use client";
+'use client';
 
-import React, { useState, useRef, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Search, SlidersHorizontal, ListFilter, ArrowUpDown, Check, ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  SlidersHorizontal,
+  ListFilter,
+  ArrowUpDown,
+  Check,
+  ChevronDown,
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export interface SortOption {
   label: string;
@@ -33,7 +42,7 @@ interface DataTableProps<T> {
 export default function DataTable<T extends { id: string | number }>({
   data,
   columns,
-  searchPlaceholder = "Search...",
+  searchPlaceholder = 'Search...',
   onSearch,
   onFilter,
   onRowClick,
@@ -64,8 +73,8 @@ export default function DataTable<T extends { id: string | number }>({
         setIsItemsPerPageOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const renderPageNumbers = () => {
@@ -84,7 +93,14 @@ export default function DataTable<T extends { id: string | number }>({
 
     return pages.map((page, idx) => {
       if (page === '...') {
-        return <span key={`ellipsis-${idx}`} className="w-10 h-10 flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold text-lg tracking-widest pb-2">...</span>;
+        return (
+          <span
+            key={`ellipsis-${idx}`}
+            className="w-10 h-10 flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold text-lg tracking-widest pb-2"
+          >
+            ...
+          </span>
+        );
       }
       return (
         <button
@@ -123,10 +139,10 @@ export default function DataTable<T extends { id: string | number }>({
         ) : (
           <div className="flex-1" />
         )}
-        
+
         <div className="flex gap-3 w-full sm:w-auto">
           {onFilter && (
-            <button 
+            <button
               onClick={onFilter}
               className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 bg-white/80 dark:bg-white/5 backdrop-blur-sm border border-gray-200/80 dark:border-white/10 text-gray-700 dark:text-gray-300 text-sm font-bold rounded-2xl hover:bg-indigo-50/80 dark:hover:bg-indigo-500/10 hover:border-indigo-200 dark:hover:border-indigo-500/30 hover:text-indigo-700 dark:hover:text-indigo-300 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-95"
             >
@@ -136,15 +152,19 @@ export default function DataTable<T extends { id: string | number }>({
           )}
           {sortOptions ? (
             <div className="relative" ref={sortRef}>
-              <button 
+              <button
                 onClick={() => setIsSortOpen(!isSortOpen)}
                 className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3.5 bg-white/80 dark:bg-white/5 backdrop-blur-sm border border-gray-200/80 dark:border-white/10 text-gray-700 dark:text-gray-300 text-sm font-bold rounded-2xl hover:bg-indigo-50/80 dark:hover:bg-indigo-500/10 hover:border-indigo-200 dark:hover:border-indigo-500/30 hover:text-indigo-700 dark:hover:text-indigo-300 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-95"
               >
                 <ArrowUpDown size={18} strokeWidth={2.5} />
                 Sort
-                <ChevronDown size={16} strokeWidth={2.5} className={cn("transition-transform duration-300", isSortOpen && "rotate-180")} />
+                <ChevronDown
+                  size={16}
+                  strokeWidth={2.5}
+                  className={cn('transition-transform duration-300', isSortOpen && 'rotate-180')}
+                />
               </button>
-              
+
               <AnimatePresence>
                 {isSortOpen && (
                   <motion.div
@@ -163,14 +183,20 @@ export default function DataTable<T extends { id: string | number }>({
                             setIsSortOpen(false);
                           }}
                           className={cn(
-                            "w-full flex items-center justify-between px-4 py-2.5 text-sm font-bold rounded-xl transition-all duration-200",
-                            currentSort === option.value 
-                              ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400"
-                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-white/10"
+                            'w-full flex items-center justify-between px-4 py-2.5 text-sm font-bold rounded-xl transition-all duration-200',
+                            currentSort === option.value
+                              ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400'
+                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-white/10'
                           )}
                         >
                           {option.label}
-                          {currentSort === option.value && <Check size={16} strokeWidth={3} className="text-indigo-600 dark:text-indigo-400" />}
+                          {currentSort === option.value && (
+                            <Check
+                              size={16}
+                              strokeWidth={3}
+                              className="text-indigo-600 dark:text-indigo-400"
+                            />
+                          )}
                         </button>
                       ))}
                     </div>
@@ -193,7 +219,10 @@ export default function DataTable<T extends { id: string | number }>({
           <thead>
             <tr className="bg-gray-50/50 dark:bg-black/20 backdrop-blur-md border-b border-gray-100/80 dark:border-white/10 text-xs font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               {columns.map((col, index) => (
-                <th key={index} className={cn("px-6 lg:px-8 py-5 whitespace-nowrap", col.className)}>
+                <th
+                  key={index}
+                  className={cn('px-6 lg:px-8 py-5 whitespace-nowrap', col.className)}
+                >
                   {col.header}
                 </th>
               ))}
@@ -210,35 +239,37 @@ export default function DataTable<T extends { id: string | number }>({
                   key={item.id}
                   onClick={() => onRowClick?.(item)}
                   className={cn(
-                    "hover:bg-indigo-50/60 dark:hover:bg-indigo-500/10 transition-colors duration-300 group hover:shadow-[inset_4px_0_0_0_#6366f1]",
-                    onRowClick && "cursor-pointer"
+                    'hover:bg-indigo-50/60 dark:hover:bg-indigo-500/10 transition-colors duration-300 group hover:shadow-[inset_4px_0_0_0_#6366f1]',
+                    onRowClick && 'cursor-pointer'
                   )}
                 >
                   {columns.map((col, colIndex) => (
-                    <td 
-                      key={colIndex} 
+                    <td
+                      key={colIndex}
                       className={cn(
-                        "px-6 lg:px-8 py-5 whitespace-nowrap text-[15px] text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors",
+                        'px-6 lg:px-8 py-5 whitespace-nowrap text-[15px] text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors',
                         col.className
                       )}
                     >
-                      {col.cell 
-                        ? col.cell(item) 
-                        : col.accessorKey 
-                          ? String(item[col.accessorKey]) 
+                      {col.cell
+                        ? col.cell(item)
+                        : col.accessorKey
+                          ? String(item[col.accessorKey])
                           : null}
                     </td>
                   ))}
                 </motion.tr>
               ))}
             </AnimatePresence>
-            
+
             {isLoading && (
               <tr>
                 <td colSpan={columns.length} className="px-6 py-16 text-center">
                   <div className="flex justify-center items-center gap-4">
                     <div className="w-8 h-8 border-4 border-indigo-200 dark:border-indigo-500/30 border-t-indigo-600 dark:border-t-indigo-400 rounded-full animate-spin"></div>
-                    <span className="text-gray-500 dark:text-gray-400 text-[15px] font-bold">Loading data...</span>
+                    <span className="text-gray-500 dark:text-gray-400 text-[15px] font-bold">
+                      Loading data...
+                    </span>
                   </div>
                 </td>
               </tr>
@@ -246,7 +277,10 @@ export default function DataTable<T extends { id: string | number }>({
 
             {!isLoading && paginatedData.length === 0 && (
               <tr>
-                <td colSpan={columns.length} className="px-6 py-16 text-center text-gray-500 dark:text-gray-400 text-[15px] font-bold">
+                <td
+                  colSpan={columns.length}
+                  className="px-6 py-16 text-center text-gray-500 dark:text-gray-400 text-[15px] font-bold"
+                >
                   No data available matching your criteria.
                 </td>
               </tr>
@@ -258,22 +292,29 @@ export default function DataTable<T extends { id: string | number }>({
       {/* Pagination Controls */}
       {!isLoading && data.length > 0 && (
         <div className="flex flex-col xl:flex-row items-center justify-between border-t border-gray-100/80 dark:border-white/10 bg-transparent p-6 lg:p-8 gap-6">
-          
           {/* Left side: Results text & dropdown */}
           <div className="flex flex-wrap items-center gap-5">
             <div className="text-[15px] font-bold text-gray-700 dark:text-gray-300">
-              Results: {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, data.length)} of {data.length}
+              Results: {(currentPage - 1) * itemsPerPage + 1} -{' '}
+              {Math.min(currentPage * itemsPerPage, data.length)} of {data.length}
             </div>
-            
+
             <div className="relative" ref={itemsPerPageRef}>
-              <button 
+              <button
                 onClick={() => setIsItemsPerPageOpen(!isItemsPerPageOpen)}
                 className="flex items-center justify-between gap-3 bg-white/80 dark:bg-white/5 backdrop-blur-sm text-gray-700 dark:text-gray-300 font-bold text-[14px] rounded-xl pl-4 pr-3 py-2.5 outline-none cursor-pointer border border-gray-200/80 dark:border-white/10 hover:border-indigo-300 dark:hover:border-indigo-500/30 hover:bg-indigo-50/50 dark:hover:bg-indigo-500/10 transition-all shadow-sm focus:ring-2 focus:ring-indigo-500/20"
               >
                 {itemsPerPage}
-                <ChevronDown size={14} strokeWidth={3} className={cn("text-gray-500 dark:text-gray-400 transition-transform duration-300", isItemsPerPageOpen && "rotate-180")} />
+                <ChevronDown
+                  size={14}
+                  strokeWidth={3}
+                  className={cn(
+                    'text-gray-500 dark:text-gray-400 transition-transform duration-300',
+                    isItemsPerPageOpen && 'rotate-180'
+                  )}
+                />
               </button>
-              
+
               <AnimatePresence>
                 {isItemsPerPageOpen && (
                   <motion.div
@@ -293,10 +334,10 @@ export default function DataTable<T extends { id: string | number }>({
                             setIsItemsPerPageOpen(false);
                           }}
                           className={cn(
-                            "w-full flex items-center justify-center px-4 py-2 text-sm font-bold rounded-lg transition-all duration-200",
-                            itemsPerPage === option 
-                              ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400"
-                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-white/10"
+                            'w-full flex items-center justify-center px-4 py-2 text-sm font-bold rounded-lg transition-all duration-200',
+                            itemsPerPage === option
+                              ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400'
+                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-white/10'
                           )}
                         >
                           {option}
@@ -318,7 +359,7 @@ export default function DataTable<T extends { id: string | number }>({
             >
               <ChevronLeft size={20} strokeWidth={3} />
             </button>
-            
+
             {renderPageNumbers()}
 
             <button
@@ -329,7 +370,6 @@ export default function DataTable<T extends { id: string | number }>({
               <ChevronRight size={20} strokeWidth={3} />
             </button>
           </div>
-          
         </div>
       )}
     </div>

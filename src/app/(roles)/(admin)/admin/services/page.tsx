@@ -1,17 +1,17 @@
-import React, { Suspense } from "react";
-import { servicesService } from "@/services/admin/services.service";
-import ServicesLoading from "./loading";
+import React, { Suspense } from 'react';
+import { servicesService } from '@/services/admin/services.service';
+import ServicesLoading from './loading';
 // Removed dynamic import
 
 import ServicesManager from './_components/ServicesManager';
 
 async function ServicesFetcher() {
-  let initialServices: import("@/services/admin/services.service").Service[] = [];
+  let initialServices: import('@/services/admin/services.service').Service[] = [];
   try {
     const data = await servicesService.getServices();
     initialServices = data || [];
   } catch (error) {
-    console.error("Failed to fetch services:", error);
+    console.error('Failed to fetch services:', error);
   }
 
   return <ServicesManager initialServices={initialServices} />;

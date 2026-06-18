@@ -14,12 +14,8 @@ export function RegisterSuccess({ successMsg }: Props) {
         <CheckCircle2 className="w-9 h-9" aria-hidden="true" role="presentation" />
       </div>
       <div className="space-y-2">
-        <h3 className="text-xl font-bold tracking-tight text-emerald-500">
-          Check Your Email
-        </h3>
-        <p className="text-foreground/70 text-sm leading-relaxed max-w-sm mx-auto">
-          {successMsg}
-        </p>
+        <h3 className="text-xl font-bold tracking-tight text-emerald-500">Check Your Email</h3>
+        <p className="text-foreground/70 text-sm leading-relaxed max-w-sm mx-auto">{successMsg}</p>
       </div>
       <div className="pt-4">
         <Link

@@ -1,5 +1,5 @@
-import React from "react";
-import { Layers, PlusCircle } from "lucide-react";
+import React from 'react';
+import { Layers, PlusCircle } from 'lucide-react';
 
 interface Props {
   navigateToCreate: () => void;
@@ -19,7 +19,7 @@ export function ServicesHeader({ navigateToCreate }: Props) {
           Manage your IT services catalog, update pricing, and control visibility.
         </p>
       </div>
-      <button 
+      <button
         onClick={navigateToCreate}
         className="bg-[#39FF14] hover:bg-[#32e012] text-black px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center justify-center gap-2 shrink-0"
       >

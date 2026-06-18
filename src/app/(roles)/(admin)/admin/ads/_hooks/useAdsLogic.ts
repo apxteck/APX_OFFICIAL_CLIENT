@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
-import { adsService } from "@/services/admin/ads.service";
-import { Ad } from "@/app/types/ad.types";
+import { useState, useEffect, useCallback } from 'react';
+import { adsService } from '@/services/admin/ads.service';
+import { Ad } from '@/app/types/ad.types';
 
 export function useAdsLogic(initialAds: Ad[] = []) {
   const [ads, setAds] = useState<Ad[]>(initialAds);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     setAds(initialAds);
@@ -17,24 +17,22 @@ export function useAdsLogic(initialAds: Ad[] = []) {
       const data = await adsService.getAds({ limit: 100 });
       setAds(data.data || []);
     } catch (error) {
-      console.error("Failed to fetch ads", error);
-      throw new Error("Failed to fetch ads");
+      console.error('Failed to fetch ads', error);
+      throw new Error('Failed to fetch ads');
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-
-
   const handleDelete = async (id: number) => {
-    if (window.confirm("Are you sure you want to delete this ad? This action cannot be undone.")) {
+    if (window.confirm('Are you sure you want to delete this ad? This action cannot be undone.')) {
       try {
         await adsService.deleteAd(id);
         fetchAds();
         return true;
       } catch (error) {
-        console.error("Failed to delete ad", error);
-        throw new Error("Failed to delete ad");
+        console.error('Failed to delete ad', error);
+        throw new Error('Failed to delete ad');
       }
     }
     return false;
@@ -46,8 +44,8 @@ export function useAdsLogic(initialAds: Ad[] = []) {
       fetchAds();
       return !currentStatus;
     } catch (error) {
-      console.error("Failed to update ad status", error);
-      throw new Error("Failed to update ad status");
+      console.error('Failed to update ad status', error);
+      throw new Error('Failed to update ad status');
     }
   };
 

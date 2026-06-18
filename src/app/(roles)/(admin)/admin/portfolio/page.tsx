@@ -1,17 +1,17 @@
-import React, { Suspense } from "react";
+import React, { Suspense } from 'react';
 // Removed dynamic import
-import { portfolioService } from "@/services/admin/portfolio.service";
-import PortfolioLoading from "./loading";
+import { portfolioService } from '@/services/admin/portfolio.service';
+import PortfolioLoading from './loading';
 
 import PortfolioManager from './_components/PortfolioManager';
 
 async function PortfolioFetcher() {
-  let initialPortfolios: import("@/services/admin/portfolio.service").Portfolio[] = [];
+  let initialPortfolios: import('@/services/admin/portfolio.service').Portfolio[] = [];
   try {
     const data = await portfolioService.getAllPortfoliosAdmin({ limit: 100 });
     initialPortfolios = data || [];
   } catch (error) {
-    console.error("Failed to pre-fetch portfolios:", error);
+    console.error('Failed to pre-fetch portfolios:', error);
   }
 
   return <PortfolioManager initialPortfolios={initialPortfolios} />;

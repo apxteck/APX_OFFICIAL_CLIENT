@@ -1,7 +1,7 @@
-import React from "react";
-import { MessageCircle } from "lucide-react";
-import { Faq } from "@/app/types/faq.types";
-import { FaqCard } from "./FaqCard";
+import React from 'react';
+import { MessageCircle } from 'lucide-react';
+import { Faq } from '@/app/types/faq.types';
+import { FaqCard } from './FaqCard';
 
 interface FaqsListProps {
   isLoading: boolean;
@@ -12,7 +12,14 @@ interface FaqsListProps {
   onToggleActive: (id: number, currentStatus: boolean) => void;
 }
 
-export function FaqsList({ isLoading, faqs, searchTerm, onEdit, onDelete, onToggleActive }: FaqsListProps) {
+export function FaqsList({
+  isLoading,
+  faqs,
+  searchTerm,
+  onEdit,
+  onDelete,
+  onToggleActive,
+}: FaqsListProps) {
   if (isLoading) {
     return (
       <div className="h-full flex items-center justify-center min-h-[400px]">
@@ -32,7 +39,9 @@ export function FaqsList({ isLoading, faqs, searchTerm, onEdit, onDelete, onTogg
         </div>
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">No FAQs found</h3>
         <p className="text-sm font-medium text-gray-500 dark:text-gray-400 max-w-md">
-          {searchTerm ? `We couldn't find any FAQs matching "${searchTerm}".` : "No FAQs available. Create a new one to get started."}
+          {searchTerm
+            ? `We couldn't find any FAQs matching "${searchTerm}".`
+            : 'No FAQs available. Create a new one to get started.'}
         </p>
       </div>
     );
@@ -41,12 +50,12 @@ export function FaqsList({ isLoading, faqs, searchTerm, onEdit, onDelete, onTogg
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
       {faqs.map((faq) => (
-        <FaqCard 
-          key={faq.id} 
-          faq={faq} 
-          onEdit={onEdit} 
-          onDelete={onDelete} 
-          onToggleActive={onToggleActive} 
+        <FaqCard
+          key={faq.id}
+          faq={faq}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          onToggleActive={onToggleActive}
         />
       ))}
     </div>

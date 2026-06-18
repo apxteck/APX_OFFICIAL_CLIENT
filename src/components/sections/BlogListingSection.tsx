@@ -153,7 +153,10 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
 
       {/* Grid of Results */}
       {currentPosts.length === 0 ? (
-        <div className="text-center py-20 border border-dashed border-glass-border rounded-3xl notranslate" translate="no">
+        <div
+          className="text-center py-20 border border-dashed border-glass-border rounded-3xl notranslate"
+          translate="no"
+        >
           <p className="text-foreground/50 text-base font-semibold mb-2">No posts found.</p>
           <p className="text-foreground/40 text-xs">
             Try selecting a different filter key or keywords search.
@@ -206,17 +209,31 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
                             <div className="flex items-center gap-2">
                               <div className="w-7 h-7 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center font-bold text-xs text-accent uppercase overflow-hidden shrink-0">
                                 {post.author?.profile?.profilePhotoUrl ? (
-                                  <img src={post.author.profile.profilePhotoUrl} alt={post.author.fullName} className="w-full h-full object-cover" />
+                                  <img
+                                    src={post.author.profile.profilePhotoUrl}
+                                    alt={post.author.fullName}
+                                    className="w-full h-full object-cover"
+                                  />
                                 ) : post.author?.profilePhotoUrl ? (
-                                  <img src={post.author.profilePhotoUrl} alt={post.author.fullName} className="w-full h-full object-cover" />
+                                  <img
+                                    src={post.author.profilePhotoUrl}
+                                    alt={post.author.fullName}
+                                    className="w-full h-full object-cover"
+                                  />
                                 ) : post.author?.fullName ? (
-                                  <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(post.author.fullName.includes('APX Blog Bot') ? 'APX Teck' : post.author.fullName)}&background=4f46e5&color=fff`} alt={post.author.fullName} className="w-full h-full object-cover" />
+                                  <img
+                                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(post.author.fullName.includes('APX Blog Bot') ? 'APX Teck' : post.author.fullName)}&background=4f46e5&color=fff`}
+                                    alt={post.author.fullName}
+                                    className="w-full h-full object-cover"
+                                  />
                                 ) : (
                                   'A'
                                 )}
                               </div>
                               <span className="text-[10px] font-semibold text-foreground/60">
-                                {post.author?.fullName?.includes('APX Blog Bot') ? 'APX Teck' : (post.author?.fullName || 'APX Lead')}
+                                {post.author?.fullName?.includes('APX Blog Bot')
+                                  ? 'APX Teck'
+                                  : post.author?.fullName || 'APX Lead'}
                               </span>
                             </div>
                             <div className="flex items-center gap-3">
@@ -247,7 +264,10 @@ export function BlogListingSection({ initialBlogs }: BlogListingSectionProps) {
 
           {/* Pagination Controls */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 pt-8 border-t border-glass-border notranslate" translate="no">
+            <div
+              className="flex justify-center items-center gap-4 pt-8 border-t border-glass-border notranslate"
+              translate="no"
+            >
               <button
                 onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
                 disabled={currentPage === 1}

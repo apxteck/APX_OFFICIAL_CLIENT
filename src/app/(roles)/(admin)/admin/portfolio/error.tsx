@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { AlertCircle, RefreshCw } from "lucide-react";
+import React, { useEffect } from 'react';
+import { AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function PortfolioError({
   error,
@@ -11,7 +11,7 @@ export default function PortfolioError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Portfolio Error:", error);
+    console.error('Portfolio Error:', error);
   }, [error]);
 
   return (
@@ -23,7 +23,8 @@ export default function PortfolioError({
         Failed to load portfolios
       </h2>
       <p className="text-gray-500 dark:text-gray-400 text-sm max-w-md mx-auto mb-6">
-        {error.message || "An unexpected error occurred while fetching your portfolios. Please try again."}
+        {error.message ||
+          'An unexpected error occurred while fetching your portfolios. Please try again.'}
       </p>
       <button
         onClick={reset}

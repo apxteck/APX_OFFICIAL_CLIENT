@@ -7,12 +7,27 @@ export const faqsService = {
     return response.data;
   },
 
-  createFaq: async (data: { question: string; answer: string; category?: string; isPublished?: boolean; sortOrder?: number }) => {
+  createFaq: async (data: {
+    question: string;
+    answer: string;
+    category?: string;
+    isPublished?: boolean;
+    sortOrder?: number;
+  }) => {
     const response = await apiClient.post('/faq', data);
     return response.data;
   },
 
-  updateFaq: async (id: number, data: Partial<{ question: string; answer: string; category: string; isPublished: boolean; sortOrder: number }>) => {
+  updateFaq: async (
+    id: number,
+    data: Partial<{
+      question: string;
+      answer: string;
+      category: string;
+      isPublished: boolean;
+      sortOrder: number;
+    }>
+  ) => {
     const response = await apiClient.patch(`/faq/${id}`, data);
     return response.data;
   },
@@ -30,5 +45,5 @@ export const faqsService = {
   toggleFaqActive: async (id: number, currentStatus: boolean) => {
     const response = await apiClient.patch(`/faq/${id}`, { isPublished: !currentStatus });
     return response.data;
-  }
+  },
 };

@@ -1,8 +1,8 @@
-import React from "react";
-import { portfolioService } from "@/services/admin/portfolio.service";
-import { Layers } from "lucide-react";
-import Link from "next/link";
-import PortfolioForm from "../../_components/PortfolioForm";
+import React from 'react';
+import { portfolioService } from '@/services/admin/portfolio.service';
+import { Layers } from 'lucide-react';
+import Link from 'next/link';
+import PortfolioForm from '../../_components/PortfolioForm';
 
 export default async function EditPortfolioPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -24,7 +24,7 @@ export default async function EditPortfolioPage({ params }: { params: Promise<{ 
   try {
     portfolio = await portfolioService.getPortfolioByIdAdmin(id);
   } catch (error) {
-    console.error("Failed to load portfolio:", error);
+    console.error('Failed to load portfolio:', error);
   }
 
   if (!portfolio) {

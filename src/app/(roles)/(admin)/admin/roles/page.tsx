@@ -1,17 +1,17 @@
-import React, { Suspense } from "react";
-import { rolesService } from "@/services/admin/roles.service";
-import RolesLoading from "./loading";
+import React, { Suspense } from 'react';
+import { rolesService } from '@/services/admin/roles.service';
+import RolesLoading from './loading';
 // Removed dynamic import
 
 import RolesManager from './_components/RolesManager';
 
 async function RolesFetcher() {
-  let initialRoles: import("@/services/admin/roles.service").Role[] = [];
+  let initialRoles: import('@/services/admin/roles.service').Role[] = [];
   try {
     const data = await rolesService.getRoles();
     initialRoles = data || [];
   } catch (error) {
-    console.error("Failed to pre-fetch roles:", error);
+    console.error('Failed to pre-fetch roles:', error);
   }
 
   return <RolesManager initialRoles={initialRoles} />;

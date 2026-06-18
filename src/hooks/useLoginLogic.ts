@@ -6,7 +6,11 @@ import { useAuth } from '@/providers/AuthProvider';
 import { api } from '@/lib/axios';
 
 import { loginSchema, type LoginFormValues } from '@/app/(public)/login/login.schema';
-import { checkRateLimit, recordFailedAttempt, clearFailedAttempts } from '@/app/(public)/login/login.utils';
+import {
+  checkRateLimit,
+  recordFailedAttempt,
+  clearFailedAttempts,
+} from '@/app/(public)/login/login.utils';
 
 export function useLoginLogic() {
   const router = useRouter();
@@ -40,8 +44,8 @@ export function useLoginLogic() {
         role === 'ADMIN' || role === 'SUPER_ADMIN' || role === 'STAFF'
           ? '/admin'
           : role === 'EMPLOYEE'
-          ? '/employee'
-          : '/customer';
+            ? '/employee'
+            : '/customer';
       router.push(redirectParam || redirectPath);
     }
   }, [isMounted, authLoading, user, router, redirectParam]);
@@ -108,7 +112,10 @@ export function useLoginLogic() {
         msg.includes('suspended') ||
         msg.includes('block')
       ) {
-        setErrorMsg(err.response?.data?.message || 'Your account has been deactivated. Please contact support.');
+        setErrorMsg(
+          err.response?.data?.message ||
+            'Your account has been deactivated. Please contact support.'
+        );
       } else {
         setErrorMsg(err.response?.data?.message || 'Invalid email or password');
       }

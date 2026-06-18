@@ -17,9 +17,7 @@ export function PortfolioSection() {
       try {
         const data = await api.fetchPortfolios();
         // Backend already filters by isPublished: true
-        const items = (data || [])
-          .sort((a, b) => a.sortOrder - b.sortOrder)
-          .slice(0, 3);
+        const items = (data || []).sort((a, b) => a.sortOrder - b.sortOrder).slice(0, 3);
         setPortfolios(items);
       } catch (err) {
         console.error('Failed to load portfolio items', err);

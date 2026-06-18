@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import ConfirmModal from "@/components/ui/admin/ConfirmModal";
-import { BlogHeader } from "./BlogHeader";
-import { BlogSearch } from "./BlogSearch";
-import { BlogList } from "./BlogList";
-import { useBlogLogic } from "../_hooks/useBlogLogic";
-import { AdminBlogPost as BlogPost } from "@/app/types/admin-blog.types";
+import React from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import ConfirmModal from '@/components/ui/admin/ConfirmModal';
+import { BlogHeader } from './BlogHeader';
+import { BlogSearch } from './BlogSearch';
+import { BlogList } from './BlogList';
+import { useBlogLogic } from '../_hooks/useBlogLogic';
+import { AdminBlogPost as BlogPost } from '@/app/types/admin-blog.types';
 
 export function BlogManager({ initialPosts = [] }: { initialPosts?: BlogPost[] }) {
   const {
@@ -45,7 +45,14 @@ export function BlogManager({ initialPosts = [] }: { initialPosts?: BlogPost[] }
 
     return pages.map((page, idx) => {
       if (page === '...') {
-        return <span key={`ellipsis-${idx}`} className="w-10 h-10 flex items-center justify-center text-gray-700 dark:text-gray-400 font-bold text-lg tracking-widest pb-2">...</span>;
+        return (
+          <span
+            key={`ellipsis-${idx}`}
+            className="w-10 h-10 flex items-center justify-center text-gray-700 dark:text-gray-400 font-bold text-lg tracking-widest pb-2"
+          >
+            ...
+          </span>
+        );
       }
       return (
         <button
@@ -69,9 +76,9 @@ export function BlogManager({ initialPosts = [] }: { initialPosts?: BlogPost[] }
 
       <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
         <BlogSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        
+
         <div className="overflow-auto bg-gray-50 dark:bg-[#151515] min-h-[400px]">
-          <BlogList 
+          <BlogList
             isLoading={isLoading}
             posts={filteredPosts}
             searchTerm={searchTerm}
@@ -83,14 +90,14 @@ export function BlogManager({ initialPosts = [] }: { initialPosts?: BlogPost[] }
         {/* Pagination Controls */}
         {!isLoading && totalFilteredPosts > 0 && (
           <div className="flex flex-col xl:flex-row items-center justify-between border-t border-gray-100 dark:border-white/5 bg-white dark:bg-[#111111] p-6 gap-6">
-            
             {/* Left side: Results text & dropdown */}
             <div className="flex flex-wrap items-center gap-5">
               <div className="text-[15px] font-bold text-[#333] dark:text-gray-200">
-                Results: {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, totalFilteredPosts)} of {totalFilteredPosts}
+                Results: {(currentPage - 1) * itemsPerPage + 1} -{' '}
+                {Math.min(currentPage * itemsPerPage, totalFilteredPosts)} of {totalFilteredPosts}
               </div>
               <div className="relative">
-                <select 
+                <select
                   value={itemsPerPage}
                   onChange={(e) => {
                     setItemsPerPage(Number(e.target.value));
@@ -104,7 +111,18 @@ export function BlogManager({ initialPosts = [] }: { initialPosts?: BlogPost[] }
                   <option value={50}>50</option>
                 </select>
                 <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-700 dark:text-gray-400">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
                 </div>
               </div>
             </div>
@@ -118,7 +136,7 @@ export function BlogManager({ initialPosts = [] }: { initialPosts?: BlogPost[] }
               >
                 <ChevronLeft size={20} strokeWidth={2.5} />
               </button>
-              
+
               {renderPageNumbers()}
 
               <button
@@ -129,11 +147,10 @@ export function BlogManager({ initialPosts = [] }: { initialPosts?: BlogPost[] }
                 <ChevronRight size={20} strokeWidth={2.5} />
               </button>
             </div>
-            
           </div>
         )}
       </div>
-      
+
       <ConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={() => !isDeleting && setIsDeleteModalOpen(false)}

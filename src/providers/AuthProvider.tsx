@@ -23,7 +23,10 @@ export interface User {
   phone: string;
   role: string;
   profilePhotoUrl?: string;
-  permissions: Record<string, { canCreate: boolean; canRead: boolean; canUpdate: boolean; canDelete: boolean }>;
+  permissions: Record<
+    string,
+    { canCreate: boolean; canRead: boolean; canUpdate: boolean; canDelete: boolean }
+  >;
 }
 
 interface AuthContextType {
@@ -47,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
           await apiRefreshToken();
         } catch (err) {
-          console.error("Initial token refresh failed:", err);
+          console.error('Initial token refresh failed:', err);
         }
       }
       const response = await apiGetCurrentUser();
@@ -119,4 +122,3 @@ export const useAuth = () => {
   }
   return context;
 };
-

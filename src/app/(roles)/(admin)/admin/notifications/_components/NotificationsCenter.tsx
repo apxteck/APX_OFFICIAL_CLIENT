@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { NotificationItem } from "@/components/NotificationItem";
-import { Bell, Inbox, Loader2 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useNotificationsLogic } from "../_hooks/useNotificationsLogic";
-import { Notification } from "@/app/services/api/notification.api";
+import React from 'react';
+import { NotificationItem } from '@/components/NotificationItem';
+import { Bell, Inbox, Loader2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useNotificationsLogic } from '../_hooks/useNotificationsLogic';
+import { Notification } from '@/app/services/api/notification.api';
 
 interface Props {
   initialData?: {
@@ -41,7 +41,7 @@ export function NotificationsCenter({ initialData }: Props) {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
@@ -53,21 +53,21 @@ export function NotificationsCenter({ initialData }: Props) {
           <div className="flex items-center gap-4">
             <div className="flex gap-2">
               <button
-                onClick={() => setFilter("all")}
+                onClick={() => setFilter('all')}
                 className={`px-4 py-2 min-h-[44px] text-xs font-bold flex items-center justify-center rounded-xl transition-all border ${
-                  filter === "all"
-                    ? "bg-indigo-600 border-indigo-600 text-white shadow-[0_4px_14px_rgba(79,70,229,0.3)]"
-                    : "bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
+                  filter === 'all'
+                    ? 'bg-indigo-600 border-indigo-600 text-white shadow-[0_4px_14px_rgba(79,70,229,0.3)]'
+                    : 'bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10'
                 }`}
               >
                 All Notifications
               </button>
               <button
-                onClick={() => setFilter("unread")}
+                onClick={() => setFilter('unread')}
                 className={`px-4 py-2 min-h-[44px] text-xs font-bold rounded-xl transition-all border flex items-center justify-center gap-2 ${
-                  filter === "unread"
-                    ? "bg-indigo-600 border-indigo-600 text-white shadow-[0_4px_14px_rgba(79,70,229,0.3)]"
-                    : "bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
+                  filter === 'unread'
+                    ? 'bg-indigo-600 border-indigo-600 text-white shadow-[0_4px_14px_rgba(79,70,229,0.3)]'
+                    : 'bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10'
                 }`}
               >
                 Unread
@@ -105,7 +105,9 @@ export function NotificationsCenter({ initialData }: Props) {
           {isLoading && notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
               <Loader2 className="w-8 h-8 text-indigo-600 dark:text-indigo-400 animate-spin" />
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Loading notifications...</p>
+              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Loading notifications...
+              </p>
             </div>
           ) : filteredNotifications.length > 0 ? (
             <div className="bg-white dark:bg-[#111111] overflow-hidden rounded-2xl border border-gray-100/50 dark:border-white/5">
@@ -115,9 +117,9 @@ export function NotificationsCenter({ initialData }: Props) {
                     key={notification.id}
                     layout
                     initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
+                    animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   >
                     <NotificationItem
                       notification={notification}
@@ -135,8 +137,8 @@ export function NotificationsCenter({ initialData }: Props) {
               </div>
               <h4 className="text-base font-bold text-gray-900 dark:text-white">All caught up!</h4>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 max-w-[280px] leading-relaxed">
-                {filter === "unread" 
-                  ? "You have no unread notifications right now."
+                {filter === 'unread'
+                  ? 'You have no unread notifications right now.'
                   : "No notifications right now. We'll let you know when something arrives."}
               </p>
             </div>
@@ -157,7 +159,7 @@ export function NotificationsCenter({ initialData }: Props) {
                   Loading...
                 </>
               ) : (
-                "Load More"
+                'Load More'
               )}
             </button>
           </div>

@@ -20,7 +20,7 @@ export const usePaymentsLogic = (initialPayments: Payment[]) => {
           setPayments(res.data);
         }
       } catch (error) {
-        console.error("Failed to load payments:", error);
+        console.error('Failed to load payments:', error);
       } finally {
         if (mounted) setIsLoading(false);
       }
@@ -34,8 +34,10 @@ export const usePaymentsLogic = (initialPayments: Payment[]) => {
   }, []); // Only run once on mount
 
   const stats = useMemo(() => {
-    const pendingPayments = payments.filter(p => p.status === 'PENDING' || p.status === 'SENT' || p.status === 'FAILED');
-    const paidPayments = payments.filter(p => p.status === 'PAID');
+    const pendingPayments = payments.filter(
+      (p) => p.status === 'PENDING' || p.status === 'SENT' || p.status === 'FAILED'
+    );
+    const paidPayments = payments.filter((p) => p.status === 'PAID');
 
     const amountDue = pendingPayments.reduce((sum, p) => sum + Number(p.negotiatedAmount || 0), 0);
     const lastPayment = paidPayments.length > 0 ? paidPayments[0] : null;
@@ -46,6 +48,6 @@ export const usePaymentsLogic = (initialPayments: Payment[]) => {
   return {
     payments,
     isLoading,
-    ...stats
+    ...stats,
   };
 };

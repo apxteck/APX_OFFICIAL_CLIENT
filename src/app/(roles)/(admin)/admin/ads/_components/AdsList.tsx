@@ -1,7 +1,7 @@
-import React from "react";
-import { MonitorPlay } from "lucide-react";
-import { AdCard } from "./AdCard";
-import { Ad } from "@/app/types/ad.types";
+import React from 'react';
+import { MonitorPlay } from 'lucide-react';
+import { AdCard } from './AdCard';
+import { Ad } from '@/app/types/ad.types';
 
 interface AdsListProps {
   isLoading: boolean;
@@ -31,7 +31,8 @@ export function AdsList({ isLoading, ads, onEdit, onDelete, onToggleStatus }: Ad
         </div>
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">No ads found</h3>
         <p className="text-sm font-medium text-gray-500 dark:text-gray-400 max-w-md">
-          We couldn't find any advertisements matching your criteria. Create a new one to get started.
+          We couldn't find any advertisements matching your criteria. Create a new one to get
+          started.
         </p>
       </div>
     );

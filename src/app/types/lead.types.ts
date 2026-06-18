@@ -8,7 +8,14 @@ export interface EnquiryPayload {
   message: string;
 }
 
-export type LeadStatus = "NEW" | "SEEN" | "CONVERTED" | "CONTACTED" | "INTERESTED" | "NEGOTIATING" | "LOST";
+export type LeadStatus =
+  | 'NEW'
+  | 'SEEN'
+  | 'CONVERTED'
+  | 'CONTACTED'
+  | 'INTERESTED'
+  | 'NEGOTIATING'
+  | 'LOST';
 
 export interface Lead {
   id: number;

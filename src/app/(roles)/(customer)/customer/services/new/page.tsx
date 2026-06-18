@@ -10,10 +10,10 @@ export default async function AddNewServicePage() {
   try {
     const data = await api.fetchServices();
     if (Array.isArray(data)) {
-      initialServices = data.filter(s => s.isActive);
+      initialServices = data.filter((s) => s.isActive);
     }
   } catch (error) {
-    console.error("Failed to fetch initial active services for wizard:", error);
+    console.error('Failed to fetch initial active services for wizard:', error);
   }
 
   return <NewServiceManager initialServices={initialServices} />;

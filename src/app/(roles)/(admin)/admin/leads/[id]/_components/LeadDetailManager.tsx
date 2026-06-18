@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useLeadDetailLogic } from "../_hooks/useLeadDetailLogic";
-import { LeadDetailHeader } from "./LeadDetailHeader";
-import { LeadMessageView } from "./LeadMessageView";
-import { LeadIntelSidebar } from "./LeadIntelSidebar";
-import { LeadFollowUps } from "./LeadFollowUps";
-import { Lead, LeadFollowUp } from "@/app/types/lead.types";
+import React from 'react';
+import { useLeadDetailLogic } from '../_hooks/useLeadDetailLogic';
+import { LeadDetailHeader } from './LeadDetailHeader';
+import { LeadMessageView } from './LeadMessageView';
+import { LeadIntelSidebar } from './LeadIntelSidebar';
+import { LeadFollowUps } from './LeadFollowUps';
+import { Lead, LeadFollowUp } from '@/app/types/lead.types';
 
 interface Props {
   initialLead: Lead;
@@ -14,11 +14,13 @@ interface Props {
 }
 
 export function LeadDetailManager({ initialLead, initialFollowUps }: Props) {
-  const { lead, followUps, handleAddFollowUp, handleAssignLead } = useLeadDetailLogic(initialLead, initialFollowUps);
+  const { lead, followUps, handleAddFollowUp, handleAssignLead } = useLeadDetailLogic(
+    initialLead,
+    initialFollowUps
+  );
 
   return (
     <div className="space-y-6 w-full max-w-7xl mx-auto pb-safe pb-12 px-4 sm:px-6 md:px-8">
-      
       {/* Header Visualizer */}
       <div className="bg-white dark:bg-[#111111] p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm space-y-6">
         <LeadDetailHeader lead={lead} />
@@ -34,7 +36,6 @@ export function LeadDetailManager({ initialLead, initialFollowUps }: Props) {
         {/* Right Column: Lead Intel */}
         <LeadIntelSidebar lead={lead} onAssignLead={handleAssignLead} />
       </div>
-      
     </div>
   );
 }

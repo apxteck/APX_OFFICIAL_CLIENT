@@ -26,7 +26,7 @@ export function AdBanner({ placement, className = '' }: AdBannerProps) {
       try {
         const data = await api.fetchAds(placement);
         const fetchedAds = data || [];
-        
+
         // Group by Ad Type to prevent mixing CLIENT and GOOGLE ads in the rotation
         const clientAds = fetchedAds.filter((ad: Ad) => ad.adType === 'CLIENT');
         const googleAds = fetchedAds.filter((ad: Ad) => ad.adType === 'GOOGLE');
@@ -51,7 +51,7 @@ export function AdBanner({ placement, className = '' }: AdBannerProps) {
   }, [placement]);
 
   useEffect(() => {
-    // Only rotate CLIENT ads. GOOGLE ads manage their own rotation and 
+    // Only rotate CLIENT ads. GOOGLE ads manage their own rotation and
     // re-rendering Google script tags every 5 seconds causes errors.
     if (ads.length > 1 && ads[0]?.adType === 'CLIENT') {
       const interval = setInterval(() => {
@@ -73,7 +73,9 @@ export function AdBanner({ placement, className = '' }: AdBannerProps) {
           exit={{ opacity: 0 }}
           className={`w-full max-w-5xl mx-auto flex flex-col items-center gap-1.5 ${className}`}
         >
-          <div className={`w-full rounded-2xl bg-gray-100 dark:bg-white/5 animate-pulse border border-gray-200 dark:border-white/5 shadow-sm ${placement === 'BLOG_POST_SIDEBAR' ? 'h-[250px] md:h-[600px]' : 'h-[90px] md:h-[160px]'}`}></div>
+          <div
+            className={`w-full rounded-2xl bg-gray-100 dark:bg-white/5 animate-pulse border border-gray-200 dark:border-white/5 shadow-sm ${placement === 'BLOG_POST_SIDEBAR' ? 'h-[250px] md:h-[600px]' : 'h-[90px] md:h-[160px]'}`}
+          ></div>
         </motion.div>
       ) : currentAd ? (
         <motion.div
@@ -89,7 +91,9 @@ export function AdBanner({ placement, className = '' }: AdBannerProps) {
           </span>
 
           {/* Glass Container */}
-          <div className={`w-full h-auto rounded-2xl glass-panel border border-glass-border overflow-hidden flex items-center justify-center relative shadow-sm hover:shadow-lg hover:border-pink-500/20 transition-all duration-500 ${placement === 'BLOG_POST_SIDEBAR' ? 'min-h-[250px]' : 'min-h-[90px]'}`}>
+          <div
+            className={`w-full h-auto rounded-2xl glass-panel border border-glass-border overflow-hidden flex items-center justify-center relative shadow-sm hover:shadow-lg hover:border-pink-500/20 transition-all duration-500 ${placement === 'BLOG_POST_SIDEBAR' ? 'min-h-[250px]' : 'min-h-[90px]'}`}
+          >
             {currentAd.adType === 'GOOGLE' && currentAd.adCode ? (
               <div
                 className="w-full flex justify-center py-2"
@@ -133,9 +137,7 @@ export function AdBanner({ placement, className = '' }: AdBannerProps) {
             <span className="text-sm font-bold text-foreground/40 group-hover:text-accent transition-colors">
               Your Ad Here
             </span>
-            <span className="text-xs text-foreground/30 mt-1">
-              Click to contact us
-            </span>
+            <span className="text-xs text-foreground/30 mt-1">Click to contact us</span>
           </a>
         </motion.div>
       )}

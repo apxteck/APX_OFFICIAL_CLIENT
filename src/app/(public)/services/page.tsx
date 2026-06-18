@@ -6,9 +6,20 @@ import { AdBanner } from '@/components/ui/AdBanner';
 import { api } from '@/lib/axios';
 import { Service } from '@/app/types/service.types';
 
-const ServicesClient = dynamic(() => import('./ServicesClient').then(mod => mod.ServicesClient), { ssr: true });
-const ServicesListingSection = dynamic(() => import('@/components/sections/ServicesListingSection').then(mod => mod.ServicesListingSection), { ssr: true });
-const TechStackMarquee = dynamic(() => import('@/components/sections/TechStackMarquee').then(mod => mod.TechStackMarquee), { ssr: true });
+const ServicesClient = dynamic(() => import('./ServicesClient').then((mod) => mod.ServicesClient), {
+  ssr: true,
+});
+const ServicesListingSection = dynamic(
+  () =>
+    import('@/components/sections/ServicesListingSection').then(
+      (mod) => mod.ServicesListingSection
+    ),
+  { ssr: true }
+);
+const TechStackMarquee = dynamic(
+  () => import('@/components/sections/TechStackMarquee').then((mod) => mod.TechStackMarquee),
+  { ssr: true }
+);
 
 export const revalidate = 60;
 
@@ -92,8 +103,13 @@ export default async function ServicesListingPage() {
 
       <Navbar />
 
-      <main className="flex-1 pt-safe pb-safe pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-x-hidden w-full" role="main" aria-label="Main Services Content" itemScope itemType="https://schema.org/WebPage">
-        
+      <main
+        className="flex-1 pt-safe pb-safe pt-20 sm:pt-24 pb-16 sm:pb-20 overflow-x-hidden w-full"
+        role="main"
+        aria-label="Main Services Content"
+        itemScope
+        itemType="https://schema.org/WebPage"
+      >
         {/* Animated Hero and Advantage section (Client component) */}
         <ServicesClient />
 

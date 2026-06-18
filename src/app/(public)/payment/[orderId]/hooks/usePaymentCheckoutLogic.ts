@@ -42,19 +42,22 @@ export function usePaymentCheckoutLogic(orderId: string) {
       handler: function (response: any) {
         setIsProcessing(true);
         toast.success('Payment successful! Verifying...', { duration: 4000 });
-        
-        publicPaymentService.verifyPayment({
-          razorpay_order_id: response.razorpay_order_id,
-          razorpay_payment_id: response.razorpay_payment_id,
-          razorpay_signature: response.razorpay_signature,
-        }).then(() => {
-          setJustPaid(true);
-          refetch().then(() => setIsProcessing(false));
-        }).catch(() => {
-          // Fallback to refetch, maybe webhook processed it
-          setJustPaid(true);
-          refetch().then(() => setIsProcessing(false));
-        });
+
+        publicPaymentService
+          .verifyPayment({
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          })
+          .then(() => {
+            setJustPaid(true);
+            refetch().then(() => setIsProcessing(false));
+          })
+          .catch(() => {
+            // Fallback to refetch, maybe webhook processed it
+            setJustPaid(true);
+            refetch().then(() => setIsProcessing(false));
+          });
       },
       prefill: {
         name: payment.customer?.fullName || '',
@@ -68,11 +71,11 @@ export function usePaymentCheckoutLogic(orderId: string) {
 
     try {
       const rzp1 = new Razorpay(options);
-      
+
       rzp1.on('payment.failed', function (response: any) {
         toast.error(`Payment failed: ${response.error.description}`);
       });
-      
+
       rzp1.open();
     } catch (error) {
       console.error('Razorpay initialization failed', error);

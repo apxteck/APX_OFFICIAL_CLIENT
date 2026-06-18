@@ -1,5 +1,5 @@
-import React from "react";
-import { Payment } from "@/services/admin/payments.service";
+import React from 'react';
+import { Payment } from '@/services/admin/payments.service';
 
 interface Props {
   isOpen: boolean;
@@ -27,8 +27,10 @@ export function MarkPaidDialog({
   if (!isOpen || !payment) return null;
 
   const formatCurrency = (amount: string | number | null) => {
-    if (!amount) return "—";
-    return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(Number(amount));
+    if (!amount) return '—';
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(
+      Number(amount)
+    );
   };
 
   return (

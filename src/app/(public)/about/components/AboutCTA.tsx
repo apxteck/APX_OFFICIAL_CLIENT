@@ -5,7 +5,10 @@ import Link from 'next/link';
 
 export function AboutCTA() {
   return (
-    <section className="py-16 md:py-24 text-center max-w-4xl mx-auto px-4 sm:px-6 w-full overflow-hidden" aria-labelledby="about-cta-heading">
+    <section
+      className="py-16 md:py-24 text-center max-w-4xl mx-auto px-4 sm:px-6 w-full overflow-hidden"
+      aria-labelledby="about-cta-heading"
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -13,7 +16,10 @@ export function AboutCTA() {
         className="relative rounded-[2.5rem] p-[2px] overflow-hidden group shadow-2xl"
       >
         {/* Spinning Gradient Border */}
-        <div className="absolute inset-[-150%] bg-[conic-gradient(from_0deg,transparent_0_340deg,rgba(14,165,233,0.5)_360deg)] animate-[spin_6s_linear_infinite]" aria-hidden="true" />
+        <div
+          className="absolute inset-[-150%] bg-[conic-gradient(from_0deg,transparent_0_340deg,rgba(14,165,233,0.5)_360deg)] animate-[spin_6s_linear_infinite]"
+          aria-hidden="true"
+        />
 
         {/* Inner Content Card */}
         <div className="relative z-10 bg-background/95 backdrop-blur-3xl rounded-[2.4rem] p-8 sm:p-12 md:p-20 border border-white/5 flex flex-col items-center justify-center w-full">
@@ -21,7 +27,8 @@ export function AboutCTA() {
             Ready to Build a Custom Web Application?
           </h2>
           <p className="text-foreground/70 max-w-lg mx-auto mb-8 md:mb-10 text-base md:text-lg">
-            Share your business requirements and we will design a high-performance, modular solution tailored to your budget.
+            Share your business requirements and we will design a high-performance, modular solution
+            tailored to your budget.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 w-full">
             <Link

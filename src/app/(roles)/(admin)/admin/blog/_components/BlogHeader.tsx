@@ -1,10 +1,10 @@
-import React from "react";
-import { Edit3, LayoutGrid } from "lucide-react";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import { Edit3, LayoutGrid } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export function BlogHeader() {
   const router = useRouter();
-  
+
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
       <div>
@@ -18,7 +18,7 @@ export function BlogHeader() {
           Manage articles, AI drafts, categories, and publications.
         </p>
       </div>
-      <button 
+      <button
         onClick={() => router.push('/admin/blog/new')}
         className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-colors shadow-sm flex items-center justify-center gap-2 shrink-0 w-full md:w-auto"
       >

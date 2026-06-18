@@ -24,21 +24,19 @@ export function ContactForm({ services }: ContactFormProps) {
   return (
     <div className="w-full">
       {isSubmitSuccess && (
-        <div 
-          role="alert" 
+        <div
+          role="alert"
           aria-live="polite"
           className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 flex items-center gap-3 text-sm font-semibold"
         >
           <CheckCircle2 className="w-5 h-5 shrink-0" aria-hidden="true" />
-          <span>
-            Thank you! Your enquiry has been received. We will contact you in 24 hours.
-          </span>
+          <span>Thank you! Your enquiry has been received. We will contact you in 24 hours.</span>
         </div>
       )}
 
       {errorMessage && (
-        <div 
-          role="alert" 
+        <div
+          role="alert"
           aria-live="assertive"
           className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 flex items-center gap-3 text-sm font-semibold"
         >
@@ -61,14 +59,20 @@ export function ContactForm({ services }: ContactFormProps) {
 
         {/* Full Name */}
         <div className="space-y-1.5">
-          <label htmlFor="fullName" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
-            Full Name <span className="text-rose-500" aria-hidden="true">*</span>
+          <label
+            htmlFor="fullName"
+            className="text-xs font-bold uppercase tracking-wider text-foreground/75"
+          >
+            Full Name{' '}
+            <span className="text-rose-500" aria-hidden="true">
+              *
+            </span>
           </label>
           <input
             id="fullName"
             type="text"
-            aria-invalid={errors.fullName ? "true" : "false"}
-            aria-describedby={errors.fullName ? "fullName-error" : undefined}
+            aria-invalid={errors.fullName ? 'true' : 'false'}
+            aria-describedby={errors.fullName ? 'fullName-error' : undefined}
             {...register('fullName')}
             className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base transition-all focus:ring-2 focus:ring-accent/50 ${
               errors.fullName
@@ -88,14 +92,20 @@ export function ContactForm({ services }: ContactFormProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 w-full">
           {/* Email */}
           <div className="space-y-1.5 w-full">
-            <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
-              Email Address <span className="text-rose-500" aria-hidden="true">*</span>
+            <label
+              htmlFor="email"
+              className="text-xs font-bold uppercase tracking-wider text-foreground/75"
+            >
+              Email Address{' '}
+              <span className="text-rose-500" aria-hidden="true">
+                *
+              </span>
             </label>
             <input
               id="email"
               type="email"
-              aria-invalid={errors.email ? "true" : "false"}
-              aria-describedby={errors.email ? "email-error" : undefined}
+              aria-invalid={errors.email ? 'true' : 'false'}
+              aria-describedby={errors.email ? 'email-error' : undefined}
               {...register('email')}
               className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base transition-all focus:ring-2 focus:ring-accent/50 ${
                 errors.email
@@ -105,20 +115,25 @@ export function ContactForm({ services }: ContactFormProps) {
               placeholder="name@company.com"
             />
             {errors.email && (
-              <p id="email-error" className="text-xs text-rose-500 font-medium pl-1" role="alert">{errors.email.message}</p>
+              <p id="email-error" className="text-xs text-rose-500 font-medium pl-1" role="alert">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
           {/* Phone */}
           <div className="space-y-1.5 w-full">
-            <label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+            <label
+              htmlFor="phone"
+              className="text-xs font-bold uppercase tracking-wider text-foreground/75"
+            >
               Mobile Number (Indian)
             </label>
             <input
               id="phone"
               type="tel"
-              aria-invalid={errors.phone ? "true" : "false"}
-              aria-describedby={errors.phone ? "phone-error" : undefined}
+              aria-invalid={errors.phone ? 'true' : 'false'}
+              aria-describedby={errors.phone ? 'phone-error' : undefined}
               {...register('phone')}
               className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base transition-all focus:ring-2 focus:ring-accent/50 ${
                 errors.phone
@@ -128,21 +143,26 @@ export function ContactForm({ services }: ContactFormProps) {
               placeholder="10-digit mobile"
             />
             {errors.phone && (
-              <p id="phone-error" className="text-xs text-rose-500 font-medium pl-1" role="alert">{errors.phone.message}</p>
+              <p id="phone-error" className="text-xs text-rose-500 font-medium pl-1" role="alert">
+                {errors.phone.message}
+              </p>
             )}
           </div>
         </div>
 
         {/* Business Name */}
         <div className="space-y-1.5">
-          <label htmlFor="businessName" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+          <label
+            htmlFor="businessName"
+            className="text-xs font-bold uppercase tracking-wider text-foreground/75"
+          >
             Business Name
           </label>
           <input
             id="businessName"
             type="text"
-            aria-invalid={errors.businessName ? "true" : "false"}
-            aria-describedby={errors.businessName ? "businessName-error" : undefined}
+            aria-invalid={errors.businessName ? 'true' : 'false'}
+            aria-describedby={errors.businessName ? 'businessName-error' : undefined}
             {...register('businessName')}
             className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base transition-all focus:ring-2 focus:ring-accent/50 ${
               errors.businessName
@@ -152,7 +172,11 @@ export function ContactForm({ services }: ContactFormProps) {
             placeholder="e.g. Acme Tech Solutions"
           />
           {errors.businessName && (
-            <p id="businessName-error" className="text-xs text-rose-500 font-medium pl-1" role="alert">
+            <p
+              id="businessName-error"
+              className="text-xs text-rose-500 font-medium pl-1"
+              role="alert"
+            >
               {errors.businessName.message}
             </p>
           )}
@@ -162,7 +186,10 @@ export function ContactForm({ services }: ContactFormProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 w-full">
           {/* Service Interest */}
           <div className="space-y-1.5 w-full">
-            <label htmlFor="serviceInterest" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+            <label
+              htmlFor="serviceInterest"
+              className="text-xs font-bold uppercase tracking-wider text-foreground/75"
+            >
               Service Interest
             </label>
             <select
@@ -170,9 +197,15 @@ export function ContactForm({ services }: ContactFormProps) {
               {...register('serviceInterest')}
               className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80 cursor-pointer"
             >
-              <option value="" className="bg-background text-foreground">Select a service category</option>
+              <option value="" className="bg-background text-foreground">
+                Select a service category
+              </option>
               {services.map((service) => (
-                <option key={service.id} value={service.name} className="bg-background text-foreground">
+                <option
+                  key={service.id}
+                  value={service.name}
+                  className="bg-background text-foreground"
+                >
                   {service.name}
                 </option>
               ))}
@@ -181,7 +214,10 @@ export function ContactForm({ services }: ContactFormProps) {
 
           {/* Source */}
           <div className="space-y-1.5 w-full">
-            <label htmlFor="source" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
+            <label
+              htmlFor="source"
+              className="text-xs font-bold uppercase tracking-wider text-foreground/75"
+            >
               How did you hear about us?
             </label>
             <select
@@ -189,26 +225,44 @@ export function ContactForm({ services }: ContactFormProps) {
               {...register('source')}
               className="w-full bg-foreground/[0.02] border border-glass-border rounded-xl px-4 py-3 min-h-[44px] sm:min-h-[48px] outline-none text-sm md:text-base focus:ring-2 focus:ring-accent/50 focus:border-accent appearance-none relative text-foreground/80 cursor-pointer"
             >
-              <option value="" className="bg-background text-foreground">Select a source</option>
-              <option value="Google Search" className="bg-background text-foreground">Google Search</option>
-              <option value="Social Media" className="bg-background text-foreground">Social Media</option>
-              <option value="Friend/Referral" className="bg-background text-foreground">Friend/Referral</option>
-              <option value="Advertisement" className="bg-background text-foreground">Advertisement</option>
-              <option value="Other" className="bg-background text-foreground">Other</option>
+              <option value="" className="bg-background text-foreground">
+                Select a source
+              </option>
+              <option value="Google Search" className="bg-background text-foreground">
+                Google Search
+              </option>
+              <option value="Social Media" className="bg-background text-foreground">
+                Social Media
+              </option>
+              <option value="Friend/Referral" className="bg-background text-foreground">
+                Friend/Referral
+              </option>
+              <option value="Advertisement" className="bg-background text-foreground">
+                Advertisement
+              </option>
+              <option value="Other" className="bg-background text-foreground">
+                Other
+              </option>
             </select>
           </div>
         </div>
 
         {/* Message */}
         <div className="space-y-1.5">
-          <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-foreground/75">
-            Detailed Message <span className="text-rose-500" aria-hidden="true">*</span>
+          <label
+            htmlFor="message"
+            className="text-xs font-bold uppercase tracking-wider text-foreground/75"
+          >
+            Detailed Message{' '}
+            <span className="text-rose-500" aria-hidden="true">
+              *
+            </span>
           </label>
           <textarea
             id="message"
             rows={5}
-            aria-invalid={errors.message ? "true" : "false"}
-            aria-describedby={errors.message ? "message-error" : undefined}
+            aria-invalid={errors.message ? 'true' : 'false'}
+            aria-describedby={errors.message ? 'message-error' : undefined}
             {...register('message')}
             className={`w-full bg-foreground/[0.02] border rounded-xl px-4 py-3 outline-none text-sm md:text-base transition-all resize-none focus:ring-2 focus:ring-accent/50 ${
               errors.message
@@ -218,7 +272,9 @@ export function ContactForm({ services }: ContactFormProps) {
             placeholder="Please write at least 20 characters detailing your request requirements..."
           />
           {errors.message && (
-            <p id="message-error" className="text-xs text-rose-500 font-medium pl-1" role="alert">{errors.message.message}</p>
+            <p id="message-error" className="text-xs text-rose-500 font-medium pl-1" role="alert">
+              {errors.message.message}
+            </p>
           )}
         </div>
 
@@ -232,7 +288,10 @@ export function ContactForm({ services }: ContactFormProps) {
           <span className="relative z-10 flex items-center gap-2">
             {isSubmitting ? 'Sending message...' : 'Send Message'}
             {!isSubmitting && (
-              <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" aria-hidden="true" />
+              <Send
+                className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                aria-hidden="true"
+              />
             )}
           </span>
         </button>

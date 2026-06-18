@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useNotificationStore } from "@/store/notification.store";
-import { Notification } from "@/app/services/api/notification.api";
+import { useState, useEffect } from 'react';
+import { useNotificationStore } from '@/store/notification.store';
+import { Notification } from '@/app/services/api/notification.api';
 
 interface InitialData {
   notifications: Notification[];
@@ -9,8 +9,8 @@ interface InitialData {
 }
 
 export function useNotificationsLogic(initialData: InitialData) {
-  const [filter, setFilter] = useState<"all" | "unread">("all");
-  
+  const [filter, setFilter] = useState<'all' | 'unread'>('all');
+
   const {
     notifications,
     unreadCount,
@@ -20,7 +20,7 @@ export function useNotificationsLogic(initialData: InitialData) {
     markRead,
     markAllRead,
     clearNotifications,
-    hydrate
+    hydrate,
   } = useNotificationStore();
 
   useEffect(() => {
@@ -31,8 +31,8 @@ export function useNotificationsLogic(initialData: InitialData) {
     }
   }, [initialData, hydrate]);
 
-  const filteredNotifications = notifications.filter(n => {
-    if (filter === "unread") return !n.isRead;
+  const filteredNotifications = notifications.filter((n) => {
+    if (filter === 'unread') return !n.isRead;
     return true;
   });
 

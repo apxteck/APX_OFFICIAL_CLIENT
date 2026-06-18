@@ -15,22 +15,30 @@ interface DashboardReimbursementFormProps {
 }
 
 export function DashboardReimbursementForm({
-  claimTitle, setClaimTitle,
-  claimAmount, setClaimAmount,
-  claimCategory, setClaimCategory,
-  isSubmittingClaim, claimSuccess,
-  handleApplyReimbursement
+  claimTitle,
+  setClaimTitle,
+  claimAmount,
+  setClaimAmount,
+  claimCategory,
+  setClaimCategory,
+  isSubmittingClaim,
+  claimSuccess,
+  handleApplyReimbursement,
 }: DashboardReimbursementFormProps) {
   return (
     <div className="bg-white dark:bg-[#111] border border-gray-100 dark:border-white/5 p-5 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl space-y-6 shadow-sm">
       <div className="border-b border-gray-100 dark:border-white/10 pb-4">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white">Claim Reimbursement</h3>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Submit expenditures for review</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          Submit expenditures for review
+        </p>
       </div>
 
       <form onSubmit={handleApplyReimbursement} className="space-y-4">
         <div className="space-y-1">
-          <label className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Title / Item Description</label>
+          <label className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            Title / Item Description
+          </label>
           <input
             type="text"
             value={claimTitle}
@@ -43,7 +51,9 @@ export function DashboardReimbursementForm({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1">
-            <label className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount (INR)</label>
+            <label className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Amount (INR)
+            </label>
             <input
               type="number"
               value={claimAmount}
@@ -55,7 +65,9 @@ export function DashboardReimbursementForm({
           </div>
 
           <div className="space-y-1">
-            <label className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Category</label>
+            <label className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              Category
+            </label>
             <select
               value={claimCategory}
               onChange={(e) => setClaimCategory(e.target.value)}

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, User, Mail, Phone, Calendar, CheckCircle } from "lucide-react";
-import { enquiriesService, Enquiry, EnquiryStatus } from "@/services/admin/enquiries.service";
-import toast from "react-hot-toast";
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft, User, Mail, Phone, Calendar, CheckCircle } from 'lucide-react';
+import { enquiriesService, Enquiry, EnquiryStatus } from '@/services/admin/enquiries.service';
+import toast from 'react-hot-toast';
 
 interface Props {
   initialEnquiry: Enquiry;
@@ -21,9 +21,9 @@ export function EnquiryDetailManager({ initialEnquiry }: Props) {
     try {
       await enquiriesService.updateEnquiryStatus(enquiry.id, newStatus);
       setEnquiry({ ...enquiry, status: newStatus });
-      toast.success("Status updated successfully");
+      toast.success('Status updated successfully');
     } catch (error) {
-      toast.error("Failed to update status");
+      toast.error('Failed to update status');
     } finally {
       setIsUpdating(false);
     }
@@ -35,7 +35,7 @@ export function EnquiryDetailManager({ initialEnquiry }: Props) {
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 pb-safe pb-10 px-4 sm:px-6 md:px-8">
-      <button 
+      <button
         onClick={() => router.back()}
         className="flex items-center gap-2 min-h-[44px] text-sm font-medium text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
       >
@@ -44,7 +44,7 @@ export function EnquiryDetailManager({ initialEnquiry }: Props) {
 
       <div className="bg-white dark:bg-[#111111] border border-gray-100 dark:border-white/5 rounded-2xl p-6 shadow-sm">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Enquiry Details</h1>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -66,7 +66,7 @@ export function EnquiryDetailManager({ initialEnquiry }: Props) {
                 <p className="font-medium text-gray-900 dark:text-white">{enquiry.email}</p>
               </div>
             </div>
-            
+
             {enquiry.phone && (
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-gray-50 dark:bg-white/5 rounded-lg text-gray-500 dark:text-gray-400">
@@ -87,7 +87,9 @@ export function EnquiryDetailManager({ initialEnquiry }: Props) {
               </div>
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">Date Received</p>
-                <p className="font-medium text-gray-900 dark:text-white">{new Date(enquiry.createdAt).toLocaleString()}</p>
+                <p className="font-medium text-gray-900 dark:text-white">
+                  {new Date(enquiry.createdAt).toLocaleString()}
+                </p>
               </div>
             </div>
 
@@ -131,9 +133,7 @@ export function EnquiryDetailManager({ initialEnquiry }: Props) {
             <p className="text-gray-900 dark:text-white font-medium">{enquiry.businessName}</p>
           </div>
         )}
-
       </div>
     </div>
   );
 }
-

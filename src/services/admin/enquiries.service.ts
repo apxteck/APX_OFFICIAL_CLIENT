@@ -1,6 +1,13 @@
 import apiClient from '@/lib/axios';
 
-export type EnquiryStatus = "NEW" | "SEEN" | "CONTACTED" | "INTERESTED" | "NEGOTIATING" | "CONVERTED" | "LOST";
+export type EnquiryStatus =
+  | 'NEW'
+  | 'SEEN'
+  | 'CONTACTED'
+  | 'INTERESTED'
+  | 'NEGOTIATING'
+  | 'CONVERTED'
+  | 'LOST';
 
 export interface Enquiry {
   id: number;
@@ -19,12 +26,17 @@ export interface Enquiry {
 }
 
 export const enquiriesService = {
-  getEnquiries: async (params?: { page?: number; limit?: number; status?: string; search?: string }): Promise<Enquiry[]> => {
+  getEnquiries: async (params?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+    search?: string;
+  }): Promise<Enquiry[]> => {
     try {
       const response = await apiClient.get('/enquiry', { params });
       return response.data?.data?.data || [];
     } catch (error) {
-      console.error("Failed to fetch enquiries", error);
+      console.error('Failed to fetch enquiries', error);
       return [];
     }
   },
@@ -34,7 +46,7 @@ export const enquiriesService = {
       const response = await apiClient.get(`/enquiry/${id}`);
       return response.data?.data || null;
     } catch (error) {
-      console.error("Failed to fetch enquiry", error);
+      console.error('Failed to fetch enquiry', error);
       return null;
     }
   },
@@ -51,5 +63,5 @@ export const enquiriesService = {
 
   deleteEnquiry: async (id: number): Promise<void> => {
     await apiClient.delete(`/enquiry/${id}`);
-  }
+  },
 };

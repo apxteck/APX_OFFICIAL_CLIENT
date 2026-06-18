@@ -13,7 +13,7 @@ export default async function CustomerPaymentsPage() {
       initialPayments = res.data;
     }
   } catch (error) {
-    console.error("Failed to fetch initial payments:", error);
+    console.error('Failed to fetch initial payments:', error);
   }
 
   return (

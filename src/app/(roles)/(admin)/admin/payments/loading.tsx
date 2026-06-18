@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function PaymentsLoading() {
   return (
@@ -12,7 +12,10 @@ export default function PaymentsLoading() {
       {/* Summary Stats Skeleton */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         {[...Array(4)].map((_, i) => (
-          <div key={i} className="bg-white dark:bg-[#161b22] border border-gray-100 dark:border-gray-800 rounded-xl p-4">
+          <div
+            key={i}
+            className="bg-white dark:bg-[#161b22] border border-gray-100 dark:border-gray-800 rounded-xl p-4"
+          >
             <div className="h-4 bg-gray-200 dark:bg-gray-800 rounded w-24 mb-3"></div>
             <div className="h-8 bg-gray-300 dark:bg-gray-700 rounded w-16"></div>
           </div>
@@ -36,7 +39,10 @@ export default function PaymentsLoading() {
           ))}
         </div>
         {[...Array(5)].map((_, i) => (
-          <div key={i} className="p-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+          <div
+            key={i}
+            className="p-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center"
+          >
             <div className="space-y-2">
               <div className="h-4 bg-gray-200 dark:bg-gray-800 rounded w-32"></div>
               <div className="h-3 bg-gray-100 dark:bg-gray-800/50 rounded w-24"></div>

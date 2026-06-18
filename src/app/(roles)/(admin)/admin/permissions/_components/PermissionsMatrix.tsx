@@ -1,9 +1,9 @@
-import React from "react";
-import { Loader2, Save, RotateCcw } from "lucide-react";
-import { PermRow } from "@/services/admin/roles.service";
+import React from 'react';
+import { Loader2, Save, RotateCcw } from 'lucide-react';
+import { PermRow } from '@/services/admin/roles.service';
 
 interface Props {
-  selectedRoleId: number | "";
+  selectedRoleId: number | '';
   permissions: PermRow[];
   isLoadingPerms: boolean;
   isSaving: boolean;
@@ -24,10 +24,13 @@ export function PermissionsMatrix({
   onReset,
 }: Props) {
   const formatModuleName = (moduleKey: string) => {
-    return moduleKey.split('_').map(word => word.charAt(0) + word.slice(1).toLowerCase()).join(' ');
+    return moduleKey
+      .split('_')
+      .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+      .join(' ');
   };
 
-  if (selectedRoleId === "") return null;
+  if (selectedRoleId === '') return null;
 
   return (
     <div className="bg-white dark:bg-[#111111] rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm overflow-hidden flex flex-col mt-6">
@@ -51,7 +54,10 @@ export function PermissionsMatrix({
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-white/5 text-sm font-medium">
                 {permissions.map((perm) => (
-                  <tr key={perm.module} className="hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors">
+                  <tr
+                    key={perm.module}
+                    className="hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors"
+                  >
                     <td className="py-4 px-6">
                       <span className="font-bold text-gray-900 dark:text-white">
                         {formatModuleName(perm.module)}
@@ -59,44 +65,44 @@ export function PermissionsMatrix({
                     </td>
                     <td className="py-4 px-6 text-center">
                       <label className="relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          checked={perm.canRead} 
-                          onChange={() => onToggle(perm.module, "canRead")}
-                          className="sr-only peer" 
+                        <input
+                          type="checkbox"
+                          checked={perm.canRead}
+                          onChange={() => onToggle(perm.module, 'canRead')}
+                          className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500"></div>
                       </label>
                     </td>
                     <td className="py-4 px-6 text-center">
                       <label className="relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          checked={perm.canCreate} 
-                          onChange={() => onToggle(perm.module, "canCreate")}
-                          className="sr-only peer" 
+                        <input
+                          type="checkbox"
+                          checked={perm.canCreate}
+                          onChange={() => onToggle(perm.module, 'canCreate')}
+                          className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-500"></div>
                       </label>
                     </td>
                     <td className="py-4 px-6 text-center">
                       <label className="relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          checked={perm.canUpdate} 
-                          onChange={() => onToggle(perm.module, "canUpdate")}
-                          className="sr-only peer" 
+                        <input
+                          type="checkbox"
+                          checked={perm.canUpdate}
+                          onChange={() => onToggle(perm.module, 'canUpdate')}
+                          className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-orange-500"></div>
                       </label>
                     </td>
                     <td className="py-4 px-6 text-center">
                       <label className="relative inline-flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          checked={perm.canDelete} 
-                          onChange={() => onToggle(perm.module, "canDelete")}
-                          className="sr-only peer" 
+                        <input
+                          type="checkbox"
+                          checked={perm.canDelete}
+                          onChange={() => onToggle(perm.module, 'canDelete')}
+                          className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-500"></div>
                       </label>
@@ -128,7 +134,10 @@ export function PermissionsMatrix({
         </>
       ) : (
         <div className="py-20 text-center">
-          <p className="text-gray-500 dark:text-gray-400 font-medium">No permissions found for this role. Click "Reset Defaults" to initialize or "Save Changes" after toggling.</p>
+          <p className="text-gray-500 dark:text-gray-400 font-medium">
+            No permissions found for this role. Click "Reset Defaults" to initialize or "Save
+            Changes" after toggling.
+          </p>
         </div>
       )}
     </div>

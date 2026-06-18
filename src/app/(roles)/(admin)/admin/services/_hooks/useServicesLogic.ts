@@ -1,18 +1,21 @@
-import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
-import { servicesService, Service } from "@/services/admin/services.service";
+import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
+import { servicesService, Service } from '@/services/admin/services.service';
 
 export const useServicesLogic = (initialServices: Service[]) => {
   const router = useRouter();
-  
+
   const [services, setServices] = useState<Service[]>(initialServices);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "loading" } | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [toast, setToast] = useState<{
+    message: string;
+    type: 'success' | 'error' | 'loading';
+  } | null>(null);
 
-  const showToast = (message: string, type: "success" | "error" | "loading") => {
+  const showToast = (message: string, type: 'success' | 'error' | 'loading') => {
     setToast({ message, type });
-    if (type !== "loading") {
+    if (type !== 'loading') {
       setTimeout(() => setToast(null), 3000);
     }
   };
@@ -23,41 +26,43 @@ export const useServicesLogic = (initialServices: Service[]) => {
       const data = await servicesService.getServices();
       setServices(data || []);
     } catch (error) {
-      showToast("Failed to fetch services", "error");
+      showToast('Failed to fetch services', 'error');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleDelete = async (id: number) => {
-    if (window.confirm("Are you sure you want to delete this service? This action cannot be undone.")) {
+    if (
+      window.confirm('Are you sure you want to delete this service? This action cannot be undone.')
+    ) {
       try {
-        showToast("Deleting service...", "loading");
+        showToast('Deleting service...', 'loading');
         await servicesService.deleteService(id);
-        showToast("Service deleted successfully", "success");
+        showToast('Service deleted successfully', 'success');
         fetchServices();
       } catch (error) {
-        showToast("Failed to delete service", "error");
+        showToast('Failed to delete service', 'error');
       }
     }
   };
 
   const handleToggleActive = async (id: number, currentStatus: boolean) => {
     try {
-      showToast("Updating status...", "loading");
+      showToast('Updating status...', 'loading');
       await servicesService.toggleServiceActive(id, !currentStatus);
-      showToast(`Service is now ${!currentStatus ? 'Active' : 'Inactive'}`, "success");
+      showToast(`Service is now ${!currentStatus ? 'Active' : 'Inactive'}`, 'success');
       fetchServices();
     } catch (error) {
-      showToast("Failed to update service status", "error");
+      showToast('Failed to update service status', 'error');
     }
   };
 
   const filteredServices = useMemo(() => {
     const term = searchTerm.toLowerCase();
-    return services.filter(service => 
-      service.name.toLowerCase().includes(term) ||
-      service.slug.toLowerCase().includes(term)
+    return services.filter(
+      (service) =>
+        service.name.toLowerCase().includes(term) || service.slug.toLowerCase().includes(term)
     );
   }, [services, searchTerm]);
 

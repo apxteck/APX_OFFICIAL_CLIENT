@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import { AlertCircle, RefreshCcw } from "lucide-react";
+import React, { useEffect } from 'react';
+import { AlertCircle, RefreshCcw } from 'lucide-react';
 
 export default function RequestsError({
   error,
@@ -11,7 +11,7 @@ export default function RequestsError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Requests route error:", error);
+    console.error('Requests route error:', error);
   }, [error]);
 
   return (
@@ -20,9 +20,12 @@ export default function RequestsError({
         <div className="w-16 h-16 bg-red-50 dark:bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
           <AlertCircle className="w-8 h-8 text-red-500" />
         </div>
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Failed to load requests</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          Failed to load requests
+        </h2>
         <p className="text-gray-500 dark:text-gray-400 text-sm mb-8">
-          There was a problem loading your service requests. Please try again or contact support if the issue persists.
+          There was a problem loading your service requests. Please try again or contact support if
+          the issue persists.
         </p>
         <button
           onClick={() => reset()}
